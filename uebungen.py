@@ -27,5 +27,7 @@ singer2 = ["Ed"]
 singer3 = ["Ronan"]
 print(singer1 + singer2 + singer3)
 
+print("Ronan" in singers)
+
 
 
