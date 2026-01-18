@@ -1,0 +1,2 @@
+KAnG = print("Bundes - Klimaanpassungsgesetz")
+
