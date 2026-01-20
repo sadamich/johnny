@@ -14,8 +14,12 @@ print("Ed" in songs)
 
 print("Celestial" in songs)
 
+<<<<<<< HEAD
 singers.append("Westlife")
 print("Westlife" in singers)
+=======
+
+>>>>>>> 8196b1d (up date)
 
          
 item = singers.pop()
