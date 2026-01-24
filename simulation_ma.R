@@ -1,4 +1,4 @@
-### Source:
+### Source:https://www.geo.fu-berlin.de/en/v/soga-r/Introduction-to-R/index.html ###
 
 set.seed(250)
 ## white noise series
