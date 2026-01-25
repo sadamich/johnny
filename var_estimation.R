@@ -38,3 +38,14 @@ Call:DUS3MT.25.624. = DAAA.25.624..l1 + DUS3MT.25.624..l1 + DAAA.25.624..l2 + DU
       0.747442625       0.165422978      -0.547064205      -0.051992268 
             const 
       0.004643489
+
+### Granger causality test for VAR(2) model ###
+causality(eq_var2)
+$Granger
+        Granger causality H0: DAAA.25.624. do not Granger-cause DUS3MT.25.624.
+data:  VAR object eq_var2
+F-Test = 28.753, df1 = 2, df2 = 1186, p-value = 6.4e-13
+$Instant
+        H0: No instantaneous causality between: DAAA.25.624. and DUS3MT.25.624.
+data:  VAR object eq_var2
+Chi-squared = 135.86, df = 1, p-value < 2.2e-16
