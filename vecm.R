@@ -14,6 +14,9 @@ str(sjd)
 sjd.vecm <- ca.jo(sjd, ecdet = "const", type="eigen", K=2, spec="longrun",
 season=4)
 summary(sjd.vecm)
+HD1 <- matrix(c(1, -1, 0, 0, 0, 0, 0, 1, -1, 0, 0, 0, 0, 0, 1), c(5,3))
+DA <- matrix(c(1,0,0,0, 0, 1, 0, 0, 0, 0, 0, 1), c(4,3))
+summary(ablrtest(sjd.vecm, H=HD1, A=DA, r=1))
 
 ### Example 2 ###
 data(finland)
