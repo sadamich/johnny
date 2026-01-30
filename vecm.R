@@ -1,6 +1,7 @@
 ### VECM: Package urca###
 ### Source: https://cran.r-project.org/web/packages/urca/refman/urca.html#ca.jo ###
 ### Example 1 ###
+library(urca)
 data(denmark)
 ### period	Time index from 1974:Q1 until 1987:Q3 ###
 ### LRM: Logarithm of real money, M2              ###
@@ -23,6 +24,9 @@ DA <- matrix(c(1,0,0,0), c(4,1))
 summary(alrtest(sjd.vecm, A=DA, r=1))
 HD0 <- matrix(c(-1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1), c(5,4))
 summary(blrtest(sjd.vecm, H=HD0, r=1))
+lttest(sjd.vecm, r=1)
+plot(sjd.vecm)
+plotres(sjd.vecm)
 
 ### Example 2 ###
 data(finland)
@@ -38,7 +42,7 @@ str(sjf)
 sjf.vecm <- ca.jo(sjf, ecdet = "none", type="eigen", K=2,
 spec="longrun", season=4)
 summary(sjf.vecm)
-
+lttest(sjf.vecm, r=3)
 ### Example 3 ###
 data(UKpppuip)
 ### A data frame of quarterly data ranging from 1971:Q1      ###
