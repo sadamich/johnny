@@ -1,6 +1,6 @@
 ### Source:Christiaan Heij, Paul de Boer, Philip Hans Franses, Teun Kloek, ###
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
-### Business and Economics. Oxford University Press, p.665                 ###
+### Business and Economics. Oxford University Press, p.665 and p.677       ###
 
 ### Example 7 26 Interest and bond rates p.663 ###
 xm722<- read.csv("xm722.csv", head=TRUE)
@@ -57,5 +57,15 @@ serial.test(eq_var2, lags.pt = 16, type = "PT.adjusted")
 eq_var2.stabil <- stability(eq_var2, type = "OLS-CUSUM")
 eq_var2.stabil
 plot(eq_var2.stabil)
-### Example 7 27 ####
+
+### Example 7 27 p.674####
+### Compare with the result of package tsDyn ###
+library(tsDyn)
+VECM_data <- data.frame(AAA[25:624], US3MTBIL[25:624])
+#Fit a VECM with Engle-Granger 2OLS estimator:
+vecm.eg<-VECM(VECM_data, lag=2)
+#Fit a VECM with Johansen MLE estimator:
+vecm.jo<-VECM(VECM_data, lag=2, estim="ML")
+
+
 
