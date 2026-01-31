@@ -15,12 +15,10 @@ Estimated coefficients for equation DAAA.25.624.:
 Call:DAAA.25.624. = DAAA.25.624..l1 + DUS3MT.25.624..l1 + const 
   DAAA.25.624..l1 DUS3MT.25.624..l1             const 
       0.442456563      -0.052701888       0.005132361 
-
 Estimated coefficients for equation DUS3MT.25.624.: 
 Call:DUS3MT.25.624. = DAAA.25.624..l1 + DUS3MT.25.624..l1 + const 
   DAAA.25.624..l1 DUS3MT.25.624..l1             const 
       0.605138840       0.106807596       0.001374641
-
 eq_var2<- VAR(VAR_data, p = 2)
 eq_var2
 ### VAR(2) Estimation Results:###
@@ -30,15 +28,12 @@ Call:DAAA.25.624. = DAAA.25.624..l1 + DUS3MT.25.624..l1 + DAAA.25.624..l2 + DUS3
       0.529129712      -0.040859540      -0.318417863       0.047550901 
             const 
       0.006690442 
-
-
 Estimated coefficients for equation DUS3MT.25.624.:  
 Call:DUS3MT.25.624. = DAAA.25.624..l1 + DUS3MT.25.624..l1 + DAAA.25.624..l2 + DUS3MT.25.624..l2 + const 
   DAAA.25.624..l1 DUS3MT.25.624..l1   DAAA.25.624..l2 DUS3MT.25.624..l2 
       0.747442625       0.165422978      -0.547064205      -0.051992268 
             const 
       0.004643489
-
 ### Granger causality test for VAR(2) model ###
 causality(eq_var2)
 $Granger
@@ -49,3 +44,12 @@ $Instant
         H0: No instantaneous causality between: DAAA.25.624. and DUS3MT.25.624.
 data:  VAR object eq_var2
 Chi-squared = 135.86, df = 1, p-value < 2.2e-16
+
+VAR(VAR_data, p = 2, type = "none")
+VAR(VAR_data, p = 2, type = "const")
+VAR(VAR_data, p = 2, type = "trend")
+VAR(VAR_data, p = 2, type = "both")
+VARselect(VAR_data, lag.max = 5, type="const")
+arch.test(eq_var2)
+### Example 7 27 ####
+
