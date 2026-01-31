@@ -49,6 +49,7 @@ causality(var.2c, cause = "e", vcov.=vcovHC(var.2c))
 #use a wild-bootstrap procedure to for the Granger test
 ## Not run: causality(var.2c, cause = "e", boot=TRUE, boot.runs=1000)
 coef(var.2c)
+### Prediction ###
 var.2c.prd <- predict(var.2c, n.ahead = 8, ci = 0.95)
 fanchart(var.2c.prd)
 fevd(var.2c, n.ahead = 5)
@@ -94,7 +95,6 @@ plot(var.2c.stabil)
 
 predict(var.2c, n.ahead = 8, ci = 0.95)
 resid(var.2c)
-
 ## Restrictions determined by thresh
 restrict(var.2c, method = "ser")
 ## Restrictions set manually
@@ -107,10 +107,9 @@ restrict(var.2c, method = "man", resmat = restrict)
 
 roots(var.2c)
 serial.test(var.2c, lags.pt = 16, type = "PT.adjusted")
-
+### Stability test ###
 var.2c.stabil <- stability(var.2c, type = "OLS-CUSUM")
 var.2c.stabil
-## Not run: 
 plot(var.2c.stabil)
 
 ## summary-method for varest
