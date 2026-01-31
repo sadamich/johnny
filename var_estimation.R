@@ -51,5 +51,11 @@ VAR(VAR_data, p = 2, type = "trend")
 VAR(VAR_data, p = 2, type = "both")
 VARselect(VAR_data, lag.max = 5, type="const")
 arch.test(eq_var2)
+roots(eq_var2)
+serial.test(eq_var2, lags.pt = 16, type = "PT.adjusted")
+### Stability test ###
+eq_var2.stabil <- stability(eq_var2, type = "OLS-CUSUM")
+eq_var2.stabil
+plot(eq_var2.stabil)
 ### Example 7 27 ####
 
