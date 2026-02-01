@@ -1,5 +1,9 @@
 ### Package maxLik ###
-### Source: https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html ###
+### Source: https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html   ###
+### Compare with 4.2.3 Non-linear optimization of Christiaan Heij, Paul de      ###
+### Boer, Philip Hans Franses,Teun Kloek,Herman K. van Dijk (2004).Econometric  ###
+### Methods with Applications in Business and Economics. Oxford University Press###                            ###
+
 ## Create a 'maxControl' object:
 maxControl(tol=1e-4, sann_tmax=7, printLevel=2)
 ## Optimize quadratic form t(D) %*% W %*% D with p.d. weight matrix,
@@ -95,3 +99,115 @@ summary(max4)
 ### Similar result using fixed parameters in maxNR, called by maxLik    ###
 max4. <- maxLik(fn2max, start=c(1, 4), fixed=2)
 summary(max4.)
+
+### ML estimation of exponential duration model:                        ###
+t <- rexp(10, 2)
+loglik <- function(theta) log(theta) - theta*t
+### Estimate with numeric gradient and hessian                          ###
+a <- maxLik(loglik, start=1 )
+gradient(a)
+### Extract the gradients evaluated at each observation                 ###
+library( sandwich )
+estfun( a )
+### Estimate with analytic gradient.                                    ###
+### Note: it returns a vector                                           ###
+gradlik <- function(theta) 1/theta - t
+b <- maxLik(loglik, gradlik, start=1)
+gradient(a)
+estfun( b )
+
+### log-likelihood for normal density                                 ###
+### a[1] - mean                                                       ###
+### a[2] - standard deviation                                         ###
+ll <- function(a) sum(-log(a[2]) - (x - a[1])^2/(2*a[2]^2))
+x <- rnorm(100) # sample from standard normal
+ml <- maxLik(ll, start=c(1,1))
+### ignore eventual warnings "NaNs produced in: log(x)"               ###
+summary(ml) # result should be close to c(0,1)
+hessian(ml) # How the Hessian looks like
+sqrt(-solve(hessian(ml))) #Note: standard deviations are on the diagonal#
+### Now run the same example while fixing a[2] = 1                    ###
+mlf <- maxLik(ll, start=c(1,1), activePar=c(TRUE, FALSE))
+summary(mlf) # first parameter close to 0, the second exactly 1.0
+hessian(mlf)
+# Note that now NA-s are in place of passive
+# parameters.
+# now invert only the free parameter part of the Hessian
+sqrt(-solve(hessian(mlf)[activePar(mlf), activePar(mlf)]))
+# gives the standard deviation for the mean
+
+### Maximum Likelihood estimation of Poissonian distribution          ###
+n <- rpois(100, 3)
+loglik <- function(l) n*log(l) - l - lfactorial(n)
+### we use numeric gradient                                           ###
+summary(maxBFGS(loglik, start=1))
+### you would probably prefer mean(n) instead of that                 ###
+### Note also that maxLik is better suited for Maximum Likelihood     ###
+### Now an example of constrained optimization                        ###
+f <- function(theta) {
+  x <- theta[1]
+  y <- theta[2]
+  exp(-(x^2 + y^2))
+  ## you may want to use exp(- theta %*% theta) instead
+}
+### use constraints: x + y >= 1                                       ###
+A <- matrix(c(1, 1), 1, 2)
+B <- -1
+res <- maxNM(f, start=c(1,1), constraints=list(ineqA=A, ineqB=B),
+control=list(printLevel=1))
+print(summary(res))
+
+### Fit exponential distribution by ML                                ###
+t <- rexp(100, 2)  # create data with parameter 2
+loglik <- function(theta) sum(log(theta) - theta*t)
+### Note the log-likelihood and gradient are summed over observations ###
+gradlik <- function(theta) sum(1/theta - t)
+hesslik <- function(theta) -100/theta^2
+### Estimate with finite-difference gradient and Hessian              ###
+a <- maxNR(loglik, start=1, control=list(printLevel=2))
+summary(a)
+### You would probably prefer 1/mean(t) instead                       ###
+### The same example with analytic gradient and Hessian               ###
+a <- maxNR(loglik, gradlik, hesslik, start=1)
+summary(a)
+### BFGS estimation with finite-difference gradient                   ###
+a <- maxBFGSR( loglik, start=1 )
+summary(a)
+### For the BHHH method we need likelihood values and gradients       ###
+### of individual observations, not the sum of those                  ###
+loglikInd <- function(theta) log(theta) - theta*t
+gradlikInd <- function(theta) 1/theta - t
+### Estimate with analytic gradient                                   ###
+a <- maxBHHH(loglikInd, gradlikInd, start=1)
+summary(a)
+### Example with a vector argument:  Estimate the mean and            ###
+### variance of a random normal sample by maximum likelihood          ###
+### Note: you might want to use maxLik instead                        ###
+loglik <- function(param) {
+                           # param is a 2-vector of c(mean, sd)
+  mu <- param[1]
+  sigma <- param[2]
+  ll <- -0.5*N*log(2*pi) - N*log(sigma) - sum(0.5*(x - mu)^2/sigma^2)
+  ll
+}
+x <- rnorm(100, 1, 2) # use mean=1, sd=2
+N <- length(x)
+res <- maxNR(loglik, start=c(0,1)) # use 'wrong' start values
+summary(res)
+### The previous example with named parameters and a fixed value      ###
+resFix <- maxNR(loglik, start=c(mu=0, sigma=1), fixed="sigma")
+summary(resFix)  # 'sigma' is exactly 1.000 now.
+### Constrained optimization                                          ###
+### We maximize exp(-x^2 - y^2) where x+y = 1                         ###
+hatf <- function(theta) {
+  x <- theta[1]
+  y <- theta[2]
+  exp(-(x^2 + y^2))
+  ## Note: you may prefer exp(- theta %*% theta) instead
+}
+### use constraints: x + y = 1                                        ###
+A <- matrix(c(1, 1), 1, 2)
+B <- -1
+res <- maxNR(hatf, start=c(0,0), constraints=list(eqA=A, eqB=B),
+             control=list(printLevel=1))
+print(summary(res))
