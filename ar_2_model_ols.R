@@ -1,7 +1,7 @@
 ### Source:Christiaan Heij, Paul de Boer, Philip Hans Franses, Teun Kloek, ###
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
-### https://github.com/sadamich/johnny.git                                 ### 
+### https://global.oup.com/booksites/content/0199268010/                   ### 
 
 ### Example 7 8 Industrial Production  p.562 ###
 xm701<- read.csv("xm701.csv", header = TRUE)
