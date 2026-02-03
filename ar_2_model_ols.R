@@ -13,12 +13,17 @@ d4_1<- D4Y[44:179]
 d4_2<- D4Y[43:178]
 ar_2<- lm(D4Y_60 ~ d4_1+d4_2)
 summary(ar_2)
-Exhibit 7.9 (p.563) Call:lm(formula = D4Y_60 ~ d4_1 + d4_2)
-
-
+### Exhibit 7.9 (p.563) Call:lm(formula = D4Y_60 ~ d4_1 + d4_2)            ###
+library(forecast)
+Acf(res, main = "ACF")
 ### ARCH LM test ###
 res <- resid(ar_2)
-res_sq <- res^2
-res_sq_lag <- c(NA, res_sq)
-panel02 <- lm(res_sq ~ res_sq_lag[1:136])
+res_lag <- c(NA, res)
+res_lag2<- c(NA, res_lag)
+res_lag3<- c(NA, res_lag2)
+res_lag4<- c(NA, res_lag3)
+panel02 <- lm(res ~ d4_1+ d4_2 + res_lag[1:136]
++ res_lag2[1:136]+res_lag3[1:136]+ res_lag4[1:136])
 summary(panel02)
+
+### Compare with the exhibit 7. 11 Panel 3 and Panel 4 (p.573)
