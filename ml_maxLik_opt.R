@@ -2,8 +2,8 @@
 ### Source: https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html   ###
 ### Compare with 4.2.3 Non-linear optimization of Christiaan Heij, Paul de      ###
 ### Boer, Philip Hans Franses,Teun Kloek,Herman K. van Dijk (2004).Econometric  ###
-### Methods with Applications in Business and Economics. Oxford University Press###                            ###
-
+### Methods with Applications in Business and Economics. Oxford University Press###                           
+### https://global.oup.com/booksites/content/0199268010/                        ###
 ## Create a 'maxControl' object:
 maxControl(tol=1e-4, sann_tmax=7, printLevel=2)
 ## Optimize quadratic form t(D) %*% W %*% D with p.d. weight matrix,
