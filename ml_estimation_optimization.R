@@ -14,7 +14,8 @@ summary(m)
 library(maxLik)
 ### Source:Christiaan Heij, Paul de Boer, Philip Hans Franses, Teun Kloek, ###
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
-### Business and Economics. Oxford University Press, p.724                 ###                        ###
+### Business and Economics. Oxford University Press, p.724                 ###                       
+### https://global.oup.com/booksites/content/0199268010/                   ###
 fgpa<- c(1.8, 2.4, 2.9, 3.0,3.5)
 satm<- c(4,6, 6, 7, 8)
 satv<- c(4, 5, 7, 6, 7)
