@@ -15,9 +15,16 @@ ar_2<- lm(D4Y_60 ~ d4_1+d4_2)
 summary(ar_2)
 ### Exhibit 7.9 (p.563) Call:lm(formula = D4Y_60 ~ d4_1 + d4_2)            ###
 library(forecast)
+res <- resid(ar_2)
+res_ts <- ts(res, freq =4, start = 1961)
+### The time series of residuals, panel(a), p.573                          ###
+### The histgram and summary of residuals, panel(b), p.573                 ###
+plot(res_ts, main = " Time series ", ylab = "Residuals") 
+hist(res)
+summary(res)
+### Correlogram of residuals of the model AR(2), panel3, p.573             ###
 Acf(res, main = "ACF")
 ### ARCH LM test ###
-res <- resid(ar_2)
 res_lag <- c(NA, res)
 res_lag2<- c(NA, res_lag)
 res_lag3<- c(NA, res_lag2)
@@ -25,5 +32,6 @@ res_lag4<- c(NA, res_lag3)
 panel02 <- lm(res ~ d4_1+ d4_2 + res_lag[1:136]
 + res_lag2[1:136]+res_lag3[1:136]+ res_lag4[1:136])
 summary(panel02)
-
 ### Compare with the exhibit 7. 11 Panel 3 and Panel 4 (p.573)
+LM = n*R^2 = 
+
