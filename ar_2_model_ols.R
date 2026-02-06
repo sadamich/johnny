@@ -35,3 +35,4 @@ summary(panel02)
 ### Compare with the exhibit 7. 11 Panel 3 and Panel 4 (p.573)
 LM = n*R^2 = 
 
+
