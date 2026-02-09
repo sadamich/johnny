@@ -9,6 +9,15 @@ t <- 1:136
 y_trend<- lm(Y[45:180] ~ t)
 summary(y_trend)
 ### Compare with panel1(p.591) ###
+### Linear forecast ###
+f<- function(a, b){
+result <- a + b*t
+return(result)
+}
+fore<- f(3.7739920,0.0071399)
+fore
+plot(fore)
+
 dy<- Y[45:180] - Y[44:179]
 y_diff<- lm(dy ~ 1)
 ### Panel4(p.591)              ###
