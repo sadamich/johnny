@@ -34,5 +34,14 @@ panel02 <- lm(res ~ d4_1+ d4_2 + res_lag[1:136]
 summary(panel02)
 ### Compare with the exhibit 7. 11 Panel 3 and Panel 4 (p.573)
 LM = n*R^2 = 
+LM = (n*g*F)/(n-k+g*F)
+### Asymptotic LM ~ F ###
+
+
+
+
+
+
+
 
 
