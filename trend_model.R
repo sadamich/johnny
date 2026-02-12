@@ -18,6 +18,12 @@ fore<- f(3.7739920,0.0071399)
 fore
 plot(fore)
 
+y_dfr<- data.frame(t = 137:150, yt = rep(0, 14))
+y_prog<- predict(y_trend, newdata= y_dfr)
+plot(Y[45:180], xlab = "Time", main = "Linear Trend")
+lines(ts(fitted(y_trend)))
+lines(ts(y_prog,start = 137))
+
 dy<- Y[45:180] - Y[44:179]
 y_diff<- lm(dy ~ 1)
 ### Panel4(p.591)              ###
