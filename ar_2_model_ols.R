@@ -14,6 +14,12 @@ d4_2<- D4Y[43:178]
 ar_2<- lm(D4Y_60 ~ d4_1+d4_2)
 summary(ar_2)
 ### Exhibit 7.9 (p.563) Call:lm(formula = D4Y_60 ~ d4_1 + d4_2)            ###
+predict(ar_2)[1:100]
+plot(predict(ar_2)[1:100])
+### https://search.r-project.org/R/refmans/stats/html/predict.arima.html   ###
+### predict.Arima {stats}                                                  ###
+(fit<- arima(D4Y_60, order = c(2,0,0)))
+predict(fit, n.ahead = 5)
 library(forecast)
 res <- resid(ar_2)
 res_ts <- ts(res, freq =4, start = 1961)
