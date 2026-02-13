@@ -5,7 +5,7 @@
 xm701<- read.csv("xm701.csv", header = TRUE)
 str(xm701)
 attach(xm701)
-### Graphs of production                                                   ###
+### Examplt 7 1 (p.532) Graphs of production                               ###
 x<- ts(X, freq = 4, start = 1950)
 plot(x, main = "Time", ylab = "Production")
 y<- ts(Y, freq = 4, start = 1950)
@@ -29,8 +29,9 @@ fore
 plot(fore)
 
 ### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
-### angewandte Statistik, Pearson, S.391                                    ###
+### angewandte Statistik, Pearson, S.391 und S.384                          ###
 ### Quelle: https://www.pearson.de/r-9783868942507                          ###
+### And example 7 13 (p.589)                                                ###
 y_61<- ts(Y[45:180], freq = 4, start = 1961)
 plot(y_61, main = "Time", ylab = "log Production")
 y_dfr<- data.frame(t = 137:150, yt = rep(0, 14))
@@ -39,9 +40,15 @@ plot(y_61, xlab = "Time", main = "Linear Trend", xlim= c(1961, 2010),
 ylim=c(3.5, 5.0))
 lines(ts(fitted(y_trend), freq= 4, start = 1961))
 lines(ts(y_prog,freq= 4,start = 1995))
+y_hw<- HoltWinters(y_61, alpha= 0.01)
+y_hw_ts<- ts(c(fitted(y_hw)[,1], coef(y_hw)), freq=4, start = 1961)
+lines(y_hw_ts, lty =1)
 ### Differencing and detrending                                             ###
 dy<- Y[45:180] - Y[44:179]
 y_diff<- lm(dy ~ 1)
+res_diff<- resid(y_diff)
+res_diff_ts<- ts(res_diff, freq =4, start= 1961)
+plot(res_diff_ts, main ="Residuals", xlim= c(1961, 2000))
 ### Panel4(p.591)              ###
 summary(y_diff)
 dy<- ts(dy, freq = 4, start = c(1961,2))
