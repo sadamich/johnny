@@ -29,7 +29,18 @@ D4Y_61 |>
   Arima(order = c(2, 0, 0)) |>
   forecast(h = 10) |>
   autoplot()
+fit <- auto.arima(D4Y_61)
+### ARMA automatich ordering ###
+plot(forecast(fit, h = 10))
 
+findfrequency(D4Y_61)
+
+fit <- ets(D4Y_61)
+plot(D4Y_61)
+lines(fitted(fit), col = "red")
+lines(fitted(fit, h = 2), col = "green")
+lines(fitted(fit, h = 3), col = "blue")
+legend("topleft", legend = paste("h =", 1:3), col = 2:4, lty = 1)
 ### The time series of residuals, panel(a), p.573                          ###
 ### The histgram and summary of residuals, panel(b), p.573                 ###
 plot(res_ts, main = " Time series ", ylab = "Residuals") 
