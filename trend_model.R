@@ -28,16 +28,27 @@ fore<- f(3.7739920,0.0071399)
 fore
 plot(fore)
 
-
+### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
+### angewandte Statistik, Pearson, S.391                                    ###
+### Quelle: https://www.pearson.de/r-9783868942507                          ###
 y_61<- ts(Y[45:180], freq = 4, start = 1961)
 plot(y_61, main = "Time", ylab = "log Production")
 y_dfr<- data.frame(t = 137:150, yt = rep(0, 14))
 y_prog<- predict(y_trend, newdata= y_dfr, freq=4, start = 1961)
-plot(y_61, xlab = "Time", main = "Linear Trend", xlim= c(1961, 2000))
+plot(y_61, xlab = "Time", main = "Linear Trend", xlim= c(1961, 2010),
+ylim=c(3.5, 5.0))
 lines(ts(fitted(y_trend), freq= 4, start = 1961))
 lines(ts(y_prog,freq= 4,start = 1995))
-
+### Differencing and detrending                                             ###
 dy<- Y[45:180] - Y[44:179]
 y_diff<- lm(dy ~ 1)
 ### Panel4(p.591)              ###
 summary(y_diff)
+dy<- ts(dy, freq = 4, start = c(1961,2))
+plot(dy, main = "Time", ylab = "log difference production")
+dy_dfr<- data.frame(t = 137:150)
+dy_prog<- predict(y_diff, newdata = dy_dfr, freq = 4, start= c(1961,2))
+plot(dy, xlab ="Time", main= "differenced process", xlim = c(1961, 2010))
+lines(ts(fitted(y_diff), freq= 4, start = 1961))
+lines(ts(dy_prog, freq=4, start = 1995))
+
