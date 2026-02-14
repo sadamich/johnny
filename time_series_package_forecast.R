@@ -92,6 +92,9 @@ checkresiduals(fit)
 findfrequency(USAccDeaths) # Monthly data
 findfrequency(taylor) # Half-hourly data
 findfrequency(lynx)
+### Forecast HoltWinters                                                  ###
+fit <- HoltWinters(WWWusage, gamma = FALSE)
+plot(forecast(fit))
 
 
 fit <- ets(WWWusage)
@@ -100,3 +103,48 @@ lines(fitted(fit), col = "red")
 lines(fitted(fit, h = 2), col = "green")
 lines(fitted(fit, h = 3), col = "blue")
 legend("topleft", legend = paste("h =", 1:3), col = 2:4, lty = 1)
+### Naive and Random Walk Forecasts                                       ###
+# Three ways to do the same thing
+str(gold)
+gold_model <- rw_model(gold)
+gold_fc1 <- forecast(gold_model, h = 50)
+gold_fc2 <- rwf(gold, h = 50)
+gold_fc3 <- naive(gold, h = 50)
+# Plot the forecasts
+autoplot(gold_fc1)
+# Drift forecasts
+rwf(gold, drift = TRUE) |> autoplot()
+# Seasonal naive forecasts
+snaive(wineind) |> autoplot()
+
+### Forecast ts (time series)                                             ###
+WWWusage |> forecast() |> plot()
+fit <- ets(window(WWWusage, end = 60))
+fc <- forecast(WWWusage, model = fit)
+
+### Display                                                               ###
+library(ggplot2)
+ggtsdisplay(USAccDeaths, plot.type = "scatter", theme = theme_bw())
+tsdisplay(diff(WWWusage))
+ggtsdisplay(USAccDeaths, plot.type = "scatter")
+
+### Random Walk model                                                     ###
+model <- rw_model(gold)
+forecast(model, h = 50) |> autoplot()
+
+### Decomposition                                                         ###
+plot(USAccDeaths)
+fit <- stl(USAccDeaths, s.window = "periodic")
+lines(trendcycle(fit), col = "red")
+
+library(ggplot2)
+autoplot(
+  cbind(
+    Data = USAccDeaths,
+    Seasonal = seasonal(fit),
+    Trend = trendcycle(fit),
+    Remainder = remainder(fit)
+  ),
+  facets = TRUE
+) +
+  labs(x = "Year", y = "")
