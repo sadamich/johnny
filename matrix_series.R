@@ -2,11 +2,19 @@ seq(70, 100, 10)
 seq(70, 100, 5)
 seq(70, 100, 2)
 seq(70, 100, 1)
-
 seq(1,100, 1)
-
 rep(0, 8)
 rep(1, 8)
 rep(2, 8)
 rep(5, 8)
 rep(10, 8)
+
+sum(seq(70, 100, 10))
+sum(seq(70, 100, 5))
+sum(seq(70, 100, 2))
+sum(seq(70, 100, 1
+sum(rep(0,8))
+sum(rep(1,8))
+sum(rep(2,8))
+sum(rep(5,8))
+sum(rep(10,8))
