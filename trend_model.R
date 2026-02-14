@@ -9,7 +9,16 @@ attach(xm701)
 x<- ts(X, freq = 4, start = 1950)
 plot(x, main = "Time", ylab = "Production")
 y<- ts(Y, freq = 4, start = 1950)
+### Trend of production and exhibit 7 1 b (p.533)                          ### 
 plot(y, main = "Time", ylab = "log Production")
+d4y_ts<- ts(D4Y, freq=4, start=1950)
+### Stationary process and exhibit 7 1 c (p.533)                           ###
+plot(d4y_ts, main= "Time series", ylab = "D4Y")
+### Autocorrelation                                                        ###
+lag.plot(Y, lags = 12, do.lines =FALSE)
+acf(Y, 12)
+lag.plot(D4Y[5:195], lags =12, do.lines =FALSE)
+acf(D4Y[5:195], 12)
 lag4<- c(NA,NA,NA,NA,Y)
 growth<- D4Y/lag4[1:195]
 growth_ts<- ts(growth,freq=4, start =1950) 
@@ -18,6 +27,10 @@ plot(growth_ts, main="Time", ylab="Growth rates")
 t <- 1:136
 y_trend<- lm(Y[45:180] ~ t)
 summary(y_trend)
+res<- resid(y_trend)
+res_ts<- ts(res, freq=4, start = 1961)
+### Trend of residuals                                                     ###
+plot(res_ts,main="Time series", ylab = "Residuals")
 ### Compare with panel1(p.591)                                             ###
 ### Linear forecast                                                        ###
 f<- function(a, b){
@@ -58,4 +71,8 @@ dy_prog<- predict(y_diff, newdata = dy_dfr, freq = 4, start= c(1961,2))
 plot(dy, xlab ="Time", main= "differenced process", xlim = c(1961, 2010))
 lines(ts(fitted(y_diff), freq= 4, start = 1961))
 lines(ts(dy_prog, freq=4, start = 1995))
-
+### Random walk model (package forecast)
+library(forecast)
+y_rw<- rw_model(Y, lag=1, drift = TRUE)
+### Compare with exhibit 7 14 e (p.591)                                    ###
+forecast(y_rw, h = 10) |> autoplot()
