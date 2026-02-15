@@ -11,6 +11,9 @@ plot(x, main = "Time", ylab = "Production")
 y<- ts(Y, freq = 4, start = 1950)
 ### Trend of production and exhibit 7 1 b (p.533)                          ### 
 plot(y, main = "Time", ylab = "log Production")
+### Decompostion of production                                             ###
+y_decom<- decompose(y)
+plot(y_decom)
 d4y_ts<- ts(D4Y, freq=4, start=1950)
 ### Stationary process and exhibit 7 1 c (p.533)                           ###
 plot(d4y_ts, main= "Time series", ylab = "D4Y")
