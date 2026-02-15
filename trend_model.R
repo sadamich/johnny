@@ -62,6 +62,10 @@ lines(ts(y_prog,freq= 4,start = 1995))
 y_hw<- HoltWinters(y_61, alpha= 0.01)
 y_hw_ts<- ts(c(fitted(y_hw)[,1], coef(y_hw)), freq=4, start = 1961)
 lines(y_hw_ts, lty =1)
+### Exponential smoothing state space model                                 ###
+library(forecast)
+fit <- ets(y_61)
+plot(forecast(fit))
 ### Differencing and detrending                                             ###
 dy<- Y[45:180] - Y[44:179]
 y_diff<- lm(dy ~ 1)
