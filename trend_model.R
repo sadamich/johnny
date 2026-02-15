@@ -14,6 +14,9 @@ plot(y, main = "Time", ylab = "log Production")
 ### Decompostion of production                                             ###
 y_decom<- decompose(y)
 plot(y_decom)
+library(ggplot2)
+library(seasonal)
+seas(y) |> autoplot()
 d4y_ts<- ts(D4Y, freq=4, start=1950)
 ### Stationary process and exhibit 7 1 c (p.533)                           ###
 plot(d4y_ts, main= "Time series", ylab = "D4Y")
@@ -79,3 +82,26 @@ library(forecast)
 y_rw<- rw_model(Y, lag=1, drift = TRUE)
 ### Compare with exhibit 7 14 e (p.591)                                    ###
 forecast(y_rw, h = 10) |> autoplot()
+### Seasonal plot                                                          ###
+ggseasonplot(y, col = rainbow(12), year.labels = TRUE)
+ggseasonplot(y, year.labels = TRUE, continuous = TRUE)
+seasonplot(y, col = rainbow(12), year.labels = TRUE)
+### Seasonal adjustment                                                    ###
+plot(y)
+lines(seasadj(decompose(y, "multiplicative")), col = 4)
+### Extract components from a time series decomposition                    ###
+plot(y)
+fit <- stl(y, s.window = "periodic")
+lines(trendcycle(fit), col = "red")
+
+library(ggplot2)
+autoplot(
+  cbind(
+    Data = y,
+    Seasonal = seasonal(fit),
+    Trend = trendcycle(fit),
+    Remainder = remainder(fit)
+  ),
+  facets = TRUE
+) +
+  labs(x = "Year", y = "")
