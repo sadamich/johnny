@@ -1,3 +1,4 @@
+### Source: https://finance.yahoo.co.jp/                                     ###
 aktien<- read.csv("aktien.csv", header=TRUE)
 str(aktien)
 attach(aktien)
@@ -7,7 +8,7 @@ plot(x, typ="l")
 t<- 1:25
 kurs<- lm(x ~ t)
 summary(kurs)
-### Estimation of trend model                                              ###
+### Estimation of trend model                                                ###
 Call: lm(formula = x ~ t)
 Residuals:
     Min      1Q  Median      3Q     Max 
