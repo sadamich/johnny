@@ -60,9 +60,12 @@ summary(panel02)
 LM = n*R^2 = 
 LM = (n*g*F)/(n-k+g*F)
 ### Asymptotic LM ~ F ###
+### STAR model, compare with panel 1 (p.619)                               ###
+library(tsDyn)
+star(D4Y_61, m=2, noRegimes, d = 1, steps = 1,  rob = FALSE )
 
-
-
+### Self Threshold Autoregressive model, compare with panel 2 (p.619)      ###
+setar(D4Y_61, m=2, mTh=c(0,1))
 
 
 
