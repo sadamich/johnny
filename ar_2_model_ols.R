@@ -17,6 +17,8 @@ summary(ar_2)
 res <- resid(ar_2)
 res_ts <- ts(res, freq =4, start = 1961)
 plot(res_ts, main="Time series", ylab ="Reduals")
+d4_fit<- fitted(ar_2)
+d4_fit_ts<- ts(d4_fit, freq= 4, start =1961)
 ### Exhibit 7.9 (p.563) Call:lm(formula = D4Y_61 ~ d4_1 + d4_2)            ###
 predict(ar_2)[1:100]
 plot(predict(ar_2)[1:100])
@@ -66,6 +68,12 @@ star(D4Y_61, m=2, noRegimes, d = 1, steps = 1,  rob = FALSE )
 
 ### Self Threshold Autoregressive model, compare with panel 2 (p.619)      ###
 setar(D4Y_61, m=2, mTh=c(0,1))
+
+### ARCH                                                                   ###
+library(tseries)
+d4_arch<- garch(d4_fit_ts, order=c(0,1))
+summary(d4_arch)
+plot(d4_arch)
 
 
 
