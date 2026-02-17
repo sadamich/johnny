@@ -21,6 +21,15 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 12.21 on 23 degrees of freedom
 Multiple R-squared:  0.834,     Adjusted R-squared:  0.8268 
 F-statistic: 115.6 on 1 and 23 DF,  p-value: 1.92e-10
+### ADF Test                                                               ###
+library("tseries")
+adf.test(x, alternative = c("stationary", "explosive"),
+ k = trunc((length(x)-1)^(1/3)))
+ Augmented Dickey-Fuller Test
+data:  x
+Dickey-Fuller = -2.6073, Lag order = 2, p-value = 0.341
+alternative hypothesis: stationary
+
 y<- sbux
 plot(y, type="l")
 kurs_s<- lm(y~t)
@@ -38,3 +47,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 2.296 on 23 degrees of freedom
 Multiple R-squared:  0.4546,    Adjusted R-squared:  0.4309 
 F-statistic: 19.17 on 1 and 23 DF,  p-value: 0.0002192
+### ADF Test                                                               ###
+library(tseries)
+adf.test(y, alternative = c("stationary", "explosive"),
+ k = trunc((length(x)-1)^(1/3)))
+
