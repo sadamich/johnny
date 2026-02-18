@@ -62,6 +62,26 @@ lines(ts(y_prog,freq= 4,start = 1995))
 y_hw<- HoltWinters(y_61, alpha= 0.01)
 y_hw_ts<- ts(c(fitted(y_hw)[,1], coef(y_hw)), freq=4, start = 1961)
 lines(y_hw_ts, lty =1)
+
+### ADF Test, compare with panel 1 and panel 5 (p.601)                      ###                                                                 ###
+library(fUnitRoots)
+unitrootTest(Y[45:180], lags = 1, type = c("nc", "c", "ct"), title = NULL, 
+    description = NULL)    
+adfTest(Y[45:180], lags = 1, type = "ct", title = NULL, 
+    description = NULL)
+adfTest(Y[45:180], lags = 5, type = "ct", title = NULL, 
+    description = NULL)
+### ADF Test, compare with panel 1 and panel 5 (p.601)                      ###
+library(tseries)
+x<- Y[45:180]
+adf.test(x, alternative = c("stationary", "explosive"),
+         k = trunc((length(x)-1)^(1/3)))
+adf.test(x, alternative = "stationary",
+         k = trunc((length(x)-1)^(1/3)))
+
+adf.test(x, alternative = "explosive",
+         k = trunc((length(x)-1)^(1/3)))
+
 ### Exponential smoothing state space model                                 ###
 library(forecast)
 fit <- ets(y_61)
