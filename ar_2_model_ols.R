@@ -74,6 +74,12 @@ library(tseries)
 d4_arch<- garch(d4_fit_ts, order=c(0,1))
 summary(d4_arch)
 plot(d4_arch)
+d4_ar2<- arma(D4Y_61, order=c(2,0))
+summary(d4_ar2)
+d4_fit<- fitted(d4_ar2)
+garch(d4_fit[3:136], order= c(0,1))
+summary(garch(d4_fit[3:136], order= c(0,1)))
+
 
 
 
