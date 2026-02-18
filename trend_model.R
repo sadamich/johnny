@@ -126,12 +126,15 @@ adfTest(YEARSUMY[45:180], lags = 1, type = "ct", title = NULL,
 adfTest(YEARSUMY[45:180], lags = 4, type = "ct", title = NULL)
 d_YEAR <- YEARSUMY[45:180] - YEARSUMY[44:179]
 adfTest(d_YEAR, lags = 4, type = "c", title = NULL)
+
 ### Seasonal plot                                                          ###
 ggseasonplot(y, col = rainbow(12), year.labels = TRUE)
 ggseasonplot(y, year.labels = TRUE, continuous = TRUE)
 seasonplot(y, col = rainbow(12), year.labels = TRUE)
 ### Seasonal adjustment                                                    ###
+library(forecast)
 plot(y)
+### Seasonal adjustment, compare with exhibit 7 20 a (p.610)               ###
 lines(seasadj(decompose(y, "multiplicative")), col = 4)
 ### Extract components from a time series decomposition                    ###
 plot(y)
