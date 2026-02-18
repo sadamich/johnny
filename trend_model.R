@@ -106,6 +106,26 @@ library(forecast)
 y_rw<- rw_model(Y, lag=1, drift = TRUE)
 ### Compare with exhibit 7 14 e (p.591)                                    ###
 forecast(y_rw, h = 10) |> autoplot()
+
+### Seasonality                                                            ###
+### ADF Test for checking the seasonality: H0 is I(2)                      ###
+### ADF Test, compare with panel 1,panel 3 and panel 4 (p.609)             ###                                                                 ###
+library(fUnitRoots)
+DY <- Y[45:180] -Y[44:179]
+unitrootTest(DY, lags = 1, type = c("nc", "c", "ct"), title = NULL, 
+    description = NULL)    
+adfTest(DY, lags = 1, type = "ct", title = NULL, 
+    description = NULL)
+adfTest(DY, lags = 5, type = "ct", title = NULL, 
+    description = NULL)
+### H0 (I(2)) is rejected                                                  ###
+unitrootTest(YEARSUMY[45:180], lags = 1, type = c("nc", "c", "ct"), title = NULL, 
+    description = NULL)    
+adfTest(YEARSUMY[45:180], lags = 1, type = "ct", title = NULL, 
+    description = NULL)
+adfTest(YEARSUMY[45:180], lags = 4, type = "ct", title = NULL)
+d_YEAR <- YEARSUMY[45:180] - YEARSUMY[44:179]
+adfTest(d_YEAR, lags = 4, type = "c", title = NULL)
 ### Seasonal plot                                                          ###
 ggseasonplot(y, col = rainbow(12), year.labels = TRUE)
 ggseasonplot(y, year.labels = TRUE, continuous = TRUE)
