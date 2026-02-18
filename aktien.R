@@ -30,6 +30,15 @@ data:  x
 Dickey-Fuller = -2.6073, Lag order = 2, p-value = 0.341
 alternative hypothesis: stationary
 
+### Forecast, package forecast                                             ###
+library(forecast)
+model <- rw_model(x)
+forecast(model, h = 10) |> autoplot()
+fit <- ets(x)
+plot(forecast(fit, h = 10))
+
+
+### Course of sbux                                                         ###
 y<- sbux
 plot(y, type="l")
 kurs_s<- lm(y~t)
