@@ -29,6 +29,12 @@ data:  y
 Dickey-Fuller = -2.0713, Lag order = 6, p-value = 0.5459
 alternative hypothesis: stationary
 
+library(fUnitRoots)
+unitrootTest(y, lags = 4, type = "nc", title = NULL, 
+    description = NULL)    
+
+
+
 
 
 
