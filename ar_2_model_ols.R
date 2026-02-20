@@ -64,8 +64,7 @@ LM = (n*g*F)/(n-k+g*F)
 ### Asymptotic LM ~ F ###
 ### STAR model, compare with panel 1 (p.619)                               ###
 ### TAR Model panel 2 (p.619)                                              ###
-dum<- ifelse(d4_1 >0, "1", "0")
-dum<- as.numeric(dum)
+dum<- ifelse(d4_1 >0, 1, 0)
 ar2_tar<- lm(D4Y_61 ~ d4_1+d4_2+ dum*(d4_1+d4_2))
 summary(ar2_tar)
 Call: lm(formula = D4Y_61 ~ d4_1 + d4_2 + dum * (d4_1 + d4_2))
@@ -91,17 +90,31 @@ hist(res_tar)
 library(gslnls)
 ### Regression Panel 2 Non-linear model ###
 d4_star <- gsl_nls(fn = D4Y_61 ~ beta_1 + beta_2*d4_1 + beta_3*d4_2 +
- (beta_4+ beta_5*d4_1 + beta_6*d4_2)/(1+exp(-beta_7)*(d4_1 - beta_8)),
-data=xm701,start = c(beta_1=NA, beta_2=NA, beta_3=NA,
-beta_4=NA, beta_5=NA, beta_6=NA, beta_7=NA, beta_8=NA))
+ (beta_4+ beta_5*d4_1 + beta_6*d4_2)/(1 + exp(-beta_7*(d4_1 - beta_8))),
+data=xm701,
+start = c(beta_1 = 0, beta_2 = 1, beta_3 = 0,
+beta_4 = 0, beta_5 = 0, beta_6 = 0, beta_7 = NA, beta_8 = 0)
+)
 coef(d4_star)
 summary(d4_star)
-
-library(tsDyn)
-star(D4Y_61, m=2, noRegimes, d = 1, steps = 1,  rob = FALSE )
-
-### Self Threshold Autoregressive model, compare with panel 2 (p.619)      ###
-setar(D4Y_61, m=2, mTh=c(0,1))
+predict(d4_star, interval = "prediction")
+Formula: D4Y_61 ~ beta_1 + beta_2 * d4_1 + beta_3 * d4_2 + (beta_4 + beta_5 * 
+    d4_1 + beta_6 * d4_2)/(1 + exp(-beta_7 * (d4_1 - beta_8)))
+Parameters:
+        Estimate Std. Error t value Pr(>|t|)    
+beta_1 -0.003133   0.010371  -0.302    0.763    
+beta_2  1.247395   0.155029   8.046 5.02e-13 ***
+beta_3 -0.725212   0.135126  -5.367 3.63e-07 ***
+beta_4  0.018507   0.023843   0.776    0.439    
+beta_5 -0.110143   0.260573  -0.423    0.673    
+beta_6  0.300250   0.188442   1.593    0.114    
+beta_7 77.685308  93.750658   0.829    0.409    
+beta_8  0.014620   0.021987   0.665    0.507    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 
+Residual standard error: 0.02074 on 128 degrees of freedom
+Number of iterations till stop: 100 
+Achieved convergence tolerance: 1.839e-05
+Reason stopped: exceeded max number of iterations
 
 ### ARCH                                                                   ###
 library(tseries)
