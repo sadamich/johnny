@@ -87,6 +87,15 @@ F-statistic: 131.5 on 5 and 130 DF,  p-value: < 2.2e-16
 res_tar<- resid(ar2_tar)
 ### Exhibit 7 22 c (p.619)                                                 ###
 hist(res_tar)
+### STAR Model compare with panel 1 (p.619)
+library(gslnls)
+### Regression Panel 2 Non-linear model ###
+d4_star <- gsl_nls(fn = D4Y_61 ~ beta_1 + beta_2*d4_1 + beta_3*d4_2 +
+ (beta_4+ beta_5*d4_1 + beta_6*d4_2)/(1+exp(-beta_7)*(d4_1 - beta_8)),
+data=xm701,start = c(beta_1=NA, beta_2=NA, beta_3=NA,
+beta_4=NA, beta_5=NA, beta_6=NA, beta_7=NA, beta_8=NA))
+coef(d4_star)
+summary(d4_star)
 
 library(tsDyn)
 star(D4Y_61, m=2, noRegimes, d = 1, steps = 1,  rob = FALSE )
