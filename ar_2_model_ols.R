@@ -63,6 +63,31 @@ LM = n*R^2 =
 LM = (n*g*F)/(n-k+g*F)
 ### Asymptotic LM ~ F ###
 ### STAR model, compare with panel 1 (p.619)                               ###
+### TAR Model panel 2 (p.619)                                              ###
+dum<- ifelse(d4_1 >0, "1", "0")
+dum<- as.numeric(dum)
+ar2_tar<- lm(D4Y_61 ~ d4_1+d4_2+ dum*(d4_1+d4_2))
+summary(ar2_tar)
+Call: lm(formula = D4Y_61 ~ d4_1 + d4_2 + dum * (d4_1 + d4_2))
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.066517 -0.010748 -0.000278  0.010922  0.082829 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.006937   0.005423  -1.279   0.2031    
+d4_1         1.172922   0.138174   8.489 4.10e-14 ***
+d4_2        -0.714031   0.112871  -6.326 3.73e-09 ***
+dum          0.014694   0.006739   2.180   0.0310 *  
+d4_1:dum     0.092095   0.170993   0.539   0.5911    
+d4_2:dum     0.247076   0.144471   1.710   0.0896 .  
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.02038 on 130 degrees of freedom
+Multiple R-squared:  0.8349,    Adjusted R-squared:  0.8286 
+F-statistic: 131.5 on 5 and 130 DF,  p-value: < 2.2e-16
+res_tar<- resid(ar2_tar)
+### Exhibit 7 22 c (p.619)                                                 ###
+hist(res_tar)
+
 library(tsDyn)
 star(D4Y_61, m=2, noRegimes, d = 1, steps = 1,  rob = FALSE )
 
@@ -79,6 +104,7 @@ summary(d4_ar2)
 d4_fit<- fitted(d4_ar2)
 garch(d4_fit[3:136], order= c(0,1))
 summary(garch(d4_fit[3:136], order= c(0,1)))
+
 
 
 
