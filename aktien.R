@@ -4,10 +4,12 @@ str(aktien)
 attach(aktien)
 str(cyber)
 x<- cyber
-plot(x, typ="l")
+plot(x, main= "Time series",typ="l")
 t<- 1:25
 kurs<- lm(x ~ t)
 summary(kurs)
+x_fit<- fitted(kurs)
+lines(x_fit,col = "red", add=TRUE)
 ### Estimation of trend model                                              ###
 Call: lm(formula = x ~ t)
 Residuals:
