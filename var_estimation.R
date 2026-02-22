@@ -34,7 +34,11 @@ Call:DUS3MT.25.624. = DAAA.25.624..l1 + DUS3MT.25.624..l1 + DAAA.25.624..l2 + DU
       0.747442625       0.165422978      -0.547064205      -0.051992268 
             const 
       0.004643489
-### Granger causality test for VAR(2) model ###
+
+### Autocorrelations of residuals and panel 7 (p.666)                      ###
+res_2<- resid(eq_var2)
+acf(res_2)
+### Granger causality test for VAR(2) model, compare with panel 6 (p.666)  ###
 causality(eq_var2)
 $Granger
         Granger causality H0: DAAA.25.624. do not Granger-cause DUS3MT.25.624.
