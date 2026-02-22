@@ -127,7 +127,26 @@ d4_fit<- fitted(d4_ar2)
 garch(d4_fit[3:136], order= c(0,1))
 summary(garch(d4_fit[3:136], order= c(0,1)))
 
-
+library(tseries)
+eq1<- arma(D4Y_61, order =c(2,0))
+summary(eq1)
+Call:
+arma(x = D4Y_61, order = c(2, 0))
+Model:ARMA(2,0)
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0680121 -0.0078512  0.0004884  0.0109455  0.0658293 
+Coefficient(s):
+           Estimate  Std. Error  t value Pr(>|t|)    
+ar1        1.391787    0.066921   20.797  < 2e-16 ***
+ar2       -0.588858    0.065668   -8.967  < 2e-16 ***
+intercept  0.006436    0.001945    3.309 0.000935 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Fit: sigma^2 estimated as 0.0003518,  Conditional Sum-of-Squares = 0.05,  
+AIC = -689.58
+res_ar2<- resid(eq1)
+res_ar2<- na.omit(res_ar2)
+garch(res_ar2, order = c(0,1))
 
 
 
