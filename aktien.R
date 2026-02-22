@@ -5,6 +5,8 @@ attach(aktien)
 str(cyber)
 x<- cyber
 plot(x, main= "Time series",typ="l")
+x<- ts(x, freq = 5, start =1)
+plot(decompose(x))
 t<- 1:25
 kurs<- lm(x ~ t)
 summary(kurs)
