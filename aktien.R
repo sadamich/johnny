@@ -63,3 +63,10 @@ library(tseries)
 adf.test(y, alternative = c("stationary", "explosive"),
  k = trunc((length(x)-1)^(1/3)))
 
+
+### A relation between x and y ?                                           ###
+xy<- lm(x ~ y)
+summary(xy)
+yx<- lm(y ~ x)
+summary(yx)
+plot(x,y)
