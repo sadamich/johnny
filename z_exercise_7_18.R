@@ -55,3 +55,53 @@ alternative hypothesis: stationary
 rep((1,0,0,0,0,0,0,0,0,0,0,0), 10)
 ### I(2) is rejected. Seasonal effect is doubtful.                          ###
 ### c ARCH                                                                  ###
+
+dum2<- c(0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,    0, 0, 0, 0, 0, 0, 0)
+dum3<- c(0, 0, 1, 0, 0,   0, 0, 0, 0, 0, 0, 0)
+dum3<- rep(dum3, 10)
+dum4<- c(0, 0, 0, 1, 0,   0, 0, 0, 0, 0, 0, 0)
+dum4<- rep(dum4, 10)
+dum5<- c(0, 0, 0, 0, 1,   0, 0, 0, 0, 0, 0, 0)
+dum5<- rep(dum5, 10)
+dum6<- c(0, 0, 0, 0, 0,   1, 0, 0, 0, 0, 0, 0)
+dum6<- rep(dum6, 10)
+dum7<- c(0, 0, 0, 0, 0,   0, 1, 0, 0, 0, 0, 0)
+dum7<- rep(dum7, 10)
+dum8<- c(0, 0, 0, 0, 0,   0, 0, 1, 0, 0, 0, 0)
+dum8<- rep(dum8, 10)
+dum9<- c(0, 0, 0, 0, 0,   0, 0, 0, 1, 0, 0, 0)
+dum9<- rep(dum9, 10)
+dum10<- c(0, 0, 0, 0, 0,  0, 0, 0, 0, 1, 0, 0)
+dum10<- rep(dum10, 10)
+dum11<- c(0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 1, 0)
+dum11<- rep(dum11,10)
+dum12<- c(0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 1)
+dum12<- rep(dum12, 10)
+### b linear regression with dummies                                        ###
+eq1 <- lm(log(y_1) ~ t+ dum2+ dum3 + dum4 + dum5 + dum6 + dum7
+               + dum8+ dum9 + dum10 + dum11 + dum12)
+summary(eq1)
+res<- resid(eq1)
+res<- ts(res, freq = 12, start = 1990)
+plot(res, main =" 1990 - 1998", ylab = "Residuals")
+plot(res)
+acf(res)
+hist(res)
+
+### c  ARMA Model for the residuals of the model b                          ###
+library(tseries)
+res_arma<- arma(res, order = c(1,1))
+summary(res_arma)
+res_arma2<- arma(res, order = c(2,2))
+summary(res_arma2)
+res_arma3<- arma(res, order = c(2,0))
+summary(res_arma3)
