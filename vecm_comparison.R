@@ -7,20 +7,30 @@ xm722<- read.csv("xm722.csv", header = TRUE)
 str(xm722)
 attach(xm722)
 library(tsDyn)
-data(zeroyld)
-str(zeroyld)
-data<-zeroyld
+var_data<- data.frame(AAA,US3MTBIL)
+panel05<- VECM(
+  data = var_data,
+  lag = 2,
+  r = 1,
+  include = "const",
+  beta = NULL,
+  estim = "ML",
+  LRinclude = "both",
+  exogen = NULL
+)
+panel05
 
-#Fit a VECM with Engle-Granger 2OLS estimator:
-vecm.eg<-VECM(zeroyld, lag=2)
-722<- xm[,c("DAAA", "DUS3MT")
-]722_vecm<- VECM(722, lag =2)
-722_vecm
-
-
-
-eq_vecm<- VECM(xm722, lag =2)
-summary(eq_vecm)
+panel06<- VECM(
+  data = var_data,
+  lag = 2,
+  r = 1,
+  include = "none",
+  beta = NULL,
+  estim = "ML",
+  LRinclude = "none",
+  exogen = NULL
+)
+panel06
 
 library(urca)
 head(xm722)
