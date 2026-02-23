@@ -6,6 +6,22 @@
 xm722<- read.csv("xm722.csv", header = TRUE)
 str(xm722)
 attach(xm722)
+library(tsDyn)
+data(zeroyld)
+str(zeroyld)
+data<-zeroyld
+
+#Fit a VECM with Engle-Granger 2OLS estimator:
+vecm.eg<-VECM(zeroyld, lag=2)
+722<- xm[,c("DAAA", "DUS3MT")
+]722_vecm<- VECM(722, lag =2)
+722_vecm
+
+
+
+eq_vecm<- VECM(xm722, lag =2)
+summary(eq_vecm)
+
 library(urca)
 head(xm722)
 ir <- xm722[, c("AAA", "US3MTBIL")]
