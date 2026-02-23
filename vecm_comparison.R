@@ -32,15 +32,12 @@ panel06<- VECM(
 )
 panel06
 
+panel05_t<- ca.jo(var_data, type = "eigen", ecdet = "trend", K = 2,
+spec= "longrun", season = NULL, dumvar = NULL)
+summary(panel05_t)
+
+panel05_t2<- ca.jo(var_data, type = "trace", ecdet = "trend", K = 2,
+spec= "longrun", season = NULL, dumvar = NULL)
+summary(panel05_t2)
+
 library(urca)
-head(xm722)
-ir <- xm722[, c("AAA", "US3MTBIL")]
-str(ir)
-ir.vecm <- ca.jo(ir, ecdet = "const", type="eigen", K=2, spec="longrun",
-season=4)
-summary(ir.vecm)
-summary(alphaols(ir.vecm))
-summary(alphaols(ir.vecm, reg.number=1))
-lttest(ir.vecm, r=1)
-plot(ir.vecm)
-plotres(ir.vecm)
