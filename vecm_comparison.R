@@ -27,25 +27,28 @@ panel06<- VECM(
   include = "none",
   beta = NULL,
   estim = "ML",
-  LRinclude = "none",
+  LRinclude = "const",
   exogen = NULL
 )
 panel06
-
-panel05_t<- ca.jo(var_data, type = "eigen", ecdet = "trend", K = 2,
-spec= "longrun", season = NULL, dumvar = NULL)
-summary(panel05_t)
-
-panel05_t2<- ca.jo(var_data, type = "trace", ecdet = "trend", K = 2,
-spec= "longrun", season = NULL, dumvar = NULL)
-summary(panel05_t2)
-
+                          ECT    AAA -1 US3MTBIL -1     AAA -2 US3MTBIL -2
+Equation AAA      -0.01873009 0.5137194  -0.0436500 -0.3332185  0.03641944
+Equation US3MTBIL  0.03391977 0.7776206   0.1699271 -0.5166337 -0.03244040
 library(urca)
+panel05_eigen<- ca.jo(var_data, type = "eigen", ecdet = "trend", K = 2,
+spec= "longrun", season = NULL, dumvar = NULL)
+summary(panel05_eigen)
+
+panel06_eigen<- ca.jo(var_data, type = "eigen", ecdet = "none", K = 2,
+spec= "longrun", season = NULL, dumvar = NULL)
+summary(panel06_eigen)
 
 spread<- AAA - US3MTBIL
 spread<- ts(spread, freq = 12, start = 1948)
+### Exhibit 7 32 b (p.677)                                                 ###
 plot(spread, main = "Time series", ylab = "Spread")
 library(tseries)
+### Panel 7 (p.677)                                                        ###
 adf.test(spread)
   Augmented Dickey-Fuller Test
 data:  spread
@@ -53,5 +56,5 @@ Dickey-Fuller = -4.109, Lag order = 8, p-value = 0.01
 alternative hypothesis: stationary
 Warning message:
 In adf.test(spread) : p-value smaller than printed p-value
-> 
+
 
