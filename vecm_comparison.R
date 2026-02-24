@@ -41,3 +41,17 @@ spec= "longrun", season = NULL, dumvar = NULL)
 summary(panel05_t2)
 
 library(urca)
+
+spread<- AAA - US3MTBIL
+spread<- ts(spread, freq = 12, start = 1948)
+plot(spread, main = "Time series", ylab = "Spread")
+library(tseries)
+adf.test(spread)
+  Augmented Dickey-Fuller Test
+data:  spread
+Dickey-Fuller = -4.109, Lag order = 8, p-value = 0.01
+alternative hypothesis: stationary
+Warning message:
+In adf.test(spread) : p-value smaller than printed p-value
+> 
+
