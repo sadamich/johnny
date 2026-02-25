@@ -3,9 +3,12 @@ install.packages("mlogit")
 ### Wide format
 data("Train", package = "mlogit")
 str(Train)
+attach(Train)
 Train$choiceid <- 1:nrow(Train)
 head(Train, 3)
-
+head(Train, 4)
+head(Train, 10)
+head(Train, 20)
 
 ### Long format
 
