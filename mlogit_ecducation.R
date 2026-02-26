@@ -10,9 +10,9 @@ sxm604<- subset(xm604, GENDER==1)
 str(sxm604)
 attach(sxm604)
 
-data<- dfidx(sxm604, subset = c("DUMJCAT1","DUMJCAT2","DUMJCAT3"))
+data<- dfidx(sxm604,drop.index = FALSE)
 library("Formula")
-f<- formula(DUMJCAT1 ~ EDUC +MINORITY)
+f<- formula(JOBCAT ~ EDUC |MINORITY)
 
 eq1<- mlogit(f,data)
 summary(eq1)
