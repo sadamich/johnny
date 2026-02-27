@@ -36,6 +36,11 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 1.233 on 60 degrees of freedom
 Multiple R-squared:  0.1081,    Adjusted R-squared:  0.09324 
 F-statistic: 7.273 on 1 and 60 DF,  p-value: 0.009073
+
+install.packages("NPHazardRate")
+library(NPHazardRate)
+lambdahat(STRIKEDUR,)
+
 install.packages("survival")
 library(survival)
 eq_suv<- coxph(Surv(log(STRIKECENS80)) ~ PROD, xm609)
