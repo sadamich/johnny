@@ -10,8 +10,9 @@ sxm604<- subset(xm604, GENDER==1)
 str(sxm604)
 attach(sxm604)
 
-data<- dfidx(sxm604,drop.index = FALSE)
+data<- dfidx(sxm604, subset = JOBCAT == 3, alt.levels = c(1,2,3))
 library("Formula")
+JOBCAT<- as.factor(JOBCAT)
 f<- formula(JOBCAT ~ EDUC |MINORITY)
 
 eq1<- mlogit(f,data)
