@@ -37,11 +37,10 @@ Residual standard error: 1.233 on 60 degrees of freedom
 Multiple R-squared:  0.1081,    Adjusted R-squared:  0.09324 
 F-statistic: 7.273 on 1 and 60 DF,  p-value: 0.009073
 
-## ML estimation of exponential duration model:
+### Panel 5 ML estimation of exponential duration model (p.518)            ###
 library(maxLik)
 t <- STRIKEDUR
 loglik <- function(theta) log(theta) - theta*t
-## Estimate with numeric gradient and hessian
 a <- maxLik(loglik, start=1 )
 summary(a)
 Maximum Likelihood estimation
@@ -53,8 +52,37 @@ Estimates:
      Estimate Std. error t value  Pr(> t)    
 [1,] 0.023432   0.002976   7.874 3.44e-15 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+### Panel 6 Proportional hazard model (p.518)                              ###
+loglik_pro <- function(theta) {
+beta0<- theta[1]
+beta1<- theta[2]
+beta0*PROD + log(beta1) - exp(beta0*PROD)*beta1*t
+}
+b <- maxLik(loglik_pro, start= c(1,1))
+summary(b)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 7 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: -289.7647 
+2  free parameters
+Estimates:
+     Estimate Std. error t value  Pr(> t)    
+[1,] 9.332934   4.502091   2.073   0.0382 *  
+[2,] 0.022903   0.003122   7.335 2.21e-13 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’
+
+loglik_w <- function(theta) {
+beta0<- theta[1]
+beta1<- theta[2]
+sum(log(beta0)+log(beta1)+(beta0 -1)*log(t)) - sum(beta0*beta1*t^(beta0))
+}
+## Estimate with numeric gradient and hessian
+c <- maxLik(loglik_w, start= c(1,1))
+summary(c)
 
 
+
+Maximum Li
 install.packages("NPHazardRate")
 library(NPHazardRate)
 lambdahat(STRIKEDUR,)
