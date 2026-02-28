@@ -23,3 +23,13 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Newton-Raphson maximisation, 5 iterations
 Return code 1: gradient close to zero (gradtol)
 Log-likelihood: -1669.562 on 6 Df
+res<- resid(eq_cen)
+print(eq_cen, logSigma = TRUE, digits = 4)
+
+panel04<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, family = binomial(link = "probit"))
+summary(panel04)
+install.packages("sampleSelection")
+library(sampleSelection)
+invMillsRatio(panel04, all = FALSE )
+res<- residuals(panel04, type = "pearson")
+hist(res)
