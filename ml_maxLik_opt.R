@@ -211,3 +211,28 @@ B <- -1
 res <- maxNR(hatf, start=c(0,0), constraints=list(eqA=A, eqB=B),
              control=list(printLevel=1))
 print(summary(res))
+
+### https://cran.r-project.org/web/packages/maxLik/vignettes/using-maxlik.pdf ###
+library(maxLik)
+X <-cbind(rnorm(100), rnorm(100, sd=1e3), rnorm(100, sd=1e7))
+y <-X%*%c(1,1,1)+ rnorm(100)
+negSSE <- function(beta) {
+
+e <- y- X %*% beta
+
+-crossprod(e)
+ }
+m <- maxLik(negSSE, start=c(0,0,0))
+summary(m, eigentol=1e-15)
+
+grad <- function(beta) {
+2*t(y- X %*% beta) %*% X
+}
+ m <- maxLik(negSSE, grad=grad, start=c(0,0,0))
+ summary(m, eigentol=1e-15)
+
+hess <- function(beta) {
+-2*crossprod(X)
+ }
+m <- maxLik(negSSE, grad=grad, hess=hess, start=c(0,0,0))
+ summary(m, eigentol=1e-15)
