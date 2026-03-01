@@ -72,4 +72,45 @@ alternative hypothesis: stationary
 Warning message:
 In adf.test(spread) : p-value smaller than printed p-value
 
+library("tsDyn")
+library(urca)
+### Example 7 28 (p.679)                                                   ###
+xm728<- read.csv("xm728.csv", header = TRUE)
+attach(xm728)
+str(xm728)
+VAR_panel01<- data.frame(T_3M, T_1Y, T_10Y)
+
+panel02<- ca.jo(VAR_panel01, type = "eigen", ecdet = "none", K = 3,
+spec= "longrun", season = NULL, dumvar = NULL)
+summary(panel02)
+
+panel03<- VECM(
+  data = VAR_panel01,
+  lag = 2,
+  r = 2,
+  include = "none",
+  beta = NULL,
+  estim = "ML",
+  LRinclude = "const",
+  exogen = NULL
+)
+panel03
+  ECT1       ECT2     T_3M -1    T_1Y -1  T_10Y -1
+Equation T_3M  -0.13859193  0.1245596  0.04849447 0.36277090 0.1560301
+Equation T_1Y   0.05258054 -0.0926937 -0.11402554 0.40174110 0.3226561
+Equation T_10Y  0.11611018 -0.1154270 -0.08252206 0.07001954 0.3982854
+                  T_3M -2    T_1Y -2   T_10Y -2
+Equation T_3M  0.01196916 -0.1438947 -0.2217947
+Equation T_1Y  0.17077471 -0.2917727 -0.1852074
+Equation T_10Y 0.13614063 -0.1347949 -0.1881653
+                    
+coefA(panel03)
+coefB(panel03)
+ r1            r2
+T_3M   1.0000000  5.551115e-17
+T_1Y   0.0000000  1.000000e+00
+T_10Y -0.8829703 -9.726232e-01
+const  0.5747333  5.958906e-01
+coefPI(panel03)
+
 
