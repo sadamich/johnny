@@ -13,6 +13,10 @@ d4_1<- D4Y[44:179]
 d4_2<- D4Y[43:178]
 ar_2<- lm(D4Y_61 ~ d4_1+d4_2)
 summary(ar_2)
+### Compare with exhibit 7 10, panel 1 (p.566)                             ### 
+library(tseries)
+arma25<- arma(D4Y_61, order=c(2,5))
+summary(arma25)
 ### Residuals                                                              ###
 res <- resid(ar_2)
 res_ts <- ts(res, freq =4, start = 1961)
