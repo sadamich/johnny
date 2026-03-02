@@ -22,3 +22,18 @@ t.test(vwghdauer, mu = 456, alternative ="greater")
 ### Konfidenzintervall              S. 331 ###
 t.test(vwghdauer)$conf.int
 
+library(maxLik)
+t <- vwghdauer
+loglik <- function(theta) log(theta) - theta*t
+a <- maxLik(loglik, start=1 )
+summary(a)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 9 iterations
+Return code 2: successive function values within tolerance limit (tol)
+Log-Likelihood: -29281.27 
+1  free parameters
+Estimates:
+      Estimate Std. error t value Pr(> t)    
+[1,] 1.093e-03  1.788e-05   61.14  <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
