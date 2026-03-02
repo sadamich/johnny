@@ -70,13 +70,12 @@ Estimates:
 [1,] 9.332934   4.502091   2.073   0.0382 *  
 [2,] 0.022903   0.003122   7.335 2.21e-13 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’
-
+### Panel 7 Weibull Model (p.518)                                          ###
 loglik_w <- function(theta) {
 beta0<- theta[1]
 beta1<- theta[2]
 sum(log(beta0)+log(beta1)+(beta0-1)*log(t)) - sum(beta1*t^(beta0))
 }
-## Estimate with numeric gradient and hessian
 c <- maxLik(loglik_w, start= c(beta=1,beta1=1))
 summary(c)
 Maximum Likelihood estimation
@@ -89,6 +88,27 @@ Estimates:
 beta   0.92469    0.09160  10.095  <2e-16 ***
 beta1  0.03218    0.01300   2.476  0.0133 *  
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+### Panel 8 Propotional Weibull model (p.518)                              ###
+loglik_w_pro <- function(theta) {
+beta0<- theta[1]
+beta1<- theta[2]
+beta2<- theta[3]
+sum(beta2*PROD+ log(beta0)+log(beta1)+(beta0-1)*log(t)) - sum(exp(beta2*PROD)*beta1*t^(beta0))
+}
+d <- maxLik(loglik_w_pro, start= c(beta=1,beta1=1,beta2=1))
+summary(d)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 12 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: -289.7617 
+3  free parameters
+Estimates:
+      Estimate Std. error t value  Pr(> t)    
+beta  1.007860   0.099508  10.128  < 2e-16 ***
+beta1 0.022160   0.009622   2.303 0.021275 *  
+beta2 9.405741   2.548721   3.690 0.000224 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘
+
 
 install.packages("NPHazardRate")
 library(NPHazardRate)
