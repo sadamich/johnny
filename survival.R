@@ -74,15 +74,22 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’
 loglik_w <- function(theta) {
 beta0<- theta[1]
 beta1<- theta[2]
-sum(log(beta0)+log(beta1)+(beta0 -1)*log(t)) - sum(beta0*beta1*t^(beta0))
+sum(log(beta0)+log(beta1)+(beta0-1)*log(t)) - sum(beta1*t^(beta0))
 }
 ## Estimate with numeric gradient and hessian
-c <- maxLik(loglik_w, start= c(1,1))
+c <- maxLik(loglik_w, start= c(beta=1,beta1=1))
 summary(c)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 12 iterations
+Return code 1: gradient close to zero (gradtol)
+Log-Likelihood: -294.4027 
+2  free parameters
+Estimates:
+      Estimate Std. error t value Pr(> t)    
+beta   0.92469    0.09160  10.095  <2e-16 ***
+beta1  0.03218    0.01300   2.476  0.0133 *  
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-
-
-Maximum Li
 install.packages("NPHazardRate")
 library(NPHazardRate)
 lambdahat(STRIKEDUR,)
