@@ -33,3 +33,41 @@ library(sampleSelection)
 invMillsRatio(panel04, all = FALSE )
 res<- residuals(panel04, type = "pearson")
 hist(res)
+### Tobit 2 Model 
+library("sampleSelection")
+panel06<- heckit2fit( 
+   selection <- RESPONSE~ GENDER+ACTIVITY+AGE+AGE_2,
+
+   outcome <- LOGINV ~ GENDER + ACTIVITY + AGE + AGE_2, 
+   data= xm601,
+   weights = NULL, inst = NULL,
+   print.level = 0,
+   maxMethod = "Newton-Raphson" )
+summary(panel06)
+Tobit 2 model (sample selection model)
+2-step Heckman / heckit estimation
+925 observations (455 censored and 470 observed)
+13 free parameters (df = 913)
+Probit selection equation:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.49758    0.53682  -2.790  0.00539 ** 
+GENDER       0.58811    0.09668   6.083 1.73e-09 ***
+ACTIVITY     0.56117    0.11157   5.030 5.92e-07 ***
+AGE          0.04168    0.02154   1.935  0.05334 .  
+AGE_2       -0.04098    0.02061  -1.989  0.04703 *  
+Outcome equation:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept) -0.62831    5.45468  -0.115    0.908
+GENDER       0.53564    1.16447   0.460    0.646
+ACTIVITY     0.48995    0.97001   0.505    0.614
+AGE          0.12324    0.09117   1.352    0.177
+AGE_2       -0.10861    0.08948  -1.214    0.225
+Multiple R-Squared:0.0487,      Adjusted R-Squared:0.0384
+   Error terms:
+              Estimate Std. Error t value Pr(>|t|)
+invMillsRatio    1.951      2.973   0.656    0.512
+sigma            1.780         NA      NA       NA
+rho              1.096         NA      NA       NA
+
+
+
