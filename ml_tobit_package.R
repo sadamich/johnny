@@ -229,19 +229,90 @@ wage ~ exper + I( exper^2 ) + educ + city,
 data = Mroz87, method = "2step" )
 greeneTS
 summary(greeneTS)
+Tobit 2 model (sample selection model)
+2-step Heckman / heckit estimation
+753 observations (325 censored and 428 observed)
+14 free parameters (df = 740)
+Probit selection equation:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -4.157e+00  1.402e+00  -2.965 0.003127 ** 
+age          1.854e-01  6.597e-02   2.810 0.005078 ** 
+I(age^2)    -2.426e-03  7.735e-04  -3.136 0.001780 ** 
+faminc       4.580e-06  4.206e-06   1.089 0.276544    
+kidsTRUE    -4.490e-01  1.309e-01  -3.430 0.000638 ***
+educ         9.818e-02  2.298e-02   4.272 2.19e-05 ***
+Outcome equation:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.9712003  2.0593505  -0.472    0.637    
+exper        0.0210610  0.0624646   0.337    0.736    
+I(exper^2)   0.0001371  0.0018782   0.073    0.942    
+educ         0.4170174  0.1002497   4.160 3.56e-05 ***
+city         0.4438379  0.3158984   1.405    0.160    
+Multiple R-Squared:0.1264,      Adjusted R-Squared:0.116
+   Error terms:
+              Estimate Std. Error t value Pr(>|t|)
+invMillsRatio   -1.098      1.266  -0.867    0.386
+sigma            3.200         NA      NA       NA
+rho             -0.343         NA      NA       NA
 
 greeneML <- selection( lfp ~ age + I( age^2 ) + faminc + kids + educ,
 wage ~ exper + I( exper^2 ) + educ + city, data = Mroz87,
 maxMethod = "BHHH", iterlim = 500 )
 summary(greeneML)
+Tobit 2 model (sample selection model)
+Maximum Likelihood estimation
+BHHH maximisation, 62 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: -1581.259 
+753 observations (325 censored and 428 observed)
+13 free parameters (df = 740)
+Probit selection equation:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -4.120e+00  1.410e+00  -2.921  0.00359 ** 
+age          1.840e-01  6.584e-02   2.795  0.00532 ** 
+I(age^2)    -2.409e-03  7.735e-04  -3.115  0.00191 ** 
+faminc       5.676e-06  3.890e-06   1.459  0.14493    
+kidsTRUE    -4.507e-01  1.367e-01  -3.298  0.00102 ** 
+educ         9.533e-02  2.400e-02   3.973  7.8e-05 ***
+Outcome equation:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.9537242  1.6745690  -1.167    0.244    
+exper        0.0284295  0.0753989   0.377    0.706    
+I(exper^2)  -0.0001151  0.0023339  -0.049    0.961    
+educ         0.4562471  0.0959626   4.754 2.39e-06 ***
+city         0.4451424  0.4255420   1.046    0.296    
+   Error terms:
+      Estimate Std. Error t value Pr(>|t|)    
+sigma  3.10350    0.08368  37.088   <2e-16 ***
+rho   -0.13328    0.22296  -0.598     0.55    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 ### Example
 data( "RandHIE" )
 str(RandHIE)
+### Selection equation ###
+meddol: Medical expenses: all covered inpatient and outpatient services, 
+       including drugs, supplies, and inpatient costs of newborns excluding 
+       dental care and outpatient psychotherapy
 binexp: 1 if meddol > 0
 idp: 1 if individual deductible plan
+lpi: log of pioff (participation incentive payment)
+fmde: 0 if idp=1, ln(max(1,mdeoff/(0.01*coins))) otherwise
+physlm: Physical limitations
+disea: Number of chronic diseases
+hlthg: 1 if self-rated health is good – baseline is excellent self-rated health.
+hlthf: 1 if self-rated health is fair – baseline is excellent self-rated health.
+hlthp: 1 if self-rated health is poor – baseline is excellent self-rated health
+linc: log of income (family income)
+lfam: log of num (family size)
+educdec: Education of household head in years
+xage: Age in years
+female: 1 if person is female
+child: 1 if age is less than 18 years.
+fchild:female * child
+black: 1 if race of household head is black
+### Outcome equation                                                       ###
 lnmeddol: log of meddol (medical expenses)
-
 subsample <- RandHIE$year == 2 & !is.na( RandHIE$educdec )
 selectEq <- binexp ~ logc + idp + lpi + fmde + physlm + disea +
 hlthg + hlthf + hlthp + linc + lfam + educdec + xage + female +
