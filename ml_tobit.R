@@ -25,15 +25,32 @@ Return code 1: gradient close to zero (gradtol)
 Log-likelihood: -1669.562 on 6 Df
 res<- resid(eq_cen)
 print(eq_cen, logSigma = TRUE, digits = 4)
-
+margEff(eq_cen, xValues = NULL, vcov = NULL,
+   calcVCov = TRUE, returnJacobian = TRUE, vcovLogSigma)
+  GENDER   ACTIVITY        AGE      AGE_2 
+ 1.2213435  0.9715951  0.1125443 -0.1060622
+1.2213435 / 2.12629 
+[1] 0.5744012
+0.9715951 / 1.69149 
+[1] 0.5744019
+0.1125443 /  0.19593 
+[1] 0.5744108
+-0.1060622 / -0.18465 
+[1] 0.5743959
+### Panel 4 Probit model: the first equation of Heckman two step estimates(p.499) ### 
 panel04<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, family = binomial(link = "probit"))
 summary(panel04)
 install.packages("sampleSelection")
 library(sampleSelection)
-invMillsRatio(panel04, all = FALSE )
-res<- residuals(panel04, type = "pearson")
-hist(res)
-### Tobit 2 Model 
+lambda<- invMillsRatio( panel04)
+str(lambda)
+attach(lambda)
+hist(IMR1)
+summary(IMR1)
+ Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.4067  0.7072  0.7357  0.8004  0.9122  1.6045  
+
+### Tobit 1 Model: the second equation of Heckman two step estimation(p.499) ###
 library("sampleSelection")
 panel06<- heckit2fit( 
    selection <- RESPONSE~ GENDER+ACTIVITY+AGE+AGE_2,
