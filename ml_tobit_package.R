@@ -220,6 +220,9 @@ xs          0.3693103 0.1834578 2.013054 4.482896e-02
 ### Example                                                                ###
 data( "Mroz87" )
 str(Mroz87)
+lfp: Dummy variable for labor-force participation
+faminc: Family income, in 1975 dollars
+
 Mroz87$kids <- ( Mroz87$kids5 + Mroz87$kids618 > 0 )
 greeneTS <- selection( lfp ~ age + I( age^2 ) + faminc + kids + educ,
 wage ~ exper + I( exper^2 ) + educ + city,
@@ -235,6 +238,10 @@ summary(greeneML)
 ### Example
 data( "RandHIE" )
 str(RandHIE)
+binexp: 1 if meddol > 0
+idp: 1 if individual deductible plan
+lnmeddol: log of meddol (medical expenses)
+
 subsample <- RandHIE$year == 2 & !is.na( RandHIE$educdec )
 selectEq <- binexp ~ logc + idp + lpi + fmde + physlm + disea +
 hlthg + hlthf + hlthp + linc + lfam + educdec + xage + female +
