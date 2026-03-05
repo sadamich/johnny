@@ -86,10 +86,41 @@ dum11<- c(0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 1, 0)
 dum11<- rep(dum11,10)
 dum12<- c(0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 1)
 dum12<- rep(dum12, 10)
-### b linear regression with dummies                                        ###
+### b linear regression with dummies  
+y_1<- ts(y_1, freq = 12, start = 1990)                                    ###
 eq1 <- lm(log(y_1) ~ t+ dum2+ dum3 + dum4 + dum5 + dum6 + dum7
                + dum8+ dum9 + dum10 + dum11 + dum12)
 summary(eq1)
+
+Call:
+lm(formula = log(y_1) ~ t + dum2 + dum3 + dum4 + dum5 + dum6 + 
+    dum7 + dum8 + dum9 + dum10 + dum11 + dum12)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.105710 -0.031849 -0.003653  0.034771  0.093629 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  6.3629377  0.0174269 365.121  < 2e-16 ***
+t            0.0014987  0.0001338  11.199  < 2e-16 ***
+dum2        -0.1333842  0.0223396  -5.971 3.19e-08 ***
+dum3        -0.1596268  0.0223408  -7.145 1.19e-10 ***
+dum4        -0.2818302  0.0223428 -12.614  < 2e-16 ***
+dum5        -0.1792139  0.0223456  -8.020 1.50e-12 ***
+dum6        -0.1004425  0.0223492  -4.494 1.79e-05 ***
+dum7        -0.0045528  0.0223537  -0.204   0.8390    
+dum8         0.0063521  0.0223589   0.284   0.7769    
+dum9        -0.1083097  0.0223649  -4.843 4.38e-06 ***
+dum10       -0.1853371  0.0223717  -8.284 3.92e-13 ***
+dum11       -0.1506828  0.0223793  -6.733 8.82e-10 ***
+dum12       -0.0470906  0.0229611  -2.051   0.0427 *  
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.04995 on 106 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.8148,    Adjusted R-squared:  0.7938 
+F-statistic: 38.86 on 12 and 106 DF,  p-value: < 2.2e-16
+
 res<- resid(eq1)
 res<- ts(res, freq = 12, start = 1990)
 plot(res, main =" 1990 - 1998", ylab = "Residuals")
