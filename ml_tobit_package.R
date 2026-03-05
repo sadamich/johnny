@@ -324,6 +324,56 @@ child + fchild + black
 rhieTS <- selection( selectEq, outcomeEq, data = RandHIE[ subsample, ],
 method = "2step" )
 summary(rhieTS)
+Tobit 2 model (sample selection model)
+2-step Heckman / heckit estimation
+5574 observations (1293 censored and 4281 observed)
+39 free parameters (df = 5536)
+Probit selection equation:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.2716050  0.1877345  -1.447 0.148023    
+logc        -0.1187080  0.0269005  -4.413 1.04e-05 ***
+idp         -0.1279483  0.0522351  -2.449 0.014338 *  
+lpi          0.0283091  0.0088793   3.188 0.001439 ** 
+fmde         0.0075319  0.0161584   0.466 0.641142    
+physlm       0.2732013  0.0743761   3.673 0.000242 ***
+disea        0.0224861  0.0035958   6.253 4.32e-10 ***
+hlthg        0.0387516  0.0438545   0.884 0.376929    
+hlthf        0.1920062  0.0836688   2.295 0.021780 *  
+hlthp        0.6397294  0.2126322   3.009 0.002636 ** 
+linc         0.0518413  0.0168128   3.083 0.002056 ** 
+lfam        -0.0335599  0.0417280  -0.804 0.421284    
+educdec      0.0363070  0.0076536   4.744 2.15e-06 ***
+xage         0.0002631  0.0021606   0.122 0.903070    
+female       0.4451035  0.0542920   8.198 3.00e-16 ***
+child        0.1114890  0.0808338   1.379 0.167877    
+fchild      -0.4512845  0.0799219  -5.647 1.72e-08 ***
+black       -0.6057367  0.0523148 -11.579  < 2e-16 ***
+Outcome equation:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  2.882514   0.469897   6.134 9.14e-10 ***
+logc        -0.027921   0.039754  -0.702 0.482495    
+idp         -0.092290   0.068019  -1.357 0.174893    
+lpi          0.005223   0.011106   0.470 0.638190    
+fmde        -0.029521   0.018243  -1.618 0.105667    
+physlm       0.281495   0.080454   3.499 0.000471 ***
+disea        0.021617   0.005040   4.290 1.82e-05 ***
+hlthg        0.147403   0.049050   3.005 0.002666 ** 
+hlthf        0.382168   0.096128   3.976 7.11e-05 ***
+hlthp        0.833294   0.197449   4.220 2.48e-05 ***
+linc         0.099097   0.025155   3.939 8.27e-05 ***
+lfam        -0.144136   0.046807  -3.079 0.002085 ** 
+educdec      0.003364   0.010950   0.307 0.758700    
+xage         0.005556   0.002255   2.464 0.013778 *  
+female       0.384632   0.103280   3.724 0.000198 ***
+child       -0.256514   0.093677  -2.738 0.006196 ** 
+fchild      -0.392146   0.125089  -3.135 0.001728 ** 
+black       -0.263365   0.157754  -1.669 0.095082 .  
+Multiple R-Squared:0.1367,      Adjusted R-Squared:0.133
+   Error terms:
+              Estimate Std. Error t value Pr(>|t|)
+invMillsRatio   0.2358     0.5018    0.47    0.638
+sigma           1.4008         NA      NA       NA
+rho             0.1683         NA      NA       NA
 
 rhieML <- selection( selectEq, outcomeEq, data = RandHIE[ subsample, ] )
 summary(rhieML)
