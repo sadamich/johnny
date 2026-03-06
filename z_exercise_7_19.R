@@ -22,7 +22,8 @@ Multiple R-squared:  0.007948,  Adjusted R-squared:  0.00635
 F-statistic: 4.975 on 1 and 621 DF,  p-value: 0.02607
 ### a Residuals                                                            ###
 res<- resid(r)
-plot(res)
+res<- ts(res, freq=12, start =c(1948,2))
+plot(res, main= "Time series", ylab = "residuals")
 hist(res)
 acf(res)
 acf(res^2)
@@ -34,7 +35,7 @@ res_lag<- res[4:622]
 res_lag2<- res[3:621]
 res_lag3<- res[2:620]
 res_lag4<- res[1:619]
-
+const<- rep(1,619)
 res_lag_sq<- res_lag^2
 e_ols<- lm(res_sq ~ res_lag^2)
 summary(e_ols)
@@ -105,8 +106,87 @@ Multiple R-squared:  0.02957,   Adjusted R-squared:  0.02324
 F-statistic:  4.67 on 4 and 613 DF,  p-value: 0.001017
 ### AR(1) Model is good                                                   ###
 
+### ML estimate                          ###
+library(maxLik)
+X<- cbind(const, res_lag^2)
+y<- res_sq
+negSSE <- function(beta) {
+e <- y- X %*% beta
+-crossprod(e)
+}
+m <- maxLik(negSSE, start=c(0,0))
+summary(m, eigentol=1e-15)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 3 iterations
+Return code 2: successive function values within tolerance limit (tol)
+Log-Likelihood: -756.8839 
+2  free parameters
+Estimates:
+     Estimate Std. error t value  Pr(> t)    
+[1,]  0.15815    0.02892   5.469 4.52e-08 ***
+[2,]  0.27683    0.02470  11.208  < 2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
+X<- cbind(const, res_lag^2, res_lag2^2)
+y<- res_sq
+negSSE <- function(beta) {
+e <- y- X %*% beta
+-crossprod(e)
+}
+m2 <- maxLik(negSSE, start=c(0,0,0))
+summary(m2, eigentol=1e-15)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 3 iterations
+Return code 2: successive function values within tolerance limit (tol)
+Log-Likelihood: -704.1042 
+3  free parameters
+Estimates:
+     Estimate Std. error t value  Pr(> t)    
+[1,]  0.11641    0.02920   3.987 6.70e-05 ***
+[2,]  0.20373    0.02572   7.922 2.33e-15 ***
+[3,]  0.26407    0.02570  10.276  < 2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’
 
+X<- cbind(const, res_lag^2, res_lag2^2,res_lag3^2)
+y<- res_sq
+negSSE <- function(beta) {
+e <- y- X %*% beta
+-crossprod(e)
+}
+m3 <- maxLik(negSSE, start=c(0,0,0,0))
+summary(m3, eigentol=1e-15)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 3 iterations
+Return code 2: successive function values within tolerance limit (tol)
+Log-Likelihood: -703.6189 
+4  free parameters
+Estimates:
+     Estimate Std. error t value  Pr(> t)    
+[1,]  0.11335    0.02937   3.859 0.000114 ***
+[2,]  0.19679    0.02665   7.385 1.53e-13 ***
+[3,]  0.25872    0.02627   9.849  < 2e-16 ***
+[4,]  0.02625    0.02664   0.985 0.324448    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+X<- cbind(const, res_lag^2, res_lag2^2,res_lag3^2,res_lag4^2)
+y<- res_sq
+negSSE <- function(beta) {
+e <- y- X %*% beta
+-crossprod(e)
+}
+m4 <- maxLik(negSSE, start=c(0,0,0,0,0))
+summary(m4, eigentol=1e-15)
 
-
-
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 3 iterations
+Return code 2: successive function values within tolerance limit (tol)
+Log-Likelihood: -703.1092 
+5  free parameters
+Estimates:
+     Estimate Std. error t value  Pr(> t)    
+[1,]  0.11640    0.02954   3.941 8.12e-05 ***
+[2,]  0.19750    0.02665   7.411 1.25e-13 ***
+[3,]  0.26568    0.02716   9.781  < 2e-16 ***
+[4,]  0.03155    0.02716   1.161    0.245    
+[5,] -0.02691    0.02666  -1.010    0.313    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’
+### AR(2) Model is good                                                  ###
