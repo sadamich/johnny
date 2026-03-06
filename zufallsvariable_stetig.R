@@ -37,3 +37,31 @@ Estimates:
 [1,] 1.093e-03  1.788e-05   61.14  <2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
+
+loglik_pro <- function(theta) {
+beta0<- theta[1]
+beta1<- theta[2]
+beta0*senat + log(beta1) - exp(beta0*senat)*beta1*t
+}
+b <- maxLik(loglik_pro, start= c(0,1))
+summary(b)
+
+loglik_w <- function(theta) {
+beta0<- theta[1]
+beta1<- theta[2]
+sum(log(beta0)+log(beta1)+(beta0-1)*log(t)) - sum(beta1*t^(beta0))
+}
+c <- maxLik(loglik_w, start= c(beta=1,beta1=1))
+summary(c)
+-------------------------------------------
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 8 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: -29204.82 
+2  free parameters
+Estimates:
+       Estimate Std. error t value  Pr(> t)    
+beta  1.1912530  0.0205367  58.006  < 2e-16 ***
+beta1 0.0002781  0.0000416   6.685 2.31e-11 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
