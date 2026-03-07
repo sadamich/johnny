@@ -111,7 +111,7 @@ attach(xr720)
 y_jp<- LOGJAP
 gnp<- data.frame(y[16:124],y_uk[16:124],y_ger[16:124],y_jp[16:124])
 library(tsDyn)
-VECM(
+gnp_co<- VECM(
   data = gnp,
   lag=2,
   r = 3,
@@ -146,5 +146,7 @@ Warning message:
 In lineVar(data, lag, r = r, include = include, model = "VECM",  :
   When `LRinclude` is either 'const' or 'both', `include` can only be `none`.
   Setting include='none'.
-
+coefA(gnp_co)
+coefB(gnp_co)
+coefPI(gnp_co)
 
