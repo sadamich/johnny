@@ -132,6 +132,58 @@ y_rw<- rw_model(Y, lag=1, drift = TRUE)
 ### Compare with exhibit 7 14 e (p.591)                                    ###
 forecast(y_rw, h = 10) |> autoplot()
 
+str(dy)
+y_1<- Y[44:179]
+str(y_1)
+eq_adf<- lm(dy~y_1+t)
+summary(eq_adf)
+Call: lm(formula = dy ~ y_1 + t)
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.094435 -0.009790  0.002517  0.013207  0.043876 
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)   
+(Intercept)  0.2610134  0.0884636   2.951  0.00375 **
+y_1         -0.0657626  0.0235076  -2.798  0.00591 **
+t            0.0003969  0.0001753   2.263  0.02523 * 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.02025 on 133 degrees of freedom
+Multiple R-squared:  0.07587,   Adjusted R-squared:  0.06198 
+F-statistic:  5.46 on 2 and 133 DF,  p-value  0.005262
+### Autocorrelation panel 3 (p.601)                                        ###
+res<- resid(eq_adf)
+acf(res)
+anova(eq_adf)
+Analysis of Variance Table
+Response: dy
+           Df   Sum Sq    Mean Sq F value  Pr(>F)  
+y_1         1 0.002376 0.00237620  5.7966 0.01743 *
+t           1 0.002100 0.00210014  5.1232 0.02523 *
+Residuals 133 0.054521 0.00040993                  
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+eq_adf2<- lm(dy~1)
+summary(eq_adf2)
+anova(eq_adf,eq_adf2)
+Analysis of Variance Table
+Model 1: dy ~ y_1 + t
+Model 2: dy ~ 1
+  Res.Df      RSS Df  Sum of Sq      F   Pr(>F)   
+1    133 0.054521                                 
+2    135 0.058997 -2 -0.0044763 5.4599 0.005262 **
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 
+
+str(Y)
+Dy<- Y[2:195]-Y[1:194]
+str(Dy)
+Ddy<- Dy[45:180] - Ddy[44:179]
+str(Ddy)
+Ddy1<- Ddy[44:179] - Ddy[43:178]
+Ddy2<- Ddy[43:178] - Ddy[42:177]
+Ddy3<- Ddy[42:177] - Ddy[41:176]
+Ddy4<- Ddy[41:176] - Ddy[40:175]
+Ddy5<- Ddy[40:175] - Ddy[39:174]
+eq_d_adf<- lm(Ddy ~ y_1 + Ddy1+Ddy2+Ddy3+Ddy4+Ddy5 + t)
+summary(eq_d_adf)
 ### Seasonality                                                            ###
 ### ADF Test for checking the seasonality: H0 is I(2)                      ###
 ### ADF Test, compare with panel 1,panel 3 and panel 4 (p.609)             ###                                                                 ###
