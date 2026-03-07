@@ -4,6 +4,7 @@ str(aktien)
 attach(aktien)
 str(cyber)
 x<- cyber
+acf(x)
 plot(x, main= "Time series",typ="l")
 x<- ts(x, freq = 5, start =1)
 plot(decompose(x))
@@ -27,8 +28,7 @@ Multiple R-squared:  0.834,     Adjusted R-squared:  0.8268
 F-statistic: 115.6 on 1 and 23 DF,  p-value: 1.92e-10
 ### ADF Test                                                               ###
 library("tseries")
-adf.test(x, alternative = c("stationary", "explosive"),
- k = trunc((length(x)-1)^(1/3)))
+adf.test(x)
  Augmented Dickey-Fuller Test
 data:  x
 Dickey-Fuller = -2.6073, Lag order = 2, p-value = 0.341
@@ -40,8 +40,60 @@ model <- rw_model(x)
 forecast(model, h = 10) |> autoplot()
 fit <- ets(x)
 plot(forecast(fit, h = 10))
+### AR(1) model    
+t<- rep(1,24)
+eq_ar1<- lm(x[2:25] ~ x[1:24] +t)
+summary(eq_ar1)
+detach(aktien)
 
+### Zeitraum von bis 6 MRZ 2026                                            ###
+aktien2<- read.csv("aktien2.csv", header=TRUE)
+str(aktien2)
+attach(aktien2)
+str(cyber)
+x<- cyber
+plot(x, main= "Time series",typ="l")
+x<- ts(x, freq = 5, start =1)
+plot(decompose(x))
+t<- 1:39
+kurs<- lm(x ~ t)
+summary(kurs)
+x_fit<- fitted(kurs)
+lines(x_fit,col = "red", add=TRUE)
 
+library("tseries")
+adf.test(x)
+    Augmented Dickey-Fuller Test
+data:  x
+Dickey-Fuller = -1.597, Lag order = 3, p-value = 0.7312
+alternative hypothesis: stationary 
+var(x)
+sd(x)
+x1<- x[1:25]
+x2<- x[26:39]
+sd(x1)
+sd(x2)
+var(x1)
+var(x2)
+acf(x)
+t<- rep(1,38)
+### AR(1) Model                                                            ###
+eq_ar1<- lm(x[2:39] ~ x[1:38]+t)
+summary(eq_ar1)
+dy<- x[2:39] - x[1:38]
+dy<- ts(dy, freq = 5, start =1)
+plot(dy,main ="Time series", ylab ="difference series")
+eq_rw<- lm(dy ~ 1)
+summary(eq_rw)
+eq_rw_no<- lm(dy ~ -1)
+summary(eq_rw_no)
+### Forecast, package forecast                                             ###
+library(forecast)
+model <- rw_model(x)
+forecast(model, h = 10) |> autoplot()
+fit <- ets(x)
+plot(forecast(fit, h = 10))
+detach(aktien2)
 ### Course of sbux                                                         ###
 y<- sbux
 plot(y, type="l")
