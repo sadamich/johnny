@@ -33,11 +33,24 @@ plot(growth_ts, main="Time", ylab="Growth rates")
 t <- 1:136
 y_trend<- lm(Y[45:180] ~ t)
 summary(y_trend)
+### Panel 1 (p.591) Call: lm(formula = Y[45:180] ~ t)                      ###
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.239072 -0.051494  0.007656  0.045814  0.132270 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 3.7739920  0.0124815  302.37   <2e-16 ***
+t           0.0071399  0.0001581   45.16   <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.07238 on 134 degrees of freedom
+Multiple R-squared:  0.9384,    Adjusted R-squared:  0.9379 
+F-statistic:  2040 on 1 and 134 DF, p-value: < 2.2e-16
+
 res<- resid(y_trend)
 res_ts<- ts(res, freq=4, start = 1961)
 ### Trend of residuals                                                     ###
 plot(res_ts,main="Time series", ylab = "Residuals")
-### Compare with panel1(p.591)                                             ###
+### Compare with Exhibit 7 14 (c) (p.591)                                  ###           ###
 ### Linear forecast                                                        ###
 f<- function(a, b){
 result <- a + b*t
@@ -92,8 +105,20 @@ y_diff<- lm(dy ~ 1)
 res_diff<- resid(y_diff)
 res_diff_ts<- ts(res_diff, freq =4, start= 1961)
 plot(res_diff_ts, main ="Residuals", xlim= c(1961, 2000))
-### Panel4(p.591)              ###
 summary(y_diff)
+### Panel 4 Random walk Model: Call: lm(formula = dy ~ 1)
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.096148 -0.011829  0.001002  0.014492  0.048904 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.008400   0.001793   4.686 6.71e-06 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.0209 on 135 degrees of freedom
+res_rw<- resid(y_diff)
+res_rw<- ts(res_rw, freq = 4, start = 1961)
+### Exhibit 7 14 (f) (p.591)                                               ###
+plot(res_rw, main = "Time series", ylab= "Residuals")
 dy<- ts(dy, freq = 4, start = c(1961,2))
 plot(dy, main = "Time", ylab = "log difference production")
 dy_dfr<- data.frame(t = 137:150)
@@ -101,7 +126,7 @@ dy_prog<- predict(y_diff, newdata = dy_dfr, freq = 4, start= c(1961,2))
 plot(dy, xlab ="Time", main= "differenced process", xlim = c(1961, 2010))
 lines(ts(fitted(y_diff), freq= 4, start = 1961))
 lines(ts(dy_prog, freq=4, start = 1995))
-### Random walk model (package forecast)
+### Random walk model 
 library(forecast)
 y_rw<- rw_model(Y, lag=1, drift = TRUE)
 ### Compare with exhibit 7 14 e (p.591)                                    ###
