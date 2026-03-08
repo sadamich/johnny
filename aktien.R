@@ -13,6 +13,12 @@ kurs<- lm(x ~ t)
 summary(kurs)
 x_fit<- fitted(kurs)
 lines(x_fit,col = "red", add=TRUE)
+res<- resid(kurs)
+acf(res)
+res_sq<- res^2
+acf(res_sq)
+res<<- ts(res,freq=5, start =1)
+plot(res, main = "Time series", ylab= "Residuals")
 ### Estimation of trend model                                              ###
 Call: lm(formula = x ~ t)
 Residuals:
@@ -58,9 +64,25 @@ plot(decompose(x))
 t<- 1:39
 kurs<- lm(x ~ t)
 summary(kurs)
+Call: lm(formula = x ~ t)
+Residuals:
+   Min     1Q Median     3Q    Max 
+-43.13 -12.85  -1.95  11.45  57.32 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 218.0283     6.9326   31.45  < 2e-16 ***
+t             3.9217     0.3021   12.98 2.39e-15 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 21.23 on 37 degrees of freedom
+Multiple R-squared:   0.82,     Adjusted R-squared:  0.8151 
+F-statistic: 168.5 on 1 and 37 DF,  p-value: 2.393e-15
 x_fit<- fitted(kurs)
-lines(x_fit,col = "red", add=TRUE)
+lines(x_fit,col = "red")
 res<- resid(kurs)
+acf(res)
+res_sq<- res^2
+acf(res_sq)
 res<- ts(res, freq = 5, start =1)
 plot(res, main ="Time series", ylab ="Residuals")
 
