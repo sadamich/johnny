@@ -13,6 +13,19 @@ d4_1<- D4Y[44:179]
 d4_2<- D4Y[43:178]
 ar_2<- lm(D4Y_61 ~ d4_1+d4_2)
 summary(ar_2)
+### Exhibit 7 9 (p.563)Call: lm(formula = D4Y_61 ~ d4_1 + d4_2)            ###
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.067281 -0.007682  0.001154  0.011385  0.082473 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.007147   0.002161   3.307  0.00121 ** 
+d4_1         1.332025   0.072094  18.476  < 2e-16 ***
+d4_2        -0.545933   0.072174  -7.564 5.74e-12 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.02096 on 133 degrees of freedom
+Multiple R-squared:  0.8214,    Adjusted R-squared:  0.8187 
+F-statistic: 305.8 on 2 and 133 DF,  p-value: < 2.2e-16
 ### Compare with exhibit 7 10, panel 1 (p.566)                             ### 
 library(tseries)
 arma25<- arma(D4Y_61, order=c(2,5))
@@ -20,7 +33,10 @@ summary(arma25)
 ### Residuals                                                              ###
 res <- resid(ar_2)
 res_ts <- ts(res, freq =4, start = 1961)
+### Exhibit 7 11 (a and b)(p. 573)                                         ###
 plot(res_ts, main="Time series", ylab ="Reduals")
+hist(res_ts)
+acf(res_ts)
 d4_fit<- fitted(ar_2)
 d4_fit_ts<- ts(d4_fit, freq= 4, start =1961)
 ### Exhibit 7.9 (p.563) Call:lm(formula = D4Y_61 ~ d4_1 + d4_2)            ###
