@@ -63,3 +63,41 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 res<- resid(eq_adf)
 ### Panel 3 (p.603)                                                        ###
 acf(res)
+
+### I(2) ???                                                               ###
+str(xm702)
+DLOGDJ_1<- c(NA,DLOGDJ)[1:2528]
+Ddlogdj<- DLOGDJ - DLOGDJ_1
+str(Ddlogdj)
+t<- 1:2528
+eq_adf_u2<- lm(Ddlogdj ~ dlogdj_1+ t)
+summary(eq_adf_u2)
+### Panel 4 (p.603) Call:lm(formula = Ddlogdj ~ dlogdj_1 + t)               ###
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.074821 -0.004537  0.000050  0.004922  0.047922 
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  1.281e-04  3.553e-04   0.360    0.719    
+dlogdj_1    -9.705e-01  1.990e-02 -48.766   <2e-16 ***
+t            3.266e-07  2.433e-07   1.342    0.180    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 
+Residual standard error: 0.008915 on 2523 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.4852,    Adjusted R-squared:  0.4848 
+F-statistic:  1189 on 2 and 2523 DF,  p-value: < 2.2e-16
+anova(eq_adf_u2)
+eq_adf_u22<- lm(Ddlogdj ~ 1)
+summary(eq_adf_u22)
+anova(eq_adf_u2, eq_adf_u22)
+anova(eq_adf_u2, eq_adf_u22)
+### Panel 5 (p.603) Analysis of Variance Table                             ###
+Model 1: Ddlogdj ~ dlogdj_1 + t
+Model 2: Ddlogdj ~ 1
+  Res.Df     RSS Df Sum of Sq      F    Pr(>F)    
+1   2523 0.20051                                  
+2   2525 0.38950 -2  -0.18899 1189.1 < 2.2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.
+res<- resid(eq_adf_u2)
+### Panel 6 (p.603)                                                        ###
+acf(res)
