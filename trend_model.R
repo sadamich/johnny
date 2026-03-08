@@ -165,7 +165,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 eq_adf2<- lm(dy~1)
 summary(eq_adf2)
 anova(eq_adf,eq_adf2)
-Analysis of Variance Table
+### Panel 2 (p.601) Analysis of Variance Table                             ###
 Model 1: dy ~ y_1 + t
 Model 2: dy ~ 1
   Res.Df      RSS Df  Sum of Sq      F   Pr(>F)   
@@ -216,7 +216,7 @@ Residuals 128 0.040424 0.0003158
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
 eq_d_adf2<- lm(dy ~ dy1+dy2+dy3+dy4+dy5)
 anova(eq_d_adf, eq_d_adf2)
-Analysis of Variance Table
+### Panel 6 (p.601) Analysis of Variance Table                            ###
 Model 1: dy ~ y_1 + dy1 + dy2 + dy3 + dy4 + dy5 + t
 Model 2: dy ~ dy1 + dy2 + dy3 + dy4 + dy5
   Res.Df      RSS Df  Sum of Sq      F   Pr(>F)   
