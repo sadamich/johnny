@@ -59,8 +59,6 @@ attach(aktien2)
 str(cyber)
 x<- cyber
 plot(x, main= "Time series",typ="l")
-x<- ts(x, freq = 5, start =1)
-plot(decompose(x))
 t<- 1:39
 kurs<- lm(x ~ t)
 summary(kurs)
@@ -119,7 +117,7 @@ summary(eq_rw_no)
 library(forecast)
 model <- rw_model(x)
 forecast(model, h = 10) |> autoplot()
-fit <- ets(x)
+fit <- ets(x,model="AAN")
 plot(forecast(fit, h = 10))
 detach(aktien2)
 ### Course of sbux                                                         ###
