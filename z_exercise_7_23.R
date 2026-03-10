@@ -57,5 +57,12 @@ adf.test(logp_uk)
 data:  logp_uk
 Dickey-Fuller = -1.3178, Lag order = 7, p-value = 0.867
 alternative hypothesis: stationary
-
-             
+### PPP Theory                                                             ###
+ppp<- x_g_uk - logp_g + logp_uk
+adf.test(ppp)   
+Augmented Dickey-Fuller Test
+data:  ppp
+Dickey-Fuller = -2.0429, Lag order = 7, p-value = 0.5601
+alternative hypothesis: stationary
+### PPP is not stationary                                                  ###
+          
