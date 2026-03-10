@@ -28,33 +28,33 @@ plot(y_3, main = "1950 - 1993", ylab = "GNP")
 ### Problem c  1950-1989                                                   ###
 OBS
 yc<- y[81:120] 
-yc<- ts(yc, freq =12, start = 1950)
+yc<- ts(yc, freq =1, start = 1950)
 plot(yc, main = "Time series", ylab = "GNP")
 yc_1<- y[80:119]  
-t<- rep(1,40)
+t<- 1:40
 eq_t <- lm(yc ~ t)
 summary(eq_t)   
-Call:
-lm(formula = yc ~ t)
+### Problem (c and d) Trend model Call:lm(formula = yc ~ t)                ###
 Residuals:
-     Min       1Q   Median       3Q      Max 
--0.69589 -0.37355  0.04106  0.35306  0.61725 
-Coefficients: (1 not defined because of singularities)
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept) 14.88821    0.06172   241.2   <2e-16 ***
-t                 NA         NA      NA       NA    
+      Min        1Q    Median        3Q       Max 
+-0.061170 -0.025469 -0.001332  0.025568  0.069200 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 14.206801   0.012068  1177.2   <2e-16 ***
+t            0.033240   0.000513    64.8   <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Residual standard error: 0.3903 on 39 degrees of freedom
-
+Residual standard error: 0.03745 on 38 degrees of freedom
+Multiple R-squared:  0.991,     Adjusted R-squared:  0.9908 
+F-statistic:  4199 on 1 and 38 DF,  p-value: < 2.2e-16
 fit<- fitted(eq_t)
-fit<- ts(fit, freq=12, start = 1950)
-plot(fit, main = "Time series", ylab = "fitted value")
-### forecast  y(t+1) = 14.88821* t
-
+fit<- ts(fit, freq=1, start = 1950)
+lines(fit, main = "Time series", ylab = "fitted value",,col ="red",add=TRUE)
+library(forecast)
+eq_prog<- ets(yc)
+plot(forecast(eq_prog))
 eq_rw<- lm(yc ~ yc_1)
 summary(eq_rw)
-Call:
-lm(formula = yc ~ yc_1)
+### Problem (c and d) Random walk model Call:lm(formula = yc ~ yc_1        ### 
 Residuals:
       Min        1Q    Median        3Q       Max 
 -0.049915 -0.016884  0.003002  0.019721  0.048022 
@@ -67,6 +67,28 @@ Residual standard error: 0.02497 on 38 degrees of freedom
 Multiple R-squared:  0.996,     Adjusted R-squared:  0.9959 
 F-statistic:  9490 on 1 and 38 DF,  p-value: < 2.2e-16         
 
+model <- rw_model(yc)
+forecast(model, h = 10) |> autoplot()
+
+### Problem (e) ARMA Model
+eq_arma<- Arima(yc, order = c(2,0,5))
+summary(eq_arma)
+Series: yc 
+ARIMA(2,0,5) with non-zero mean 
+
+Coefficients:
+         ar1      ar2      ma1     ma2     ma3     ma4     ma5     mean
+      1.7183  -0.7229  -0.3840  0.0182  0.0764  0.5243  0.1972  14.7588
+s.e.  0.1626   0.1633   0.2656  0.1574  0.1917  0.1963  0.2045   0.6171
+
+sigma^2 = 0.0007998:  log likelihood = 84.28
+AIC=-150.56   AICc=-144.56   BIC=-135.36
+
+Training set error measures:
+                      ME       RMSE        MAE        MPE      MAPE      MASE
+Training set 0.005791422 0.02529541 0.02097147 0.03864299 0.1409333 0.5822993
+                   ACF1
+Training set -0.1563415
 library(tseries)
 adf.test(yc)    
  Augmented Dickey-Fuller Test
