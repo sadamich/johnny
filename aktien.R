@@ -93,7 +93,37 @@ alternative hypothesis: stationary
 var(x)
 sd(x)
 x1<- x[1:25]
+t1<- 1:25
+eq1<- lm(x1 ~ t1)
+summary(eq1)
 x2<- x[26:39]
+t2<- 1:14
+eq2<- lm(x2 ~ t2)
+summary(eq2)
+anova(eq1,eq2)
+sis of Variance Table
+
+Response: x1
+          Df Sum Sq Mean Sq F value   Pr(>F)    
+t1         1  17239 17239.0  115.56 1.92e-10 ***
+Residuals 23   3431   149.2                     
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Warning message:
+In anova.lmlist(object, ...) :
+  models with response ‘"x2"’ removed because response differs from 
+model 1
+anova(kurs, eq1)
+Analysis of Variance Table
+Response: x
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+t          1  75974   75974  168.53 2.393e-15 ***
+Residuals 37  16679     451                      
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Warning message:
+In anova.lmlist(object, ...) :
+  models with response ‘"x1"’ removed because response differs 
+  from model 1
+
 sd(x1)
 sd(x2)
 var(x1)
