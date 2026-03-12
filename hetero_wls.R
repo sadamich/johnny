@@ -64,3 +64,38 @@ loglik <- function(theta) {
  }
  m <- maxLik(loglik,start=c(beta0 = 0, beta1=0.2,sigma=1))
  summary(m)
+
+res_1<- c(NA,res)
+res_1<- res_1[1:600]
+res_1sq<- res_1^2
+eq_aux2<- lm(res^2 ~ res_1sq)
+summary(eq_aux2)
+### Panel 6 (p.342) Call:lm(formula = res^2 ~ res_1sq)                     ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.23585 -0.02304 -0.02075 -0.00753  1.09447 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.023025   0.003336   6.901 1.32e-11 ***
+res_1sq     0.211512   0.039997   5.288 1.74e-07 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.0765 on 597 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.04475,   Adjusted R-squared:  0.04315 
+F-statistic: 27.96 on 1 and 597 DF,  p-value: 1.736e-07
+v1<- fitted(eq_aux2)
+panel07<- lm(DAAA[2:600] ~ DUS3MT[2:600], weight = 1/v1)
+summary(panel07)
+### panel 7 (p.342) Call:lm(formula = DAAA[2:600] ~ DUS3MT[2:600],         ###
+###                                                weights = 1/v1)         ###
+Weighted Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.9980 -0.4368 -0.0433  0.3874  4.7747 
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   0.008738   0.006354   1.375     0.17    
+DUS3MT[2:600] 0.284731   0.015628  18.219   <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.9577 on 597 degrees of freedom
+Multiple R-squared:  0.3573,    Adjusted R-squared:  0.3562 
+F-statistic: 331.9 on 1 and 597 DF,  p-value: < 2.2e-16
