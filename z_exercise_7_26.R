@@ -20,6 +20,9 @@ Residual standard error: 0.2605 on 47 degrees of freedom
 Multiple R-squared:  0.544,     Adjusted R-squared:  0.5245 
 F-statistic: 28.03 on 2 and 47 DF,  p-value: 9.7e-09
 
-### parameter restriction                                        ###
-
-
+### parameter restriction                                                 ###
+b_2 = -1
+t value 
+(-0.7945 -(-1))/0.1114  =  1.844704
+Critical Value = 1.96
+H0: LOGQT is not rejectet. 
