@@ -85,7 +85,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.6035 on 237 degrees of freedom
 Multiple R-squared:  0.1517,    Adjusted R-squared:  0.1445 
 F-statistic: 21.18 on 2 and 237 DF,  p-value: 3.436e-09
-
+res_aux<- resid(panel02)
 xhat<- fitted(panel02)
 DAAA_80<- DAAA[361:600]
 panel04<- lm(DAAA_80~ xhat)
@@ -102,7 +102,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.3088 on 238 degrees of freedom
 Multiple R-squared:  0.01921,   Adjusted R-squared:  0.01509 
 F-statistic: 4.663 on 1 and 238 DF,  p-value: 0.03183
-
+res_aux<- resid(panel04)
 panel_4<- lm(DAAA_80 ~ xhat -1)
 summary(panel_4)
 ### Panel 4 (p.408) Call:lm(formula = DAAA_80 ~ xhat - 1)                ###
@@ -124,3 +124,28 @@ Model 2: DAAA_80 ~ xhat - 1
   Res.Df    RSS Df Sum of Sq      F Pr(>F)
 1    238 22.700                           
 2    239 22.716 -1 -0.016935 0.1776 0.6739 (H0 -constant- is not rejectet.)
+
+eqols<- lm(DAAA_80 ~ DUS3MT_80)
+summary(eqols)
+res_ols<- resid(eqols)
+res_aux<- resid(panel02)
+hausman<- lm(res_ols ~ DUS3MT_80+ res_aux)
+summary(hausman)
+### Panel 1 (p.415) Call:lm(formula = res_ols ~ DUS3MT_80 + res_aux)      ###
+### Hausman test                                                          ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.67573 -0.13130  0.00406  0.12481  1.02532 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)  
+(Intercept) -0.003895   0.015359  -0.254   0.8000  
+DUS3MT_80   -0.136674   0.060199  -2.270   0.0241 *
+res_aux      0.161106   0.065359   2.465   0.0144 *
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.2365 on 237 degrees of freedom
+Multiple R-squared:  0.025,     Adjusted R-squared:  0.01677 
+F-statistic: 3.038 on 2 and 237 DF,  p-value: 0.0498
+### LM = n*rR^2 = 240 * 0.025 = 6 (H0 - exogeneity is rejectet)           ###
+
+eqsargan<- lm(  ~ DUS3MT_lag180+DUS3MT_lag280)
+summary(eqsargan)
