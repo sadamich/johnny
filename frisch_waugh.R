@@ -2,7 +2,10 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
-### Example 3 3 Bank wage ###
+### Example 3 3 Bank wage (p.148)                                          ###
+xm301<- read.csv("xm301.csv",header=TRUE)
+attach(xm301)
+str(xm301)
 regression1<- lm(LOGSAL ~ 1)
 summary(regression1)
 ### Regression 1 (p.149) Call:lm(formula = LOGSAL ~ 1)                     ###
@@ -91,7 +94,7 @@ res_logsal<- resid(regression5)
 res_educ<- resid(regression6)
 regression7<- lm(res_logsal ~ res_educ -1)
 summary(regression7)
-### Regression 7 (p.149) Call:lm(formula = res_logsal ~ res_educ - 1)       ###
+### Regression 7 (p.149) Call:lm(formula = res_logsal ~ res_educ - 1)      ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.45035 -0.11750 -0.01215  0.11453  0.90229 
@@ -102,6 +105,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.1774 on 473 degrees of freedom
 Multiple R-squared:  0.06966,   Adjusted R-squared:  0.06769 
 F-statistic: 35.42 on 1 and 473 DF,  p-value: 5.192e-09
+### Exhibit 3 11 The partial regression scatter (p.150)                    ###
+plot(res_educ,res_logsal)
+fit<- fitted(regression7)
+
 
 
 
