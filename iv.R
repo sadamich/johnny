@@ -55,3 +55,72 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.03833 on 27 degrees of freedom
 Multiple R-squared:  0.9668,    Adjusted R-squared:  0.9644 
 F-statistic: 393.3 on 2 and 27 DF,  p-value: < 2.2e-16
+
+### Example 5 30 (p.400)                                                   ###
+xm511<- read.csv("xm511.csv", header = TRUE)
+str(xm511)
+attach(xm511)
+DUS3MT_lag1<- c(NA,lag(DUS3MT))
+DUS3MT_lag2<- c(NA,NA,lag(DUS3MT))
+str(DUS3MT)
+DUS3MT_80<- DUS3MT[361:600]
+str(DUS3MT_80)
+### Panel 1 (p.401) Autocorrelation                                        ###
+acf(DUS3MT_80)
+DUS3MT_lag180<- DUS3MT_lag1[361:600]
+DUS3MT_lag280<- DUS3MT_lag2[361:600]
+panel02<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
+summary(panel02)
+### Panel 2 (p.401) Call:lm(formula = DUS3MT_80 ~ DUS3MT_lag180            ###
+###                                             + DUS3MT_lag280)           ###
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.5101 -0.1137  0.0235  0.1866  2.4483 
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   -0.02611    0.03901  -0.669    0.504    
+DUS3MT_lag180  0.35815    0.06231   5.748 2.76e-08 ***
+DUS3MT_lag280 -0.28260    0.06227  -4.539 9.01e-06 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.6035 on 237 degrees of freedom
+Multiple R-squared:  0.1517,    Adjusted R-squared:  0.1445 
+F-statistic: 21.18 on 2 and 237 DF,  p-value: 3.436e-09
+
+xhat<- fitted(panel02)
+DAAA_80<- DAAA[361:600]
+panel04<- lm(DAAA_80~ xhat)
+summary(panel04)
+### Panel 4 (p.401) Call:lm(formula = DAAA_80 ~ xhat)                     ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.13311 -0.15251 -0.00666  0.16657  1.31431 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)  
+(Intercept) -0.008453   0.020060  -0.421   0.6739  
+xhat         0.169779   0.078626   2.159   0.0318 *
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.3088 on 238 degrees of freedom
+Multiple R-squared:  0.01921,   Adjusted R-squared:  0.01509 
+F-statistic: 4.663 on 1 and 238 DF,  p-value: 0.03183
+
+panel_4<- lm(DAAA_80 ~ xhat -1)
+summary(panel_4)
+### Panel 4 (p.408) Call:lm(formula = DAAA_80 ~ xhat - 1)                ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.14073 -0.16093 -0.01501  0.15807  1.30620 
+Coefficients:
+     Estimate Std. Error t value Pr(>|t|)  
+xhat   0.1735     0.0780   2.224   0.0271 *
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.3083 on 239 degrees of freedom
+Multiple R-squared:  0.02028,   Adjusted R-squared:  0.01618 
+F-statistic: 4.947 on 1 and 239 DF,  p-value: 0.02708
+
+anova(panel04, panel_4)
+Analysis of Variance Table
+Model 1: DAAA_80 ~ xhat
+Model 2: DAAA_80 ~ xhat - 1
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)
+1    238 22.700                           
+2    239 22.716 -1 -0.016935 0.1776 0.6739 (H0 -constant- is not rejectet.)
