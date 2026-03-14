@@ -180,3 +180,36 @@ summary(xy)
 yx<- lm(y ~ x)
 summary(yx)
 plot(x,y)
+
+aktien3<- read.csv("aktien3.csv", header = TRUE)
+str(aktien3)
+attach(aktien3)
+y<- ts(sbux, freq =5, start =1)
+plot(y, main = "Time series", ylab = "y")
+t<- 1:44
+eq_sb<- lm(y ~t)
+fit<- fitted(eq_sb)
+lines(fit, col="red", add =TRUE)
+acf(y)
+summary(eq_sb)
+Call:lm(formula = y ~ t)
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.6302 -1.3784  0.1151  1.0115  3.9157 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 91.62074    0.60268  152.02  < 2e-16 ***
+t            0.18941    0.02333    8.12 3.81e-10 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 1.965 on 42 degrees of freedom
+Multiple R-squared:  0.6109,    Adjusted R-squared:  0.6016 
+F-statistic: 65.93 on 1 and 42 DF,  p-value: 3.809e-10
+library(tseries)
+adf.test(y)
+ Augmented Dickey-Fuller Test
+data:  y
+Dickey-Fuller = -4.1457, Lag order = 3, p-value = 0.01277
+alternative hypothesis: stationary
+res<- resid(eq_sb)
+res<- ts(res, freq = 5, start=1)
+plot(res, main = "Time series", ylab = "Residuals")
