@@ -20,6 +20,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.2817 on 23 degrees of freedom
 Multiple R-squared:  0.9569,    Adjusted R-squared:  0.9531 
 F-statistic: 255.2 on 2 and 23 DF,p-value:2.2e-16 (H0 b2 = b3 = 0 is rejectet)
+res<- resid(eq_base)
+e<- sum(res^2)
 ### The same 
 log_lk<- LOGL+LOGK
 eq_same<- lm(LOGY ~ log_lk)
@@ -36,7 +38,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.3144 on 24 degrees of freedom
 Multiple R-squared:  0.944,     Adjusted R-squared:  0.9416 
 F-statistic: 404.4 on 1 and 24 DF,  p-value: < 2.2e-16
-
+res<- resid(eq_same)
+e_r<- sum(res^2)
+e_r
 log_lk_c<- LOGL - LOGK
 eq_c<- lm(LOGY - LOGK ~ log_lk_c)
 summary(eq_c)
@@ -53,7 +57,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.2758 on 24 degrees of freedom
 Multiple R-squared:  0.7514,    Adjusted R-squared:  0.741 
 F-statistic: 72.54 on 1 and 24 DF,  p-value: 1.023e-08
-
+res<- resid(eq_c)
+e_r<- sum(res^2)
 anova(eq_base, eq_same)
 Analysis of Variance Table
 Model 1: LOGY ~ LOGL + LOGK
@@ -63,6 +68,21 @@ Model 2: LOGY ~ log_lk
 2     24 2.3720 -1  -0.54645 6.8847 0.01518 *
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
+F<- function(n, k, g, R1,R2){
+result<- (n-k)/g * (R1 - R2)/(1-R1)
+return(result)
+}
+F(26,3,1,0.9569,0.944)
+[1] 6.883991
+
+F<- function(e_r, e,n, k, g){
+result<- ((e_r - e)/g) / (e /(n-k))
+return(result)
+}
+F(2.371989,1.825544,26,3,1)
+[1] 6.884652
+
+### joint singnificance F Test                                            ###
 F<- function(n, k, R){
 result<- (n-k)/(k-1)* R/(1-R)
 return(result)
@@ -83,6 +103,22 @@ Warning message:
 In anova.lmlist(object, ...) :
   models with response ‘"LOGY - LOGK"’ removed because response
  differs from model 1
+
+F<- function(n, k, g, R1,R2){
+result<- (n-k)/g * (R1 - R2)/(1-R1)
+return(result)
+}
+F(26,3,2,0.9569, 0.7514)
+[1] 10.64293
+
+F<- function(e_r, e,n, k, g){
+result<- ((e_r - e)/g) / (e /(n-k))
+return(result)
+}
+F(1.825652,1.825544,26,3,2)
+[1] 0.0006803451
+
+
 F<- function(n, k, R){
 result<- (n-k)/(k-1)* R/(1-R)
 return(result)
