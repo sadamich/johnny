@@ -76,7 +76,9 @@ z_t<- t(z)
 b<- solve(z_t%*%z)
 p<- z%*%b%*%z_t
 ### Eigenvalue decomposition???                                            ###
-str(p)
+ev<- eigen(p)
+(values<- ev$values)
+(vectors<- ev$vectors)
 
 summary(panel02)
 ### Panel 2 (p.401) Call:lm(formula = DUS3MT_80 ~ DUS3MT_lag180            ###
