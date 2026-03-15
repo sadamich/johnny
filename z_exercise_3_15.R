@@ -7,7 +7,7 @@ str(xr315)
 attach(xr315)
 eq_base<- lm(LOGY ~ LOGL + LOGK)
 summary(eq_base)
-### Base Model Regression Call:lm(formula = LOGY ~ LOGL + LOGK)
+### Base Model Regression Call:lm(formula = LOGY ~ LOGL + LOGK)            ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.65794 -0.16933 -0.04051  0.16689  0.62780 
@@ -19,7 +19,7 @@ LOGK         0.24182    0.11017   2.195   0.0385 *
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Residual standard error: 0.2817 on 23 degrees of freedom
 Multiple R-squared:  0.9569,    Adjusted R-squared:  0.9531 
-F-statistic: 255.2 on 2 and 23 DF,  p-value: < 2.2e-16
+F-statistic: 255.2 on 2 and 23 DF,p-value:2.2e-16 (H0 b2 = b3 = 0 is rejectet)
 ### The same 
 log_lk<- LOGL+LOGK
 eq_same<- lm(LOGY ~ log_lk)
@@ -32,7 +32,6 @@ Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
 (Intercept)  0.01014    0.35835   0.028    0.978    
 log_lk       0.52432    0.02607  20.111   <2e-16 ***
----
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Residual standard error: 0.3144 on 24 degrees of freedom
 Multiple R-squared:  0.944,     Adjusted R-squared:  0.9416 
@@ -64,6 +63,14 @@ Model 2: LOGY ~ log_lk
 2     24 2.3720 -1  -0.54645 6.8847 0.01518 *
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
+F<- function(n, k, R){
+result<- (n-k)/(k-1)* R/(1-R)
+return(result)
+}
+F(26,2, 0.944)
+F-statistic: 404.4 on 1 and 24 DF,  p-value: < 2.2e-16F<- function(n, k, R){
+
+
 anova(eq_base, eq_c) 
 Analysis of Variance Table
 Response: LOGY
@@ -76,4 +83,10 @@ Warning message:
 In anova.lmlist(object, ...) :
   models with response ‘"LOGY - LOGK"’ removed because response
  differs from model 1
-
+F<- function(n, k, R){
+result<- (n-k)/(k-1)* R/(1-R)
+return(result)
+}
+F(26, 2, 0.7514)
+[1] 72.54063
+F-statistic: 72.54 on 1 and 24 DF,  p-value: 1.023e-08
