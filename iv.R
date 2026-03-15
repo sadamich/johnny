@@ -56,6 +56,7 @@ Residual standard error: 0.03833 on 27 degrees of freedom
 Multiple R-squared:  0.9668,    Adjusted R-squared:  0.9644 
 F-statistic: 393.3 on 2 and 27 DF,  p-value: < 2.2e-16
 
+
 ### Example 5 30 (p.400)                                                   ###
 xm511<- read.csv("xm511.csv", header = TRUE)
 str(xm511)
@@ -70,6 +71,13 @@ acf(DUS3MT_80)
 DUS3MT_lag180<- DUS3MT_lag1[361:600]
 DUS3MT_lag280<- DUS3MT_lag2[361:600]
 panel02<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
+z<- cbind(DUS3MT_lag180, DUS3MT_lag280)
+z_t<- t(z)
+b<- solve(z_t%*%z)
+p<- z%*%b%*%z_t
+### Eigenvalue decomposition???                                            ###
+str(p)
+
 summary(panel02)
 ### Panel 2 (p.401) Call:lm(formula = DUS3MT_80 ~ DUS3MT_lag180            ###
 ###                                             + DUS3MT_lag280)           ###
@@ -147,5 +155,28 @@ Multiple R-squared:  0.025,     Adjusted R-squared:  0.01677
 F-statistic: 3.038 on 2 and 237 DF,  p-value: 0.0498
 ### LM = n*rR^2 = 240 * 0.025 = 6 (H0 - exogeneity is rejectet)           ###
 
-eqsargan<- lm(  ~ DUS3MT_lag180+DUS3MT_lag280)
+eqols<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
+summary(eqols)
+xhat<- fitted(eqols)
+eq_iv<- lm(DAAA_80~ xhat)
+summary(eq_iv)
+res_iv<- resid(eq_iv)
+eqsargan<- lm(res_iv~ DUS3MT_lag180+ DUS3MT_lag280)
 summary(eqsargan)
+Call:lm(formula = res_iv ~ DUS3MT_lag180 + DUS3MT_lag280)
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.13759 -0.15194 -0.00699  0.16635  1.31507 
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)
+(Intercept)   -0.0001558  0.0200047  -0.008    0.994
+DUS3MT_lag180 -0.0022183  0.0319529  -0.069    0.945
+DUS3MT_lag280 -0.0033868  0.0319316  -0.106    0.916
+Residual standard error: 0.3095 on 237 degrees of freedom
+Multiple R-squared:  9.238e-05, Adjusted R-squared:  -0.008346 
+F-statistic: 0.01095 on 2 and 237 DF,  p-value: 0.9891
+LM = n*R^2 = 240 * 0.00009238
+[1] 0.0221712
+### H0 is not rejectet                                                     ###
+
+
