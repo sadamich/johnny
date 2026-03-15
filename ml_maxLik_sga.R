@@ -55,3 +55,60 @@ a <- maxSGA(loglik, gradlik, start=c(10,10),
                         # no momentum
                         ), nObs=length(yTrain))
 print(summary(a))  # close to true value
+
+
+### https://cran.r-project.org/web/packages/maxLik/vignettes/stochastic-gradient-maxLik.pdf
+### 4 Example usage: Linear regression
+### 4.1 Setting Up
+i <- which(names(MASS::Boston) == "medv")
+X <- as.matrix(MASS::Boston[,-i])
+X <- cbind("const"=1, X) # add constant
+y <- MASS::Boston[,i]
+str(X)
+num [1:506, 1:14] 1 1 1 1 1 1 1 1 1 1 ...
+ - attr(*, "dimnames")=List of 2
+  ..$ : chr [1:506] "1" "2" "3" "4" ...
+  ..$ : chr [1:14] "const" "crim" "zn" "indus" ...
+str(y)
+    num [1:506] 24 21.6 34.7 33.4 36.2 28.7 22.9 
+
+colMeans(X)
+      const         crim           zn        indus         chas          nox 
+  1.00000000   3.61352356  11.36363636  11.13677866   0.06916996   0.55469506 
+          rm          age          dis          rad          tax      ptratio 
+  6.28463439  68.57490119   3.79504269   9.54940711 408.23715415  18.45553360 
+       black        lstat 
+356.67403162  12.65306324        ### 14 columns  ###
+
+z<- t(X)%*%X
+ev<- eigen(z)
+(values<- ev$values)
+(vectors<- ev$vectors)
+
+betaX <- solve(crossprod(X)) %*% crossprod(X, y)
+betaX <- drop(betaX) # matrix to vector
+betaX
+
+gradloss <- function(theta, index) {
+e <- y[index]- X[index,,drop=FALSE] %*% theta
+ }
+
+set.seed(3)
+start <- setNames(rnorm(ncol(X), sd=0.1), colnames(X))
+# add names for better reference
+res <- try(maxSGA(grad=gradloss,
+start=start,
+nObs=nrow(X),
+control=list(iterlim=1000)
+)
+)
+
+
+res <- maxSGA(grad=gradloss,
+start=start,
+nObs=nrow(X),
+control=list(iterlim=1000,
+SG_clip=1e4) # limit ||g|| <= 100
+)
+
+summary(res)
