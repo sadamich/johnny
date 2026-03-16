@@ -131,3 +131,38 @@ V1%*%D1%*%V1_t
 [1,]  5.814604  31.82263  29.00131
 [2,] 31.822627 201.00000 186.82394
 [3,] 29.001308 186.82394 174.18542
+
+### https://cran.r-project.org/web/packages/matlib/vignettes/a7-eigen-ex1.html ###
+A <- matrix(c(13, -4, 2, -4, 11, -2, 2, -2, 8), 3, 3, byrow=TRUE)
+A
+
+ev <- eigen(A)
+# extract components
+(values <- ev$values)
+
+(vectors <- ev$vectors)
+
+crossprod(vectors)
+zapsmall(crossprod(vectors))
+### I_3 Matrix                                                            ###
+install.packages("matlib")
+library(matlib)   # use the matlib package
+tr(A)
+sum(values)
+sum(A^2)
+sum(values^2)
+det(A)
+prod(values)
+R(A)
+sum(values != 0)
+AI <- solve(A)
+AI
+eigen(AI)$values
+
+eigen(AI)$vectors
+eigen(A %*% A)
+eigen(A %*% A %*% A)$values
+eigen(mpower(A, 4))$values
+
+### Matrix decomposition                                                 ###
+https://cran.r-project.org/web/packages/mand/vignettes/e_Multivariate_Approach_Matrix_Decomposition.html
