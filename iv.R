@@ -72,13 +72,14 @@ DUS3MT_lag180<- DUS3MT_lag1[361:600]
 DUS3MT_lag280<- DUS3MT_lag2[361:600]
 panel02<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
 z<- cbind(DUS3MT_lag180, DUS3MT_lag280)
-z_t<- t(z)
-b<- solve(z_t%*%z)
-p<- z%*%b%*%z_t
+
+b<- solve(t(z)%*%z)
+p<- z%*%b%*%t(z)
 ### Eigenvalue decomposition???                                            ###
 ev<- eigen(p)
 (values<- ev$values)
 (vectors<- ev$vectors)
+ev
 
 summary(panel02)
 ### Panel 2 (p.401) Call:lm(formula = DUS3MT_80 ~ DUS3MT_lag180            ###
