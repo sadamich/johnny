@@ -213,3 +213,43 @@ alternative hypothesis: stationary
 res<- resid(eq_sb)
 res<- ts(res, freq = 5, start=1)
 plot(res, main = "Time series", ylab = "Residuals")
+y1<- c(NA,y)
+y2<- c(NA,y1)
+eq_ar2<- lm(y ~ y1[1:44]+ y2[1:44])
+summary(eq_ar2)
+### AR2 Model Call lm(formula = y ~ y1[1:44] + y2[1:44])
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.7344 -0.9838 -0.1393  0.9477  3.2991 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  18.9308     7.1180   2.660   0.0113 *  
+y1[1:44]      0.9295     0.1582   5.876 7.69e-07 ***
+y2[1:44]     -0.1245     0.1498  -0.832   0.4107    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 1.368 on 39 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.7591,    Adjusted R-squared:  0.7468 
+F-statistic: 61.46 on 2 and 39 DF,  p-value: 8.793e
+eq_ar1<- lm(y ~ y1[1:44])
+summary(eq_ar1)
+
+### AR1 Model Call:lm(formula = y ~ y1[1:44])
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.0649 -0.8333 -0.1127  1.0330  3.2099 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 16.35833    6.44278   2.539    0.015 *  
+y1[1:44]     0.83192    0.06721  12.377 1.97e-15 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 1.354 on 41 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.7889,    Adjusted R-squared:  0.7837 
+F-statistic: 153.2 on 1 and 41 DF,  p-value: 1.971e-15
+fit<- fitted(eq_ar1)
+fit<- ts(fit, freq = 5, start=1)
+lines(fit, col = "red", add =TRUE)
+library(forecast)
+plot(forecast(fit, h= 10))
