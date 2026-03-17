@@ -71,10 +71,15 @@ acf(DUS3MT_80)
 DUS3MT_lag180<- DUS3MT_lag1[361:600]
 DUS3MT_lag280<- DUS3MT_lag2[361:600]
 panel02<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
-z<- cbind(DUS3MT_lag180, DUS3MT_lag280)
+const<- rep(1, 240)
+z<- cbind(const,DUS3MT_lag180, DUS3MT_lag280)
 
 b<- solve(t(z)%*%z)
 p<- z%*%b%*%t(z)
+
+eq_iv<- lm(DAAA[361:600] ~ DUS3MT_80, weigths = 1/sqrt(p))
+summary(eq_iv)
+
 ### Eigenvalue decomposition???                                            ###
 ev<- eigen(p)
 (values<- ev$values)
