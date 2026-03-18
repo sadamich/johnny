@@ -8,15 +8,8 @@ str(xm535)
 attach(xm535)
 plot(PROFIT, SALARY)
 plot(LOGPROFIT, LOGSALARY)
-LOGPROFIT<- sort(LOGPROFIT)
-str(LOGPROFIT)
 panel03<- lm(LOGSALARY ~ LOGPROFIT)
 summary(panel03)
-res<- resid(panel03)
-plot(res, type="l")
-fit<- fitted(panel03)
-plot(fit, type ="l")
-hist(LOGPROFIT)
 Panel03 Call:lm(formula = LOGSALARY ~ LOGPROFIT)
 Residuals:
      Min       1Q   Median       3Q      Max 
@@ -31,9 +24,19 @@ Residual standard error: 0.327 on 94 degrees of freedom
   (4 observations deleted due to missingness)
 Multiple R-squared:  0.3668,    Adjusted R-squared:   0.36 
 F-statistic: 54.45 on 1 and 94 DF,  p-value: 6.278e-11
-fit<- c(fit, NA, NA, NA, NA)
+### http://127.0.0.1:27442/library/base/html/sort.html ###
+LOGPROFIT_s<- sort(LOGPROFIT)
+str(LOGPROFIT_s)
+LOGSALARY_s<- LOGSALARY[PROFIT > 0]
+LOGSALARY_s<- na.omit(LOGSALARY_s)
+LOGSALARY_s<- sort(LOGSALARY_s)
+eq_s<- lm(LOGSALARY_s~ LOGPROFIT_s)
+summary(eq_s)
+res_s<- resid(eq_s)
+plot(res_s, type="l")
+fit<- fitted(eq_s)
 fit_sq<- fit^2
-eq_reset<- lm(LOGSALARY[5:100] ~ LOGPROFIT[5:100] + fit_sq)
+eq_reset<- lm(LOGSALARY_s ~ LOGPROFIT_s + fit_sq)
 summary(eq_reset)
 
 str(fit)
