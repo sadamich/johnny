@@ -77,6 +77,13 @@ Multiple R-squared:   0.82,     Adjusted R-squared:  0.8151
 F-statistic: 168.5 on 1 and 37 DF,  p-value: 2.393e-15
 x_fit<- fitted(kurs)
 lines(x_fit,col = "red")
+library(sandwich)
+estfun(kurs)
+meat(kurs)
+meatHC(kurs)
+bread(kurs)
+sandwich(kurs)
+vcovHC(kurs, type = "HC")
 res<- resid(kurs)
 acf(res)
 res_sq<- res^2
