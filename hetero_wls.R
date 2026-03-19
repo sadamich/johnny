@@ -2,6 +2,72 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
+### Example 5 13 Bank wages p.331                                          ###
+xm513<- read.csv("xm513.csv", header=TRUE)
+str(xm513)
+attach(xm513)
+panel01<- lm(MEANLOGSAL~ MEANEDUC+GENDER+MINORITY+DUMJCAT2+DUMJCAT3)
+summary(panel01)
+### Panel 1 (p. 332) Call:lm(formula = MEANLOGSAL ~ MEANEDUC + GENDER      ###
+###                                  + MINORITY + DUMJCAT2 + DUMJCAT3)     ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.32369 -0.06412  0.00861  0.03348  0.40133 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  9.67344    0.14188  68.183  < 2e-16 ***
+MEANEDUC     0.03359    0.01002   3.352  0.00318 ** 
+GENDER       0.24952    0.07478   3.337  0.00329 ** 
+MINORITY    -0.02444    0.06294  -0.388  0.70186    
+DUMJCAT2     0.01953    0.09098   0.215  0.83224    
+DUMJCAT3     0.67561    0.08466   7.980 1.21e-07 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.1575 on 20 degrees of freedom
+Multiple R-squared:  0.8867,    Adjusted R-squared:  0.8584 
+F-statistic:  31.3 on 5 and 20 DF,  p-value: 8.408e-09
+
+coeftest(panel01, df = Inf, vcov = vcovHC(panel01, type = "HC1"))
+### Panel 2 (p.332) z test of coefficients:                                ###
+              Estimate Std. Error z value  Pr(>|z|)    
+(Intercept)  9.6734398  0.1255414 77.0538 < 2.2e-16 ***
+MEANEDUC     0.0335916  0.0096175  3.4928 0.0004781 ***
+GENDER       0.2495224  0.0533516  4.6769 2.912e-06 ***
+MINORITY    -0.0244436  0.0603894 -0.4048 0.6856493    
+DUMJCAT2     0.0195258  0.1023407  0.1908 0.8486888    
+DUMJCAT3     0.6756137  0.1048912  6.4411 1.186e-10 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+size<- as.numeric(GROUPSIZE)
+v<- 1/sqrt(size)
+eq_wls <- lm(MEANLOGSAL~ MEANEDUC+GENDER+MINORITY+DUMJCAT2+DUMJCAT3, weight = GROUPSIZE)
+summary(eq_wls)
+### Panel 3 (p.332) Call: lm(formula = MEANLOGSAL ~ MEANEDUC + GENDER +    ### 
+###                            MINORITY + DUMJCAT2 +                       ###
+    DUMJCAT3, weights = GROUPSIZE)
+Weighted Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.42041 -0.11854 -0.00198  0.21955  0.58734 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  9.586344   0.077396 123.860  < 2e-16 ***
+MEANEDUC     0.043238   0.006123   7.061 7.58e-07 ***
+GENDER       0.179823   0.029525   6.091 5.94e-06 ***
+MINORITY    -0.074960   0.031581  -2.374   0.0277 *  
+DUMJCAT2     0.166985   0.061281   2.725   0.0130 *  
+DUMJCAT3     0.542568   0.042672  12.715 4.86e-11 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.2747 on 20 degrees of freedom
+Multiple R-squared:  0.974,     Adjusted R-squared:  0.9675 
+F-statistic: 149.8 on 5 and 20 DF,  p-value: 3.887e-15
+
+
+
+
+
+
+
+
 xm511<- read.csv("xm511.csv", header =TRUE)
 str(xm511)
 attach(xm511)
