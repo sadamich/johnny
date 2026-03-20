@@ -62,11 +62,97 @@ Multiple R-squared:  0.974,     Adjusted R-squared:  0.9675
 F-statistic: 149.8 on 5 and 20 DF,  p-value: 3.887e-15
 
 
+### Example 5 14 Interest and Bond rates ###
+xm511<- read.csv("xm511.csv",header =TRUE)
+str(xm511)
+attach(xm511)
+panel01<- lm(DAAA~DUS3MT)
+summary(panel01)
+v<- DUS3MT^2
+data<- cbind(DAAA, DUS3MT, v)
+u<- c(6,7,14,23,168,170, 173,174,175,236,268,407,459,481,485,506,524)
+DAAA<- DAAA[-u]
+DUS3MT<- DUS3MT[-u]
+v<- v[-u]
+eq_wls<- lm(DAAA~ DUS3MT,weight = 1/v)
+summary(eq_wls)
+### Panel 2 (p. 333) Call:                                                 ###
+lm(formula = DAAA ~ DUS3MT, weights = 1/v)
+Weighted Residuals:
+    Min      1Q  Median      3Q     Max 
+-37.500  -0.374   0.032   0.512  48.500 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)  
+(Intercept) -0.002380   0.005143  -0.463   0.6437  
+DUS3MT       0.262260   0.144280   1.818   0.0696 .
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 3.483 on 581 degrees of freedom
+Multiple R-squared:  0.005655,  Adjusted R-squared:  0.003943 
+F-statistic: 3.304 on 1 and 581 DF,  p-value: 0.06962
 
 
+### Example 5 15 Bank wages ###
+xm501<- read.csv("xm501.csv", header =TRUE)
+attach(xm501)
+eq_01<- lm(LOGSALARY ~ EDUC + GENDER + MINORITY + DUMJCAT2 + DUMJCAT3)
+summary(eq_01)
+### Panel 1 (p. 338) Call: lm(formula = LOGSALARY ~ EDUC +                 ###
+###                           GENDER + MINORITY + DUMJCAT2 + DUMJCAT3)     ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.44945 -0.12800 -0.01606  0.12080  0.87387 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  9.574694   0.054218 176.596  < 2e-16 ***
+EDUC         0.044192   0.004285  10.313  < 2e-16 ***
+GENDER       0.178340   0.020962   8.508 2.42e-16 ***
+MINORITY    -0.074858   0.022459  -3.333 0.000927 ***
+DUMJCAT2     0.170360   0.043494   3.917 0.000103 ***
+DUMJCAT3     0.539075   0.030213  17.842  < 2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.1954 on 468 degrees of freedom
+Multiple R-squared:  0.7608,    Adjusted R-squared:  0.7582 
+F-statistic: 297.7 on 5 and 468 DF,  p-value: < 2.2e-16
+res_eq_01<- resid(eq_01)
+log01_res<-log(res_eq_01^2)
+res_model<- lm(log01_res ~ DUMJCAT2 + DUMJCAT3)
+summary(res_model)
 
-
-
+### Panel 2 (p.338) Call:lm(formula = log01_res ~ DUMJCAT2 + DUMJCAT3)     ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10.0723  -0.9277   0.5556   1.5520   4.4636 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -4.7332     0.1235 -38.338   <2e-16 ***
+DUMJCAT2     -0.2892     0.4692  -0.616    0.538    
+DUMJCAT3      0.4605     0.2848   1.617    0.107    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 2.352 on 471 degrees of freedom
+Multiple R-squared:  0.006882,  Adjusted R-squared:  0.002665 
+F-statistic: 1.632 on 2 and 471 DF,  p-value: 0.1966
+fit_res <- fitted(res_model)
+v<- (exp(1.27- 4.7332 - 0.2892*DUMJCAT2+ 0.4605*DUMJCAT3))
+fwls_sal<- lm(LOGSALARY ~ EDUC+GENDER+MINORITY+DUMJCAT2+DUMJCAT3, weight = 1/v)
+summary(fwls_sal)
+### Compare with the panel 3 (p.338) Call:                                 ###
+### lm(formula = LOGSALARY ~ EDUC + GENDER + MINORITY + DUMJCAT2 +         ###
+###                                        DUMJCAT3, weights = 1/v)        ###
+Weighted Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.6385 -0.7182 -0.0832  0.6833  4.9510 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  9.594903   0.052131 184.054  < 2e-16 ***
+EDUC         0.042693   0.004123  10.356  < 2e-16 ***
+GENDER       0.178160   0.020345   8.757  < 2e-16 ***
+MINORITY    -0.078365   0.021330  -3.674 0.000266 ***
+DUMJCAT2     0.167288   0.037542   4.456 1.05e-05 ***
+DUMJCAT3     0.545052   0.032882  16.576  < 2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 1.054 on 468 degrees of freedom
+Multiple R-squared:  0.7166,    Adjusted R-squared:  0.7135 
+F-statistic: 236.6 on 5 and 468 DF,  p-value: < 2.2e-16
 
 xm511<- read.csv("xm511.csv", header =TRUE)
 str(xm511)
