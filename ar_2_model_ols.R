@@ -26,6 +26,24 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.02096 on 133 degrees of freedom
 Multiple R-squared:  0.8214,    Adjusted R-squared:  0.8187 
 F-statistic: 305.8 on 2 and 133 DF,  p-value: < 2.2e-16
+eq_ml<- function(theta){
+beta1<- theta[1]
+beta2<- theta[2]
+beta3<- theta[3]
+sigma<- theta[4]
+N<- 136
+mu<- beta1+ beta2*d4_1+beta3*d4_2
+-N*0.5*log(2*pi) - N*0.5*log(sigma^2) - 0.5*((D4Y_61 -mu)^2/sigma^2)
+}
+library(maxLik)
+m<- maxLik(eq_ml, start = c(0,1.3,-0.5,1))
+m
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 2 iterations
+Return code 3: Last step could not find a value above the current.
+Boundary of parameter space?  
+
+
 ### Compare with exhibit 7 10, panel 1 (p.566)                             ### 
 library(tseries)
 arma25<- arma(D4Y_61, order=c(2,5))
