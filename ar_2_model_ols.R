@@ -36,12 +36,15 @@ mu<- beta1+ beta2*d4_1+beta3*d4_2
 -N*0.5*log(2*pi) - N*0.5*log(sigma^2) - 0.5*((D4Y_61 -mu)^2/sigma^2)
 }
 library(maxLik)
-m<- maxLik(eq_ml, start = c(0,1.3,-0.5,1))
+m<- maxLik(eq_ml, start=c(0.007147, 1.332025,-0.545933,1))
 m
 Maximum Likelihood estimation
 Newton-Raphson maximisation, 2 iterations
 Return code 3: Last step could not find a value above the current.
 Boundary of parameter space?  
+Consider switching to a more robust optimisation method temporarily.
+Log-Likelihood: -6884.248 (4 free parameter(s))
+Estimate(s): 0.006838815 1.331714 -0.5462435 -0.578833 
 
 
 ### Compare with exhibit 7 10, panel 1 (p.566)                             ### 
