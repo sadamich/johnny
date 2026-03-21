@@ -153,10 +153,11 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 1.054 on 468 degrees of freedom
 Multiple R-squared:  0.7166,    Adjusted R-squared:  0.7135 
 F-statistic: 236.6 on 5 and 468 DF,  p-value: < 2.2e-16
+
+### ML estimation with the variance model                                  ###
 res<- resid(eq_01)
 eq_res<- lm(log(res^2) ~ DUMJCAT2+DUMJCAT3)
 summary(eq_res)
-
 eq_ml<- function(theta){
 beta1<- theta[1]
 beta2<- theta[2]
@@ -178,12 +179,10 @@ mu<- beta1+ beta2*EDUC+beta3*GENDER+beta4*MINORITY+beta5*DUMJCAT2+beta6*DUMJCAT3
 
 m<- maxLik(eq_ml, start= c(9.574694,0.044192,0.178340,-0.074858,0.170360,  
               0.539075,1,-4.7332 ,-0.2892 ,0.4605 ))
+### Compare with the panel 4 (p.339)                                       ###
 summary(m, eigentol=1e-15)
 
-
-
-
-
+### Example 5 16 (p.341)                                                   ###
 xm511<- read.csv("xm511.csv", header =TRUE)
 str(xm511)
 attach(xm511)
@@ -239,12 +238,17 @@ library(maxLik)
 loglik <- function(theta) {
  beta0 <- theta[1]
  beta1 <- theta[2]
- sigma <- theta[5]
+ sigma <- theta[3]
+ gamma1<- theta[4]
+ gamma2<- theta[5]
  N <- nrow(xm511)
  mu <- beta0 + beta1*DUS3MT
  -1/2*N*log(2*pi) - 1/2*N*log(sigma^2) - 1/2*sum((DAAA -mu)^2/sigma^2)
+
+ (DAAA -mu)^2 <- gamma1+ gamma2*DUM7599
  }
- m <- maxLik(loglik,start=c(beta0 = 0, beta1=0.2,sigma=1))
+ m <- maxLik(loglik,start=c(beta0 = 0.013384 , beta1=0.214989,sigma=1,
+                            gamma1= 0.009719, gamma2=0.038850 ))
  summary(m)
 
 res_1<- c(NA,res)
