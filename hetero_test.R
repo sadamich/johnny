@@ -5,9 +5,20 @@
 xm501<- read.csv("xm501.csv", header=TRUE)
 attach(xm501)
 str(xm501)
-
-
-
+panel01<- lm(LOGSALARY ~ EDUC+GENDER+MINORITY+DUMJCAT2+DUMJCAT3)
+summary(panel01)
+panel02<- lm(LOGSALARY[JOBCAT==1] ~ EDUC[JOBCAT==1]+GENDER[JOBCAT==1]
+         +MINORITY[JOBCAT==1])
+summary(panel02)
+anova(panel01,panel02)
+panel03<- lm(LOGSALARY[JOBCAT==2] ~ EDUC[JOBCAT==2]+GENDER[JOBCAT==2]
+         +MINORITY[JOBCAT==2])
+summary(panel03)
+anova(panel01, panel03)
+panel04<- lm(LOGSALARY[JOBCAT==3] ~ EDUC[JOBCAT==3]+GENDER[JOBCAT==3]
+         +MINORITY[JOBCAT==3])
+summary(panel04)
+anova(panel01, panel04)
 
 xm513<- read.csv("xm513.csv", header =TRUE)
 str(xm513)
