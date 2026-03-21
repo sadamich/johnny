@@ -153,6 +153,36 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 1.054 on 468 degrees of freedom
 Multiple R-squared:  0.7166,    Adjusted R-squared:  0.7135 
 F-statistic: 236.6 on 5 and 468 DF,  p-value: < 2.2e-16
+res<- resid(eq_01)
+eq_res<- lm(log(res^2) ~ DUMJCAT2+DUMJCAT3)
+summary(eq_res)
+
+eq_ml<- function(theta){
+beta1<- theta[1]
+beta2<- theta[2]
+beta3<- theta[3]
+beta4<- theta[4]
+beta5<- theta[5]
+beta6<- theta[6]
+sigma<- theta[7]
+gamma1<- theta[8]
+gamma2<- theta[9]
+gamma3<- theta[10]
+N<- 474
+mu<- beta1+ beta2*EDUC+beta3*GENDER+beta4*MINORITY+beta5*DUMJCAT2+beta6*DUMJCAT3
+
+-N*0.5*log(2*pi)-N*0.5*log(sigma^2)- 0.5*((LOGSALARY -mu)^2/sigma^2)
+(LOGSALARY - mu)^2 <- exp(gamma1+ gamma2*DUMJCAT2+gamma3*DUMJCAT3)
+
+}
+
+m<- maxLik(eq_ml, start= c(9.574694,0.044192,0.178340,-0.074858,0.170360,  
+              0.539075,1,-4.7332 ,-0.2892 ,0.4605 ))
+summary(m, eigentol=1e-15)
+
+
+
+
 
 xm511<- read.csv("xm511.csv", header =TRUE)
 str(xm511)
