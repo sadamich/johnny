@@ -52,3 +52,30 @@ Residual standard error: 0.1621 on 594 degrees of freedom
 Multiple R-squared:  0.1078,    Adjusted R-squared:  0.1033 
 F-statistic: 23.93 on 3 and 594 DF,  p-value: 1.25e-14
 LM = n R^2 = 600*0.1078=64.68 (H0 is rejectet)  
+
+### Panel data unordered and ordered data                                  ###
+### Example 5 23 Food Expenditure ###
+xm520<- read.csv("xm520.csv", header = TRUE)
+str(xm520)
+attach(xm520)
+eq_ols<- lm(FRACFOOD ~ TOTCONS+FOODCONS+AHSIZE)
+summary(eq_ols)
+res<- resid(eq_ols)
+acf(res)
+res_1<- c(NA, res)
+eq_res<- lm(res[2:48] ~ TOTCONS[2:48]+AHSIZE[2:48]+res_1[2:48])
+summary(eq_res)
+### Compare the panel 2) U(p.367)                                          ###
+lm(formula = res[2:48] ~ TOTCONS[2:48] + AHSIZE[2:48] + res_1[2:48])
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.017786 -0.010552 -0.005387  0.008087  0.034162 
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)
+(Intercept)   -0.0039137  0.0057933  -0.676    0.503
+TOTCONS[2:48]  0.0077910  0.0091244   0.854    0.398
+AHSIZE[2:48]  -0.0000736  0.0012015  -0.061    0.951
+res_1[2:48]    0.2511941  0.1629559   1.541    0.131
+Residual standard error: 0.01482 on 43 degrees of freedom
+Multiple R-squared:  0.05483,   Adjusted R-squared:  -0.01111 
+F-statistic: 0.8315 on 3 and 43 DF,  p-value: 0.4839
