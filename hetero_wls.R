@@ -243,14 +243,15 @@ loglik <- function(theta) {
  gamma2<- theta[5]
  N <- nrow(xm511)
  mu <- beta0 + beta1*DUS3MT
- -1/2*N*log(2*pi) - 1/2*N*log(sigma^2) - 1/2*sum((DAAA -mu)^2/sigma^2)
+ e<- DAAA -mu
+ e^2 <-  gamma1+ gamma2*DUM7599
 
- (DAAA -mu)^2 <- gamma1+ gamma2*DUM7599
- }
+ -1/2*N*log(2*pi) - 1/2*N*log(sigma^2) - 1/2*sum((e^2/sigma^2) 
+ 
  m <- maxLik(loglik,start=c(beta0 = 0.013384 , beta1=0.214989,sigma=1,
                             gamma1= 0.009719, gamma2=0.038850 ))
  summary(m)
-
+### Clustered variances                                                    ###
 res_1<- c(NA,res)
 res_1<- res_1[1:600]
 res_1sq<- res_1^2
