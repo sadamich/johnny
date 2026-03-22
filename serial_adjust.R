@@ -130,14 +130,35 @@ Estimates:
 [5,]  2.431e-03  3.586e-05   67.81  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-### Example 5 26 Industrial production ###
-xm526<- read.csv("xm526.csv", header = TRUE)
-str(xm526)
-attach(xm526)
-log_IP<- log(IP)
-### (iii) Tests on serial correlation ###
-res_a<- res[3:195]
-str(res_a)
-res_lag1a<- res_lag1[3:195]
-e_dif<- res_a - res_lag1
-str(res_lag1a)
+
+
+### Package gslnls ###
+library(gslnls)
+### Regression Panel 2 Non-linear model ###
+non_linear <- gsl_nls(fn = FRACFOOD ~ beta1 + (beta2*TOTCONS^beta3)+beta4*AHSIZE, data = xm520, 
+start = c(beta1 = 0.4, beta2 = -0.2, beta3= 0.4,beta4=0.01))
+summary(non_linear)
+### Panel 1 FRACFOOD ~ beta1 + (beta2 * TOTCONS^beta3) + beta4 * AHSIZE    ###   
+Parameters:
+        Estimate Std. Error t value Pr(>|t|)    
+beta1  0.4539213  0.0543000   8.360 1.24e-10 ***
+beta2 -0.2710133  0.0534437  -5.071 7.62e-06 ***
+beta3  0.4125870  0.1155453   3.571 0.000876 ***
+beta4  0.0169607  0.0009913  17.110  < 2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.01244 on 44 degrees of freedom
+Number of iterations to convergence: 7 
+Achieved convergence tolerance: 7.199e-14
+res<- resid(non_linear)
+res_1<- c(NA, res)
+res_1<- res_1[1:48]
+cor(res,res_1)
+plot(res,res_1)
+acf(res)
+
+non_linear2 <- gsl_nls(fn = res ~beta1 + beta2*(TOTCONS^0.4125870)
+             +beta3*(TOTCONS^0.4125870*log(TOTCONS))+beta4*AHSIZE
+             + beta5*res_1, data = xm520, 
+start = c(beta1 = 0.1, beta2 = -0.15, beta3= 0.07,beta4=0.01,beta5=0.1))
+summary(non_linear2)
+
