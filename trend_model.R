@@ -2,6 +2,50 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
+### Example 5 26 Industrial production ###
+xm526<- read.csv("xm526.csv", header = TRUE)
+str(xm526)
+attach(xm526)
+log_IP<- log(IP)
+t<- 1:195
+panel01<- lm(log(IP) ~ t)
+summary(panel01)
+### Panel 1 (p.375) Call:lm(formula = log(IP) ~ t)                         ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.21506 -0.06316 -0.01191  0.06406  0.17922 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 3.3135599  0.0122344  270.84   <2e-16 ***
+t           0.0081965  0.0001083   75.72   <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.08509 on 193 degrees of freedom
+Multiple R-squared:  0.9674,    Adjusted R-squared:  0.9673 
+F-statistic:  5733 on 1 and 193 DF,  p-value: < 2.2e-1
+res<- resid(panel01)
+res_1<- c(NA, res)[1:195]
+res_2<- c(NA, res_1)[1:195]
+acf(res)
+eq_lm<- lm(res ~ t+ res_1+res_2)
+summary(eq_lm)
+### Compare with the panel 3 (p.375) lm(formula = res ~ t + res_1 + res_2) ###
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.081310 -0.015832  0.001028  0.015143  0.069279 
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  2.777e-03  3.487e-03   0.796  0.42685    
+t           -2.210e-05  3.068e-05  -0.720  0.47221    
+res_1        1.145e+00  7.061e-02  16.218  < 2e-16 ***
+res_2       -2.022e-01  6.943e-02  -2.912  0.00402 ** 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.02365 on 189 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.9203,    Adjusted R-squared:  0.9191 
+F-statistic: 727.8 on 3 and 189 DF,  p-value: < 2.2e-16
+LM= 195* 0.9203 = [1] 179.4585 (H0 is rejectet) 
+
+
 xm701<- read.csv("xm701.csv", header = TRUE)
 str(xm701)
 attach(xm701)
