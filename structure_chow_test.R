@@ -88,3 +88,20 @@ return(result)
 }
 F_forecast(30.85177, 23.40327,4,424,50)
 [1] 2.673447
+
+###CUSUM Test
+library(strucchange)
+panel01<- lm(LOGSAL ~ EDUC + LOGSALBEGIN + GENDER + MINORITY)
+summary(panel01)
+eq_cusum<- efp(LOGSAL ~ EDUC + LOGSALBEGIN + GENDER + MINORITY,type = "OLS-CUSUM")
+plot(eq_cusum)
+plot(eq_cusum, alpha = 0.01, alt.boundary = TRUE)
+## calculate corresponding test statistic
+sctest(eq_cusum)
+  OLS-based CUSUM test
+data:  eq_cusum
+S0 = 2.6647, p-value = 1.36e-06
+
+eq_cusum2<- efp(LOGSAL ~ EDUC + LOGSALBEGIN + GENDER + MINORITY,type = "Rec-CUSUM")
+plot(eq_cusum2)
+
