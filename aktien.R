@@ -263,3 +263,23 @@ fit<- ts(fit, freq = 5, start=1)
 lines(fit, col = "red", add =TRUE)
 library(forecast)
 plot(forecast(fit, h= 10))
+
+x<- cyber
+x<- ts(x, freq= 5, start =1)
+eq<- lm(x~t)
+summary(eq)
+res_x<- resid(eq)
+fit_x<- fitted(eq)
+plot(x, main= "Time series", ylab="x")
+lines(fit_x, col="red")
+library(strucchange)
+
+eq_cusum<- efp(x~t,type = "Rec-CUSUM")
+plot(eq_cusum)
+plot(eq_cusum, alpha = 0.01, alt.boundary = TRUE)
+## calculate corresponding test statistic
+sctest(eq_cusum)
+        Recursive CUSUM test
+
+data:  eq_cusum
+S = 0.60109, p-value = 0.4113
