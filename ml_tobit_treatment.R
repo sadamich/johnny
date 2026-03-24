@@ -6,6 +6,7 @@
 xm608micro<- read.csv("xm608micro.csv", header =TRUE)
 str(xm608micro)
 attach(xm608micro)
+detach(xm608micro)
 xm608macro<- read.csv("xm608macro.csv", header =TRUE)
 str(xm608macro)
 attach(xm608macro)
@@ -89,14 +90,58 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual deviance: 710.40  on 599  degrees of freedom
 AIC: 730.4
 
-Number of Fisher Scoring iterations: 4
+xm608macro<- read.csv("xm608macro.csv", header =TRUE)
+str(xm608macro)
+attach(xm608macro)
+library(sampleSelection)
+sat<- SATMATH/100
+verb<- SATVERB/100
+panelmac <- treatReg(MATHHIGH~sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
+                    +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
+              GRINTERMACRO ~ SELCORMACRO+MATHHIGH+
+              GRDFINTMACRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
+              +sat+verb)
+summary(panelmac)
+### Compare with the panel 4 (p.510)                                       ###
+Tobit treatment model (switching regression model)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 3 iterations
+Return code 1: gradient close to zero (gradtol)
+Log-Likelihood: -797.6823 
+490 observations: 224 non-participants (selection 0) and 266 participants (selection 1)
 
-> 
-
-
-
-
-
+22 free parameters (df = 468)
+Probit selection equation:
+            Estimate Std. Error t value Pr(>|t|)   
+(Intercept) -0.14368    0.74218  -0.194  0.84658   
+sat         -0.09528    0.10166  -0.937  0.34912   
+FEMALE      -0.21050    0.12605  -1.670  0.09560 . 
+MAJORESH    -0.19353    0.14971  -1.293  0.19675   
+MAJORNAT     0.29454    0.19577   1.505  0.13313   
+ADVMATH1     0.19949    0.26145   0.763  0.44584   
+ADVMATH2     0.84721    0.26782   3.163  0.00166 **
+ADVMATH3     0.67308    0.72137   0.933  0.35127   
+PHYSICS      0.36933    0.12637   2.923  0.00364 **
+CHEMISTRY    0.32673    0.25462   1.283  0.20006   
+Outcome equation:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -0.12994    0.40370  -0.322    0.748    
+SELCORMACRO  -0.05406    0.05821  -0.929    0.354    
+MATHHIGH      0.13884    0.18066   0.769    0.443    
+GRDFINTMACRO  0.93789    0.15418   6.083 2.45e-09 ***
+GRMACRO1      0.21337    0.05350   3.988 7.73e-05 ***
+GRMICRO1      0.31161    0.04990   6.245 9.52e-10 ***
+FRESHMAN      0.55823    0.08762   6.371 4.49e-10 ***
+FEMALE        0.03525    0.06564   0.537    0.592    
+sat           0.01001    0.05529   0.181    0.856    
+verb         -0.03132    0.04834  -0.648    0.517    
+   Error terms:
+      Estimate Std. Error t value Pr(>|t|)    
+sigma  0.65633    0.02115  31.032   <2e-16 ***
+rho    0.04659    0.16138   0.289    0.773    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+--------------------------------------------
 
 ### https://cran.r-project.org/web/packages/sampleSelection/vignettes/treatReg.pdf ###
 library(sampleSelection)
