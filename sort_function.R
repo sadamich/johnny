@@ -1,4 +1,4 @@
-### http://127.0.0.1:27442/library/base/html/sort.html                       ###
+### function sort                                                          ###
 
 x <- swiss$Education[1:25]
 x
