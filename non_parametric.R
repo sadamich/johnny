@@ -22,3 +22,9 @@ w(1)
 [1] 0
 
 curve(w, 0, 1, lty=2, ylim=c(0, 1), xlab = "d", ylab="Weigth")
+
+### Example 5 3 (p. 293)                                                   ###
+x<- runif(200, 0, 2.5)
+e<- rnorm(200, 0, 0.04)
+y<- sin(x)+e
+plot(x,y)
