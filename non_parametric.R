@@ -28,3 +28,27 @@ x<- runif(200, 0, 2.5)
 e<- rnorm(200, 0, 0.04)
 y<- sin(x)+e
 plot(x,y)
+
+library(maxLik)
+w<- function(d){
+result<- (1-d^3)^3
+return(result)
+}
+w_sp<- w(0.6)
+x0<- 1.5
+fn<- function(theta){
+a<- theta[1]
+b<- theta[2]
+e<- y - a - b*(x - x0)
+-w_sp*crossprod(e)
+}
+summary(maxBFGS(fn, start=c(0,0)))
+BFGS maximization 
+Number of iterations: 80 
+Return code: 0 
+successful convergence  
+Function value: -3.970968e+15 
+Estimates:
+      estimate gradient
+[1,] -128357.1        0
+[2,] -405211.8  1500000
