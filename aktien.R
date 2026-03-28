@@ -192,7 +192,7 @@ aktien3<- read.csv("aktien3.csv", header = TRUE)
 str(aktien3)
 attach(aktien3)
 y<- ts(sbux, freq =5, start =1)
-plot(y, main = "Time series", ylab = "y")
+plot(y, main = "AR(1) Model", ylab = "y")
 t<- 1:44
 eq_sb<- lm(y ~t)
 fit<- fitted(eq_sb)
@@ -226,7 +226,8 @@ eq_ar2<- lm(y ~ y1[1:44]+ y2[1:44])
 summary(eq_ar2)
 fit2<- fitted(eq_ar2)
 fit2<- ts(fit2, freq = 5, start =1)
-lines(fit2, col ="red", add =TRUE)
+lines(fit2, col ="red", type="l")
+legend("bottomright", paste("The red line is the fitted value."))
 ### AR2 Model Call lm(formula = y ~ y1[1:44] + y2[1:44])
 Residuals:
     Min      1Q  Median      3Q     Max 
@@ -260,7 +261,8 @@ Multiple R-squared:  0.7889,    Adjusted R-squared:  0.7837
 F-statistic: 153.2 on 1 and 41 DF,  p-value: 1.971e-15
 fit<- fitted(eq_ar1)
 fit<- ts(fit, freq = 5, start=1)
-lines(fit, col = "red", add =TRUE)
+lines(fit, col = "red", type="l")
+legend("bottomright", "The red line is the fitted value.")
 library(forecast)
 plot(forecast(fit, h= 10))
 
