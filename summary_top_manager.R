@@ -24,11 +24,18 @@ Residual standard error: 0.327 on 94 degrees of freedom
   (4 observations deleted due to missingness)
 Multiple R-squared:  0.3668,    Adjusted R-squared:   0.36 
 F-statistic: 54.45 on 1 and 94 DF,  p-value: 6.278e-11
-### http://127.0.0.1:27442/library/base/html/sort.html ###
+res<- resid(panel03)
+plot(res, type="l")
+plot(LOGSALARY, type ="l")
 LOGPROFIT_s<- sort(LOGPROFIT)
 str(LOGPROFIT_s)
+
 LOGSALARY_s<- LOGSALARY[PROFIT > 0]
+str(LOGSALARY_s)
 LOGSALARY_s<- na.omit(LOGSALARY_s)
+str(LOGSALARY_s)
+LOGSALARY<- LOGSALARY[LOGPROFIT]
+str(LOGSALARY_s)
 LOGSALARY_s<- sort(LOGSALARY_s)
 eq_s<- lm(LOGSALARY_s~ LOGPROFIT_s)
 summary(eq_s)
@@ -38,9 +45,10 @@ fit<- fitted(eq_s)
 fit_sq<- fit^2
 eq_reset<- lm(LOGSALARY_s ~ LOGPROFIT_s + fit_sq)
 summary(eq_reset)
-
 str(fit)
 fit_sq<- fit^s
+
+### Ramsey Reset test 
 panel05<- lm(LOGSALARY ~ LOGPROFIT + fit_sq)
 summary(panel05)
 res_sq<- res^2
@@ -48,6 +56,7 @@ logprofit_sq<- logprof^2
 panel011<- lm(res_sq ~ logprof+ logprofit_sq)
 summary(panel011)
 
+### Chow break test
 panel09<- lm(LOGSALARY[1:77]~LOGPROFIT[1:77])
 summary(panel09)
 Call:lm(formula = LOGSALARY[1:77] ~ LOGPROFIT[1:77])
