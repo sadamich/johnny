@@ -70,6 +70,10 @@ str(DUS3MT_80)
 acf(DUS3MT_80)
 DUS3MT_lag180<- DUS3MT_lag1[361:600]
 DUS3MT_lag280<- DUS3MT_lag2[361:600]
+
+### Panel 1 (p.408)                                                        ###
+library(gmm)
+
 panel02<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
 const<- rep(1, 240)
 z<- cbind(const,DUS3MT_lag180, DUS3MT_lag280)
