@@ -27,19 +27,16 @@ F-statistic: 54.45 on 1 and 94 DF,  p-value: 6.278e-11
 res<- resid(panel03)
 plot(res, type="l")
 plot(LOGSALARY, type ="l")
-LOGPROFIT_s<- sort(LOGPROFIT)
+LOGPROFIT_s<- sort(LOGPROFIT, index.return = TRUE)
+ix<- LOGPROFIT_s$ix
 str(LOGPROFIT_s)
-
-LOGSALARY_s<- LOGSALARY[PROFIT > 0]
-str(LOGSALARY_s)
-LOGSALARY_s<- na.omit(LOGSALARY_s)
-str(LOGSALARY_s)
-LOGSALARY<- LOGSALARY[LOGPROFIT]
-str(LOGSALARY_s)
-LOGSALARY_s<- sort(LOGSALARY_s)
+LOGSALARY_s<- LOGSALARY[ix]
+LOGSALARY_s<- as.numeric(LOGSALARY_s)
+LOGPROFIT_s<- sort(LOGPROFIT)
 eq_s<- lm(LOGSALARY_s~ LOGPROFIT_s)
 summary(eq_s)
 res_s<- resid(eq_s)
+### Exhibit 5 49 (d) (p.420)                                               ###
 plot(res_s, type="l")
 fit<- fitted(eq_s)
 fit_sq<- fit^2
@@ -47,31 +44,35 @@ eq_reset<- lm(LOGSALARY_s ~ LOGPROFIT_s + fit_sq)
 summary(eq_reset)
 str(fit)
 fit_sq<- fit^s
+### Panel 5 RESET Test(p.421)lm(formula=LOGSALARY_s ~ LOGPROFIT_s + fit_sq)###
+Residuals:   Min       1Q   Median       3Q      Max 
+-0.68812 -0.26622 -0.04463  0.22185  0.94482 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  -6.0953    13.7992  -0.442    0.660
+LOGPROFIT_s  -0.5717     0.8078  -0.708    0.481
+fit_sq        0.3124     0.3452   0.905    0.368
+Residual standard error: 0.3249 on 93 degrees of freedom
+Multiple R-squared:  0.3663,    Adjusted R-squared:  0.3527 
+F-statistic: 26.88 on 2 and 93 DF,  p-value: 6.128e-10
 
-### Ramsey Reset test 
-panel05<- lm(LOGSALARY ~ LOGPROFIT + fit_sq)
-summary(panel05)
-res_sq<- res^2
-logprofit_sq<- logprof^2
-panel011<- lm(res_sq ~ logprof+ logprofit_sq)
-summary(panel011)
 
 ### Chow break test
-panel09<- lm(LOGSALARY[1:77]~LOGPROFIT[1:77])
+panel09<- lm(LOGSALARY_s[5:76]~LOGPROFIT_s[5:76])
 summary(panel09)
-Call:lm(formula = LOGSALARY[1:77] ~ LOGPROFIT[1:77])
+### Compare with the Panel 9 Chow forecast Test (p.421)                    ###
+### lm(formula = LOGSALARY_s[5:76] ~ LOGPROFIT_s[5:76])                    ###
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.56110 -0.21552 -0.02492  0.19416  0.84531 
+-0.52369 -0.26386 -0.05426  0.22140  0.91544 
 Coefficients:
-                Estimate Std. Error t value Pr(>|t|)    
-(Intercept)       6.6015     0.1335  49.455  < 2e-16 ***
-LOGPROFIT[1:77]   0.1368     0.0218   6.274 2.33e-08 ***
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)         6.2051     0.2871  21.617  < 2e-16 ***
+LOGPROFIT_s[5:76]   0.1922     0.0548   3.508 0.000794 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Residual standard error: 0.2882 on 72 degrees of freedom
-  (3 observations deleted due to missingness)
-Multiple R-squared:  0.3535,    Adjusted R-squared:  0.3445 
-F-statistic: 39.37 on 1 and 72 DF,  p-value: 2.333e-08
+Residual standard error: 0.3335 on 70 degrees of freedom
+Multiple R-squared:  0.1495,    Adjusted R-squared:  0.1373 
+F-statistic:  12.3 on 1 and 70 DF,  p-value: 0.0007945
 
 anova(panel03, panel09)
 Analysis of Variance Table
@@ -82,49 +83,59 @@ Residuals 94 10.0502  0.1069
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Warning message:
 In anova.lmlist(object, ...) :
-  models with response ‘"LOGSALARY[1:77]"’ removed because response differs from model 1
-> 
+models with response ‘"LOGSALARY_s[5:76]"’ removed because response 
+differs from model 1
 
 
-LOGSAL100<- LOGSALARY[78:100]
-LOGPROFIT100<- LOGPROFIT[78:100]
-panel09a<- lm(LOGSAL100~ LOGPROFIT100)
-summary(panel09a)
-Call:
-Panel09a lm(formula = LOGSAL100 ~ LOGPROFIT100)
-Residuals:
-      Min        1Q    Median        3Q       Max 
--0.068399 -0.029394 -0.007086  0.013509  0.084560
-Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   6.800453   0.043619 155.907   <2e-16 ***
-LOGPROFIT100 -0.002348   0.008897  -0.264    0.795    
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Residual standard error: 0.04399 on 20 degrees of freedom
- (1 個の観測値が欠損のため削除されました)
-Multiple R-squared:  0.003472,  Adjusted R-squared:  -0.04635 
-F-statistic: 0.06968 on 1 and 20 DF,  p-value: 0.7945
-Chow break point test
-(((0.327)^2-(0.2882)^2-(0.04399)^2)/2)/((0.2882+0.04399)/(77+23-4))
-chow break forecast test
-((0.327-0.2882)/23)/(0.2882/(77-4))
 
-White test
-str(res)
-res_100<- c(res, NA, NA,NA,NA)
-res_100_sq<- res_100^2
-LOGPROFIT_sq<- LOGPROFIT^2
-panel11<- lm(res_100_sq~ LOGPROFIT+ LOGPROFIT_sq)
+res_s<- resid(eq_s)
+plot(res_s, type="l")
+LOGPROFIT_sq<- LOGPROFIT_s^2
+panel11<- lm(res_s^2~ LOGPROFIT_s+ LOGPROFIT_sq)
 summary(panel11)
+### White Test: Compare with the panel 11 (p.422)                          ###
+### lm(formula = res_s^2 ~ LOGPROFIT_s + LOGPROFIT_sq)                     ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.11175 -0.08575 -0.03419  0.04261  0.74345 
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept)  -0.036526   0.135894  -0.269    0.789
+LOGPROFIT_s   0.050192   0.044944   1.117    0.267
+LOGPROFIT_sq -0.004206   0.003614  -1.164    0.247
+Residual standard error: 0.1347 on 93 degrees of freedom
+Multiple R-squared:  0.0145,    Adjusted R-squared:  -0.006699 
+F-statistic: 0.6839 on 2 and 93 DF,  p-value: 0.5071
 
-Breusch Godfrey test
-res_lag1<- c(NA, lag(res_100))[1:100]
-res_lag2<- c(NA, NA, lag(res_100))[1:100]
-panel12<- lm(res_100~ LOGPROFIT+res_lag1+ res_lag2)
+
+res_lag1<- c(NA, lag(res_s))[1:96]
+res_lag2<- c(NA, NA, lag(res_s))[1:96]
+panel12<- lm(res_s~ LOGPROFIT_s+res_lag1+ res_lag2)
 summary(panel12)
+### Breusch Godfrey test: Compare with the panel 12 (p.422)                ###
+### lm(formula = res_s ~ LOGPROFIT_s + res_lag1 + res_lag2)                ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.75330 -0.26132 -0.03266  0.22821  0.85875 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept) -0.08058    0.13859  -0.581    0.562
+LOGPROFIT_s  0.01295    0.02341   0.553    0.582
+res_lag1    -0.15577    0.10468  -1.488    0.140
+res_lag2     0.03132    0.10501   0.298    0.766
+Residual standard error: 0.3238 on 90 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.02909,   Adjusted R-squared:  -0.003273 
+F-statistic: 0.8989 on 3 and 90 DF,  p-value: 0.4451
 
-acf(res, 10)
-str(LOGPROFIT)
+### Panel 13 (p. 422)                                                      ###
+acf(res_s, 10)
+hist(res_s)
+summary(res_s)
+
+### Now no ordered data                                                    ###
+### Exhibit 5 49 (o) (p. 423)  Positive correlation                        ###
+plot(LOGTURNOVER,LOGPROFIT)
 logprof_iv<- lm(LOGPROFIT ~ LOGTURNOVER)
 Profit<- fitted(logprof_iv)
 str(Profita)
@@ -132,9 +143,7 @@ Profita<- c(Profit, NA,NA, NA, NA, NA,NA,NA, NA,NA,NA, NA,NA,NA,NA,NA,NA)
 LOGSALARYa<- LOGSALARY[1:84]
 panel016a<- lm(LOGSALARY~ Profit)
 summary(panel016a)
-Call:
-lm(formula = LOGSALARY ~ Profit)
-
+### IV estimation: Panel 16 (p. 423) lm(formula = LOGSALARY ~ Profit)      ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.64599 -0.28874 -0.03064  0.23432  1.20376 
@@ -153,8 +162,7 @@ res_v<- resid(logprof_iv)
 panel017<- lm(res~ 
 LOGPROFIT + res_v)
 summary(panel017)
-Call:
-lm(formula = res ~ LOGPROFIT + res_v)
+### Hausman Test: Panel 17 (p. 423) lm(formula = res ~ LOGPROFIT + res_v)  ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.74797 -0.22827 -0.02471  0.23661  0.93408 
