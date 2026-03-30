@@ -56,7 +56,10 @@ Residual standard error: 0.3249 on 93 degrees of freedom
 Multiple R-squared:  0.3663,    Adjusted R-squared:  0.3527 
 F-statistic: 26.88 on 2 and 93 DF,  p-value: 6.128e-10
 
-
+library(strucchange)
+eq_cusum<- efp(LOGSALARY_s~ LOGPROFIT_s,type = "Rec-CUSUM")
+plot(eq_cusum)
+sctest(eq_cusum
 ### Chow break test
 panel09<- lm(LOGSALARY_s[5:76]~LOGPROFIT_s[5:76])
 summary(panel09)
