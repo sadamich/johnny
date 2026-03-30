@@ -224,6 +224,9 @@ y1<- c(NA,y)
 y2<- c(NA,y1)
 eq_ar2<- lm(y ~ y1[1:44]+ y2[1:44])
 summary(eq_ar2)
+res1<- resid(eq_ar2)
+res1<- ts(res1, freq=5, start=1)
+plot(res1, main ="AR(2) model", ylab="Residuals")
 fit2<- fitted(eq_ar2)
 fit2<- ts(fit2, freq = 5, start =1)
 lines(fit2, col ="red", type="l")
@@ -245,6 +248,9 @@ Multiple R-squared:  0.7591,    Adjusted R-squared:  0.7468
 F-statistic: 61.46 on 2 and 39 DF,  p-value: 8.793e
 eq_ar1<- lm(y ~ y1[1:44])
 summary(eq_ar1)
+res2<- resid(eq_ar1)
+res2<- ts(res2, freq =5, start=1)
+plot(res2,main="AR(1) model", ylab="Residuals")
 
 ### AR1 Model Call:lm(formula = y ~ y1[1:44])
 Residuals:
