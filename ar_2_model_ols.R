@@ -11,6 +11,35 @@ D4Y_61<- D4Y[45:180]
 ### AR(2) Model ###
 d4_1<- D4Y[44:179]
 d4_2<- D4Y[43:178]
+ma<- c(0.5, rep(1,3),0.5)/4
+MA<- filter(D4Y, ma,sides=2)
+MA1<- MA[44:179]
+MA2<- MA[43:178]
+MA3<- MA[42:177]
+MA4<- MA[41:176]
+MA5<- MA[40:175]
+ar_25<- lm(D4Y_61 ~ d4_1+d4_2+MA1+MA2+MA3+MA4+MA5)
+summary(ar_25)
+### Compare with the panel 1 (p.566) Call:                                 ###
+### lm(formula = D4Y_61 ~ d4_1 + d4_2 + MA1 + MA2 + MA3 + MA4 + MA5)       ###
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0133663 -0.0025947 -0.0002225  0.0020773  0.0188922 
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.0012497  0.0006968  -1.793 0.075274 .  
+d4_1        -0.1869944  0.0611056  -3.060 0.002695 ** 
+d4_2        -0.4558829  0.0511866  -8.906 4.44e-15 ***
+MA1          1.8765780  0.0992909  18.900  < 2e-16 ***
+MA2          1.0850571  0.2886643   3.759 0.000258 ***
+MA3         -2.4600261  0.3703917  -6.642 8.01e-10 ***
+MA4          1.5194390  0.3155122   4.816 4.07e-06 ***
+MA5         -0.3419825  0.1169408  -2.924 0.004083 ** 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.005193 on 128 degrees of freedom
+Multiple R-squared:  0.9894,    Adjusted R-squared:  0.9889 
+F-statistic:  1714 on 7 and 128 DF,  p-value: < 2.2e-16
+
 ar_2<- lm(D4Y_61 ~ d4_1+d4_2)
 summary(ar_2)
 ### Exhibit 7 9 (p.563)Call: lm(formula = D4Y_61 ~ d4_1 + d4_2)            ###
