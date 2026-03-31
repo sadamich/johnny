@@ -136,15 +136,18 @@ acf(res_s, 10)
 hist(res_s)
 summary(res_s)
 
-### Now no ordered data                                                    ###
+### Now no ordered data 
+xm535_s<- xm535[order(xm535$LOGPROFIT), ]
+xm535_s                                                   
 ### Exhibit 5 49 (o) (p. 423)  Positive correlation                        ###
 plot(LOGTURNOVER,LOGPROFIT)
 logprof_iv<- lm(LOGPROFIT ~ LOGTURNOVER)
+summary(logprof_iv)
 Profit<- fitted(logprof_iv)
 str(Profita)
 Profita<- c(Profit, NA,NA, NA, NA, NA,NA,NA, NA,NA,NA, NA,NA,NA,NA,NA,NA)
-LOGSALARYa<- LOGSALARY[1:84]
-panel016a<- lm(LOGSALARY~ Profit)
+LOGSALARYa<- LOGSALARY[Profit >0]
+panel016a<- lm(LOGSALARYa~ Profit)
 summary(panel016a)
 ### IV estimation: Panel 16 (p. 423) lm(formula = LOGSALARY ~ Profit)      ###
 Residuals:
