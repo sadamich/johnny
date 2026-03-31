@@ -166,3 +166,12 @@ eigen(mpower(A, 4))$values
 
 ### Matrix decomposition                                                 ###
 https://cran.r-project.org/web/packages/mand/vignettes/e_Multivariate_Approach_Matrix_Decomposition.html
+
+### https://www.geo.fu-berlin.de/en/v/soga-r/Introduction-to-R/Control-Flow-Structures/index.html
+M <- matrix(1:10, 5)
+for (i in seq(nrow(M))) {
+  for (j in seq(ncol(M))) {
+    val <- M[i, j]
+    print(paste("row index:", i, "column index:", j, "value:", val))
+  }
+}
