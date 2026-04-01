@@ -6,7 +6,7 @@ library(maxLik)
 ### https://global.oup.com/booksites/content/0199268010/                        ###
 ### Create a 'maxControl' object                                           ###
 maxControl(tol=1e-4, sann_tmax=7, printLevel=2)
-### Optimize quadratic form t(D) %*% W %*% D with p.d. weight matrix,
+### Optimize quadratic form t(D) %*% W %*% D : min D'WD (cf 1/nG'WG)       ###
 ### s.t. constraints sum(D) = 1
 quadForm <- function(D) {
    return(-t(D) %*% W %*% D)
@@ -76,7 +76,7 @@ Estimates:
 [2,]  3.943876e-07 -7.888135e-07
 activePar(free)
 
-## keep the first parameter constant
+### keep the first parameter constant                                      ###
 cons <- maxNR(f, start=1:2, fixed=c(TRUE,FALSE))
 summary(cons) # result should be around (1,0)
 activePar(cons)
