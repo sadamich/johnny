@@ -291,3 +291,18 @@ sctest(eq_cusum)
 
 data:  eq_cusum
 S = 0.60109, p-value = 0.4113
+aktien4<- read.csv("aktien4.csv", header=TRUE)
+str(aktien4)
+attach(aktien4)
+x<- cyber
+x<- ts(x, freq=5, start =1)
+plot(x, main ="Actual value", ylab = "x")
+t<- 1:55
+eq<- lm(x~t)
+summary(eq)
+library(tseries)
+adf.test(x)
+library(strucchange)
+eq_cusum<- efp(x~t,type = "Rec-CUSUM")
+plot(eq_cusum)
+sctest(eq_cusum)
