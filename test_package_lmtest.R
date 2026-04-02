@@ -90,3 +90,59 @@ Model 2: con ~ gnp + gnp1
 1     15                      
 2     16 -1 9.7456 0.006998 **
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 
+
+
+### load data and fit model                                                ###
+data("Mandible", package = "lmtest")
+fm <- lm(length ~ age, data = Mandible, subset=(age <= 28))
+### the following commands lead to the same tests:                         ###
+summary(fm)
+(ct <- coeftest(fm))
+t test of coefficients:
+              Estimate Std. Error t value  Pr(>|t|)    
+(Intercept) -11.953366   0.976227 -12.245 < 2.2e-16 ***
+age           1.772730   0.047704  37.161 < 2.2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+### a z test (instead of a t test) can be performed by                     ###
+coeftest(fm, df = Inf)
+### corresponding confidence intervals                                     ###
+confint(ct)
+coefci(fm)
+### which in this simple case is equivalent to                             ###
+confint(fm)
+
+### extract further model information either from                          ###
+### the original model or from the coeftest output                         ###
+nobs(fm)
+nobs(ct)
+logLik(fm)
+logLik(ct)
+AIC(fm, ct)
+BIC(fm, ct)
+
+if(require("sandwich")) {
+### a different covariance matrix can be also used:                        ###
+(ct <- coeftest(fm, df = Inf, vcov = vcovHC))
+
+### the corresponding confidence interval can be computed either as        ###
+confint(ct)
+### or based on the original model                                         ###
+coefci(fm, df = Inf, vcov = vcovHC)
+
+### note that the degrees of freedom _actually used_ can be extracted      ###
+df.residual(ct)
+### which differ here from                                                 ###
+df.residual(fm)
+
+### vcov can also be supplied as a function with additional arguments      ###
+coeftest(fm, df = Inf, vcov = vcovHC, type = "HC0")
+### or as a matrix                                                         ###
+coeftest(fm, df = Inf, vcov = vcovHC(fm, type = "HC0"))
+}
+z test of coefficients:
+
+              Estimate Std. Error z value  Pr(>|z|)    
+(Intercept) -11.953366   1.009817 -11.837 < 2.2e-16 ***
+age           1.772730   0.054343  32.621 < 2.2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
