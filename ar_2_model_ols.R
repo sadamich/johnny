@@ -11,14 +11,19 @@ D4Y_61<- D4Y[45:180]
 ### AR(2) Model ###
 d4_1<- D4Y[44:179]
 d4_2<- D4Y[43:178]
-ma<- c(0.5, rep(1,3),0.5)/4
-MA<- filter(D4Y, ma,sides=2)
-MA1<- MA[44:179]
-MA2<- MA[43:178]
-MA3<- MA[42:177]
-MA4<- MA[41:176]
-MA5<- MA[40:175]
-ar_25<- lm(D4Y_61 ~ d4_1+d4_2+MA1+MA2+MA3+MA4+MA5)
+ma1<- rep(1,1)
+MA1<- filter(D4Y, ma1,sides=2)
+ma2<- 1/2
+MA2<- filter(D4Y, ma2,sides=2)
+ma3<- rep(1/3, 3)
+MA3<- filter(D4Y, ma3,sides=2)
+ma4<- c(0.5, rep(1,3),0.5)/4
+MA4<- filter(D4Y, ma4,sides=2)
+ma5<- rep(1/5, 5)
+MA5<- filter(D4Y, ma5,sides=2)
+
+ar_25<- lm(D4Y_61 ~ d4_1+d4_2+MA1[45:180]+MA2[45:180]+MA3[45:180]
+                      +MA4[45:180]+MA5[45:180])
 summary(ar_25)
 ### Compare with the panel 1 (p.566) Call:                                 ###
 ### lm(formula = D4Y_61 ~ d4_1 + d4_2 + MA1 + MA2 + MA3 + MA4 + MA5)       ###
