@@ -47,5 +47,27 @@ Estimates:
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 
-             
- 
+### ML estimation                                                           ###
+f<- function(theta){
+beta1<- theta[1]
+beta2<- theta[2]
+sigma<- theta[3]
+N<- 240
+mu<- beta1+beta2*RENDMARK
+-N*0.5*log(2*pi)-N*0.5*log(sigma^2)- 0.5*((RENDCYCO - mu)^2/sigma^2)
+}
+m<- maxLik(f,start=c(0,0,1))
+summary(m)            
+ --------------------------------------------
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 6 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: -22287.01 
+3  free parameters
+Estimates:
+      Estimate Std. error t value Pr(> t)    
+[1,] -0.447481   0.023322  -19.19  <2e-16 ***
+[2,]  1.171128   0.004846  241.69  <2e-16 ***
+[3,] -0.356290   0.001050 -339.41  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+### Compare with the panel 1 (p.264) the coeficients are the same (ML=OLS) ###
