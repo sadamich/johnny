@@ -336,3 +336,16 @@ fit<- fitted(eq_ar1)
 fit<- ts(fit, freq=5, start=1)
 lines(fit, col ="red", type="l")
 
+x_diff<- x[2:55] - x[1:54]
+library(tseries)
+adf.test(x_diff)
+Augmented Dickey-Fuller Test
+data:  x_diff
+Dickey-Fuller = -3.4042, Lag order = 3, p-value = 0.06455
+alternative hypothesis: stationary
+
+eq_rw<- lm(x_diff ~ 1)
+summary(eq_rw)
+fit<- fitted(eq_rw)
+fit<- ts(fit, freq=5, start=1)
+plot(fit, col="red", type ="l")
