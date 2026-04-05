@@ -355,3 +355,16 @@ model <- rw_model(x)
 forecast(model, h = 10) |> autoplot()
 fit <- ets(x,model="AAN")
 plot(forecast(fit, h = 10))
+
+x_d2<- x_diff[2:54] - x_diff[1:53]
+library(tseries)
+adf.test(x_d2)
+Augmented Dickey-Fuller Test
+
+data:  x_d2
+Dickey-Fuller = -5.8907, Lag order = 3, p-value = 0.01
+alternative hypothesis: stationary
+Warning message:
+In adf.test(x_d2) : p-value smaller than printed p-value
+plot(decompose(x))
+
