@@ -299,7 +299,7 @@ x<- cyber
 x<- ts(x, freq=5, start =1)
 plot(x, main ="Actual value", ylab = "x")
 acf(x)
-t<- 1:55
+t<- 1:58
 eq<- lm(x~t)
 summary(eq)
 library(tseries)
@@ -308,40 +308,41 @@ library(strucchange)
 eq_cusum<- efp(x~t,type = "Rec-CUSUM")
 plot(eq_cusum)
 sctest(eq_cusum)
- Recursive CUSUM test
+    Recursive CUSUM test
 data:  eq_cusum
-S = 1.3893, p-value = 0.0008451
+S = 1.5779, p-value = 9.133e-05
+
 
 x1<- c(NA,x)
 x2<- c(NA,x1)
-eq_ar2<- lm(x ~ x1[1:55]+x2[1:55])
+eq_ar2<- lm(x ~ x1[1:58]+x2[1:58])
 summary(eq_ar2)
 
-eq_ar1<- lm(x ~ x1[1:55])
+eq_ar1<- lm(x ~ x1[1:58])
 summary(eq_ar1)
 res<- resid(eq_ar1)
 res<- ts(res, freq = 5, start=1)
 plot(res, type="l")
 
 library(strucchange)
-eq_cusum2<- efp(x~x1[1:55],type = "Rec-CUSUM")
+eq_cusum2<- efp(x~x1[1:58],type = "Rec-CUSUM")
 plot(eq_cusum2)
 sctest(eq_cusum2)
 Recursive CUSUM test
 data:  eq_cusum2
-S = 0.61263, p-value = 0.3896
+S = 0.62943, p-value = 0.3593
 
 plot(x, main ="Actual value", ylab = "x")
 fit<- fitted(eq_ar1)
 fit<- ts(fit, freq=5, start=1)
 lines(fit, col ="red", type="l")
 
-x_diff<- x[2:55] - x[1:54]
+x_diff<- x[2:58] - x[1:57]
 library(tseries)
 adf.test(x_diff)
-Augmented Dickey-Fuller Test
+ Augmented Dickey-Fuller Test
 data:  x_diff
-Dickey-Fuller = -3.4042, Lag order = 3, p-value = 0.06455
+Dickey-Fuller = -3.5842, Lag order = 3, p-value = 0.04243
 alternative hypothesis: stationary
 
 eq_rw<- lm(x_diff ~ 1)
