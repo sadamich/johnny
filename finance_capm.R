@@ -71,3 +71,16 @@ Estimates:
 [3,] -0.356290   0.001050 -339.41  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ### Compare with the panel 1 (p.264) the coeficients are the same (ML=OLS) ###
+
+
+### 4 3 9 Example (p.245) ????
+f_t<- function(theta){
+beta1<- theta[1]
+beta2<- theta[2]
+sigma<- theta[3]
+N<- 240
+mu<- beta1+beta2*RENDMARK
+ N*log(3) -N*0.5*log(sigma^2)- 3*sum(log(1+(RENDCYCO - mu)^2/5*sigma^2))
+}
+m<- maxLik(f_t,start=c(0,1,1))
+summary(m) 
