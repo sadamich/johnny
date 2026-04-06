@@ -78,6 +78,13 @@ f_res_c<- (RENDNCCO -(0.136400 +0.914571*RENDMARK))
 hist(f_res_c)
 f_res<- (RENDNCCO -(0.19788+0.93154*RENDMARK))
 hist(f_res)
+library(tseries)
+jarque.bera.test(f_res)
+Jarque Bera Test
+data:  f_res
+X-squared = 84.123, df = 2, p-value < 2.2e-16
+### f_res is not normal distributet.                                       ###
+
 ### Problem (g)                                                            ###
 library("gmm")
 eq_gmm<- gmm(RENDNCCO~RENDMARK, x=RENDMARK)
