@@ -11,20 +11,20 @@ beta1<- theta[1]
 beta2<- theta[2]
 N<- 240
 mu<- beta1+beta2*RENDMARK
-- N*log(1+(RENDNCCO - mu)^2)
+-N*log(pi) - N*log(1+(RENDNCCO - mu)^2)
 }
 m_cauchy<- maxLik(f_cauchy, start = c(0,0))
 summary(m_cauchy)
-Maximum Likelihood estimation
-Newton-Raphson maximisation, 11 iterations
+ Maximum Likelihood estimation
+Newton-Raphson maximisation, 8 iterations
 Return code 8: successive function values within relative tolerance limit (reltol)
-Log-Likelihood: -82249.39 
+Log-Likelihood: -148185.8 
 2  free parameters
 Estimates:
      Estimate Std. error t value Pr(> t)    
-[1,] 0.136400   0.007848   17.38  <2e-16 ***
-[2,] 0.914571   0.001548  590.95  <2e-16 ***
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 
+[1,] 0.136400   0.007844   17.39  <2e-16 ***
+[2,] 0.914571   0.001548  590.94  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
 
 ### Problem (c) ML under normal distribution assumption                    ###
 f<- function(theta){
