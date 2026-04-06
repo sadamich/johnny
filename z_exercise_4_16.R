@@ -68,5 +68,10 @@ Model 2: y ~ beta1 + beta2 * x2^(1/2) + beta4 * x3
 1     50   0.022408                            
 2     51   0.022469 -1 -6.07e-05  0.1354 0.7144
 ### H0 (beta3=1/2) is not rejected.                                         ###
-
-
+### Problem (f) LR test                                                     ###
+logLik(eq_nls)
+logLik(eq_nls_r)
+2* 133.6349 - 2*133.5618 =  0.1462
+### H0 (beta3=1/2) is not rejected.                                         ###
+res<- resid(eq_nls_r)
+                                  
