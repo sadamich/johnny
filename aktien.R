@@ -297,7 +297,7 @@ str(aktien4)
 attach(aktien4)
 x<- cyber
 x<- ts(x, freq=5, start =1)
-plot(x, main ="Actual value", ylab = "x")
+plot(x, main ="Actual value (von 8 JAN 2026 bis 3 APR 2026)", ylab = "x")
 acf(x)
 t<- 1:58
 eq<- lm(x~t)
