@@ -5,6 +5,7 @@
 xm526<- read.csv("xm526.csv", header=TRUE)
 str(xm526)
 attach(xm526)
+detach(xm526)
 ### Problem a (p.434)                                                      ###
 t<- 1:195
 eq_t<- lm(IP ~ t)
