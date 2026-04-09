@@ -4,6 +4,7 @@
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 xm501<- read.csv("xm501.csv", header=TRUE)
 attach(xm501)
+detach(xm501)
 str(xm501)
 panel01<- lm(LOGSALARY ~ EDUC+GENDER+MINORITY+DUMJCAT2+DUMJCAT3)
 summary(panel01)
@@ -73,9 +74,15 @@ LM= 26*0.2956 = [1] 7.6856 (P= 0.006) H0 is rejectet.
 xm511<- read.csv("xm511.csv", header = TRUE)
 str(xm511)
 attach(xm511)
+detach(xm511)
 panel01<- lm(DAAA~ DUS3MT)
 summary(panel01)
 res<- resid(panel01)
+sd(res)
+res_sd<- res/sd(res)
+### Exhibit 5 27 (p.351)                                                   ###
+res_sd<- ts(res_sd, freq=12, start=1950)
+plot(res_sd)
 DUS3MT_sq<- DUS3MT^2
 panel02<- lm(res^2 ~ DUS3MT+ DUS3MT_sq)
 summary(panel02)
