@@ -34,6 +34,9 @@ Multiple R-squared:  0.4207,    Adjusted R-squared:  0.4178
 F-statistic:   144 on 3 and 595 DF,  p-value: < 2.2e-16
 panel01_a<- lm(DAAA[2:600]~ DUS3MT[2:600])
 model_lag_a<- lm(DAAA[2:600]~ DUS3MT[2:600]+DUS3MT_lag[2:600]+DAAA_lag[2:600])
+
+### Panel 3 (p.371) Wald test                                             ###
+0.252145 * 0.289874 - 0.079633 =  -0.00654272
 anova(panel01_a, model_lag_a)
 Analysis of Variance Table
 Model 1: DAAA[2:600] ~ DUS3MT[2:600]
@@ -42,6 +45,8 @@ Model 2: DAAA[2:600] ~ DUS3MT[2:600] + DUS3MT_lag[2:600] + DAAA_lag[2:600]
 1    597 17.486                                  
 2    595 16.087  2     1.399 25.872 1.683e-11 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
+###The models are different. Therefore,the restriction of parameter is not rejected.###
+
 panel04<- lm(DAAA ~ DUS3MT + ar1_error[1:600])
 summary(panel04)
 ### Panel 4 (p.370) lm(formula = DAAA ~ DUS3MT + ar1_error[1:600])         ###
