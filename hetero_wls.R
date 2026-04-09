@@ -193,6 +193,7 @@ summary(m, eigentol=1e-15)
 xm511<- read.csv("xm511.csv", header =TRUE)
 str(xm511)
 attach(xm511)
+detach(xm511)
 panel01<- lm(DAAA ~ DUS3MT)
 summary(panel01)
 ### Panel 1 (p.341) Call:lm(formula = DAAA ~ DUS3MT)                       ###
@@ -239,7 +240,12 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.9859 on 598 degrees of freedom
 Multiple R-squared:  0.2805,    Adjusted R-squared:  0.2793 
 F-statistic: 233.2 on 1 and 598 DF,  p-value: < 2.2e-16
-
+res<- resid(panel03)
+sd(res)
+res_sd<- res/sd(res)
+res_sd<- ts(res_sd, freq=12, start=1950)
+### Exhibit 5 27 (d) (p.351)                                               ###
+plot(res_sd)
 
 library(maxLik)
 loglik <- function(theta) {
@@ -259,6 +265,7 @@ loglik <- function(theta) {
                             gamma1= 0.009719, gamma2=0.038850 ))
  summary(m)
 ### Clustered variances                                                    ###
+res<- resid(panel01)
 res_1<- c(NA,res)
 res_1<- res_1[1:600]
 res_1sq<- res_1^2
@@ -293,3 +300,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.9577 on 597 degrees of freedom
 Multiple R-squared:  0.3573,    Adjusted R-squared:  0.3562 
 F-statistic: 331.9 on 1 and 597 DF,  p-value: < 2.2e-16
+res<- resid(panel07)
+sd(res)
+res_sd<- res/sd(res)
+res_sd<- ts(res_sd, freq = 12, start =1950)
+### Compare with Exhibit 5 27 (e) (p.351)                                  ###
+plot(res_sd)
