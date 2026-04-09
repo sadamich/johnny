@@ -58,6 +58,7 @@ LM = n R^2 = 600*0.1078=64.68 (H0 is rejectet)
 xm520<- read.csv("xm520.csv", header = TRUE)
 str(xm520)
 attach(xm520)
+detach(xm520)
 eq_ols<- lm(FRACFOOD ~ TOTCONS+FOODCONS+AHSIZE)
 summary(eq_ols)
 res<- resid(eq_ols)
@@ -79,3 +80,18 @@ res_1[2:48]    0.2511941  0.1629559   1.541    0.131
 Residual standard error: 0.01482 on 43 degrees of freedom
 Multiple R-squared:  0.05483,   Adjusted R-squared:  -0.01111 
 F-statistic: 0.8315 on 3 and 43 DF,  p-value: 0.4839
+
+xm520_o<- xm520[order(xm520$SAMPSIZE), ]
+detach(xm520)
+attach(xm520_o)
+detach(xm520_o)
+u<- c(1,7,16,25,33,41)
+TOTCONS<- TOTCONS[-u]
+AHSIZE<- AHSIZE[-u]
+FOODCONS<- FOODCONS[-u]
+eq<- lm(FOODCONS~TOTCONS+AHSIZE)
+summary(eq)
+res<- resid(eq)
+eq_bg<- lm(res[2:42]~TOTCONS[2:42]+AHSIZE[2:42]+res[1:41])
+summary(eq_bg)?????
+
