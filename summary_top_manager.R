@@ -6,6 +6,7 @@
 xm535<- read.csv("xm535.csv", header = TRUE)
 str(xm535)
 attach(xm535)
+detach(xm535)
 plot(PROFIT, SALARY)
 plot(LOGPROFIT, LOGSALARY)
 panel03<- lm(LOGSALARY ~ LOGPROFIT)
@@ -165,8 +166,7 @@ F-statistic: 26.18 on 1 and 82 DF,  p-value: 2.01e-06
 eq_ols<- lm(LOGSALARY ~ LOGPROFIT)
 res<- resid(eq_ols)
 res_v<- resid(logprof_iv)
-panel017<- lm(res~ 
-LOGPROFIT + res_v)
+panel017<- lm(res~ LOGPROFIT + res_v)
 summary(panel017)
 ### Hausman Test: Panel 17 (p. 423) lm(formula = res ~ LOGPROFIT + res_v)  ###
 Residuals:
