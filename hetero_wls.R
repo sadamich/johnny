@@ -76,6 +76,13 @@ DUS3MT<- DUS3MT[-u]
 v<- v[-u]
 eq_wls<- lm(DAAA~ DUS3MT,weight = 1/v)
 summary(eq_wls)
+res<- resid(eq_wls)
+sd(res)
+res_sd<- res/sd(res)
+res_sd<- ts(res_sd, freq=12,start=1950)
+### Compare with Exhibit 5 27 b and c (p.351)                              ###
+plot(res_sd)
+plot(DUS3MT, res_sd)
 ### Panel 2 (p. 333) Call:                                                 ###
 lm(formula = DAAA ~ DUS3MT, weights = 1/v)
 Weighted Residuals:
