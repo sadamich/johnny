@@ -5,6 +5,7 @@
 xm531<- read.csv("xm531.csv", header = TRUE)
 str(xm531)
 attach(xm531)
+detach(xm531)
 panel01<- lm(GC ~ PG+RI)
 summary(panel01)
 ### Panel 1 Call:lm(formula = GC ~ PG + RI)
@@ -55,12 +56,16 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.03833 on 27 degrees of freedom
 Multiple R-squared:  0.9668,    Adjusted R-squared:  0.9644 
 F-statistic: 393.3 on 2 and 27 DF,  p-value: < 2.2e-16
-
-
+const<- rep(1,30)
+z<- c(const,RPT,RPN,RPU,RI)
+library("gmm")
+eq_gmm<- gmm(GC~PG+RI, x=z)????
+summary(eq_gmm)
 ### Example 5 30 (p.400)                                                   ###
 xm511<- read.csv("xm511.csv", header = TRUE)
 str(xm511)
 attach(xm511)
+detach(xm511)
 DUS3MT_lag1<- c(NA,lag(DUS3MT))
 DUS3MT_lag2<- c(NA,NA,lag(DUS3MT))
 str(DUS3MT)
@@ -73,23 +78,37 @@ DUS3MT_lag280<- DUS3MT_lag2[361:600]
 
 ### Panel 1 (p.408)                                                        ###
 library(gmm)
-
 panel02<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
 const<- rep(1, 240)
 z<- cbind(const,DUS3MT_lag180, DUS3MT_lag280)
-
-b<- solve(t(z)%*%z)
-p<- z%*%b%*%t(z)
-
-eq_iv<- lm(DAAA[361:600] ~ DUS3MT_80, weigths = 1/sqrt(p))
-summary(eq_iv)
-
+library("gmm")
+eq_gmm<- gmm(DAAA[361:600]~DUS3MT[361:600], x=z)
+summary(eq_gmm)
+### Compare the panel 1(p.408)gmm(g = DAAA[361:600] ~ DUS3MT[361:600], x = z)###
+Method:  twoStep 
+Kernel:  Quadratic Spectral(with bw =  1.47311 )
+Coefficients:
+                 Estimate    Std. Error  t value     Pr(>|t|)  
+(Intercept)      -0.0091059   0.0236358  -0.3852616   0.7000436
+DUS3MT[361:600]   0.1691413   0.0867269   1.9502746   0.0511434
+J-Test: degrees of freedom is 1 
+                J-test    P-value 
+Test E(g)=0:    0.010698  0.917622
+Initial values of the coefficients
+    (Intercept) DUS3MT[361:600] 
+    -0.00845297      0.16977883 
+### The Sargan test Panel 6 (p.415)                                        ###
+res_iv<- resid(eq_gmm)
+eq_sargan<- lm(res_iv~ DUS3MT[360:599]+DUS3MT[359:598])
+summary(eq_sargan)
+240*0.0001356 = 0.032544
+panel01<- lm(DAAA[361:600] ~ DUS3MT[361:600])
+res_ols<- resid(panel01)
 ### Eigenvalue decomposition???                                            ###
 ev<- eigen(p)
 (values<- ev$values)
 (vectors<- ev$vectors)
 ev
-
 summary(panel02)
 ### Panel 2 (p.401) Call:lm(formula = DUS3MT_80 ~ DUS3MT_lag180            ###
 ###                                             + DUS3MT_lag280)           ###
