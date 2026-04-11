@@ -7,6 +7,7 @@ str(xm531)
 attach(xm531)
 detach(xm531)
 panel01<- lm(GC ~ PG+RI)
+res_ols<- resid(panel01)
 summary(panel01)
 ### Panel 1 Call:lm(formula = GC ~ PG + RI)
 Residuals:
@@ -39,6 +40,24 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.07269 on 25 degrees of freedom
 Multiple R-squared:  0.8868,    Adjusted R-squared:  0.8687 
 F-statistic: 48.97 on 4 and 25 DF,  p-value: 1.797e-11
+res_aux<- resid(panel03)
+eq_hausman<- lm(res_ols~PG+RI+res_aux)
+summary(eq_hausman)
+### Hausman test Exogeneity Panel 1 (p.417)                                ### 
+### lm(formula = res_ols ~ PG + RI + res_aux)                              ###
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.041418 -0.015382 -0.002321  0.016155  0.042308 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)
+(Intercept)  0.027703   0.081429   0.340    0.736
+PG          -0.016872   0.028093  -0.601    0.553
+RI          -0.008558   0.024638  -0.347    0.731
+res_aux      0.104845   0.070032   1.497    0.146
+Residual standard error: 0.02332 on 26 degrees of freedom
+Multiple R-squared:  0.07936,   Adjusted R-squared:  -0.02686 
+F-statistic: 0.7471 on 3 and 26 DF,  p-value: 0.5339
+LM=n*R^2= 30* 0.07936 =  2.3808
 
 pg_fit<- fitted(panel03)
 panel02<- lm(GC ~ pg_fit + RI)
@@ -56,11 +75,30 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.03833 on 27 degrees of freedom
 Multiple R-squared:  0.9668,    Adjusted R-squared:  0.9644 
 F-statistic: 393.3 on 2 and 27 DF,  p-value: < 2.2e-16
+res_iv<- resid(panel02)
+eq_sargan<- lm(res_iv~ RPT+RPN+RPU+RI)
+summary(eq_sargan)
+### Compare the panel 2 (p.416)lm(formula = res_iv ~ RPT + RPN + RPU + RI) ###
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.067822 -0.020037 -0.005752  0.022093  0.084996 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept) -0.20975    0.44738  -0.469    0.643
+RPT         -0.05120    0.10261  -0.499    0.622
+RPN          0.02041    0.18887   0.108    0.915
+RPU         -0.07023    0.09826  -0.715    0.481
+RI           0.06041    0.13258   0.456    0.653
+Residual standard error: 0.03901 on 25 degrees of freedom
+Multiple R-squared:  0.04093,   Adjusted R-squared:  -0.1125 
+F-statistic: 0.2667 on 4 and 25 DF,  p-value: 0.8965
+LM= n*R^2=30* 0.04093=1.2279
+
 const<- rep(1,30)
 z<- c(const,RPT,RPN,RPU,RI)
 library("gmm")
-eq_gmm<- gmm(GC~PG+RI, x=z)????
-summary(eq_gmm)
+eq_tsls<- tsls(GC~pg_fit+RI, x=z, data=xm531)
+summary(eq_tsls)
 ### Example 5 30 (p.400)                                                   ###
 xm511<- read.csv("xm511.csv", header = TRUE)
 str(xm511)
@@ -82,6 +120,36 @@ panel02<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
 const<- rep(1, 240)
 z<- cbind(const,DUS3MT_lag180, DUS3MT_lag280)
 library("gmm")
+eq_tsls<- tsls(DAAA[361:600]~DUS3MT[361:600], x=z)
+summary(eq_tsls)
+### Panel 1 (p.408) tsls(g = DAAA[361:600] ~ DUS3MT[361:600], x = z)       ###
+Method:  Two Stage Least Squares(Meat type = Classical) 
+Coefficients:
+                 Estimate    Std. Error  t value     Pr(>|t|)  
+(Intercept)      -0.0084530   0.0165717  -0.5100850   0.6099919
+DUS3MT[361:600]   0.1697788   0.0649521   2.6139065   0.0089514
+J-Test: degrees of freedom is 1 
+                J-test    P-value 
+Test E(g)=0:    0.032488  0.856962
+ First stage F-statistics: 
+DUS3MT[361:600] : F( 2 ,  237 ) =  21.18306  (P-Vavue =  3.436291e-09 )
+res_tsls<- resid(eq_tsls)
+eq_sargan<- lm(res_tsls~ DUS3MT[360:599]+DUS3MT[359:598])
+summary(eq_sargan)
+### Panel 6 Sargan test (p.415)                                            ###
+### lm(formula = res_tsls ~ DUS3MT[360:599] + DUS3MT[359:598])             ###
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.74664 -0.13315  0.00007  0.13673  1.16679 
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)
+(Intercept)     -0.0001558  0.0165252  -0.009    0.992
+DUS3MT[360:599] -0.0022183  0.0263953  -0.084    0.933
+DUS3MT[359:598] -0.0033868  0.0263777  -0.128    0.898
+Residual standard error: 0.2556 on 237 degrees of freedom
+Multiple R-squared:  0.0001354, Adjusted R-squared:  -0.008302 
+F-statistic: 0.01604 on 2 and 237 DF,  p-value: 0.9841
+LM= n*R^2= 240*0.0001354 =  0.032496
 eq_gmm<- gmm(DAAA[361:600]~DUS3MT[361:600], x=z)
 summary(eq_gmm)
 ### Compare the panel 1(p.408)gmm(g = DAAA[361:600] ~ DUS3MT[361:600], x = z)###
@@ -194,7 +262,8 @@ summary(eq_iv)
 res_iv<- resid(eq_iv)
 eqsargan<- lm(res_iv~ DUS3MT_lag180+ DUS3MT_lag280)
 summary(eqsargan)
-Call:lm(formula = res_iv ~ DUS3MT_lag180 + DUS3MT_lag280)
+### Compare with the panel 6 (p.415)                                       ###
+### lm(formula = res_iv ~ DUS3MT_lag180 + DUS3MT_lag280)                   ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -1.13759 -0.15194 -0.00699  0.16635  1.31507 
