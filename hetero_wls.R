@@ -257,19 +257,23 @@ loglik <- function(theta) {
  N <- nrow(xm511)
  mu <- beta0 + beta1*DUS3MT
  e<- DAAA -mu
- e^2 <-  gamma1+ gamma2*DUM7599
 
- -1/2*N*log(2*pi) - 1/2*N*log(sigma^2) - 1/2*sum((e^2/sigma^2) 
+ -1/2*N*log(2*pi) - 1/2*N*log(sigma^2) - 1/2*sum(e^2/sigma^2) 
+}
  
- m <- maxLik(loglik,start=c(beta0 = 0.013384 , beta1=0.214989,sigma=1,
-                            gamma1= 0.009719, gamma2=0.038850 ))
+ m <- maxLik(loglik,start=c(beta0 = 0 , beta1=0,sigma=1))
  summary(m)
-### Clustered variances                                                    ###
-res<- resid(panel01)
-res_1<- c(NA,res)
-res_1<- res_1[1:600]
-res_1sq<- res_1^2
-eq_aux2<- lm(res^2 ~ res_1sq)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 6 iterations
+Return code 1: gradient close to zero (gradtol)
+Log-Likelihood: 209.2857 
+3  free parameters
+Estimates:
+       Estimate Std. error t value Pr(> t)    
+beta0  0.006393   0.006970   0.917   0.359    
+beta1  0.274585   0.014617  18.786  <2e-16 ***
+sigma -0.170717   0.004928 -34.642  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 
 summary(eq_aux2)
 ### Panel 6 (p.342) Call:lm(formula = res^2 ~ res_1sq)                     ###
 Residuals:
@@ -284,6 +288,7 @@ Residual standard error: 0.0765 on 597 degrees of freedom
   (1 observation deleted due to missingness)
 Multiple R-squared:  0.04475,   Adjusted R-squared:  0.04315 
 F-statistic: 27.96 on 1 and 597 DF,  p-value: 1.736e-07
+
 v1<- fitted(eq_aux2)
 panel07<- lm(DAAA[2:600] ~ DUS3MT[2:600], weight = 1/v1)
 summary(panel07)
