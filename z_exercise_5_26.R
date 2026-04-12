@@ -5,6 +5,7 @@
 xr526<- read.csv("xr526.csv",header =TRUE)
 str(xr526)
 attach(xr526)
+detach(xr526)
 y<- log(QUANTITY)
 ### Problem a (p.434)                                                      ###
 AP<- A*DP
@@ -52,3 +53,13 @@ Residual standard error: 0.07298 on 8 degrees of freedom
 Multiple R-squared:  0.9555,    Adjusted R-squared:  0.9388 
 F-statistic: 57.26 on 3 and 8 DF,  p-value: 9.473e-06
 ### The coefficient of beta2 is larger.                                    ###
+
+### Problem d (p.434)                                                      ###
+ 6.17571/6.36437
+[1] 0.9703568
+ 0.28084/0.56116
+[1] 0.5004633
+ 0.18866/-0.18866 
+[1] -1
+ 0.28032/-0.28032 
+[1] -1
