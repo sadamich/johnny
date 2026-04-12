@@ -5,6 +5,7 @@
 xr523<- read.csv("xr523.csv", header=TRUE)
 str(xr523)
 attach(xr523)
+detach(xr523)
 ### Problem (a) OLS estimate                                               ###
 eq<- lm(CRIME ~ POLICE)
 summary(eq)
@@ -69,7 +70,7 @@ Multiple R-squared:  0.01754,   Adjusted R-squared:  0.007513
 F-statistic: 1.749 on 1 and 98 DF,  p-value: 0.189
 ### beta_iv -0.8669508 = fit -0.8670                                       ###
 
-### Hausman test
+### Hausman test (p.411)                                                   ###
 res_ols<- resid(eq)
 resaux<- resid(eq_d)
 eq_hausman<- lm(res_ols ~ POLICE+resaux)
@@ -88,3 +89,8 @@ Residual standard error: 1.046 on 97 degrees of freedom
 Multiple R-squared:  0.5871,    Adjusted R-squared:  0.5786 
 F-statistic: 68.98 on 2 and 97 DF,  p-value: < 2.2e-16
 LM = n*R^2= 100*0.5871 = 58.71 HO (Exogenity) is rejected.                 ###
+dchisq(x, df, ncp = 0, log = FALSE)
+dchisq(0.025,1)
+[1] 2.49179
+dchisq(0.05,1)
+[1] 1.740074
