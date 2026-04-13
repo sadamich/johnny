@@ -297,13 +297,14 @@ str(aktien4)
 attach(aktien4)
 x<- cyber
 x<- ts(x, freq=5, start =1)
-plot(x, main ="Actual value (von 8 JAN 2026 bis 3 APR 2026)", ylab = "x")
+plot(x, main ="Actual value (von 8 JAN 2026 bis 10 APR 2026)", ylab = "x")
 acf(x)
-t<- 1:58
+t<- 1:64
 eq<- lm(x~t)
 summary(eq)
 library(tseries)
-adf.test(x)
+x_adj<- na.omit(x)
+adf.test(x_adj)
 library(strucchange)
 eq_cusum<- efp(x~t,type = "Rec-CUSUM")
 plot(eq_cusum)
@@ -311,7 +312,15 @@ sctest(eq_cusum)
     Recursive CUSUM test
 data:  eq_cusum
 S = 1.5779, p-value = 9.133e-05
-
+plot(decompose(x))
+y<- sbux
+y<- ts(y, freq=5, start =1)
+plot(y, main ="Actual value (von 8 JAN 2026 bis 10 APR 2026)", ylab = "y")
+y_adj<- na.omit(y)
+adf.test(y_adj)
+eq_cusum2<- efp(y~t,type = "Rec-CUSUM")
+plot(eq_cusum2)
+plot(decompose(y))
 
 x1<- c(NA,x)
 x2<- c(NA,x1)
