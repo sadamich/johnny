@@ -108,14 +108,137 @@ phase <- factor(rep(c("pretest", "posttest", "followup"), c(5, 5, 5)),
 hour <- ordered(rep(1:5, 3))
 idata <- data.frame(phase, hour)
 idata
-
+ phase hour
+1   pretest    1
+2   pretest    2
+3   pretest    3
+4   pretest    4
+5   pretest    5
+6  posttest    1
+7  posttest    2
+8  posttest    3
+9  posttest    4
+10 posttest    5
+11 followup    1
+12 followup    2
+13 followup    3
+14 followup    4
+15 followup    5
 mod.ok <- lm(cbind(pre.1, pre.2, pre.3, pre.4, pre.5,
                      post.1, post.2, post.3, post.4, post.5,
                      fup.1, fup.2, fup.3, fup.4, fup.5) ~  treatment*gender,
                 data=OBrienKaiser)
 (av.ok <- Anova(mod.ok, idata=idata, idesign=~phase*hour))
+Type II Repeated Measures MANOVA Tests: Pillai test statistic
+                            Df test stat approx F num Df den Df    Pr(>F)    
+(Intercept)                  1   0.96954   318.34      1     10 6.532e-09 ***
+treatment                    2   0.48092     4.63      2     10 0.0376868 *  
+gender                       1   0.20356     2.56      1     10 0.1409735    
+treatment:gender             2   0.36350     2.86      2     10 0.1044692    
+phase                        1   0.85052    25.61      2      9 0.0001930 ***
+treatment:phase              2   0.68518     2.61      4     20 0.0667354 .  
+gender:phase                 1   0.04314     0.20      2      9 0.8199968    
+treatment:gender:phase       2   0.31060     0.92      4     20 0.4721498    
+hour                         1   0.93468    25.04      4      7 0.0003043 ***
+treatment:hour               2   0.30144     0.35      8     16 0.9295212    
+gender:hour                  1   0.29274     0.72      4      7 0.6023742    
+treatment:gender:hour        2   0.57022     0.80      8     16 0.6131884    
+phase:hour                   1   0.54958     0.46      8      3 0.8324517    
+treatment:phase:hour         2   0.66367     0.25     16      8 0.9914415    
+gender:phase:hour            1   0.69505     0.85      8      3 0.6202076    
+treatment:gender:phase:hour  2   0.79277     0.33     16      8 0.9723693    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 summary(av.ok, multivariate=FALSE)
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                            Sum Sq num Df Error SS den Df  F value    Pr(>F)
+(Intercept)                 7260.0      1  228.056     10 318.3435 6.532e-09
+treatment                    211.3      2  228.056     10   4.6323  0.037687
+gender                        58.3      1  228.056     10   2.5558  0.140974
+treatment:gender             130.2      2  228.056     10   2.8555  0.104469
+phase                        167.5      2   80.278     20  20.8651 1.274e-05
+treatment:phase               78.7      4   80.278     20   4.8997  0.006426
+gender:phase                   1.7      2   80.278     20   0.2078  0.814130
+treatment:gender:phase        10.2      4   80.278     20   0.6366  0.642369
+hour                         106.3      4   62.500     40  17.0067 3.191e-08
+treatment:hour                 1.2      8   62.500     40   0.0929  0.999257
+gender:hour                    2.6      4   62.500     40   0.4094  0.800772
+treatment:gender:hour          7.8      8   62.500     40   0.6204  0.755484
+phase:hour                    11.1      8   96.167     80   1.1525  0.338317
+treatment:phase:hour           6.3     16   96.167     80   0.3256  0.992814
+gender:phase:hour              6.6      8   96.167     80   0.6900  0.699124
+treatment:gender:phase:hour   14.2     16   96.167     80   0.7359  0.749562
+                               
+(Intercept)                 ***
+treatment                   *  
+gender                         
+treatment:gender               
+phase                       ***
+treatment:phase             ** 
+gender:phase                   
+treatment:gender:phase         
+hour                        ***
+treatment:hour                 
+gender:hour                    
+treatment:gender:hour          
+phase:hour                     
+treatment:phase:hour           
+gender:phase:hour              
+treatment:gender:phase:hour    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+Mauchly Tests for Sphericity
+
+                            Test statistic p-value
+phase                              0.74927 0.27282
+treatment:phase                    0.74927 0.27282
+gender:phase                       0.74927 0.27282
+treatment:gender:phase             0.74927 0.27282
+hour                               0.06607 0.00760
+treatment:hour                     0.06607 0.00760
+gender:hour                        0.06607 0.00760
+treatment:gender:hour              0.06607 0.00760
+phase:hour                         0.00478 0.44939
+treatment:phase:hour               0.00478 0.44939
+gender:phase:hour                  0.00478 0.44939
+treatment:gender:phase:hour        0.00478 0.44939
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                             GG eps Pr(>F[GG])    
+phase                       0.79953  7.323e-05 ***
+treatment:phase             0.79953    0.01223 *  
+gender:phase                0.79953    0.76616    
+treatment:gender:phase      0.79953    0.61162    
+hour                        0.46028  8.741e-05 ***
+treatment:hour              0.46028    0.97879    
+gender:hour                 0.46028    0.65346    
+treatment:gender:hour       0.46028    0.64136    
+phase:hour                  0.44950    0.34573    
+treatment:phase:hour        0.44950    0.94019    
+gender:phase:hour           0.44950    0.58903    
+treatment:gender:phase:hour 0.44950    0.64634    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+                               HF eps   Pr(>F[HF])
+phase                       0.9278594 2.387543e-05
+treatment:phase             0.9278594 8.089765e-03
+gender:phase                0.9278594 7.984495e-01
+treatment:gender:phase      0.9278594 6.319975e-01
+hour                        0.5592802 2.014357e-05
+treatment:hour              0.5592802 9.887716e-01
+gender:hour                 0.5592802 6.911521e-01
+treatment:gender:hour       0.5592802 6.692976e-01
+phase:hour                  0.7330608 3.440460e-01
+treatment:phase:hour        0.7330608 9.804731e-01
+gender:phase:hour           0.7330608 6.552382e-01
+treatment:gender:phase:hour 0.7330608 7.080122e-01
+ 
 
 ## A "doubly multivariate" design with two  distinct repeated-measures variables
 ## (example courtesy of Michael Friendly)
@@ -166,8 +289,8 @@ measure        1    86.203  1293.04      2     30 < 2.2e-16 ***
 group:measure  2     0.356     5.52      2     31  0.008906 ** 
 month          1     9.407    65.85      4     28 7.807e-14 ***
 group:month    2     1.772    12.84      4     29 3.909e-06 ***
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-> 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
 ## mixed-effects models examples:
 ## Not run:  # loads nlme package
 	library(nlme)
