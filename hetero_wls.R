@@ -6,6 +6,7 @@
 xm513<- read.csv("xm513.csv", header=TRUE)
 str(xm513)
 attach(xm513)
+detach(xm513)
 panel01<- lm(MEANLOGSAL~ MEANEDUC+GENDER+MINORITY+DUMJCAT2+DUMJCAT3)
 summary(panel01)
 ### Panel 1 (p. 332) Call:lm(formula = MEANLOGSAL ~ MEANEDUC + GENDER      ###
@@ -66,6 +67,7 @@ F-statistic: 149.8 on 5 and 20 DF,  p-value: 3.887e-15
 xm511<- read.csv("xm511.csv",header =TRUE)
 str(xm511)
 attach(xm511)
+detach(xm511)
 panel01<- lm(DAAA~DUS3MT)
 summary(panel01)
 v<- DUS3MT^2
@@ -252,8 +254,6 @@ loglik <- function(theta) {
  beta0 <- theta[1]
  beta1 <- theta[2]
  sigma <- theta[3]
- gamma1<- theta[4]
- gamma2<- theta[5]
  N <- nrow(xm511)
  mu <- beta0 + beta1*DUS3MT
  e<- DAAA -mu
@@ -274,6 +274,55 @@ beta0  0.006393   0.006970   0.917   0.359
 beta1  0.274585   0.014617  18.786  <2e-16 ***
 sigma -0.170717   0.004928 -34.642  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 
+
+loglik2 <- function(theta) {
+ beta0 <- theta[1]
+ beta1 <- theta[2]
+ gamma1<- theta[3]
+ gamma2<- theta[4]
+ 
+ N <- nrow(xm511)
+ mu <- beta0 + beta1*DUS3MT
+ e<- DAAA -mu
+ h <- gamma1 + gamma2*DUM7599
+ -1/2*N*log(2*pi) - 1/2*N*log(h^2) - 1/2*sum(e^2/h^2) 
+}
+ 
+ m2 <- maxLik(loglik2,start=c(0,1,1,1))
+ summary(m2)
+### Compare with the panel 4 (p.341)                                       ###
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 11 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: 185069.5 
+4  free parameters
+Estimates:
+      Estimate Std. error t value Pr(> t)    
+[1,] 0.0140832  0.0002014   69.92  <2e-16 ***
+[2,] 0.2058705  0.0006063  339.54  <2e-16 ***
+[3,] 0.0917209  0.0001581  579.96  <2e-16 ***
+[4,] 0.1365926  0.0004338  314.89  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 
+
+
+loglik3 <- function(theta) {
+ beta0 <- theta[1]
+ beta1 <- theta[2]
+ gamma1<- theta[3]
+ gamma2<- theta[4] 
+ 
+ N <- nrow(xm511)
+ mu <- beta0 + beta1*DUS3MT
+ e<- DAAA -mu
+ h <- gamma1 + gamma2*lag(e)
+ -1/2*N*log(2*pi) - 1/2*N*log(h^2) - 1/2*sum(e^2/h^2) 
+}
+ 
+ m3 <- maxLik(loglik3,start=c(0,0,0,0))
+ summary(m3)???
+
+
+
 summary(eq_aux2)
 ### Panel 6 (p.342) Call:lm(formula = res^2 ~ res_1sq)                     ###
 Residuals:
