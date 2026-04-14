@@ -5,13 +5,15 @@
 xr417<- read.csv("xr417.csv", header=TRUE)
 str(xr417)
 attach(xr417)
+detach(xr417)
 ### Problem (b) ML based on cauchy distribution                            ###
 f_cauchy<- function(theta){
 beta1<- theta[1]
 beta2<- theta[2]
 N<- 240
 mu<- beta1+beta2*RENDMARK
--N*log(pi) - N*log(1+(RENDNCCO - mu)^2)
+
+
 }
 m_cauchy<- maxLik(f_cauchy, start = c(0,0))
 summary(m_cauchy)
@@ -99,3 +101,14 @@ RENDMARK     9.3154e-01  4.4034e-02  2.1155e+01  2.4894e-99
 J-Test: degrees of freedom is 0 
                 J-test                P-value             
 Test E(g)=0:    2.95041575704312e-27  *******   
+
+### Problem (h)                                                            ###
+QML
+Step1 Loglikelihood
+-N*log(pi) - N*log(1+(RENDNCCO - mu)^2)
+
+Step2 Moment conditon
+
+Step3 1/n*g(theta) = 0
+
+Step4 GMM standard errors 
