@@ -174,22 +174,40 @@ beta3<- theta[3]
 beta4<- theta[4]
 beta5<- theta[5]
 beta6<- theta[6]
-sigma<- theta[7]
-gamma1<- theta[8]
-gamma2<- theta[9]
-gamma3<- theta[10]
+gamma1<- theta[7]
+gamma2<- theta[8]
+gamma3<- theta[9]
 N<- 474
+h<- exp(gamma1+gamma2*DUMJCAT2+gamma3*DUMJCAT3)
 mu<- beta1+ beta2*EDUC+beta3*GENDER+beta4*MINORITY+beta5*DUMJCAT2+beta6*DUMJCAT3
 
--N*0.5*log(2*pi)-N*0.5*log(sigma^2)- 0.5*((LOGSALARY -mu)^2/sigma^2)
-(LOGSALARY - mu)^2 <- exp(gamma1+ gamma2*DUMJCAT2+gamma3*DUMJCAT3)
+-N*0.5*log(2*pi)-N*0.5*log(h)- 0.5*((LOGSALARY -mu)^2/h)
+
 
 }
-
-m<- maxLik(eq_ml, start= c(9.574694,0.044192,0.178340,-0.074858,0.170360,  
-              0.539075,1,-4.7332 ,-0.2892 ,0.4605 ))
+library(maxLik)
+m<- maxLik(eq_ml, start= c(9.57,0.04,0.17,-0.07,0.17,0.53,1,1,1))
+summary(m)
 ### Compare with the panel 4 (p.339)                                       ###
-summary(m, eigentol=1e-15)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 12 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: 745331.7 
+9  free parameters
+Estimates:
+        Estimate Std. error  t value Pr(> t)    
+ [1,]  9.6292969  0.0025780  3735.20  <2e-16 ***
+ [2,]  0.0397815  0.0002060   193.11  <2e-16 ***
+ [3,]  0.1821400  0.0009469   192.35  <2e-16 ***
+ [4,] -0.0727565  0.0009630   -75.55  <2e-16 ***
+ [5,]  0.1558644  0.0014856   104.92  <2e-16 ***
+ [6,]  0.5571017  0.0015522   358.91  <2e-16 ***
+ [7,] -9.5033240  0.0034431 -2760.13  <2e-16 ***
+ [8,] -0.8671085  0.0146385   -59.23  <2e-16 ***
+ [9,]  0.4520732  0.0079331    56.98  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+--------------------------------------------
+
 
 ### Example 5 16 (p.341)                                                   ###
 xm511<- read.csv("xm511.csv", header =TRUE)
