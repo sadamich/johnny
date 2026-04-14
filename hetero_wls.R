@@ -323,22 +323,23 @@ Estimates:
 [4,] 4.371e-02  1.840e-04  237.63  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
 
-
+panel01<- lm(DAAA ~ DUS3MT)
+summary(panel01)
+res<- resid(panel01)
+res1<- c(NA,res)[1:600]
 loglik3 <- function(theta) {
  beta0 <- theta[1]
  beta1 <- theta[2]
  gamma1<- theta[3]
  gamma2<- theta[4] 
- 
  N <- nrow(xm511)
  mu <- beta0 + beta1*DUS3MT
- e<- DAAA -mu
- h <- gamma1 + gamma2*lag(e)
- -1/2*N*log(2*pi) - 1/2*N*log(h^2) - 1/2*sum(e^2/h^2) 
+ h <- gamma1 + gamma2*res1^2
+ -0.5*N*log(2*pi) - 0.5*N*log(h) - 0.5*sum((DAAA - mu)^2/h) 
 }
  
- m3 <- maxLik(loglik3,start=c(0,0,0,0))
- summary(m3)???
+m3 <- maxLik(loglik3,start=c(0,0,0,0))
+summary(m3)???
 
 
 
