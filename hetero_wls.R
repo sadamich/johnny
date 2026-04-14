@@ -103,6 +103,7 @@ F-statistic: 3.304 on 1 and 581 DF,  p-value: 0.06962
 ### Example 5 15 Bank wages ###
 xm501<- read.csv("xm501.csv", header =TRUE)
 attach(xm501)
+detach(xm501)
 eq_01<- lm(LOGSALARY ~ EDUC + GENDER + MINORITY + DUMJCAT2 + DUMJCAT3)
 summary(eq_01)
 ### Panel 1 (p. 338) Call: lm(formula = LOGSALARY ~ EDUC +                 ###
@@ -310,17 +311,17 @@ loglik2 <- function(theta) {
  summary(m2)
 ### Compare with the panel 4 (p.341)                                       ###
 Maximum Likelihood estimation
-Newton-Raphson maximisation, 11 iterations
+Newton-Raphson maximisation, 12 iterations
 Return code 8: successive function values within relative tolerance limit (reltol)
 Log-Likelihood: 185069.5 
 4  free parameters
 Estimates:
       Estimate Std. error t value Pr(> t)    
-[1,] 0.0140832  0.0002014   69.92  <2e-16 ***
-[2,] 0.2058705  0.0006063  339.54  <2e-16 ***
-[3,] 0.0917209  0.0001581  579.96  <2e-16 ***
-[4,] 0.1365926  0.0004338  314.89  <2e-16 ***
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 
+[1,] 1.408e-02  2.014e-04   69.92  <2e-16 ***
+[2,] 2.059e-01  6.063e-04  339.53  <2e-16 ***
+[3,] 8.413e-03  2.902e-05  289.92  <2e-16 ***
+[4,] 4.371e-02  1.840e-04  237.63  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
 
 
 loglik3 <- function(theta) {
