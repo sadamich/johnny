@@ -7,6 +7,7 @@
 xm701<- read.csv("xm701.csv", header = TRUE)
 str(xm701)
 attach(xm701)
+detach(xm701)
 D4Y_61<- D4Y[45:180]
 ### AR(2) Model ###
 d4_1<- D4Y[44:179]
@@ -236,6 +237,25 @@ AIC = -689.58
 res_ar2<- resid(eq1)
 res_ar2<- na.omit(res_ar2)
 garch(res_ar2, order = c(0,1))
+
+### ML estimation AR(2) ARCH (1)                                               ###
+eq_arch <- function(theta) {
+ beta0 <- theta[1]
+ beta1 <- theta[2]
+ beta2 <- theta[3]
+ gamma1<- theta[4] 
+ gamma2<- theta[5]
+ N <- 136
+ mu <- beta0 + beta1*d4_1+beta2*d4_2
+ e <- D4Y_61 - mu
+ e_1<- c(NA,e)
+ h<- gamma1+gamma2*e_1^2
+ -0.5*N*log(2*pi) - 0.5*N*log(h) - 0.5*sum((D4Y_61 - mu)^2/h) 
+}
+ 
+m_arch <- maxLik(eq_arch,start=c(0.007,1.3,0,0,1))
+summary(m_arch)???
+
 
 
 
