@@ -1,3 +1,4 @@
+https://en.wikipedia.org/wiki/Cross_product
 ### Function crossprod                                                       ###
 (z <- crossprod(1:4))    # = sum(1 + 2^2 + 3^2 + 4^2)
 ###       [,1]                                                               ###
