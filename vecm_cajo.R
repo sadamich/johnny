@@ -10,14 +10,24 @@ library(urca)
 
 x<- cbind(AAA, US3MTBIL)
 
-x<-ca.jo(x, type = "trace", ecdet = "trend", K = 2,
+x_ja<- ca.jo(x, type = "trace", ecdet = "trend", K = 2,
 spec="longrun")
+x_ja
+x_ja2<- ca.jo(x, type = "trace", ecdet = "none", K = 2,
+spec="longrun")
+x_ja2
 
-ca.jo(x, type = "eigen", ecdet = "none", K = 3,
+y_ja<- ca.jo(x, type = "eigen", ecdet = "trend", K = 2,
 spec= "longrun")
+y_ja
+y_ja2<- ca.jo(x, type = "eigen", ecdet = "none", K = 2,
+spec= "longrun")
+y_ja2
 
+summary(x_ja)
+summary(x_ja2)
+summary(y_ja)
+summary(y_ja2)
 
 cajolst(x, trend = TRUE, K = 2, season = NULL)
-
-
-plotres(x)
+plotres(x_ja)
