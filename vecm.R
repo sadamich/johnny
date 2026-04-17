@@ -19,7 +19,8 @@ summary(sjd.vecm)
 ###################### 
 # Johansen-Procedure # 
 ###################### 
-Test type: maximal eigenvalue statistic (lambda max) , without linear trend and constant in cointegration 
+Test type: maximal eigenvalue statistic (lambda max) ,
+without linear trend and constant in cointegration 
 Eigenvalues (lambda):
 [1] 4.331654e-01 1.775836e-01 1.127905e-01 4.341130e-02 6.668049e-16
 Values of teststatistic and critical values of test:
@@ -305,7 +306,8 @@ summary(sjf.vecm)
 # Johansen-Procedure # 
 ###################### 
 
-Test type: maximal eigenvalue statistic (lambda max) , with linear trend 
+Test type: maximal eigenvalue statistic (lambda max) , 
+with linear trend 
 
 Eigenvalues (lambda):
 [1] 0.30932660 0.22599561 0.07308056 0.02946699
@@ -364,7 +366,87 @@ H1 <- ca.jo(dat1, type='trace', K=2, season=4, dumvar=dat2)
 H51 <- c(1, -1, -1, 0, 0)
 H52 <- c(0, 0, 0, 1, -1)
 summary(bh5lrtest(H1, H=H51, r=2))
+###################### 
+# Johansen-Procedure # 
+###################### 
+Estimation and testing under partly known beta 
+The VECM has been estimated subject to: 
+beta=H*phi and/or alpha=A*psi
+
+     [,1]
+[1,]    1
+[2,]   -1
+[3,]   -1
+[4,]    0
+[5,]    0
+
+Eigenvalues of restricted VAR (lambda):
+[1] 0.3956 0.2812 0.2541 0.1008
+
+The value of the likelihood ratio test statistic:
+14.52 distributed as chi square with 3 df.
+The p-value of the test statistic is: 0 
+Eigenvectors, normalised to first column
+of the restricted VAR:
+
+     [,1]     [,2]
+[1,]    1   1.0000
+[2,]   -1   0.7845
+[3,]   -1   0.2155
+[4,]    0 -64.9725
+[5,]    0 -40.7031
+Weights W of the restricted VAR:
+
+         [,1]    [,2]
+p1.d  -0.0744 -0.0031
+p2.d  -0.0147 -0.0009
+e12.d  0.0724  0.0057
+i1.d   0.0164  0.0020
+i2.d   0.0416  0.0035
+
 summary(bh5lrtest(H1, H=H52, r=2))
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Estimation and testing under partly known beta 
+
+The VECM has been estimated subject to: 
+beta=H*phi and/or alpha=A*psi
+
+     [,1]
+[1,]    0
+[2,]    0
+[3,]    0
+[4,]    1
+[5,]   -1
+
+Eigenvalues of restricted VAR (lambda):
+[1] 0.4064 0.2607 0.1052 0.1007
+
+The value of the likelihood ratio test statistic:
+1.89 distributed as chi square with 3 df.
+The p-value of the test statistic is: 0.59 
+
+Eigenvectors, normalised to first column
+of the restricted VAR:
+
+     [,1]    [,2]
+[1,]    0  1.0000
+[2,]    0 -0.9102
+[3,]    0 -0.9334
+[4,]    1 -2.6163
+[5,]   -1 -2.6163
+
+Weights W of the restricted VAR:
+
+         [,1]    [,2]
+p1.d   0.0881 -0.0678
+p2.d  -0.0597 -0.0189
+e12.d -0.2731  0.0975
+i1.d  -0.1450  0.0320
+i2.d   0.2197  0.0625
+
 H1 <- ca.jo(dat1, type='trace', K=2, season=4, dumvar=dat2)
 H6 <- matrix(c(1,0,0,0,0, 0,1,0,0,0, 0,0,1,0,0), c(5,3))
 bh6lrtest(z=H1, H=H6, r=2, r1=1, conv.val=0.0001, max.iter=50)
