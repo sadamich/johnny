@@ -4,6 +4,8 @@
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 xm404<- read.csv("xm404.csv", header = TRUE)
 attach(xm404)
+str(xm404)
+detach(xm404)
 ### Package gmm ###
 install.packages("gmm")
 library("gmm")
@@ -80,7 +82,21 @@ beta2<- theta[2]
 sigma<- theta[3]
 N<- 240
 mu<- beta1+beta2*RENDMARK
- N*log(3) -N*0.5*log(sigma^2)- 3*sum(log(1+(RENDCYCO - mu)^2/5*sigma^2))
+e<- RENDCYCO - mu
+ N*log(3) -N*0.5*log(sigma^2)- 3*sum(log(1+(e)^2/5*sigma^2))
 }
 m<- maxLik(f_t,start=c(0,1,1))
 summary(m) 
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 2 iterations
+Return code 3: Last step could not find a value above the current.
+Boundary of parameter space?  
+Consider switching to a more robust optimisation method temporarily.
+Log-Likelihood: 1124.754 
+3  free parameters
+Estimates:
+      Estimate Std. error t value Pr(> t)    
+[1,]  -0.01073  145.26731   0.000  0.9999    
+[2,]   0.94504    0.46894   2.015  0.0439 *  
+[3,]  -0.02727    0.00000    -Inf  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’
