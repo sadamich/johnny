@@ -31,3 +31,5 @@ summary(y_ja2)
 
 cajolst(x, trend = TRUE, K = 2, season = NULL)
 plotres(x_ja)
+
+lttest(x_ja, r=1)
