@@ -299,12 +299,19 @@ x<- cyber
 x<- ts(x, freq=5, start =1)
 plot(x, main ="Actual value (von 8 JAN 2026 bis 10 APR 2026)", ylab = "x")
 acf(x)
-t<- 1:64
+t<- 1:68
 eq<- lm(x~t)
 summary(eq)
 library(tseries)
-x_adj<- na.omit(x)
-adf.test(x_adj)
+adf.test(x)
+ Augmented Dickey-Fuller Test
+data:  x_diff
+Dickey-Fuller = -3.2697, Lag order = 4, p-value = 0.08416
+alternative hypothesis: stationary
+
+
+x_diff<- x[2:68]-x[1:67]
+adf.test(x_diff)
 library(strucchange)
 eq_cusum<- efp(x~t,type = "Rec-CUSUM")
 plot(eq_cusum)
