@@ -100,3 +100,22 @@ Estimates:
 [2,]   0.94504    0.46894   2.015  0.0439 *  
 [3,]  -0.02727    0.00000    -Inf  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’
+
+f_t2<- function(theta){
+beta1<- theta[1]
+beta2<- theta[2]
+sigma<- theta[3]
+N<- 240
+mu<- beta1+beta2*RENDMARK
+x<- RENDMARK
+e<- RENDCYCO - mu
+ N*log(3) -N*0.5*log(sigma^2)- 3*sum(log(1+(e)^2/5*sigma^2))
+gradient<- matrix(0, N, 3)
+gradient[,1]<- 6*e/(5*sigma^2+e^2)
+gradient[,2]<- 6*x*e/(5*sigma^2+e^2)
+gradient[,3]<- -0.5*N/sigma^2+(3/sigma^2)*sum((e^2/(5*sigma^2+e^2)))
+gradient
+
+}
+m2<- maxLik(f_t2,gradient,start=c(0,1,1),method="BHHH")???
+summary(m2) 
