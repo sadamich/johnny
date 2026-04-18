@@ -24,7 +24,16 @@ Equation AAA      -0.02307544 0.5142587 -0.04493965 -0.3313776  0.03443276
 Equation US3MTBIL  0.03794585 0.7739789  0.17161767 -0.5223374 -0.03099130
 
 coefA(panel05)
+                     ECT
+Equation AAA      -0.02307544
+Equation US3MTBIL  0.03794585
+
 coefB(panel05)
+                   r1
+AAA       1.000000000
+US3MTBIL -1.049585578
+const    -1.129016810
+trend    -0.002041254
 coefPI(panel05)
 
 panel06<- VECM(
@@ -42,7 +51,15 @@ panel06
 Equation AAA      -0.01873009 0.5137194  -0.0436500 -0.3332185  0.03641944
 Equation US3MTBIL  0.03391977 0.7776206   0.1699271 -0.5166337 -0.03244040
 coefA(panel06)
+                          ECT
+Equation AAA      -0.01873009
+Equation US3MTBIL  0.03391977
+
 coefB(panel06)
+AAA       1.000000
+US3MTBIL -1.154232
+const    -1.253103
+
 coefPI(panel06)
 
 
@@ -105,6 +122,11 @@ Equation T_1Y  0.17077471 -0.2917727 -0.1852074
 Equation T_10Y 0.13614063 -0.1347949 -0.1881653
                     
 coefA(panel03)
+     ECT1       ECT2
+Equation T_3M  -0.13859193  0.1245596
+Equation T_1Y   0.05258054 -0.0926937
+Equation T_10Y  0.11611018 -0.1154270
+
 coefB(panel03)
  r1            r2
 T_3M   1.0000000  5.551115e-17
