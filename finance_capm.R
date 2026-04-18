@@ -74,33 +74,7 @@ Estimates:
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ### Compare with the panel 1 (p.264) the coeficients are the same (ML=OLS) ###
 
-
-### 4 3 9 Example (p.245) ????
-f_t<- function(theta){
-beta1<- theta[1]
-beta2<- theta[2]
-sigma<- theta[3]
-N<- 240
-mu<- beta1+beta2*RENDMARK
-e<- RENDCYCO - mu
- N*log(3) -N*0.5*log(sigma^2)- 3*sum(log(1+(e)^2/5*sigma^2))
-}
-m<- maxLik(f_t,start=c(0,1,1))
-summary(m) 
-Maximum Likelihood estimation
-Newton-Raphson maximisation, 2 iterations
-Return code 3: Last step could not find a value above the current.
-Boundary of parameter space?  
-Consider switching to a more robust optimisation method temporarily.
-Log-Likelihood: 1124.754 
-3  free parameters
-Estimates:
-      Estimate Std. error t value Pr(> t)    
-[1,]  -0.01073  145.26731   0.000  0.9999    
-[2,]   0.94504    0.46894   2.015  0.0439 *  
-[3,]  -0.02727    0.00000    -Inf  <2e-16 ***
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’
-
+### 4 3 9 Example (p.245) 
 f_t2<- function(theta){
 beta1<- theta[1]
 beta2<- theta[2]
@@ -109,13 +83,20 @@ N<- 240
 mu<- beta1+beta2*RENDMARK
 x<- RENDMARK
 e<- RENDCYCO - mu
- N*log(3) -N*0.5*log(sigma^2)- 3*sum(log(1+(e)^2/5*sigma^2))
-gradient<- matrix(0, N, 3)
-gradient[,1]<- sum(6*e/(5*sigma^2+e^2))
-gradient[,2]<- sum(6*x*e/(5*sigma^2+e^2))
-gradient[,3]<- -0.5*N/sigma^2+(3/sigma^2)*sum((e^2/(5*sigma^2+e^2)))
-gradient
-
+ N*log(5) -N*0.5*log(sigma^2)- 3*sum(log(1+ e^2/(5*sigma^2)))
 }
-m2<- maxLik(f_t2,gradient,start=c(0,1,1),method="BHHH")
+m2<- maxLik(f_t2,start=c(0,1,1))
 summary(m2) 
+### Exhibit 4 18 (p.245) and panel 3 (p.264)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 8 iterations
+Return code 2: successive function values within tolerance limit (tol)
+Log-Likelihood: -128.9477 
+3  free parameters
+Estimates:
+     Estimate Std. error t value Pr(> t)    
+[1,] -0.34497    0.33811   -1.02   0.308    
+[2,]  1.19641    0.06912   17.31  <2e-16 ***
+[3,]  4.49424    0.25581   17.57  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
