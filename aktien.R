@@ -308,10 +308,18 @@ adf.test(x)
 data:  x_diff
 Dickey-Fuller = -3.2697, Lag order = 4, p-value = 0.08416
 alternative hypothesis: stationary
+y<- sbux[1:67]
+adf.test(y)
+y_diff<- y[2:67]-y[1:66]
+adf.test(y_diff)
 
 
 x_diff<- x[2:68]-x[1:67]
 adf.test(x_diff)
+
+x_diff2<- x_diff[2:67]-x_diff[1:66]
+adf.test(x_diff2)
+
 library(strucchange)
 eq_cusum<- efp(x~t,type = "Rec-CUSUM")
 plot(eq_cusum)
