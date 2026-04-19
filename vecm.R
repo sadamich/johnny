@@ -3,6 +3,7 @@
 ### Example 1 ###
 library(urca)
 data(denmark)
+str(denmark)
 ### period	Time index from 1974:Q1 until 1987:Q3 ###
 ### LRM: Logarithm of real money, M2              ###
 ### LRY: Logarithm of real income                 ###
@@ -349,6 +350,7 @@ LR test           4.78    0.03
 
 ### Example 3 ###
 data(UKpppuip)
+str(UKpppuip)
 ### A data frame of quarterly data ranging from 1971:Q1      ###
 ### until 1987:Q2. All variables are expressed in logarithms.###
 ### p1: UK wholesale price index                             ###
