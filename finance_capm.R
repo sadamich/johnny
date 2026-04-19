@@ -99,4 +99,11 @@ Estimates:
 [2,]  1.19641    0.06912   17.31  <2e-16 ***
 [3,]  4.49424    0.25581   17.57  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
+### Exhibit 4 18 f (p.245)                                                ###
+res_ml<- RENDCYCO -(-0.34497 +1.19641*RENDMARK)
+plot(res_ml, type="l")
+hist(res_ml)
+summary(res_ml)
+ Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+-20.60286  -3.62816   0.06664  -0.12296   3.30268  14.84975 
+> 
