@@ -58,6 +58,41 @@ Equation AAA.25.624.      0.0345(0.0214)
 Equation US3MTBIL.25.624. -0.0306(0.0482)    
 
 
+
+eq<- ca.jo(var_data, type = c("eigen", "trace"), ecdet = "trend", K = 2,
+spec= "longrun", season = NULL, dumvar = NULL)
+summary(eq)
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: maximal eigenvalue statistic (lambda max) , with linear trend in cointegration 
+
+Eigenvalues (lambda):
+[1] 7.736274e-02 8.810866e-03 4.737016e-19
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 |  5.29 10.49 12.25 16.26
+r = 0  | 48.15 16.85 18.96 23.65
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                    AAA.25.624..l2 US3MTBIL.25.624..l2    trend.l2
+AAA.25.624..l2         1.000000000         1.000000000  1.00000000
+US3MTBIL.25.624..l2   -1.074707188        -0.191661721 -0.46517893
+trend.l2              -0.002127598        -0.007228131 -0.02929441
+
+Weights W:
+(This is the loading matrix)
+
+                   AAA.25.624..l2 US3MTBIL.25.624..l2      trend.l2
+AAA.25.624..d         -0.01348030         -0.00978560 -1.852282e-17
+US3MTBIL.25.624..d     0.06043515         -0.01830475  7.238774e-17
+
+
 panel06<- VECM(
   data = var_data,
   lag = 2,
@@ -93,6 +128,94 @@ panel06_eigen<- ca.jo(var_data, type = "eigen", ecdet = "none", K = 2,
 spec= "longrun", season = NULL, dumvar = NULL)
 summary(panel06_eigen)
 
+
+eq2<- ca.jo(var_data, type = "eigen", ecdet = "none", K = 2,
+spec="longrun", season = NULL, dumvar = NULL)
+summary(eq2)
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: maximal eigenvalue statistic (lambda max) , with linear trend 
+
+Eigenvalues (lambda):
+[1] 0.074542828 0.006908705
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 |  4.15  6.50  8.18 11.65
+r = 0  | 46.33 12.91 14.90 19.19
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                    AAA.25.624..l2 US3MTBIL.25.624..l2
+AAA.25.624..l2             1.00000           1.0000000
+US3MTBIL.25.624..l2       -1.18375          -0.1225018
+
+Weights W:
+(This is the loading matrix)
+
+                   AAA.25.624..l2 US3MTBIL.25.624..l2
+AAA.25.624..d         -0.01014892        -0.005955544
+US3MTBIL.25.624..d     0.05312947        -0.010730552
+
+
+eq3<- cajools(eq2, reg.number = NULL)
+summary(eq3)
+
+Response AAA.25.624..d :
+
+Call:
+lm(formula = AAA.25.624..d ~ constant + AAA.25.624..dl1 + US3MTBIL.25.624..dl1 + 
+    AAA.25.624..l2 + US3MTBIL.25.624..l2 - 1, data = data.mat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.18626 -0.06613 -0.00920  0.07656  1.10823 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(>|t|)    
+constant              0.053418   0.021977   2.431   0.0154 *  
+AAA.25.624..dl1       0.417530   0.048985   8.524   <2e-16 ***
+US3MTBIL.25.624..dl1 -0.045707   0.021913  -2.086   0.0374 *  
+AAA.25.624..l2       -0.016104   0.006324  -2.547   0.0111 *  
+US3MTBIL.25.624..l2   0.012743   0.006574   1.939   0.0530 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1987 on 593 degrees of freedom
+Multiple R-squared:  0.1578,    Adjusted R-squared:  0.1507 
+F-statistic: 22.22 on 5 and 593 DF,  p-value: < 2.2e-16
+
+
+Response US3MTBIL.25.624..d :
+
+Call:
+lm(formula = US3MTBIL.25.624..d ~ constant + AAA.25.624..dl1 + 
+    US3MTBIL.25.624..dl1 + AAA.25.624..l2 + US3MTBIL.25.624..l2 - 
+    1, data = data.mat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.7158 -0.1463  0.0015  0.1358  2.5051 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+constant              0.02024    0.04885   0.414  0.67885    
+AAA.25.624..dl1       0.70963    0.10889   6.517 1.53e-10 ***
+US3MTBIL.25.624..dl1  0.06197    0.04871   1.272  0.20379    
+AAA.25.624..l2        0.04240    0.01406   3.016  0.00267 ** 
+US3MTBIL.25.624..l2  -0.06158    0.01461  -4.214 2.90e-05 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.4418 on 593 degrees of freedom
+Multiple R-squared:  0.1517,    Adjusted R-squared:  0.1446 
+F-statistic: 21.21 on 5 and 593 DF,  p-value: < 2.2e-16
+
+
+
+### Spread                                                                 ###
 spread<- AAA - US3MTBIL
 spread<- ts(spread, freq = 12, start = 1948)
 ### Exhibit 7 32 b (p.677)                                                 ###
