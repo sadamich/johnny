@@ -61,3 +61,53 @@ curve(kweights(x, kernel = "Tukey", normalize = TRUE),
       from = 0, to = 3.2, col = 4, add = TRUE)
 curve(kweights(x, kernel = "Truncated", normalize = TRUE),
       from = 0, to = 3.2, col = 5, add = TRUE)
+
+https://cran.r-project.org/web/packages/sandwich/refman/sandwich.html#weightsAndrews
+
+## fit investment equation
+data(Investment)
+fm <- lm(RealInv ~ RealGNP + RealInt, data = Investment)
+
+## compute quadratic spectral kernel HAC estimator
+kernHAC(fm)
+            (Intercept)       RealGNP     RealInt
+(Intercept) 788.6120652 -0.7502080996 49.78912814
+RealGNP      -0.7502081  0.0007483977 -0.06641343
+RealInt      49.7891281 -0.0664134303 17.71735491
+kernHAC(fm, verbose = TRUE)
+Bandwidth chosen: 1.744749 
+            (Intercept)       RealGNP     RealInt
+(Intercept) 788.6120652 -0.7502080996 49.78912814
+RealGNP      -0.7502081  0.0007483977 -0.06641343
+RealInt      49.7891281 -0.0664134303 17.71735491
+> 
+
+## use Parzen kernel instead, VAR(2) prewhitening, no finite sample
+## adjustment and Newey & West (1994) bandwidth selection
+kernHAC(fm, kernel = "Parzen", prewhite = 2, adjust = FALSE,
+  bw = bwNeweyWest, verbose = TRUE)
+Bandwidth chosen: 2.814444 
+            (Intercept)       RealGNP      RealInt
+(Intercept) 608.3101258 -0.5089107386 -64.93690203
+RealGNP      -0.5089107  0.0004340803   0.04689293
+RealInt     -64.9369020  0.0468929322  15.58251456
+## compare with estimate under assumption of spheric errors
+vcov(fm)
+ (Intercept)       RealGNP     RealInt
+(Intercept) 620.7706170 -0.5038304429  8.47475285
+RealGNP      -0.5038304  0.0004229789 -0.01145679
+RealInt       8.4747529 -0.0114567949  5.61097245
+
+https://cran.r-project.org/web/packages/sandwich/refman/sandwich.html#weightsLumley
+
+x <- sin(1:100)
+y <- 1 + x + rnorm(100)
+fm <- lm(y ~ x)
+weave(fm)
+             (Intercept)            x
+(Intercept)  0.008741632 -0.001365024
+x           -0.001365024  0.015733250
+vcov(fm)
+             (Intercept)            x
+(Intercept) 8.923630e-03 2.257536e-05
+x           2.257536e-05 1.775197e-02
