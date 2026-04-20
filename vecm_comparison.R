@@ -106,6 +106,9 @@ Dickey-Fuller = -4.109, Lag order = 8, p-value = 0.01
 alternative hypothesis: stationary
 Warning message:
 In adf.test(spread) : p-value smaller than printed p-value
+spread_50<- spread[25:624]
+adf.test(spread_50)
+
 
 library("tsDyn")
 library(urca)
@@ -113,6 +116,7 @@ library(urca)
 xm728<- read.csv("xm728.csv", header = TRUE)
 attach(xm728)
 str(xm728)
+detach(xm728)
 VAR_panel01<- data.frame(T_3M, T_1Y, T_10Y)
 
 panel02<- ca.jo(VAR_panel01, type = "eigen", ecdet = "none", K = 3,
@@ -140,17 +144,41 @@ Equation T_1Y  0.17077471 -0.2917727 -0.1852074
 Equation T_10Y 0.13614063 -0.1347949 -0.1881653
                     
 coefA(panel03)
-     ECT1       ECT2
+                      ECT1       ECT2
 Equation T_3M  -0.13859193  0.1245596
 Equation T_1Y   0.05258054 -0.0926937
 Equation T_10Y  0.11611018 -0.1154270
 
 coefB(panel03)
- r1            r2
+              r1            r2
 T_3M   1.0000000  5.551115e-17
 T_1Y   0.0000000  1.000000e+00
 T_10Y -0.8829703 -9.726232e-01
 const  0.5747333  5.958906e-01
 coefPI(panel03)
 
+summary(panel03)
+#############
+###Model VECM 
+#############
+Full sample size: 480   End sample size: 477
+Number of variables: 3  Number of estimated slope parameters 24
+AIC -4178.604   BIC -4070.248   SSR 221.232
+Cointegrating vector (estimated by ML):
+           T_3M T_1Y      T_10Y     const
+r1 1.000000e+00    0 -0.8829703 0.5747333
+r2 5.551115e-17    1 -0.9726232 0.5958906
 
+
+               ECT1               ECT2                T_3M -1            
+Equation T_3M  -0.1386(0.0668)*   0.1246(0.0771)      0.0485(0.1180)     
+Equation T_1Y  0.0526(0.0659)     -0.0927(0.0760)     -0.1140(0.1163)    
+Equation T_10Y 0.1161(0.0411)**   -0.1154(0.0475)*    -0.0825(0.0726)    
+               T_1Y -1            T_10Y -1           T_3M -2           
+Equation T_3M  0.3628(0.1636)*    0.1560(0.1436)     0.0120(0.1181)    
+Equation T_1Y  0.4017(0.1613)*    0.3227(0.1416)*    0.1708(0.1164)    
+Equation T_10Y 0.0700(0.1007)     0.3983(0.0884)***  0.1361(0.0727).   
+               T_1Y -2             T_10Y -2           
+Equation T_3M  -0.1439(0.1658)     -0.2218(0.1447)    
+Equation T_1Y  -0.2918(0.1634).    -0.1852(0.1426)    
+Equation T_10Y -0.1348(0.1021)     -0.1882(0.0891)*   
