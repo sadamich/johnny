@@ -297,28 +297,35 @@ str(aktien4)
 attach(aktien4)
 x<- cyber
 x<- ts(x, freq=5, start =1)
-plot(x, main ="Actual value (von 8 JAN 2026 bis 10 APR 2026)", ylab = "x")
+plot(x, main ="Actual value (von 8 JAN 2026 bis 17 APR 2026)", ylab = "x")
 acf(x)
 t<- 1:68
 eq<- lm(x~t)
 summary(eq)
 library(tseries)
 adf.test(x)
+x_diff<- x[2:68]-x[1:67]
+adf.test(x_diff)
  Augmented Dickey-Fuller Test
 data:  x_diff
 Dickey-Fuller = -3.2697, Lag order = 4, p-value = 0.08416
 alternative hypothesis: stationary
+
+x_diff2<- x_diff[2:67]-x_diff[1:66]
+adf.test(x_diff2)
+Augmented Dickey-Fuller Test
+data:  x_diff2
+Dickey-Fuller = -6.3658, Lag order = 4, p-value = 0.01
+alternative hypothesis: stationary
+
+Warning message:
+In adf.test(x_diff2) : p-value smaller than printed p-value
+
+
 y<- sbux[1:67]
 adf.test(y)
 y_diff<- y[2:67]-y[1:66]
 adf.test(y_diff)
-
-
-x_diff<- x[2:68]-x[1:67]
-adf.test(x_diff)
-
-x_diff2<- x_diff[2:67]-x_diff[1:66]
-adf.test(x_diff2)
 
 library(strucchange)
 eq_cusum<- efp(x~t,type = "Rec-CUSUM")
