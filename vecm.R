@@ -105,14 +105,12 @@ https://cran.r-project.org/web/packages/urca/refman/urca.html#alphaols
 summary(alphaols(sjd.vecm))
 Response R0.LRM.d :
 
-Call:
-lm(formula = R0.LRM.d ~ V.RK.LRM.l2 + V.RK.LRY.l2 + V.RK.IBO.l2 + 
+Call:lm(formula = R0.LRM.d ~ V.RK.LRM.l2 + V.RK.LRY.l2 + V.RK.IBO.l2 + 
     V.RK.IDE.l2 + V.RK.constant - 1, data = data.mat)
 
 Residuals:
       Min        1Q    Median        3Q       Max 
 -0.039482 -0.014437 -0.005498  0.013169  0.051973 
-
 Coefficients:
                 Estimate Std. Error t value Pr(>|t|)    
 V.RK.LRM.l2   -2.130e-01  6.039e-02  -3.526 0.000938 ***
@@ -120,9 +118,7 @@ V.RK.LRY.l2   -4.815e-03  4.028e-02  -0.120 0.905341
 V.RK.IBO.l2    3.501e-02  2.184e-02   1.603 0.115453    
 V.RK.IDE.l2    2.029e-03  2.815e-03   0.721 0.474633    
 V.RK.constant -1.175e-12  3.123e-02   0.000 1.000000    
----
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
 Residual standard error: 0.02001 on 48 degrees of freedom
 Multiple R-squared:  0.2446,    Adjusted R-squared:  0.1659 
 F-statistic: 3.108 on 5 and 48 DF,  p-value: 0.01647
@@ -130,14 +126,11 @@ F-statistic: 3.108 on 5 and 48 DF,  p-value: 0.01647
 
 Response R0.LRY.d :
 
-Call:
-lm(formula = R0.LRY.d ~ V.RK.LRM.l2 + V.RK.LRY.l2 + V.RK.IBO.l2 + 
+Call:lm(formula = R0.LRY.d ~ V.RK.LRM.l2 + V.RK.LRY.l2 + V.RK.IBO.l2 + 
     V.RK.IDE.l2 + V.RK.constant - 1, data = data.mat)
-
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.03448 -0.01507 -0.00100  0.01115  0.05666 
-
 Coefficients:
                 Estimate Std. Error t value Pr(>|t|)  
 V.RK.LRM.l2    1.150e-01  6.189e-02   1.859   0.0692 .
@@ -145,7 +138,6 @@ V.RK.LRY.l2    1.975e-02  4.128e-02   0.478   0.6345
 V.RK.IBO.l2    4.994e-02  2.238e-02   2.231   0.0304 *
 V.RK.IDE.l2    1.109e-03  2.885e-03   0.384   0.7025  
 V.RK.constant -3.405e-13  3.200e-02   0.000   1.0000  
----
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Residual standard error: 0.0205 on 48 degrees of freedom
 Multiple R-squared:  0.1551,    Adjusted R-squared:  0.06707 
@@ -153,15 +145,11 @@ F-statistic: 1.762 on 5 and 48 DF,  p-value: 0.1387
 
 
 Response R0.IBO.d :
-
-Call:
-lm(formula = R0.IBO.d ~ V.RK.LRM.l2 + V.RK.LRY.l2 + V.RK.IBO.l2 + 
+Call:lm(formula = R0.IBO.d ~ V.RK.LRM.l2 + V.RK.LRY.l2 + V.RK.IBO.l2 + 
     V.RK.IDE.l2 + V.RK.constant - 1, data = data.mat)
-
 Residuals:
        Min         1Q     Median         3Q        Max 
 -0.0232722 -0.0044453 -0.0000303  0.0048527  0.0176373 
-
 Coefficients:
                 Estimate Std. Error t value Pr(>|t|)
 V.RK.LRM.l2    2.318e-02  2.403e-02   0.965    0.340
@@ -173,10 +161,8 @@ Residual standard error: 0.00796 on 48 degrees of freedom
 Multiple R-squared:  0.068,     Adjusted R-squared:  -0.02908 
 F-statistic: 0.7004 on 5 and 48 DF,  p-value: 0.6258
 
-
 Response R0.IDE.d :
-Call:
-lm(formula = R0.IDE.d ~ V.RK.LRM.l2 + V.RK.LRY.l2 + V.RK.IBO.l2 + 
+Call:lm(formula = R0.IDE.d ~ V.RK.LRM.l2 + V.RK.LRY.l2 + V.RK.IBO.l2 + 
     V.RK.IDE.l2 + V.RK.constant - 1, data = data.mat)
 Residuals:
        Min         1Q     Median         3Q        Max 
