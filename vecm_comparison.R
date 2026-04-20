@@ -6,8 +6,11 @@
 xm722<- read.csv("xm722.csv", header = TRUE)
 str(xm722)
 attach(xm722)
+detach(xm722)
 library(tsDyn)
-var_data<- data.frame(AAA,US3MTBIL)
+var_data<- data.frame(AAA[25:624],US3MTBIL[25:624])
+eq<- VECM(var_data,lag=2, estim="ML")
+summary(eq)
 panel05<- VECM(
   data = var_data,
   lag = 2,
@@ -19,22 +22,41 @@ panel05<- VECM(
   exogen = NULL
 )
 panel05
-                          ECT    AAA -1 US3MTBIL -1     AAA -2 US3MTBIL -2
-Equation AAA      -0.02307544 0.5142587 -0.04493965 -0.3313776  0.03443276
-Equation US3MTBIL  0.03794585 0.7739789  0.17161767 -0.5223374 -0.03099130
-
 coefA(panel05)
-                     ECT
-Equation AAA      -0.02307544
-Equation US3MTBIL  0.03794585
+                                  ECT
+Equation AAA.25.624.      -0.02305473
+Equation US3MTBIL.25.624.  0.03823438
 
 coefB(panel05)
-                   r1
-AAA       1.000000000
-US3MTBIL -1.049585578
-const    -1.129016810
-trend    -0.002041254
+                           r1
+AAA.25.624.       1.000000000
+US3MTBIL.25.624. -1.050296180
+const            -1.152990971
+trend            -0.002093609
 coefPI(panel05)
+
+summary(panel05)
+#############
+###Model VECM 
+#############
+Full sample size: 600   End sample size: 597
+Number of variables: 2  Number of estimated slope parameters 10
+AIC -3202.448   BIC -3154.137   SSR 131.116
+Cointegrating vector (estimated by ML):
+   AAA.25.624. US3MTBIL.25.624.     const        trend
+r1           1        -1.050296 -1.152991 -0.002093609
+
+
+                          ECT                AAA.25.624. -1   
+Equation AAA.25.624.      -0.0231(0.0066)*** 0.5144(0.0479)***
+Equation US3MTBIL.25.624. 0.0382(0.0148)*    0.7745(0.1078)***
+                          US3MTBIL.25.624. -1 AAA.25.624. -2    
+Equation AAA.25.624.      -0.0450(0.0212)*    -0.3313(0.0492)***
+Equation US3MTBIL.25.624. 0.1718(0.0478)***   -0.5229(0.1107)***
+                          US3MTBIL.25.624. -2
+Equation AAA.25.624.      0.0345(0.0214)     
+Equation US3MTBIL.25.624. -0.0306(0.0482)    
+
 
 panel06<- VECM(
   data = var_data,
@@ -47,22 +69,18 @@ panel06<- VECM(
   exogen = NULL
 )
 panel06
-                          ECT    AAA -1 US3MTBIL -1     AAA -2 US3MTBIL -2
-Equation AAA      -0.01873009 0.5137194  -0.0436500 -0.3332185  0.03641944
-Equation US3MTBIL  0.03391977 0.7776206   0.1699271 -0.5166337 -0.03244040
-coefA(panel06)
-                          ECT
-Equation AAA      -0.01873009
-Equation US3MTBIL  0.03391977
 
+coefA(panel06)
+                                  ECT
+Equation AAA.25.624.      -0.01884191
+Equation US3MTBIL.25.624.  0.03382030
 coefB(panel06)
-AAA       1.000000
-US3MTBIL -1.154232
-const    -1.253103
+                       r1
+AAA.25.624.       1.000000
+US3MTBIL.25.624. -1.150557
+const            -1.278046
 
 coefPI(panel06)
-
-
 
 library(urca)
 panel05_eigen<- ca.jo(var_data, type = "eigen", ecdet = "trend", K = 2,
