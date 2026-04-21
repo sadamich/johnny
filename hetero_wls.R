@@ -334,13 +334,35 @@ loglik3 <- function(theta) {
  gamma2<- theta[4] 
  N <- nrow(xm511)
  mu <- beta0 + beta1*DUS3MT
- h <- gamma1 + gamma2*res1^2
- -0.5*N*log(2*pi) - 0.5*N*log(h) - 0.5*sum((DAAA - mu)^2/h) 
+ e<- DAAA - mu
+ e<- e[2:600]
+ e1<- e[1:599]
+ h <- gamma1 + gamma2*e1^2
+ -0.5*N*log(2*pi) - 0.5*N*log(h) - 0.5*sum(e^2/h) 
 }
  
-m3 <- maxLik(loglik3,start=c(0,0,0,0))
-summary(m3)???
-
+m3 <- maxLik(loglik3,start=c(1,1,1,1))
+summary(m3)
+### Compare with the panel 8 (p.342)                                       ###
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 3 iterations
+Return code 3: Last step could not find a value above the current.
+Boundary of parameter space?  
+Consider switching to a more robust optimisation method temporarily.
+Log-Likelihood: -155533.7 
+4  free parameters
+Estimates:
+     Estimate Std. error t value Pr(> t)    
+[1,] 0.219951        NaN     NaN     NaN    
+[2,] 0.835076   0.003957     211  <2e-16 ***
+[3,] 0.191849        NaN     NaN     NaN    
+[4,] 1.020499        NaN     NaN     NaN    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+--------------------------------------------
+Warning messages:
+1: In sqrt(diag(vc)) : NaNs produced
+2: In sqrt(diag(vc)) : NaNs produced
 
 
 summary(eq_aux2)
