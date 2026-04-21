@@ -111,7 +111,6 @@ Residual standard error: 0.1347 on 93 degrees of freedom
 Multiple R-squared:  0.0145,    Adjusted R-squared:  -0.006699 
 F-statistic: 0.6839 on 2 and 93 DF,  p-value: 0.5071
 
-
 res_lag1<- c(NA, lag(res_s))[1:96]
 res_lag2<- c(NA, NA, lag(res_s))[1:96]
 panel12<- lm(res_s~ LOGPROFIT_s+res_lag1+ res_lag2)
@@ -139,16 +138,25 @@ summary(res_s)
 
 ### Now no ordered data 
 xm535_s<- xm535[order(xm535$LOGPROFIT), ]
-xm535_s                                                   
+detach(xm535)
+str(xm535_s)
+attach(xm535_s)                                                  
 ### Exhibit 5 49 (o) (p. 423)  Positive correlation                        ###
 plot(LOGTURNOVER,LOGPROFIT)
-logprof_iv<- lm(LOGPROFIT ~ LOGTURNOVER)
+
+
+u<- c(1,11,23,26,49,51,53,65,83,89,93,94,95,97,98,99,100)
+str(u)
+LOGPROFIT_s<- LOGPROFIT[- u]
+LOGTURNOVER_s<- LOGTURNOVER[- u]
+
+logprof_iv<- lm(LOGPROFIT_s ~ LOGTURNOVER_s)
 summary(logprof_iv)
 Profit<- fitted(logprof_iv)
-str(Profita)
-Profita<- c(Profit, NA,NA, NA, NA, NA,NA,NA, NA,NA,NA, NA,NA,NA,NA,NA,NA)
-LOGSALARYa<- LOGSALARY[Profit >0]
-panel016a<- lm(LOGSALARYa~ Profit)
+str(Profit)
+
+LOGSALARY_s<- LOGSALARY[- u]
+panel016a<- lm(LOGSALARY_s~ Profit)
 summary(panel016a)
 ### IV estimation: Panel 16 (p. 423) lm(formula = LOGSALARY ~ Profit)      ###
 Residuals:
@@ -163,10 +171,10 @@ Residual standard error: 0.3534 on 82 degrees of freedom
 MultipleR-squared:  0.242,     Adjusted R-squared:  0.2328 
 F-statistic: 26.18 on 1 and 82 DF,  p-value: 2.01e-06
 
-eq_ols<- lm(LOGSALARY ~ LOGPROFIT)
+eq_ols<- lm(LOGSALARY_s ~ LOGPROFIT_s)
 res<- resid(eq_ols)
 res_v<- resid(logprof_iv)
-panel017<- lm(res~ LOGPROFIT + res_v)
+panel017<- lm(res~ LOGPROFIT_s + res_v)
 summary(panel017)
 ### Hausman Test: Panel 17 (p. 423) lm(formula = res ~ LOGPROFIT + res_v)  ###
 Residuals:
