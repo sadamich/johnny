@@ -146,18 +146,23 @@ plot(LOGTURNOVER,LOGPROFIT)
 
 
 u<- c(1,11,23,26,49,51,53,65,83,89,93,94,95,97,98,99,100)
+u2<- c(1,11,23,26,49,51,53,65,83,89,93,94,95,99)
 str(u)
 LOGPROFIT_s<- LOGPROFIT[- u]
 LOGTURNOVER_s<- LOGTURNOVER[- u]
+LOGPROFIT_s2<- LOGPROFIT[- u2]
+LOGTURNOVER_s2<- LOGTURNOVER[- u2]
 
 logprof_iv<- lm(LOGPROFIT_s ~ LOGTURNOVER_s)
 summary(logprof_iv)
 Profit<- fitted(logprof_iv)
 str(Profit)
-
-LOGSALARY_s<- LOGSALARY[- u]
-panel016a<- lm(LOGSALARY_s~ Profit)
-summary(panel016a)
+logprof_iv2<- lm(LOGPROFIT_s2 ~ LOGTURNOVER_s2)
+summary(logprof_iv2)
+Profit2<- fitted(logprof_iv2)
+LOGSALARY_s2<- LOGSALARY[- u2]
+panel016a2<- lm(LOGSALARY_s2[1:83]~ Profit2)
+summary(panel016a2)
 ### IV estimation: Panel 16 (p. 423) lm(formula = LOGSALARY ~ Profit)      ###
 Residuals:
      Min       1Q   Median       3Q      Max 
