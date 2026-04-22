@@ -150,6 +150,7 @@ u2<- c(1,11,23,26,49,51,53,65,83,89,93,94,95,99)
 str(u)
 LOGPROFIT_s<- LOGPROFIT[- u]
 LOGTURNOVER_s<- LOGTURNOVER[- u]
+
 LOGPROFIT_s2<- LOGPROFIT[- u2]
 LOGTURNOVER_s2<- LOGTURNOVER[- u2]
 
@@ -157,11 +158,15 @@ logprof_iv<- lm(LOGPROFIT_s ~ LOGTURNOVER_s)
 summary(logprof_iv)
 Profit<- fitted(logprof_iv)
 str(Profit)
+
 logprof_iv2<- lm(LOGPROFIT_s2 ~ LOGTURNOVER_s2)
 summary(logprof_iv2)
 Profit2<- fitted(logprof_iv2)
+Profit2<- c(Profit2, NA,NA,NA)
+str(Profit2)
 LOGSALARY_s2<- LOGSALARY[- u2]
-panel016a2<- lm(LOGSALARY_s2[1:83]~ Profit2)
+str(LOGSALARY_s2)
+panel016a2<- lm(LOGSALARY_s2~ Profit2)
 summary(panel016a2)
 ### IV estimation: Panel 16 (p. 423) lm(formula = LOGSALARY ~ Profit)      ###
 Residuals:
