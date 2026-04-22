@@ -323,10 +323,7 @@ Estimates:
 [4,] 4.371e-02  1.840e-04  237.63  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
 
-panel01<- lm(DAAA ~ DUS3MT)
-summary(panel01)
-res<- resid(panel01)
-res1<- c(NA,res)[1:600]
+
 loglik3 <- function(theta) {
  beta0 <- theta[1]
  beta1 <- theta[2]
@@ -343,6 +340,20 @@ loglik3 <- function(theta) {
  
 m3 <- maxLik(loglik3,start=c(1,1,1,1))
 summary(m3)
+m3_b <- maxBFGS(loglik3,start=c(1,1,1,1))
+summary(m3_b)
+
+## For the BHHH method we need likelihood values and gradients
+## of individual observations, not the sum of those
+loglikInd <- function(theta) log(theta) - theta*t
+gradlikInd <- function(theta) 1/theta - t
+## Estimate with analytic gradient
+a <- maxBHHH(loglikInd, gradlikInd, start=1)
+summary(a)
+
+
+
+
 ### Compare with the panel 8 (p.342)                                       ###
 Maximum Likelihood estimation
 Newton-Raphson maximisation, 3 iterations
