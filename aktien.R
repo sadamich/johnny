@@ -1,24 +1,4 @@
 ### Source: https://finance.yahoo.co.jp/                                     ###
-aktien<- read.csv("aktien.csv", header=TRUE)
-str(aktien)
-attach(aktien)
-str(cyber)
-x<- cyber
-acf(x)
-plot(x, main= "Time series",typ="l")
-x<- ts(x, freq = 5, start =1)
-plot(decompose(x))
-t<- 1:25
-kurs<- lm(x ~ t)
-summary(kurs)
-x_fit<- fitted(kurs)
-lines(x_fit,col = "red", add=TRUE)
-res<- resid(kurs)
-acf(res)
-res_sq<- res^2
-acf(res_sq)
-res<<- ts(res,freq=5, start =1)
-plot(res, main = "Time series", ylab= "Residuals")
 ### Estimation of trend model                                              ###
 Call: lm(formula = x ~ t)
 Residuals:
@@ -39,7 +19,6 @@ adf.test(x)
 data:  x
 Dickey-Fuller = -2.6073, Lag order = 2, p-value = 0.341
 alternative hypothesis: stationary
-
 ### Forecast, package forecast                                             ###
 library(forecast)
 model <- rw_model(x)
@@ -52,31 +31,6 @@ eq_ar1<- lm(x[2:25] ~ x[1:24] +t)
 summary(eq_ar1)
 detach(aktien)
 
-### Zeitraum von bis 6 MRZ 2026                                            ###
-aktien2<- read.csv("aktien2.csv", header=TRUE)
-str(aktien2)
-attach(aktien2)
-str(cyber)
-x<- cyber
-plot(x, main= "Time series",typ="l")
-t<- 1:39
-kurs<- lm(x ~ t)
-summary(kurs)
-Call: lm(formula = x ~ t)
-Residuals:
-   Min     1Q Median     3Q    Max 
--43.13 -12.85  -1.95  11.45  57.32 
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept) 218.0283     6.9326   31.45  < 2e-16 ***
-t             3.9217     0.3021   12.98 2.39e-15 ***
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 21.23 on 37 degrees of freedom
-Multiple R-squared:   0.82,     Adjusted R-squared:  0.8151 
-F-statistic: 168.5 on 1 and 37 DF,  p-value: 2.393e-15
-x_fit<- fitted(kurs)
-lines(x_fit,col = "red")
 library(sandwich)
 estfun(kurs)
 meat(kurs)
@@ -91,22 +45,6 @@ acf(res_sq)
 res<- ts(res, freq = 5, start =1)
 plot(res, main ="Time series", ylab ="Residuals")
 
-library("tseries")
-adf.test(x)
-    Augmented Dickey-Fuller Test
-data:  x
-Dickey-Fuller = -1.597, Lag order = 3, p-value = 0.7312
-alternative hypothesis: stationary 
-var(x)
-sd(x)
-x1<- x[1:25]
-t1<- 1:25
-eq1<- lm(x1 ~ t1)
-summary(eq1)
-x2<- x[26:39]
-t2<- 1:14
-eq2<- lm(x2 ~ t2)
-summary(eq2)
 anova(eq1,eq2)
 sis of Variance Table
 
@@ -179,14 +117,6 @@ F-statistic: 19.17 on 1 and 23 DF,  p-value: 0.0002192
 library(tseries)
 adf.test(y, alternative = c("stationary", "explosive"),
  k = trunc((length(x)-1)^(1/3)))
-
-
-### A relation between x and y ?                                           ###
-xy<- lm(x ~ y)
-summary(xy)
-yx<- lm(y ~ x)
-summary(yx)
-plot(x,y)
 
 aktien3<- read.csv("aktien3.csv", header = TRUE)
 str(aktien3)
@@ -344,17 +274,6 @@ eq_cusum2<- efp(y~t,type = "Rec-CUSUM")
 plot(eq_cusum2)
 plot(decompose(y))
 
-x1<- c(NA,x)
-x2<- c(NA,x1)
-eq_ar2<- lm(x ~ x1[1:58]+x2[1:58])
-summary(eq_ar2)
-
-eq_ar1<- lm(x ~ x1[1:58])
-summary(eq_ar1)
-res<- resid(eq_ar1)
-res<- ts(res, freq = 5, start=1)
-plot(res, type="l")
-
 library(strucchange)
 eq_cusum2<- efp(x~x1[1:58],type = "Rec-CUSUM")
 plot(eq_cusum2)
@@ -362,11 +281,6 @@ sctest(eq_cusum2)
 Recursive CUSUM test
 data:  eq_cusum2
 S = 0.62943, p-value = 0.3593
-
-plot(x, main ="Actual value", ylab = "x")
-fit<- fitted(eq_ar1)
-fit<- ts(fit, freq=5, start=1)
-lines(fit, col ="red", type="l")
 
 x_diff<- x[2:58] - x[1:57]
 library(tseries)
