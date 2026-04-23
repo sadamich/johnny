@@ -6,6 +6,16 @@
 xm604<- read.csv("xm604.csv", header = TRUE)
 attach(xm604)
 str(xm604)
+detach(xm604)
+idx<- as.numeric(rownames(xm604))
+JOBCAT_i<- JOBCAT[idx]
+JOBCAT_i
+xm604_i<- data.frame(xm604,JOBCAT_i)
+EDUC_i<- EDUC[idx]
+GENDER_i<- GENDER[idx]
+MINORITY_i<- MINORITY[idx]
+library(mlogit)
+summary(mlogit(JOBCAT_i ~ EDUC_i+GENDER_i+MINORITY_i, data = xm604_i))???
 sxm604<- subset(xm604, GENDER==1)
 str(sxm604)
 attach(sxm604)
