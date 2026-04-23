@@ -41,6 +41,9 @@ Measures of Sampling Adequacy (MSA):
 
 library("psych")
 VSS.scree(smd)
+
+https://www.geo.fu-berlin.de/en/v/soga-r/Advanced-statistics/Multivariate-approaches/Principal-Component-Analysis/index.html
+
 pca.smd <- principal(smd, 5, rotate = "none")
 pca.smd$criteria <- NULL
 pca.smd
