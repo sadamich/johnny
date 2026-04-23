@@ -33,6 +33,9 @@ head(smd.scores)
 88  0.9250770  0.30530920  1.0300059 -0.2480888 -1.34447243    weiblich
 
 boxplot(Qual ~ SEX, data= smd.scores)
+str(SEX)
+Geschlecht<- factor(SEX, labels=c("Maennlich", "Weiblich"))
+boxplot(Qual ~ Geschlecht, data= smd.scores, ylab="Qualitaet")
 
 describeBy(smd.scores$Qual, SEX, skew=FALSE)
 y group 
