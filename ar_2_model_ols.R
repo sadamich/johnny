@@ -12,6 +12,21 @@ D4Y_61<- D4Y[45:180]
 ### AR(2) Model ###
 d4_1<- D4Y[44:179]
 d4_2<- D4Y[43:178]
+
+https://search.r-project.org/R/refmans/stats/html/filter.html
+
+filter(x, filter, method = c("convolution", "recursive"),
+       sides = 2, circular = FALSE, init)
+ma <- stats::filter(D4Y_61,rep(1,3), method = "convolution",sides = 1)
+ma1<- c(NA,ma)[1:136]
+ma2<- c(NA,ma1)[1:136]
+ma3<- c(NA,ma2)[1:136]
+ma4<- c(NA,ma3)[1:136]
+ma5<- c(NA,ma4)[1:136]
+ar_25<- lm(D4Y_61 ~ d4_1+d4_2+ma1+ma2+ma3+ma4+ma5)
+summary(ar_25)
+???
+
 ma1<- rep(1,1)
 MA1<- filter(D4Y, ma1,sides=2)
 ma2<- 1/2
