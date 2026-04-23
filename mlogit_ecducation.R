@@ -14,6 +14,10 @@ xm604_i<- data.frame(xm604,JOBCAT_i)
 EDUC_i<- EDUC[idx]
 GENDER_i<- GENDER[idx]
 MINORITY_i<- MINORITY[idx]
+
+MC <- dfidx(xm604, subset = JOBCAT_i == 3)
+ml.MC1 <- mlogit( JOBCAT_i~ EDUC|GENDER, MC)
+summary(ml.MC1)
 library(mlogit)
 summary(mlogit(JOBCAT_i ~ EDUC_i+GENDER_i+MINORITY_i, data = xm604_i))???
 sxm604<- subset(xm604, GENDER==1)
