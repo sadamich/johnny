@@ -17,7 +17,7 @@ MINORITY_i<- MINORITY[idx]
 
 library(mlogit)
 MC <- dfidx(xm604, subset = JOBCAT == 3,idx = "JOBCAT", alt.levels = c("1", "2", "3"))
-ml.MC1 <- mlogit( JOBCAT~ EDUC|GENDER, MC)
+ml.MC1 <- mlogit( JOBCAT~ EDUC+GENDER, MC)
 summary(ml.MC1)
 library(mlogit)
 summary(mlogit(JOBCAT_i ~ EDUC_i+GENDER_i+MINORITY_i, data = xm604_i))???
