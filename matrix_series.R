@@ -29,3 +29,16 @@ w_colsum
 W<- w_testmt
 v<- c(1,0.5,0.3)
 W%*%v
+
+aq<- function(a, q){
+result<- sum(a*1/10^q)
+return(result)
+}
+aq(0.3, 1)
+[1] 0.03
+aq(0.3, 2)
+[1] 0.003
+aq(0.3,5)
+[1] 3e-06
+aq(0.3, 1:6)
+[1] 0.0333333
