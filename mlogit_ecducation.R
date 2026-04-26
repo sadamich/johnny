@@ -33,8 +33,8 @@ summary(m_mnl)
 
 
 library(mlogit)
-MC <- dfidx(xm604, subset = JOBCAT == 3,idx = "JOBCAT", alt.levels = c("1", "2", "3"))
-ml.MC1 <- mlogit( JOBCAT~ EDUC+GENDER, MC)
+MC <- dfidx(xm604,alt.levels = c("DUMJCAT1","DUMJCAT2","DUMJCAT3"),idx="JOBCAT")
+ml.MC1 <- mlogit( JOBCAT~ EDUC+MINORITY, MC)
 summary(ml.MC1)
 library(mlogit)
 summary(mlogit(JOBCAT_i ~ EDUC_i+GENDER_i+MINORITY_i, data = xm604_i))???
@@ -42,7 +42,7 @@ sxm604<- subset(xm604, GENDER==1)
 str(sxm604)
 attach(sxm604)
 
-data<- dfidx(sxm604, subset = JOBCAT == 3, alt.levels = c(1,2,3))
+data<- dfidx(sxm604, alt.levels = c(1,2,3))
 library("Formula")
 JOBCAT<- as.factor(JOBCAT)
 f<- formula(JOBCAT ~ EDUC |MINORITY)
