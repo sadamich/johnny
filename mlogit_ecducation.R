@@ -15,6 +15,23 @@ EDUC_i<- EDUC[idx]
 GENDER_i<- GENDER[idx]
 MINORITY_i<- MINORITY[idx]
 
+mnl<- function(theta){
+beta2_1<- theta[1]
+beta2_2<- theta[2]
+beta2_3<- theta[3]
+beta3_1<- theta[4]
+beta3_2<- theta[5]
+beta3_3<- theta[6]
+sum(DUMJCAT2*(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)
+   +DUMJCAT3*(beta3_1+beta3_2*EDUC+beta2_3*MINORITY)
+   - log(1+ exp(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)+
+      exp(beta3_1+beta3_2*EDUC+beta2_3*MINORITY)))
+}
+library(maxLik)
+m_mnl<- maxLik(mnl, start= c(1,1,1,1,1,1))
+summary(m_mnl)
+
+
 library(mlogit)
 MC <- dfidx(xm604, subset = JOBCAT == 3,idx = "JOBCAT", alt.levels = c("1", "2", "3"))
 ml.MC1 <- mlogit( JOBCAT~ EDUC+GENDER, MC)
