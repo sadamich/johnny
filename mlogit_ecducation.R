@@ -22,17 +22,22 @@ beta2_3<- theta[3]
 beta3_1<- theta[4]
 beta3_2<- theta[5]
 beta3_3<- theta[6]
-sum(DUMJCAT2*(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)
-   +DUMJCAT3*(beta3_1+beta3_2*EDUC+beta2_3*MINORITY)
-   - log(1+ exp(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)+
+sum(JOBCAT*(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)
+   +JOBCAT*(beta3_1+beta3_2*EDUC+beta2_3*MINORITY)
+   - log(1+ exp(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)*
       exp(beta3_1+beta3_2*EDUC+beta2_3*MINORITY)))
 }
 library(maxLik)
 m_mnl<- maxLik(mnl, start= c(1,1,1,1,1,1))
 summary(m_mnl)
 
-
 library(mlogit)
+### Wide
+xm604$JOBCAT <- 1:nrow(xm604)
+head(xm604,3)
+job<- dfidx(xm604, shape = "wide", varying = 11:13, sep = "_",
+            idx = list(c("OBS", "JOBCAT")))
+
 MC <- dfidx(xm604,alt.levels = c("DUMJCAT1","DUMJCAT2","DUMJCAT3"),idx="JOBCAT")
 ml.MC1 <- mlogit( JOBCAT~ EDUC+MINORITY, MC)
 summary(ml.MC1)
