@@ -14,7 +14,12 @@ xm604_i<- data.frame(xm604,JOBCAT_i)
 EDUC_i<- EDUC[idx]
 GENDER_i<- GENDER[idx]
 MINORITY_i<- MINORITY[idx]
-
+JOBCAT<- JOBCAT[GENDER==1]
+EUDC<- EDUC[GENDER==1]
+MINORITY<- MINORITY[GENDER==1]
+DUMJCAT1<- DUMJCAT1[GENDER==1]
+DUMJCAT2<- DUMJCAT2[GENDER==1]
+DUMJCAT3<- DUMJCAT3[GENDER==1]
 mnl<- function(theta){
 beta2_1<- theta[1]
 beta2_2<- theta[2]
@@ -24,11 +29,11 @@ beta3_2<- theta[5]
 beta3_3<- theta[6]
 sum(JOBCAT*(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)
    +JOBCAT*(beta3_1+beta3_2*EDUC+beta2_3*MINORITY)
-   - log(1+ exp(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)*
-      exp(beta3_1+beta3_2*EDUC+beta2_3*MINORITY)))
+   - log(1+ exp(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)
+      +exp(beta3_1+beta3_2*EDUC+beta2_3*MINORITY)))
 }
 library(maxLik)
-m_mnl<- maxLik(mnl, start= c(1,1,1,1,1,1))
+m_mnl<- maxLik(mnl, start= c(0,1,1,0,1,1))
 summary(m_mnl)
 
 library(mlogit)
