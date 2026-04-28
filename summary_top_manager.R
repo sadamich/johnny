@@ -25,54 +25,83 @@ Residual standard error: 0.327 on 94 degrees of freedom
   (4 observations deleted due to missingness)
 Multiple R-squared:  0.3668,    Adjusted R-squared:   0.36 
 F-statistic: 54.45 on 1 and 94 DF,  p-value: 6.278e-11
+xm535_s<- xm535[order(xm535$LOGPROFIT), ]
+detach(xm535)
+str(xm535_s)
+attach(xm535_s) 
+detach(xm535_s)
+panel03<- lm(LOGSALARY ~ LOGPROFIT)
+summary(panel03)
+### Exhibit 5 49 (d) (p.420)
 res<- resid(panel03)
 plot(res, type="l")
 plot(LOGSALARY, type ="l")
-LOGPROFIT_s<- sort(LOGPROFIT, index.return = TRUE)
-ix<- LOGPROFIT_s$ix
-str(LOGPROFIT_s)
-LOGSALARY_s<- LOGSALARY[ix]
-LOGSALARY_s<- as.numeric(LOGSALARY_s)
-LOGPROFIT_s<- sort(LOGPROFIT)
-eq_s<- lm(LOGSALARY_s~ LOGPROFIT_s)
-summary(eq_s)
-res_s<- resid(eq_s)
-### Exhibit 5 49 (d) (p.420)                                               ###
-plot(res_s, type="l")
-fit<- fitted(eq_s)
+fit<- fitted(panel03)
+plot(fit, type ="l")
+fit<- fitted(panel03)
 fit_sq<- fit^2
-eq_reset<- lm(LOGSALARY_s ~ LOGPROFIT_s + fit_sq)
+eq_reset<- lm(LOGSALARY[1:96] ~ LOGPROFIT[1:96] + fit_sq)
 summary(eq_reset)
 str(fit)
 fit_sq<- fit^s
 ### Panel 5 RESET Test(p.421)lm(formula=LOGSALARY_s ~ LOGPROFIT_s + fit_sq)###
-Residuals:   Min       1Q   Median       3Q      Max 
--0.68812 -0.26622 -0.04463  0.22185  0.94482 
+Call:
+lm(formula = LOGSALARY[1:96] ~ LOGPROFIT[1:96] + fit_sq)
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.69833 -0.27073 -0.04285  0.22938  0.96690 
 Coefficients:
-            Estimate Std. Error t value Pr(>|t|)
-(Intercept)  -6.0953    13.7992  -0.442    0.660
-LOGPROFIT_s  -0.5717     0.8078  -0.708    0.481
-fit_sq        0.3124     0.3452   0.905    0.368
-Residual standard error: 0.3249 on 93 degrees of freedom
-Multiple R-squared:  0.3663,    Adjusted R-squared:  0.3527 
-F-statistic: 26.88 on 2 and 93 DF,  p-value: 6.128e-10
+                Estimate Std. Error t value Pr(>|t|)
+(Intercept)      -5.9816    13.1548  -0.455    0.650
+LOGPROFIT[1:96]  -0.5826     0.7948  -0.733    0.465
+fit_sq            0.3129     0.3337   0.937    0.351
+Residual standard error: 0.3272 on 93 degrees of freedom
+Multiple R-squared:  0.3727,    Adjusted R-squared:  0.3592 
+F-statistic: 27.63 on 2 and 93 DF,  p-value: 3.824e-10
 
 library(strucchange)
-eq_cusum<- efp(LOGSALARY_s~ LOGPROFIT_s,type = "Rec-CUSUM")
+eq_cusum<- efp(LOGSALARY~ LOGPROFIT,type = "Rec-CUSUM")
 plot(eq_cusum)
-sctest(eq_cusum
+sctest(eq_cusum)
+Recursive CUSUM test
+data:  eq_cusum
+S = 0.51276, p-value = 0.5975
+
+### Chow breakpoint test 
+eq76<- lm(LOGSALARY[5:76] ~ LOGPROFIT[5:76])
+summary(eq76)
+res2<- resid(eq76)
+ssr2<- sum(res2^2)
+eq77<- lm(LOGSALARY[77:100] ~ LOGPROFIT[77:100])
+summary(eq77)
+res3<- resid(eq77)
+ssr3<- sum(res3^2)
+### 5 20 (p.315)                                                           ###
+F_break<- function(ssr, ssr2,ssr3,k,n2,n3){
+result<- ((ssr - ssr2 -ssr3)/k) / ((ssr2+ssr3)/(n2+n3 - 2*k))
+return(result)
+}
+F_break(10.05023,8.119966,1.915027,2,76,24)
+### 5 22 (p.316)                                                           ###
+F_forecast<- function(ssr, ssr2,k,n2,n3){
+result<- ((ssr - ssr2)/n3) / (ssr2/(n2-k))
+return(result)
+}
+F_forecast(10.05023,8.119966,2,76,24)
+
+
 ### Chow break test
-panel09<- lm(LOGSALARY_s[5:76]~LOGPROFIT_s[5:76])
+panel09<- lm(LOGSALARY[5:76]~LOGPROFIT[5:76])
 summary(panel09)
 ### Compare with the Panel 9 Chow forecast Test (p.421)                    ###
-### lm(formula = LOGSALARY_s[5:76] ~ LOGPROFIT_s[5:76])                    ###
+### lm(formula = LOGSALARY[5:76] ~ LOGPROFIT[5:76])                    ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.52369 -0.26386 -0.05426  0.22140  0.91544 
 Coefficients:
                   Estimate Std. Error t value Pr(>|t|)    
 (Intercept)         6.2051     0.2871  21.617  < 2e-16 ***
-LOGPROFIT_s[5:76]   0.1922     0.0548   3.508 0.000794 ***
+LOGPROFIT[5:76]   0.1922     0.0548   3.508 0.000794 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Residual standard error: 0.3335 on 70 degrees of freedom
 Multiple R-squared:  0.1495,    Adjusted R-squared:  0.1373 
@@ -87,9 +116,8 @@ Residuals 94 10.0502  0.1069
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Warning message:
 In anova.lmlist(object, ...) :
-models with response ‘"LOGSALARY_s[5:76]"’ removed because response 
+models with response ‘"LOGSALARY[5:76]"’ removed because response 
 differs from model 1
-
 
 
 res_s<- resid(eq_s)
@@ -136,11 +164,33 @@ acf(res_s, 10)
 hist(res_s)
 summary(res_s)
 
-### Now no ordered data 
+### IV estimation                                                          ###
 xm535_s<- xm535[order(xm535$LOGPROFIT), ]
 detach(xm535)
 str(xm535_s)
-attach(xm535_s)                                                  
+attach(xm535_s) 
+detach(xm535_s) 
+library(gmm) 
+u<- c(1,11,23,26,49,51,53,65,83,89,93,94,95,99)
+u2<-c(1,11,23,26,49,51,53,65,83,89,93,95,97,98,99,100)
+LOGSALARY_s<- LOGSALARY[-u2]
+LOGPROFIT_s<- LOGPROFIT[-u2]
+LOGTURNOVER_s<- LOGTURNOVER[-u2]
+eq_2s<-  tsls(LOGSALARY_s~LOGPROFIT_s,LOGTURNOVER_s,xm535_s)     
+summary(eq_2s)
+Call:
+tsls(g = LOGSALARY_s ~ LOGPROFIT_s, x = LOGTURNOVER_s, data = xm535_s)
+Method:  Two Stage Least Squares(Meat type = Classical) 
+Coefficients:
+             Estimate     Std. Error   t value      Pr(>|t|)   
+(Intercept)   6.2534e+00   1.8300e-01   3.4173e+01  6.1676e-256
+LOGPROFIT_s   1.8156e-01   3.1937e-02   5.6850e+00   1.3080e-08
+J-Test: degrees of freedom is 0 
+                J-test                P-value             
+Test E(g)=0:    1.03202394034774e-25  *******             
+ No first stage F-statistics (just identified model)
+
+                                        
 ### Exhibit 5 49 (o) (p. 423)  Positive correlation                        ###
 plot(LOGTURNOVER,LOGPROFIT)
 logprof_iv<- lm(LOGPROFIT ~ LOGTURNOVER)
@@ -167,14 +217,16 @@ Residual standard error: 0.3534 on 82 degrees of freedom
 Multiple R-squared:  0.242,     Adjusted R-squared:  0.2328 
 F-statistic: 26.18 on 1 and 82 DF,  p-value: 2.01e-06
 
-
+### The Hausman test 
 eq_ols<- lm(LOGSALARY[-u2]~ LOGPROFIT[-u2])
+summary(eq_ols)
 res<- resid(eq_ols)
 str(res)
 res_v<- resid(logprof_iv)
 str(res_v)
 panel017<- lm(res~ LOGPROFIT[-u2] + res_v)
 summary(panel017)
+
 ### Hausman Test: Panel 17 (p. 423) lm(formula = res ~ LOGPROFIT + res_v)  ###
 Residuals:
      Min       1Q   Median       3Q      Max 
