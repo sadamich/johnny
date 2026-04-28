@@ -99,6 +99,8 @@ z<- c(const,RPT,RPN,RPU,RI)
 library("gmm")
 eq_tsls<- tsls(GC~pg_fit+RI, x=z, data=xm531)
 summary(eq_tsls)
+
+
 ### Example 5 30 (p.400)                                                   ###
 xm511<- read.csv("xm511.csv", header = TRUE)
 str(xm511)
@@ -114,13 +116,14 @@ acf(DUS3MT_80)
 DUS3MT_lag180<- DUS3MT_lag1[361:600]
 DUS3MT_lag280<- DUS3MT_lag2[361:600]
 
-### Panel 1 (p.408)                                                        ###
-library(gmm)
+### Panel 2 (p.401)                                                        ###
 panel02<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
+summary(panel02)
 const<- rep(1, 240)
 z<- cbind(const,DUS3MT_lag180, DUS3MT_lag280)
 library("gmm")
 eq_tsls<- tsls(DAAA[361:600]~DUS3MT[361:600], x=z)
+### Panel 4 (p.401)  and  Panel 1 (p.408)                                  ###                                                   ###
 summary(eq_tsls)
 ### Panel 1 (p.408) tsls(g = DAAA[361:600] ~ DUS3MT[361:600], x = z)       ###
 Method:  Two Stage Least Squares(Meat type = Classical) 
@@ -150,6 +153,7 @@ Residual standard error: 0.2556 on 237 degrees of freedom
 Multiple R-squared:  0.0001354, Adjusted R-squared:  -0.008302 
 F-statistic: 0.01604 on 2 and 237 DF,  p-value: 0.9841
 LM= n*R^2= 240*0.0001354 =  0.032496
+
 eq_gmm<- gmm(DAAA[361:600]~DUS3MT[361:600], x=z)
 summary(eq_gmm)
 ### Compare the panel 1(p.408)gmm(g = DAAA[361:600] ~ DUS3MT[361:600], x = z)###
@@ -197,7 +201,7 @@ xhat<- fitted(panel02)
 DAAA_80<- DAAA[361:600]
 panel04<- lm(DAAA_80~ xhat)
 summary(panel04)
-### Panel 4 (p.401) Call:lm(formula = DAAA_80 ~ xhat)                     ###
+### Panel 4 (p.401)and Panel 3 (p.408) :lm(formula = DAAA_80 ~ xhat)    ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -1.13311 -0.15251 -0.00666  0.16657  1.31431 
@@ -232,11 +236,11 @@ Model 2: DAAA_80 ~ xhat - 1
 1    238 22.700                           
 2    239 22.716 -1 -0.016935 0.1776 0.6739 (H0 -constant- is not rejectet.)
 
-eqols<- lm(DAAA_80 ~ DUS3MT_80)
+eqols<- lm(DAAA[361:600] ~ DUS3MT[361:600])
 summary(eqols)
 res_ols<- resid(eqols)
 res_aux<- resid(panel02)
-hausman<- lm(res_ols ~ DUS3MT_80+ res_aux)
+hausman<- lm(res_ols ~ DUS3MT[361:600]+ res_aux)
 summary(hausman)
 ### Panel 1 (p.415) Call:lm(formula = res_ols ~ DUS3MT_80 + res_aux)      ###
 ### Hausman test                                                          ###
@@ -244,10 +248,10 @@ Residuals:
      Min       1Q   Median       3Q      Max 
 -0.67573 -0.13130  0.00406  0.12481  1.02532 
 Coefficients:
-             Estimate Std. Error t value Pr(>|t|)  
-(Intercept) -0.003895   0.015359  -0.254   0.8000  
-DUS3MT_80   -0.136674   0.060199  -2.270   0.0241 *
-res_aux      0.161106   0.065359   2.465   0.0144 *
+                Estimate  Std. Error t value Pr(>|t|)  
+(Intercept)    -0.003895   0.015359  -0.254   0.8000  
+DUS3MT[361:600]-0.136674   0.060199  -2.270   0.0241 *
+res_aux         0.161106   0.065359   2.465   0.0144 *
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Residual standard error: 0.2365 on 237 degrees of freedom
 Multiple R-squared:  0.025,     Adjusted R-squared:  0.01677 
@@ -257,7 +261,7 @@ F-statistic: 3.038 on 2 and 237 DF,  p-value: 0.0498
 eqols<- lm(DUS3MT_80~ DUS3MT_lag180+DUS3MT_lag280)
 summary(eqols)
 xhat<- fitted(eqols)
-eq_iv<- lm(DAAA_80~ xhat)
+eq_iv<- lm(DAAA[361:600]~ xhat)
 summary(eq_iv)
 res_iv<- resid(eq_iv)
 eqsargan<- lm(res_iv~ DUS3MT_lag180+ DUS3MT_lag280)
