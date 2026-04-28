@@ -35,6 +35,11 @@ sum(JOBCAT*(beta2_1+beta2_2*EDUC+beta2_3*MINORITY)
 library(maxLik)
 m_mnl<- maxLik(mnl, start= c(0,1,1,0,1,1))
 summary(m_mnl)
+co <- maxControl(printLevel=2, qac="marquardt", marquardt_lambda0=1)
+eq <- maxNR(mnl, start=c(1,1,1,1,1,1), control=co)
+summary(eq)
+
+
 
 library(mlogit)
 ### Wide
