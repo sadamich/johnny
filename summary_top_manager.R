@@ -143,48 +143,37 @@ str(xm535_s)
 attach(xm535_s)                                                  
 ### Exhibit 5 49 (o) (p. 423)  Positive correlation                        ###
 plot(LOGTURNOVER,LOGPROFIT)
-
-
-u<- c(1,11,23,26,49,51,53,65,83,89,93,94,95,97,98,99,100)
-u2<- c(1,11,23,26,49,51,53,65,83,89,93,94,95,99)
-str(u)
-LOGPROFIT_s<- LOGPROFIT[- u]
-LOGTURNOVER_s<- LOGTURNOVER[- u]
-
-LOGPROFIT_s2<- LOGPROFIT[- u2]
-LOGTURNOVER_s2<- LOGTURNOVER[- u2]
-
-logprof_iv<- lm(LOGPROFIT_s ~ LOGTURNOVER_s)
+logprof_iv<- lm(LOGPROFIT ~ LOGTURNOVER)
 summary(logprof_iv)
-Profit<- fitted(logprof_iv)
-str(Profit)
-
-logprof_iv2<- lm(LOGPROFIT_s2 ~ LOGTURNOVER_s2)
-summary(logprof_iv2)
-Profit2<- fitted(logprof_iv2)
-Profit2<- c(Profit2, NA,NA,NA)
-str(Profit2)
-LOGSALARY_s2<- LOGSALARY[- u2]
-str(LOGSALARY_s2)
-panel016a2<- lm(LOGSALARY_s2~ Profit2)
-summary(panel016a2)
-### IV estimation: Panel 16 (p. 423) lm(formula = LOGSALARY ~ Profit)      ###
+u<- c(1,11,23,26,49,51,53,65,83,89,93,94,95,99)
+u2<-c(1,11,23,26,49,51,53,65,83,89,93,95,97,98,99,100)
+profit<- fitted(logprof_iv)
+str(profit)
+LOGSALARY_s<- LOGSALARY[- u2]
+str(LOGSALARY_s)
+eq<- lm(LOGSALARY_s ~ profit)
+summary(eq)
+Call:
+lm(formula = LOGSALARY_s ~ profit)
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.64599 -0.28874 -0.03064  0.23432  1.20376 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
 (Intercept)  6.25344    0.20332  30.757  < 2e-16 ***
-Profit       0.18156    0.03548   5.117 2.01e-06 ***
+profit       0.18156    0.03548   5.117 2.01e-06 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Residual standard error: 0.3534 on 82 degrees of freedom
-MultipleR-squared:  0.242,     Adjusted R-squared:  0.2328 
+Multiple R-squared:  0.242,     Adjusted R-squared:  0.2328 
 F-statistic: 26.18 on 1 and 82 DF,  p-value: 2.01e-06
 
-eq_ols<- lm(LOGSALARY_s ~ LOGPROFIT_s)
+
+eq_ols<- lm(LOGSALARY[-u2]~ LOGPROFIT[-u2])
 res<- resid(eq_ols)
+str(res)
 res_v<- resid(logprof_iv)
-panel017<- lm(res~ LOGPROFIT_s + res_v)
+str(res_v)
+panel017<- lm(res~ LOGPROFIT[-u2] + res_v)
 summary(panel017)
 ### Hausman Test: Panel 17 (p. 423) lm(formula = res ~ LOGPROFIT + res_v)  ###
 Residuals:
