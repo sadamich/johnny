@@ -67,81 +67,75 @@ Recursive CUSUM test
 data:  eq_cusum
 S = 0.51276, p-value = 0.5975
 
+
+### Break point                                                            ###
+plot(LOGPROFIT)
+panel03<- lm(LOGSALARY[1:96]~LOGPROFIT[1:96])
+res<- resid(panel03)
+ssr<- sum(res^2)
 ### Chow breakpoint test 
-eq76<- lm(LOGSALARY[5:76] ~ LOGPROFIT[5:76])
-summary(eq76)
-res2<- resid(eq76)
+eq72<- lm(LOGSALARY[1:72] ~ LOGPROFIT[1:72])
+summary(eq72)
+### Panel 10 (p.421)                                                       ###
+lm(formula = LOGSALARY[1:72] ~ LOGPROFIT[1:72])
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.49501 -0.27613 -0.06197  0.22826  0.99635 
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       6.5214     0.2225  29.309  < 2e-16 ***
+LOGPROFIT[1:72]   0.1247     0.0440   2.835  0.00599 ** 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.3324 on 70 degrees of freedom
+Multiple R-squared:  0.103,     Adjusted R-squared:  0.09017 
+F-statistic: 8.036 on 1 and 70 DF,  p-value: 0.005988
+
+res2<- resid(eq72)
 ssr2<- sum(res2^2)
-eq77<- lm(LOGSALARY[77:100] ~ LOGPROFIT[77:100])
-summary(eq77)
-res3<- resid(eq77)
+eq73<- lm(LOGSALARY[73:96] ~ LOGPROFIT[73:96])
+summary(eq73)
+res3<- resid(eq73)
 ssr3<- sum(res3^2)
 ### 5 20 (p.315)                                                           ###
-F_break<- function(ssr, ssr2,ssr3,k,n2,n3){
-result<- ((ssr - ssr2 -ssr3)/k) / ((ssr2+ssr3)/(n2+n3 - 2*k))
+F_break<- function(ssr,ssr2,ssr3,k,n2,n3){
+result<- ((ssr - ssr2 - ssr3)/k) / ((ssr2+ssr3)/(n2+n3 - 2*k))
 return(result)
 }
-F_break(10.05023,8.119966,1.915027,2,76,24)
+### Panel 9 (p.421)                                                        ###
+F_break(10.05023,7.733956 , 2.134867,2,72,24)
+[1] 0.8455641
 ### 5 22 (p.316)                                                           ###
 F_forecast<- function(ssr, ssr2,k,n2,n3){
 result<- ((ssr - ssr2)/n3) / (ssr2/(n2-k))
 return(result)
 }
-F_forecast(10.05023,8.119966,2,76,24)
-
-
-### Chow break test
-panel09<- lm(LOGSALARY[5:76]~LOGPROFIT[5:76])
-summary(panel09)
-### Compare with the Panel 9 Chow forecast Test (p.421)                    ###
-### lm(formula = LOGSALARY[5:76] ~ LOGPROFIT[5:76])                    ###
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.52369 -0.26386 -0.05426  0.22140  0.91544 
-Coefficients:
-                  Estimate Std. Error t value Pr(>|t|)    
-(Intercept)         6.2051     0.2871  21.617  < 2e-16 ***
-LOGPROFIT[5:76]   0.1922     0.0548   3.508 0.000794 ***
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Residual standard error: 0.3335 on 70 degrees of freedom
-Multiple R-squared:  0.1495,    Adjusted R-squared:  0.1373 
-F-statistic:  12.3 on 1 and 70 DF,  p-value: 0.0007945
-
-anova(panel03, panel09)
-Analysis of Variance Table
-Response: LOGSALARY
-          Df  Sum Sq Mean Sq F value    Pr(>F)    
-LOGPROFIT  1  5.8212  5.8212  54.446 6.278e-11 ***
-Residuals 94 10.0502  0.1069                      
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Warning message:
-In anova.lmlist(object, ...) :
-models with response ‘"LOGSALARY[5:76]"’ removed because response 
-differs from model 1
-
-
-res_s<- resid(eq_s)
-plot(res_s, type="l")
-LOGPROFIT_sq<- LOGPROFIT_s^2
-panel11<- lm(res_s^2~ LOGPROFIT_s+ LOGPROFIT_sq)
+### Panel 10 (p.421) Chow Forecast test                                    ###
+F_forecast(10.05023,7.733956 ,2,72,24)
+[1] 0.8735244
+eq<- lm(LOGSALARY~LOGPROFIT)
+res<- resid(eq)
+res_s<- res^2
+plot(res, type="l")
+LOGPROFIT_s<- LOGPROFIT^2
+panel11<- lm(res_s~ LOGPROFIT[1:96]+ LOGPROFIT_s[1:96])
 summary(panel11)
 ### White Test: Compare with the panel 11 (p.422)                          ###
-### lm(formula = res_s^2 ~ LOGPROFIT_s + LOGPROFIT_sq)                     ###
+lm(formula = res_s ~ LOGPROFIT[1:96] + LOGPROFIT_s[1:96])
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.11175 -0.08575 -0.03419  0.04261  0.74345 
+-0.11300 -0.08834 -0.03455  0.04135  0.78195 
 Coefficients:
-              Estimate Std. Error t value Pr(>|t|)
-(Intercept)  -0.036526   0.135894  -0.269    0.789
-LOGPROFIT_s   0.050192   0.044944   1.117    0.267
-LOGPROFIT_sq -0.004206   0.003614  -1.164    0.247
-Residual standard error: 0.1347 on 93 degrees of freedom
-Multiple R-squared:  0.0145,    Adjusted R-squared:  -0.006699 
-F-statistic: 0.6839 on 2 and 93 DF,  p-value: 0.5071
+                   Estimate Std. Error t value Pr(>|t|)
+(Intercept)       -0.032151   0.140858  -0.228    0.820
+LOGPROFIT[1:96]    0.048798   0.046586   1.047    0.298
+LOGPROFIT_s[1:96] -0.004059   0.003746  -1.084    0.281
+Residual standard error: 0.1396 on 93 degrees of freedom
+Multiple R-squared:  0.01252,   Adjusted R-squared:  -0.008721 
+F-statistic: 0.5893 on 2 and 93 DF,  p-value: 0.5568
 
-res_lag1<- c(NA, lag(res_s))[1:96]
-res_lag2<- c(NA, NA, lag(res_s))[1:96]
-panel12<- lm(res_s~ LOGPROFIT_s+res_lag1+ res_lag2)
+res_lag1<- c(NA, res)[1:96]
+res_lag2<- c(NA, NA, res)[1:96]
+panel12<- lm(res[3:96]~ LOGPROFIT[3:96]+res[2:95]+ res[1:94])
 summary(panel12)
 ### Breusch Godfrey test: Compare with the panel 12 (p.422)                ###
 ### lm(formula = res_s ~ LOGPROFIT_s + res_lag1 + res_lag2)                ###
