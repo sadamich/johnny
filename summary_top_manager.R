@@ -133,25 +133,28 @@ Residual standard error: 0.1396 on 93 degrees of freedom
 Multiple R-squared:  0.01252,   Adjusted R-squared:  -0.008721 
 F-statistic: 0.5893 on 2 and 93 DF,  p-value: 0.5568
 
-res_lag1<- c(NA, res)[1:96]
-res_lag2<- c(NA, NA, res)[1:96]
-panel12<- lm(res[3:96]~ LOGPROFIT[3:96]+res[2:95]+ res[1:94])
+res1<- c(NA, res)[1:96]
+res2<- c(NA, res1)[1:96]
+panel12<- lm(res~ LOGPROFIT[1:96]+res1+ res2)
 summary(panel12)
 ### Breusch Godfrey test: Compare with the panel 12 (p.422)                ###
-### lm(formula = res_s ~ LOGPROFIT_s + res_lag1 + res_lag2)                ###
+Call:
+lm(formula = res[3:96] ~ LOGPROFIT[3:96] + res[2:95] + res[1:94])
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.75330 -0.26132 -0.03266  0.22821  0.85875 
+-0.76383 -0.26096 -0.03721  0.23900  0.88115 
 Coefficients:
-            Estimate Std. Error t value Pr(>|t|)
-(Intercept) -0.08058    0.13859  -0.581    0.562
-LOGPROFIT_s  0.01295    0.02341   0.553    0.582
-res_lag1    -0.15577    0.10468  -1.488    0.140
-res_lag2     0.03132    0.10501   0.298    0.766
-Residual standard error: 0.3238 on 90 degrees of freedom
-  (2 observations deleted due to missingness)
-Multiple R-squared:  0.02909,   Adjusted R-squared:  -0.003273 
-F-statistic: 0.8989 on 3 and 90 DF,  p-value: 0.4451
+                Estimate Std. Error t value Pr(>|t|)
+(Intercept)     -0.08622    0.13957  -0.618    0.538
+LOGPROFIT[3:96]  0.01384    0.02358   0.587    0.559
+res[2:95]       -0.15265    0.10461  -1.459    0.148
+res[1:94]        0.02672    0.10490   0.255    0.799
+Residual standard error: 0.3261 on 90 degrees of freedom
+Multiple R-squared:  0.02794,   Adjusted R-squared:  -0.004461 
+F-statistic: 0.8623 on 3 and 90 DF,  p-value: 0.4637
+0.02794*96
+0.016232*96
+
 
 ### Panel 13 (p. 422)                                                      ###
 acf(res_s, 10)
