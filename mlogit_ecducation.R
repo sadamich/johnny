@@ -40,7 +40,11 @@ eq <- maxNR(mnl, start=c(1,1,1,1,1,1), control=co)
 summary(eq)
 
 
+data_m<- mlogit.data(xm604, choice=NULL,alt.var=JOBCAT,
 
+str(data_m)
+head(data_m,5)
+head(data_m, 50:55)
 library(mlogit)
 ### Wide
 xm604$JOBCAT <- 1:nrow(xm604)
