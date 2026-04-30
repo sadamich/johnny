@@ -155,6 +155,18 @@ F-statistic: 0.8623 on 3 and 90 DF,  p-value: 0.4637
 0.02794*96
 0.016232*96
 
+library(lmtest)
+bgtest(panel03, order = 2, order.by = NULL, type = "F",
+  data = xm535_s, fill = 0)
+ Breusch-Godfrey test for serial correlation of order up to 2
+data:  panel03
+LM test = 0.98176, df1 = 2, df2 = 92, p-value = 0.3785
+
+bgtest(panel03, order = 2, order.by = NULL, type = "Chisq",
+  data = xm535_s, fill = 0)
+  Breusch-Godfrey test for serial correlation of order up to 2
+data:  panel03
+LM test = 2.0061, df = 2, p-value = 0.3668
 
 ### Panel 13 (p. 422)                                                      ###
 acf(res_s, 10)
