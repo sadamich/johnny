@@ -198,29 +198,30 @@ d4_star <- gsl_nls(fn = D4Y_61 ~ beta_1 + beta_2*d4_1 + beta_3*d4_2 +
  (beta_4+ beta_5*d4_1 + beta_6*d4_2)/(1 + exp(-beta_7*(d4_1 - beta_8))),
 data=xm701,
 start = c(beta_1 = 0, beta_2 = 1, beta_3 = 0,
-beta_4 = 0, beta_5 = 0, beta_6 = 0, beta_7 = NA, beta_8 = 0)
+beta_4 = 0, beta_5 = 1, beta_6 = 0, beta_7 = 1, beta_8 = 1)
 )
 coef(d4_star)
 summary(d4_star)
-predict(d4_star, interval = "prediction")
+### Compare the the panel 1 (p.619)                                        ###
 Formula: D4Y_61 ~ beta_1 + beta_2 * d4_1 + beta_3 * d4_2 + (beta_4 + beta_5 * 
     d4_1 + beta_6 * d4_2)/(1 + exp(-beta_7 * (d4_1 - beta_8)))
 Parameters:
-        Estimate Std. Error t value Pr(>|t|)    
-beta_1 -0.003133   0.010371  -0.302    0.763    
-beta_2  1.247395   0.155029   8.046 5.02e-13 ***
-beta_3 -0.725212   0.135126  -5.367 3.63e-07 ***
-beta_4  0.018507   0.023843   0.776    0.439    
-beta_5 -0.110143   0.260573  -0.423    0.673    
-beta_6  0.300250   0.188442   1.593    0.114    
-beta_7 77.685308  93.750658   0.829    0.409    
-beta_8  0.014620   0.021987   0.665    0.507    
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 
-Residual standard error: 0.02074 on 128 degrees of freedom
+         Estimate Std. Error t value Pr(>|t|)    
+beta_1 -6.725e-03  5.382e-03  -1.249   0.2138    
+beta_2  1.174e+00  1.382e-01   8.494 4.34e-14 ***
+beta_3 -7.115e-01  1.132e-01  -6.284 4.77e-09 ***
+beta_4  1.598e-02  6.987e-03   2.287   0.0238 *  
+beta_5  6.940e-02  1.726e-01   0.402   0.6883    
+beta_6  2.449e-01  1.453e-01   1.686   0.0943 .  
+beta_7  2.217e+03  8.726e+03   0.254   0.7999    
+beta_8  2.369e-03  1.902e-03   1.245   0.2153    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.02046 on 128 degrees of freedom
 Number of iterations till stop: 100 
-Achieved convergence tolerance: 1.839e-05
+Achieved convergence tolerance: 2.602e-11
 Reason stopped: exceeded max number of iterations
 
+predict(d4_star, interval = "prediction")
 ### ARCH                                                                   ###
 library(tseries)
 d4_arch<- garch(d4_fit_ts, order=c(0,1))
