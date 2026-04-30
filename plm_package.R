@@ -4,6 +4,7 @@ library(plm)
 
 data("Produc", package = "plm")
 str(Produc)
+attach(Produc)
 'data.frame':   816 obs. of  11 variables:
  $ state : Factor w/ 48 levels "ALABAMA","ARIZONA",..: 1 1 1 1 1 1 1 1 1 1 ...
  $ year  : int  1970 1971 1972 1973 1974 1975 1976 1977 1978 1979 ...
@@ -19,6 +20,13 @@ str(Produc)
 
 zz <- plm(log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp,
           data = Produc, index = c("state","year"))
+
+index = c("state","year")
+48 states (units) * 17 years (observations)
+m= 48               n= 17
+48*17 = 816
+
+
 summary(zz)
 Oneway (individual) effect Within Model
 
