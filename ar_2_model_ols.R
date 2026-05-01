@@ -63,6 +63,14 @@ F-statistic:  1714 on 7 and 128 DF,  p-value: < 2.2e-16
 
 ar_2<- lm(D4Y_61 ~ d4_1+d4_2)
 summary(ar_2)
+res<- resid(ar_2)
+summary(res)
+res_sd<- (res - mean(res))/sd(res)
+hist(res_sd)
+summary(res_sd)
+   Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-3.23439 -0.36931  0.05546  0.00000  0.54729  3.96471 
+
 ### Exhibit 7 9 (p.563)Call: lm(formula = D4Y_61 ~ d4_1 + d4_2)            ###
 Residuals:
       Min        1Q    Median        3Q       Max 
@@ -76,6 +84,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.02096 on 133 degrees of freedom
 Multiple R-squared:  0.8214,    Adjusted R-squared:  0.8187 
 F-statistic: 305.8 on 2 and 133 DF,  p-value: < 2.2e-16
+
 eq_ml<- function(theta){
 beta1<- theta[1]
 beta2<- theta[2]
@@ -156,16 +165,33 @@ summary(res)
 ### Correlogram of residuals of the model AR(2), panel3, p.573             ###
 Acf(res, main = "ACF")
 ### ARCH LM test ###
-res_lag <- c(NA, res)
-res_lag2<- c(NA, res_lag)
-res_lag3<- c(NA, res_lag2)
-res_lag4<- c(NA, res_lag3)
-panel02 <- lm(res ~ d4_1+ d4_2 + res_lag[1:136]
-+ res_lag2[1:136]+res_lag3[1:136]+ res_lag4[1:136])
+res_sq<- res^2
+panel02<- lm(res_sq[2:136]~res_sq[1:135])
 summary(panel02)
+### Panel02 LM test (p.630) lm(formula = res_sq[2:136] ~ res_sq[1:135])    ###
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0018862 -0.0003000 -0.0002448 -0.0000052  0.0054461 
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   2.981e-04  8.164e-05   3.652 0.000373 ***
+res_sq[1:135] 2.336e-01  7.799e-02   2.996 0.003268 ** 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.0008638 on 133 degrees of freedom
+Multiple R-squared:  0.0632,    Adjusted R-squared:  0.05616 
+F-statistic: 8.973 on 1 and 133 DF,  p-value: 0.003268
 ### Compare with the exhibit 7. 11 Panel 3 and Panel 4 (p.573)
 LM = n*R^2 = 
+135*0.063205= 8.532675 = p-value (0.0034) 
 LM = (n*g*F)/(n-k+g*F)
+### Compare the Exhibit 7 24 d (p.630)                                     ###
+res_sd<- (res - mean(res))/sd(res)
+hist(res_sd)
+summary(res_sd)
+   Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-3.23439 -0.36931  0.05546  0.00000  0.54729  3.96471 
+
+
 ### Asymptotic LM ~ F ###
 ### STAR model, compare with panel 1 (p.619)                               ###
 ### TAR Model panel 2 (p.619)                                              ###
@@ -254,7 +280,8 @@ res_ar2<- resid(eq1)
 res_ar2<- na.omit(res_ar2)
 garch(res_ar2, order = c(0,1))
 
-### ML estimation AR(2) ARCH (1)                                               ###
+### ML estimation AR(2) ARCH (1)                                           ###
+library(maxLik)
 eq_arch <- function(theta) {
  beta0 <- theta[1]
  beta1 <- theta[2]
@@ -264,14 +291,34 @@ eq_arch <- function(theta) {
  N <- 136
  mu <- beta0 + beta1*d4_1+beta2*d4_2
  e <- D4Y_61 - mu
- e_1<- c(NA,e)
+ e<- e[2:136]
+ e_1<- e[1:135]
  h<- gamma1+gamma2*e_1^2
- -0.5*N*log(2*pi) - 0.5*N*log(h) - 0.5*sum((D4Y_61 - mu)^2/h) 
+ -0.5*N*log(2*pi) - 0.5*N*log(h) - 0.5*sum(e^2/h) 
 }
  
-m_arch <- maxLik(eq_arch,start=c(0.007,1.3,0,0,1))
-summary(m_arch)???
-
+m_arch <- maxLik(eq_arch,start=c(1,1,1,1,1))
+summary(m_arch)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 3 iterations
+Return code 3: Last step could not find a value above the current.
+Boundary of parameter space?  
+Consider switching to a more robust optimisation method temporarily.
+Log-Likelihood: -6689.565 
+5  free parameters
+Estimates:
+     Estimate Std. error t value  Pr(> t)    
+[1,] 0.120418   0.002769  43.493  < 2e-16 ***
+[2,] 0.971823   0.125582   7.739 1.01e-14 ***
+[3,] 0.972270   0.122056   7.966 1.64e-15 ***
+[4,] 0.277461        NaN     NaN      NaN    
+[5,] 1.010720        NaN     NaN      NaN    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+--------------------------------------------
+Warning messages:
+1: In sqrt(diag(vc)) : NaNs produced
+2: In sqrt(diag(vc)) : NaNs produced
 
 
 
