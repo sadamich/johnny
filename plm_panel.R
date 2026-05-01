@@ -109,4 +109,29 @@ R-Squared:      0.8066
 Adj. R-Squared: 0.79523
 F-statistic: 70.9027 on 2 and 34 DF, p-value: 7.4062e-13
 
+LOGPROD<- as.matrix(LOGPROD_01+LOGPROD_02+LOGPROD_03)
+LOGLAB<- as.matrix(LOGLAB_01+LOGLAB_02+LOGLAB_03)
+LOGCAP<- as.matrix(LOGCAP_01+LOGCAP_02+LOGCAP_03)
+eq_panel01<- pggls(LOGPROD~LOGLAB+LOGCAP, data = xm729, model = "pooling")
+summary(eq_panel01)
+Oneway (individual) effect General FGLS model
 
+Call:
+pggls(formula = LOGPROD ~ LOGLAB + LOGCAP, data = xm729, model = "pooling")
+
+Balanced Panel: n = 37, T = 1, N = 37
+
+Residuals:
+       Min.     1st Qu.      Median     3rd Qu.        Max. 
+-0.59720045 -0.19182276 -0.02137554  0.19041025  0.60007493 
+
+Coefficients:
+            Estimate Std. Error z-value  Pr(>|z|)    
+(Intercept) 1.085518   0.580498  1.8700 0.0614870 .  
+LOGLAB      1.033792   0.068943 14.9948 < 2.2e-16 ***
+LOGCAP      0.108959   0.028085  3.8796 0.0001046 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Total Sum of Squares: 21.898
+Residual Sum of Squares: 2.7555
+Multiple R-squared: 0.87417
