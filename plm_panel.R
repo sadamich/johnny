@@ -108,6 +108,13 @@ Residual Sum of Squares: 242.56
 R-Squared:      0.8066
 Adj. R-Squared: 0.79523
 F-statistic: 70.9027 on 2 and 34 DF, p-value: 7.4062e-13
+summary(LOGLAB)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  22.20   26.52   30.96   31.02   35.11   39.96 
+summary(LOGCAP)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  173.5   183.9   194.4   190.0   196.8   197.8 
+
 
 LOGPROD<- as.matrix(LOGPROD_01+LOGPROD_02+LOGPROD_03)
 LOGLAB<- as.matrix(LOGLAB_01+LOGLAB_02+LOGLAB_03)
