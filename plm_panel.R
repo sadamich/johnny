@@ -88,9 +88,7 @@ Pooling Model
 
 Call:
 plm(formula = LOGPROD ~ LOGLAB + LOGCAP, data = xm729, model = "pooling")
-
 Balanced Panel: n = 37, T = 1, N = 37
-
 Residuals:
     Min.  1st Qu.   Median  3rd Qu.     Max. 
 -7.77110 -1.40605  0.34965  1.33931  5.08106 
@@ -100,9 +98,7 @@ Coefficients:
 (Intercept) -21.166472   9.981381 -2.1206   0.04133 *  
 LOGLAB        0.837977   0.093611  8.9517 1.836e-10 ***
 LOGCAP        0.290315   0.054183  5.3580 5.888e-06 ***
----
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
 Total Sum of Squares:    1254.2
 Residual Sum of Squares: 242.56
 R-Squared:      0.8066
@@ -115,8 +111,14 @@ summary(LOGCAP)
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   173.5   183.9   194.4   190.0   196.8   197.8 
 
-
-LOGPROD<- as.matrix(LOGPROD_01+LOGPROD_02+LOGPROD_03)
+c1<- rep(1,37)
+c2<- rep(1,37)
+c3<- rep(1,37)
+LOGPROD<- LOGPROD_01+LOGPROD_02+LOGPROD_03
+eq<- pggls(LOGPROD~c1+c2+c3+LOGLAB_01+LOGLAB_02+LOGLAB_03 
+            +LOGCAP_01+LOGCAP_02+LOGCAP_03 ,
+                     data = xm729, model = "pooling")
+summary(eq)
 LOGLAB<- as.matrix(LOGLAB_01+LOGLAB_02+LOGLAB_03)
 LOGCAP<- as.matrix(LOGCAP_01+LOGCAP_02+LOGCAP_03)
 eq_panel01<- pggls(LOGPROD~LOGLAB+LOGCAP, data = xm729, model = "pooling")
