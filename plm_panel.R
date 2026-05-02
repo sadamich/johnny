@@ -115,8 +115,19 @@ c1<- rep(1,37)
 c2<- rep(1,37)
 c3<- rep(1,37)
 LOGPROD<- LOGPROD_01+LOGPROD_02+LOGPROD_03
+eq_plm<- plm(LOGPROD~c1+c2+c3+LOGLAB_01+LOGLAB_02+LOGLAB_03 
+            +LOGCAP_01+LOGCAP_02+LOGCAP_03 ,effect = "individual",
+                     data = xm729, model = "pooling")
+summary(eq_plm)
+
+
+eq_glm<- glm(LOGPROD~LOGLAB_01+LOGLAB_02+LOGLAB_03 
+            +LOGCAP_01+LOGCAP_02+LOGCAP_03,
+            family= gaussian(link = "identity"))
+summary(eq_glm)
+
 eq<- pggls(LOGPROD~c1+c2+c3+LOGLAB_01+LOGLAB_02+LOGLAB_03 
-            +LOGCAP_01+LOGCAP_02+LOGCAP_03 ,
+            +LOGCAP_01+LOGCAP_02+LOGCAP_03 ,effect = "individual",
                      data = xm729, model = "pooling")
 summary(eq)
 LOGLAB<- as.matrix(LOGLAB_01+LOGLAB_02+LOGLAB_03)
