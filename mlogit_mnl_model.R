@@ -14,7 +14,61 @@ str(ModeCanada)
  $ income: int  45 45 25 25 70 70 70 70 55 55 ...
  $ urban : int  0 0 0 0 0 0 0 0 0 0 ...
  $ noalt : int  2 2 2 2 2 2 2 2 2 2 ...
+attach(ModeCanada)
+str(case)
+int [1:15520] 1 1 2 2 3 3 4 4 5 5 ...
+str(alt)
+ Factor w/ 4 levels "train","air",..: 1 4 1 4 1 4 1 4 1 4 ...
+str(choice)
+int [1:15520] 0 1 0 1 0 1 0 1 0 1 ...
+str(dist)
+int [1:15520] 83 83 83 83 83 83 83 83 83 83 ...
+str(cost)
+num [1:15520] 28.2 15.8 28.2 15.8 28.2 ...
+str(ivt)
+int [1:15520] 50 61 50 61 50 61 50 61 50 61
+str(ovt)
+int [1:15520] 66 0 66 0 66 0 66 0 66 0 .
+str(freq)
+int [1:15520] 4 0 4 0 4 0 4 0 4 0 ...
+str(income)
+int [1:15520] 45 45 25 25 70 70 70 70 55 55 ...
+str(urban)
+int [1:15520] 0 0 0 0 0 0 0 0 0 0
+str(noalt)
+int [1:15520] 2 2 2 2 2 2 2 2 2 2 ...
 MC <- dfidx(ModeCanada, subset = noalt == 4)
+MC
+~~~~~~~
+ first 10 observations out of 11116 
+~~~~~~~
+   choice dist   cost ivt ovt freq income urban noalt      idx
+1       0  377  58.25 215  74    4     45     0     4 109:rain
+2       1  377 142.80  56  85    9     45     0     4  109:air
+3       0  377  27.52 301  63    8     45     0     4  109:bus
+4       0  377  71.63 262   0    0     45     0     4  109:car
+5       0  377  58.25 215  74    4     70     0     4 110:rain
+6       1  377 142.80  56  85    9     70     0     4  110:air
+7       0  377  27.52 301  63    8     70     0     4  110:bus
+8       0  377  71.63 262   0    0     70     0     4  110:car
+9       0  377  58.25 215  74    4     35     0     4 111:rain
+10      1  377 142.80  56  85    9     35     0     4  111:air
+
+~~~ indexes ~~~~
+   case   alt
+1   109 train
+2   109   air
+3   109   bus
+4   109   car
+5   110 train
+6   110   air
+7   110   bus
+8   110   car
+9   111 train
+10  111   air
+indexes:  1, 2 
+ 
+
 ml.MC1 <- mlogit(choice ~ cost + freq + ovt | income | ivt, MC)
 summary(ml.MC1)
 Call:
