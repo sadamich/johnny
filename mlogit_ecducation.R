@@ -15,11 +15,17 @@ EDUC_i<- EDUC[idx]
 GENDER_i<- GENDER[idx]
 MINORITY_i<- MINORITY[idx]
 JOBCAT<- JOBCAT[GENDER==1]
-EUDC<- EDUC[GENDER==1]
+EDUC<- EDUC[GENDER==1]
 MINORITY<- MINORITY[GENDER==1]
 DUMJCAT1<- DUMJCAT1[GENDER==1]
 DUMJCAT2<- DUMJCAT2[GENDER==1]
 DUMJCAT3<- DUMJCAT3[GENDER==1]
+JOBCAT_f<- as.factor(JOBCAT)
+job_m<- data.frame(DUMJCAT1,DUMJCAT2,DUMJCAT3,EDUC,MINORITY, JOBCAT_f)
+MC <- dfidx(job_m, subset = JOBCAT_f == 3, idx=JOBCAT_f)
+job_mlogit<- mlogit.data(job_m, JOBCAT_f, idx=JOBCAT_f)
+eq<- mlogit(DUMJCAT2 ~ EDUC+MINORITY, JOBCAT_f)
+summary(eq)
 mnl<- function(theta){
 beta2_1<- theta[1]
 beta2_2<- theta[2]
