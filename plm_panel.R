@@ -11,6 +11,9 @@ plot(LOGPROD_1)
 ### Single equations estimation: Compare with the panel 1 (p.690)         ###
 eq1<- lm(LOGPROD_01~LOGLAB_01+LOGCAP_01)
 summary(eq1)
+res1<- resid(eq1)
+eq1_w<- lm(LOGPROD_01~LOGLAB_01+LOGCAP_01,weights= 1/sqrt(s12))
+summary(eq1_w)
 Call:
 lm(formula = LOGPROD_01 ~ LOGLAB_01 + LOGCAP_01)
 Residuals:
@@ -28,6 +31,10 @@ F-statistic: 806.3 on 2 and 34 DF,  p-value: < 2.2e-16
 
 eq2<- lm(LOGPROD_02~LOGLAB_02+LOGCAP_02)
 summary(eq2)
+res2<- resid(eq2)
+s12<- 1/37*res1*res2
+eq2_w<- lm(LOGPROD_02~LOGLAB_02+LOGCAP_02,weights=1/sqrt(s12))
+summary(eq2_w)
 Call:
 lm(formula = LOGPROD_02 ~ LOGLAB_02 + LOGCAP_02)
 Residuals:
@@ -42,9 +49,14 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.1993 on 34 degrees of freedom
 Multiple R-squared:  0.802,     Adjusted R-squared:  0.7904 
 F-statistic: 68.87 on 2 and 34 DF,  p-value: 1.102e-12
-
 eq3<- lm(LOGPROD_03~LOGLAB_03+LOGCAP_03)
 summary(eq3)
+eq3_w<- lm(LOGPROD_03~LOGLAB_03+LOGCAP_03,weights=1/sqrt(s31))
+summary(eq3_w)
+res3<- resid(eq3)
+s31<- 1/37*res3*res1
+s23<- 1/37*res2*res3
+s<- cbind(s12,s23,s31)
 Call:
 lm(formula = LOGPROD_03 ~ LOGLAB_03 + LOGCAP_03)
 Residuals:
@@ -59,7 +71,33 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.1081 on 34 degrees of freedom
 Multiple R-squared:  0.8092,    Adjusted R-squared:  0.7979 
 F-statistic: 72.08 on 2 and 34 DF,  p-value: 5.91e-13
+### Compare with Exhibit 7 35 (p.691)                                     ###
+eq26<- lm(LOGPROD_26~LOGLAB_26+LOGCAP_26)
+summary(eq26)
+eq3<- lm(LOGPROD_3~LOGLAB_3+LOGCAP_3)
+summary(eq3)
+alpha<- c(10.96592,3.39567,-1.48729,
+          -3.7471,-1.6405,-0.34940,-1.08791,-5.99866,-1.59972,0.6849,0.92464,
+          5.13734,1.59682,1.363460,-0.48478,-0.07928,-1.8722,-1.2806,-3.1958,
+          -0.33998,-0.87963,-1.25345,-1.63651,-2.95658,-0.99852,-1.22933)
+summary(alpha)
+ Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-5.9987 -1.6273 -1.0432 -0.3096  0.4939 10.9659 
 
+beta<- c(0.94310,0.86726,0.99864,
+          0.9889,0.9346,0.97486,0.96180,0.74730,0.84925,0.7540,0.63027,
+          0.72109,0.67519,0.922977,0.91237,0.79406,0.7184,1.0055,0.7583,
+          1.33022,1.16403,0.96464,0.81486,0.91326,1.06729,1.02743)
+summary(beta)
+  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.6303  0.7672  0.9181  0.9015  0.9854  1.3302 
+gamma<- c(-0.87883,-0.30351,0.36564,
+          0.6627,0.3936,0.13435,0.27270,1.13128,0.35422,0.1291,-0.01051,
+          -0.65876,0.03621,0.005695,0.27037,0.19960,0.4088,0.2929,0.7255,
+          0.18063,0.21915,0.28392,0.42819,0.62048,0.31001,0.38826)
+summary(gamma)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-0.8788  0.1304  0.2783  0.2293  0.3923  1.1313 
 install.packages("plm")
 library(plm)
 
