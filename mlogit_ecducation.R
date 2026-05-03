@@ -7,24 +7,43 @@ xm604<- read.csv("xm604.csv", header = TRUE)
 attach(xm604)
 str(xm604)
 detach(xm604)
+
+### Indexing                                                               ###
 idx<- as.numeric(rownames(xm604))
-JOBCAT_i<- JOBCAT[idx]
-JOBCAT_i
+JOBCAT<- JOBCAT[idx]
+OBS<- OBS[idx]
 xm604_i<- data.frame(xm604,JOBCAT_i)
-EDUC_i<- EDUC[idx]
-GENDER_i<- GENDER[idx]
-MINORITY_i<- MINORITY[idx]
+EDUC<- EDUC[idx]
+GENDER<- GENDER[idx]
+MINORITY<- MINORITY[idx]
+
+
+### Subset GENDER == 1                                                     ###
 JOBCAT<- JOBCAT[GENDER==1]
 EDUC<- EDUC[GENDER==1]
 MINORITY<- MINORITY[GENDER==1]
 DUMJCAT1<- DUMJCAT1[GENDER==1]
 DUMJCAT2<- DUMJCAT2[GENDER==1]
 DUMJCAT3<- DUMJCAT3[GENDER==1]
-JOBCAT_f<- as.factor(JOBCAT)
+JOBCAT_f<- factor(JOBCAT,labels=c("1","2","3"))
+OBS<- OBS[GENDER==1]
+job_s<- data.frame(DUMJCAT1,DUMJCAT2,DUMJCAT3,EDUC,MINORITY,JOBCAT_f,OBS)
+head(job_s,5)
+  DUMJCAT1 DUMJCAT2 DUMJCAT3 EDUC MINORITY JOBCAT_f OBS
+1        0        0        1   15        0        3   1
+2        1        0        0   16        0        1   2
+3        1        0        0   15        1        1   7
+4        1        0        0    8        0        1  12
+5        1        0        0   15        0        3  13
+
+job_m<- mlogit.data(job_s, choice = c("DUMJCAT1","DUMJCAT2","DUMJCAT3"),
+shape= "long")
+            
+JOBCAT_f<- JOBCAT[idx]
+DUMJCAT2<- DUMJCAT2[idx]
 job_m<- data.frame(DUMJCAT1,DUMJCAT2,DUMJCAT3,EDUC,MINORITY, JOBCAT_f)
-MC <- dfidx(job_m, subset = JOBCAT_f == 3, idx=JOBCAT_f)
-job_mlogit<- mlogit.data(job_m, JOBCAT_f, idx=JOBCAT_f)
-eq<- mlogit(DUMJCAT2 ~ EDUC+MINORITY, JOBCAT_f)
+MC <- dfidx(job_s, subset = JOBCAT_f == 3, idx=c("JOBCAT_f","DUMJCAT2"))
+job_mlogit<- mlogit(DUMJCAT2~ EDUC+MINORITY,xm604_i, JOBCAT_f)
 summary(eq)
 mnl<- function(theta){
 beta2_1<- theta[1]
