@@ -57,6 +57,12 @@ res3<- resid(eq3)
 s31<- 1/37*res3*res1
 s23<- 1/37*res2*res3
 s<- cbind(s12,s23,s31)
+grp <- c(res1,res2,res3)
+p<- c(LOGPROD_01, LOGPROD_02,LOGPROD_03)
+l<- c(LOGLAB_01,LOGLAB_02,LOGLAB_03)
+c<- c(LOGCAP_01,LOGCAP_02,LOGCAP_03)
+mat_g<- pdata.frame(p,l,c)
+cortab(mat_g, grouping = grp, groupnames = c("1", "2", "3"))
 Call:
 lm(formula = LOGPROD_03 ~ LOGLAB_03 + LOGCAP_03)
 Residuals:
@@ -120,7 +126,8 @@ LOGCAP<-  LOGCAP_1+ LOGCAP_2+LOGCAP_3+LOGCAP_4+LOGCAP_5+
           LOGCAP_15+ LOGCAP_17+LOGCAP_18+LOGCAP_19+LOGCAP_20+
           LOGCAP_21+ LOGCAP_22+LOGCAP_23+LOGCAP_24+LOGCAP_25+
           LOGCAP_26
-panel01<- plm(LOGPROD ~LOGLAB+LOGCAP  ,data = xm729, model = "pooling")
+panel01<- plm(LOGPROD ~LOGLAB+LOGCAP  ,data = xm729, index =c(
+            "LOGLAB","LOGCAP"),model = "pooling")
 summary(panel01)
 Pooling Model
 
