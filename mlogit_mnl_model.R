@@ -23,9 +23,9 @@ str(alt)
 str(choice)
 int [1:15520] 0 1 0 1 0 1 0 1 0 1 ...
 str(dist)
-int [1:15520] 83 83 83 83 83 83 83 83 83 83 ...
+  alternative specific        int [1:15520] 83 83 
 str(cost)
-num [1:15520] 28.2 15.8 28.2 15.8 28.2 ...
+  alternative specific        num [1:15520] 28.2 15.8 28.
 str(ivt)
 int [1:15520] 50 61 50 61 50 61 50 61 50 61
 str(ovt)
@@ -33,7 +33,7 @@ int [1:15520] 66 0 66 0 66 0 66 0 66 0 .
 str(freq)
 int [1:15520] 4 0 4 0 4 0 4 0 4 0 ...
 str(income)
-int [1:15520] 45 45 25 25 70 70 70 70 55 55 ...
+   individual specific        int [1:15520] 45 45 25 25 
 str(urban)
 int [1:15520] 0 0 0 0 0 0 0 0 0 0
 str(noalt)
