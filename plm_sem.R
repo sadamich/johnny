@@ -2,6 +2,8 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ### 
+
+### Example 7 32 Interes and bonds rates (p.707)                           ###
 xm511<- read.csv("xm511.csv", header = TRUE)
 str(xm511)
 attach(xm511)
@@ -84,3 +86,4 @@ J-Test: degrees of freedom is 1
 Test E(g)=0:    2.952122  0.085765
  First stage F-statistics: 
 DAAA_90 : F( 4 ,  115 ) =  4.551734  (P-Vavue =  0.001893333 )
+
