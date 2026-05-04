@@ -12,54 +12,38 @@ D4Y_61<- D4Y[45:180]
 ### AR(2) Model ###
 d4_1<- D4Y[44:179]
 d4_2<- D4Y[43:178]
-
+MA<- c(0.5,1,1,0.5)/4
 https://search.r-project.org/R/refmans/stats/html/filter.html
 
 filter(x, filter, method = c("convolution", "recursive"),
        sides = 2, circular = FALSE, init)
-ma <- stats::filter(D4Y_61,rep(1,3), method = "convolution",sides = 1)
-ma1<- c(NA,ma)[1:136]
-ma2<- c(NA,ma1)[1:136]
-ma3<- c(NA,ma2)[1:136]
-ma4<- c(NA,ma3)[1:136]
-ma5<- c(NA,ma4)[1:136]
+ma <- stats::filter(D4Y,MA,sides = 2)
+ma1<- ma[44:179]
+ma2<- ma[43:178]
+ma3<- ma[42:177]
+ma4<- ma[41:176]
+ma5<- ma[40:175]
 ar_25<- lm(D4Y_61 ~ d4_1+d4_2+ma1+ma2+ma3+ma4+ma5)
 summary(ar_25)
-???
-
-ma1<- rep(1,1)
-MA1<- filter(D4Y, ma1,sides=2)
-ma2<- 1/2
-MA2<- filter(D4Y, ma2,sides=2)
-ma3<- rep(1/3, 3)
-MA3<- filter(D4Y, ma3,sides=2)
-ma4<- c(0.5, rep(1,3),0.5)/4
-MA4<- filter(D4Y, ma4,sides=2)
-ma5<- rep(1/5, 5)
-MA5<- filter(D4Y, ma5,sides=2)
-
-ar_25<- lm(D4Y_61 ~ d4_1+d4_2+MA1[45:180]+MA2[45:180]+MA3[45:180]
-                      +MA4[45:180]+MA5[45:180])
-summary(ar_25)
-### Compare with the panel 1 (p.566) Call:                                 ###
-### lm(formula = D4Y_61 ~ d4_1 + d4_2 + MA1 + MA2 + MA3 + MA4 + MA5)       ###
+Call:
+lm(formula = D4Y_61 ~ d4_1 + d4_2 + ma1 + ma2 + ma3 + ma4 + ma5)
 Residuals:
        Min         1Q     Median         3Q        Max 
--0.0133663 -0.0025947 -0.0002225  0.0020773  0.0188922 
+-0.0065366 -0.0008963 -0.0000197  0.0012077  0.0061386 
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -0.0012497  0.0006968  -1.793 0.075274 .  
-d4_1        -0.1869944  0.0611056  -3.060 0.002695 ** 
-d4_2        -0.4558829  0.0511866  -8.906 4.44e-15 ***
-MA1          1.8765780  0.0992909  18.900  < 2e-16 ***
-MA2          1.0850571  0.2886643   3.759 0.000258 ***
-MA3         -2.4600261  0.3703917  -6.642 8.01e-10 ***
-MA4          1.5194390  0.3155122   4.816 4.07e-06 ***
-MA5         -0.3419825  0.1169408  -2.924 0.004083 ** 
+(Intercept) -9.825e-05  2.652e-04  -0.370    0.712    
+d4_1        -9.562e-01  2.967e-02 -32.226  < 2e-16 ***
+d4_2        -8.479e-01  2.981e-02 -28.443  < 2e-16 ***
+ma1          5.125e-01  6.063e-02   8.453 5.45e-14 ***
+ma2          5.887e+00  1.922e-01  30.632  < 2e-16 ***
+ma3         -4.091e+00  2.251e-01 -18.175  < 2e-16 ***
+ma4          1.838e+00  1.685e-01  10.906  < 2e-16 ***
+ma5         -4.038e-01  5.711e-02  -7.071 8.91e-11 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Residual standard error: 0.005193 on 128 degrees of freedom
-Multiple R-squared:  0.9894,    Adjusted R-squared:  0.9889 
-F-statistic:  1714 on 7 and 128 DF,  p-value: < 2.2e-16
+Residual standard error: 0.002022 on 128 degrees of freedom
+Multiple R-squared:  0.9984,    Adjusted R-squared:  0.9983 
+F-statistic: 1.141e+04 on 7 and 128 DF,  p-value: < 2.2e-16
 
 ar_2<- lm(D4Y_61 ~ d4_1+d4_2)
 summary(ar_2)
