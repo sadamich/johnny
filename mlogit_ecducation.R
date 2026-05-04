@@ -7,7 +7,28 @@ xm604<- read.csv("xm604.csv", header = TRUE)
 attach(xm604)
 str(xm604)
 detach(xm604)
+xm604_s<- subset(xm604, GENDER==1)
+attach(xm604_s)
+newdata<- data.frame(OBS,DUMJCAT1,DUMJCAT2,DUMJCAT3,EDUC,MINORITY,JOBCAT)
+library(mlogit)
+xm604_i<- dfidx(newdata)
+head(xm604_i,5)
 
+JOBCAT<- factor(JOBCAT, labels=c("1","2","3"))
+MC<- dfidx(JOBCAT)
+newdata2<- data.frame(OBS,DUMJCAT2,DUMJCAT3,EDUC,MINORITY,JOBCAT)
+xm604_i2<- dfidx(newdata2)
+head(xm604_i2,5)
+eq2<- mlogit(DUMJCAT2~EDUC+MINORITY)
+
+
+jcat<- cbind(DUMJCAT1,DUMJCAT2,DUMJCAT3)
+newdatax<- data.frame(OBS,JOBCAT,DUMJCAT1,DUMJCAT2,DUMJCAT3,EDUC,MINORITY)
+xm604_ix<- dfidx(newdatax)
+MC<- xm604_ix
+head(MC,5)
+eqx<- mlogit(DUMJCAT2~EDUC+MINORITY,MC)
+summary(eqx)
 ### Indexing                                                               ###
 idx<- as.numeric(rownames(xm604))
 JOBCAT<- JOBCAT[idx]
