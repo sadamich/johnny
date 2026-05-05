@@ -12,13 +12,10 @@ eq3<- LOGPROD_03~ LOGLAB_03+LOGCAP_03
 system<- list(eq1,eq2,eq3)
 eq<- systemfit(system, data=xm729)
 summary(eq)
-
 systemfit results 
 method: OLS 
-
          N  DF     SSR detRCov   OLS-R2 McElroy-R2
 system 111 102 2.09207   4e-06 0.918262   0.951196
-
      N DF      SSR      MSE     RMSE       R2   Adj R2
 eq1 37 34 0.344691 0.010138 0.100688 0.979352 0.978137
 eq2 37 34 1.350434 0.039719 0.199295 0.802030 0.790385
@@ -29,14 +26,13 @@ The covariance matrix of the residuals
 eq1 0.01013798 0.00107126 0.00240572
 eq2 0.00107126 0.03971865 0.00810346
 eq3 0.00240572 0.00810346 0.01167491
-
+### Panel 5 (p.690)                                                        ###
 The correlations of the residuals
           eq1       eq2      eq3
 eq1 1.0000000 0.0533855 0.221128
 eq2 0.0533855 1.0000000 0.376310
 eq3 0.2211276 0.3763105 1.000000
-
-
+### Compare with the Panel (p.690)                                         ### 
 OLS estimates for 'eq1' (equation 1)
 Model Formula: LOGPROD_01 ~ LOGLAB_01 + LOGCAP_01
               Estimate Std. Error  t value   Pr(>|t|)    
@@ -74,19 +70,16 @@ Number of observations: 37 Degrees of Freedom: 34
 SSR: 0.396947 MSE: 0.011675 Root MSE: 0.10805 
 Multiple R-Squared: 0.809154 Adjusted R-Squared: 0.797928 
 
-
 eq_sur<- systemfit(system,"SUR", data=xm729)
 summary(eq_sur)
 systemfit results 
 method: SUR 
          N  DF    SSR detRCov   OLS-R2 McElroy-R2
 system 111 102 2.0941   4e-06 0.918182   0.951303
-
      N DF      SSR      MSE     RMSE       R2   Adj R2
 eq1 37 34 0.344823 0.010142 0.100707 0.979344 0.978129
 eq2 37 34 1.351688 0.039756 0.199388 0.801847 0.790191
 eq3 37 34 0.397594 0.011694 0.108139 0.808843 0.797598
-
 The covariance matrix of the residuals used for estimation
            eq1        eq2        eq3
 eq1 0.01013798 0.00107126 0.00240572
@@ -98,14 +91,14 @@ The covariance matrix of the residuals
 eq1 0.01014184 0.00104171 0.00246629
 eq2 0.00104171 0.03975552 0.00821772
 eq3 0.00246629 0.00821772 0.01169395
-
+### Panel 7 (p.691)                                                        ###
 The correlations of the residuals
           eq1       eq2      eq3
 eq1 1.0000000 0.0518789 0.226467
 eq2 0.0518789 1.0000000 0.381129
 eq3 0.2264674 0.3811290 1.000000
 
-
+### Compare with the Panel 6 (p.690)                                       ###
 SUR estimates for 'eq1' (equation 1)
 Model Formula: LOGPROD_01 ~ LOGLAB_01 + LOGCAP_01
               Estimate Std. Error  t value   Pr(>|t|)    
@@ -172,6 +165,28 @@ system2<- list(eq01,eq02,eq03,eq4,eq5,eq6,eq7,eq8,eq9,eq10,eq11,eq12,eq13,eq14,e
           eq16,eq17,eq18,eq19,eq20,eq21,eq22,eq23,eq24,eq25,eq26)
 eq_s<- systemfit(system2,"SUR", data=xm729)
 summary(eq_s)
+theta<- coef(eq_s)
+theta<- data.frame(theta)
+str(theta)
+theta
+attach(theta)
+u<-  c(1,4,7,10,13,16,19,22,25,28,31,34,37,40,43,46,49,52,55,58,61,64,67,70,73,76)
+u2<- c(2,5,8,11,14,17,20,23,26,29,32,35,38,41,44,47,50,53,56,59,62,65,68,71,74,77)
+u3<- c(3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72,75,78)
+alpha<- coef(eq_s)[u]
+### Exhibit h (p.691)                                                     ###
+summary(alpha)
+  Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-6.07930 -1.19684 -0.78643 -0.09883  0.69890  9.90575 
 
-
-
+beta<- coef(eq_s)[u2]
+### Exhibit j (p.691)                                                     ###
+summary(beta)
+ Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.6507  0.8100  0.9008  0.8993  0.9745  1.1952 
+ 
+gamma<- coef(eq_s)[u3]
+### Exhibit l (p.691)                                                     ###
+summary(gamma)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-0.7761  0.1053  0.2355  0.1999  0.3332  1.1418 
