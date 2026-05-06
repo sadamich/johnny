@@ -87,3 +87,45 @@ Test E(g)=0:    2.952122  0.085765
  First stage F-statistics: 
 DAAA_90 : F( 4 ,  115 ) =  4.551734  (P-Vavue =  0.001893333 )
 
+### 1 stage   X-> Z                                                       ###
+iv_dus<- lm(DUS3MT_90~DUS3MT1+DUS3MT2+DAAA1+DAAA2)
+fit_dus<- fitted(iv_dus)
+### 1 stage   X-> Z                                                       ###
+iv_daaa<- lm(DAAA_90~DAAA1+DAAA2+DUS3MT1+DUS3MT2)
+fit_daaa<- fitted(iv_daaa)
+### 2 stage   Y-> fitX                                                    ###
+eq2<- lm(DAAA_90~fit_dus+DUS3MT1+DAAA1)
+summary(eq2)
+### Panel 2 (p.708)                                                       ###
+lm(formula = DAAA_90 ~ fit_dus + DUS3MT1 + DAAA1)
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.3411 -0.1029 -0.0240  0.1098  0.3523 
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)  
+(Intercept) -0.006983   0.015608  -0.447   0.6554  
+fit_dus     -0.013614   0.521862  -0.026   0.9792  
+DUS3MT1     -0.033164   0.166270  -0.199   0.8423  
+DAAA1        0.385929   0.151755   2.543   0.0123 *
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 
+Residual standard error: 0.157 on 116 degrees of freedom
+Multiple R-squared:  0.1341,    Adjusted R-squared:  0.1117 
+F-statistic:  5.99 on 3 and 116 DF,  p-value: 0.000785
+### 2 stage     Y-> fitX                                                   ###
+eq4<- lm(DUS3MT_90~fit_daaa+DAAA1+DUS3MT1)
+summary(eq4)
+### Panel 4 (p.708)                                                        ###
+lm(formula = DUS3MT_90 ~ fit_daaa + DAAA1 + DUS3MT1)
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.56716 -0.09539 -0.00928  0.11267  0.55756 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)  
+(Intercept) -0.01235    0.01993  -0.620   0.5367  
+fit_daaa    -0.14630    1.83561  -0.080   0.9366  
+DAAA1        0.28286    0.71009   0.398   0.6911  
+DUS3MT1      0.26621    0.11523   2.310   0.0226 *
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.1685 on 116 degrees of freedom
+Multiple R-squared:  0.161,     Adjusted R-squared:  0.1393 
+F-statistic: 7.418 on 3 and 116 DF,  p-value: 0.0001372
