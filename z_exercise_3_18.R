@@ -40,9 +40,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.1867 on 28 degrees of freedom
 Multiple R-squared:  0.1833,    Adjusted R-squared:  0.1541 
 F-statistic: 6.283 on 1 and 28 DF,  p-value: 0.01827
-eq3<- lm(y~ x2+x3)
-summary(eq3)
-
+eqc<- lm(y ~ x2+x3)
+summary(eqc)
 ### Call:lm(formula = y ~ x2 + x3)
 Residuals:
       Min        1Q    Median        3Q       Max 
@@ -58,7 +57,6 @@ Multiple R-squared:  0.9872,    Adjusted R-squared:  0.9862
 F-statistic:  1037 on 2 and 27 DF,  p-value: < 2.2e-16
 eq4<- lm(y~ x3)
 summary(eq4)
-
 ### Call:lm(formula = y ~ x3)
 Residuals:
      Min       1Q   Median       3Q      Max 
@@ -71,6 +69,30 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.108 on 28 degrees of freedom
 Multiple R-squared:  0.727,     Adjusted R-squared:  0.7172 
 F-statistic: 74.55 on 1 and 28 DF,  p-value: 2.217e-09
+### b_restriction = b_1 + P*b_2                                            ###
+
+
+### e
+eq_y<- lm(y~x2)
+res_y<- resid(eq_y)
+eq_x3<- lm(x3~x2)
+res_x3<- resid(eq_x3)
+eq_e<-lm(res_y~res_x3)
+summary(eq_e)
+### the partial regression for x3: the Frisch-Waugh is valid               ###
+lm(formula = res_y ~ res_x3)
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.046139 -0.013715 -0.000357  0.020523  0.038915 
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  8.719e-18  4.275e-03    0.00        1    
+res_x3      -5.276e-01  2.584e-02  -20.41   <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.02342 on 28 degrees of freedom
+Multiple R-squared:  0.937,     Adjusted R-squared:  0.9348 
+F-statistic: 416.7 on 1 and 28 DF,  p-value: < 2.2e-16
+plot(res_x3, res_y)
 
 
 eq_f<- lm(y ~ x2+x3+x4+x5+x6)
@@ -91,3 +113,46 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.02283 on 24 degrees of freedom
 Multiple R-squared:  0.9895,    Adjusted R-squared:  0.9874 
 F-statistic: 453.8 on 5 and 24 DF,  p-value: < 2.2e-16
+
+
+### Indexing                                                              ###-+
+PALL_70<- (PALL*100)/38.8
+PALL_70
+
+y<- log(SGAS/PGAS)    Not changed
+x2_g<- log(INC/PALL_70)
+x3_g<- log(PGAS/PALL_70)
+x4_g<- log(PPUB/PALL_70)
+x5_g<- log(PNCAR/PALL_70)
+x6_g<- log(PUCAR/PALL_70)
+eqc_g<- lm(y~ x2_g+x3_g)
+summary(eqc_g)
+
+eqd_g<- lm(y ~ x3_g)
+summary(eqd_g)
+Call:
+lm(formula = y ~ x3_g)
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.25263 -0.05369  0.02944  0.07735  0.15338 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  6.06289    0.10135  59.821  < 2e-16 ***
+x3_g        -0.86281    0.09993  -8.634 2.22e-09 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.108 on 28 degrees of freedom
+Multiple R-squared:  0.727,     Adjusted R-squared:  0.7172 
+F-statistic: 74.55 on 1 and 28 DF,  p-value: 2.217e-09
+
+eq_yg<- lm(y ~ x2_g)
+res_yg<- resid(eq_yg)
+eq_x3g<- lm(x3_g ~x2_g)
+res_x3g<- resid(eq_x3g)
+eq_eg<- lm(res_yg~res_x3g)
+summary(eq_eg)
+
+eqf_g<- lm(y ~ x2_g+x3_g+x4_g+x5_g+x6_g)
+summary(eqf_g)
+
+### The coeficients are same, but intercepts changed                       ###
+### That is a level shift.                                                 ###
