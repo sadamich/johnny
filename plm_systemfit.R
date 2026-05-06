@@ -178,15 +178,16 @@ alpha<- coef(eq_s)[u]
 summary(alpha)
   Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 -6.07930 -1.19684 -0.78643 -0.09883  0.69890  9.90575 
-
+hist(alpha)
 beta<- coef(eq_s)[u2]
 ### Exhibit j (p.691)                                                     ###
 summary(beta)
  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
  0.6507  0.8100  0.9008  0.8993  0.9745  1.1952 
- 
+hist(beta)
 gamma<- coef(eq_s)[u3]
 ### Exhibit l (p.691)                                                     ###
 summary(gamma)
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 -0.7761  0.1053  0.2355  0.1999  0.3332  1.1418 
+hist(gamma)
