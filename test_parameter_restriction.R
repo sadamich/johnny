@@ -4,7 +4,6 @@
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 ### Illustration 3 4 2 Bank wages (p.166)                                  ###
 
-
 xm301<- read.csv("xm301.csv",header=TRUE)
 attach(xm301)
 str(xm301)
@@ -83,3 +82,25 @@ Model 2: LOGSAL ~ EDUC + LOGSALBEGIN + gm
   Res.Df    RSS Df  Sum of Sq      F Pr(>F)
 1    469 14.627                            
 2    470 14.629 -1 -0.0016242 0.0521 0.8196 (H0 is not rejectet.)
+
+
+F<- function(ssr_r,ssr,g,n,k){
+result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
+return(result)
+}
+
+F(14.6291,14.6275,1,474,5)
+[1] 0.05130063
+
+library(car)
+
+linearHypothesis(panel01, "1*GENDER + 1*MINORITY = 0")
+Linear hypothesis test:
+GENDER  + MINORITY = 0
+Model 1: restricted model
+Model 2: LOGSAL ~ EDUC + LOGSALBEGIN + GENDER + MINORITY
+
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)
+1    470 14.629                           
+2    469 14.627  1 0.0016242 0.0521 0.8196
+
