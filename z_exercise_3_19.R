@@ -42,10 +42,38 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.01715 on 25 degrees of freedom
 Multiple R-squared:  0.9938,    Adjusted R-squared:  0.9929 
 F-statistic:  1009 on 4 and 25 DF,  p-value: < 2.2e-16
+res<- resid(eq_b)
+ssr<- sum(res^2)
+ssr
+0.007355256
 
-SUM<- (log(PGAS)+log(PALL)+log(INC)+log(PPUB))
+SUM<- (log(PGAS)+log(PALL)+log(INC))-log(PPUB)
 eq_c<- lm(y~ SUM)
 summary(eq_c)
+res_c<- resid(eq_c)
+ssr_c<- sum(res_c^2)
+ssr_c
+
+F<- function(ssr_r,ssr,g,n,k){
+result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
+return(result)
+}
+F(0.007355256 ,0.007355256,1,30,5)
+[1] 927.8761
+
+library(car)
+
+linearHypothesis(eq_b, "1*log(PGAS) + 1*log(PALL)+1*log(INC)+1*log(PPUB) = 0")
+r hypothesis test:
+log(PGAS)  + log(PALL)  + log(INC)  + log(PPUB) = 0
+Model 1: restricted model
+Model 2: y ~ log(PGAS) + log(PALL) + log(INC) + log(PPUB)
+
+  Res.Df       RSS Df Sum of Sq      F    Pr(>F)    
+1     26 0.0147905                                  
+2     25 0.0073553  1 0.0074352 25.272 3.475e-05 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
 ### The parameter restriction Call:lm(formula = y ~ SUM)
 Residuals:
      Min       1Q   Median       3Q      Max 
@@ -59,6 +87,42 @@ Residual standard error: 0.1401 on 28 degrees of freedom
 Multiple R-squared:  0.5403,    Adjusted R-squared:  0.5239 
 F-statistic: 32.91 on 1 and 28 DF,  p-value: 3.725e-06
 ### H0 (SUM = 0) is rejectet                                              ###
-SUM2<- log(PALL)+log(INC)+log(PPUB)
-eq_d<- lm(y~ SUM2)
+SUM2<- log(PPUB)-(log(PALL)+log(INC))
+eq_d<- lm(y~ log(PGAS)+log(PALL)+log(INC)+SUM2)
 summary(eq_d)
+res_d<- resid(eq_d)
+ssr_d<- sum(res_d^2)
+ssr_d
+[1] 0.5571564
+F( 0.3702383,0.007355256,1,30,5)
+anova(eq_c,eq_d)
+Analysis of Variance Table
+Model 1: y ~ SUM
+Model 2: y ~ SUM2
+  Res.Df     RSS Df Sum of Sq F Pr(>F)
+1     28 0.54946                      
+2     28 0.43894  0   0.11052   
+
+linearHypothesis(eq_b, "1*log(PALL)+1*log(INC)+1*log(PPUB) = 0")
+Linear hypothesis test:
+log(PALL)  + log(INC)  + log(PPUB) = 0
+Model 1: restricted model
+Model 2: y ~ log(PGAS) + log(PALL) + log(INC) + log(PPUB)
+
+  Res.Df       RSS Df  Sum of Sq      F Pr(>F)
+1     26 0.0074022                            
+2     25 0.0073553  1 4.6927e-05 0.1595  0.693
+
+const<- rep(1,30)
+R<- c(0,1,1,1,1)
+r<- 0
+X<- cbind(const,log(PGAS),log(PALL),log(INC),log(PPUB))
+b<- c(b1,b2,b3,b4,b5)
+R*b
+F<- function(ssr_r,ssr,g,n,k){
+result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
+return(result)
+}
+
+F( 0.43894,0.54946,1,30,2)
+
