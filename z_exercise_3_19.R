@@ -42,6 +42,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.01715 on 25 degrees of freedom
 Multiple R-squared:  0.9938,    Adjusted R-squared:  0.9929 
 F-statistic:  1009 on 4 and 25 DF,  p-value: < 2.2e-16
+
 SUM<- (log(PGAS)+log(PALL)+log(INC)+log(PPUB))
 eq_c<- lm(y~ SUM)
 summary(eq_c)
@@ -58,6 +59,6 @@ Residual standard error: 0.1401 on 28 degrees of freedom
 Multiple R-squared:  0.5403,    Adjusted R-squared:  0.5239 
 F-statistic: 32.91 on 1 and 28 DF,  p-value: 3.725e-06
 ### H0 (SUM = 0) is rejectet                                              ###
-SUM2<- (log(PALL)+log(INC)+log(PPUB))
+SUM2<- log(PALL)+log(INC)+log(PPUB)
 eq_d<- lm(y~ SUM2)
-summary(eq_d)???
+summary(eq_d)
