@@ -47,8 +47,8 @@ ssr<- sum(res^2)
 ssr
 0.007355256
 
-SUM<- (log(PGAS)+log(PALL)+log(INC))-log(PPUB)
-eq_c<- lm(y~ SUM)
+SUM<- log(PPUB)+log(PGAS)-log(PALL)-log(INC)
+eq_c<- lm(y~ log(PALL)+log(INC)+SUM)
 summary(eq_c)
 res_c<- resid(eq_c)
 ssr_c<- sum(res_c^2)
@@ -58,8 +58,8 @@ F<- function(ssr_r,ssr,g,n,k){
 result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
 return(result)
 }
-F(0.007355256 ,0.007355256,1,30,5)
-[1] 927.8761
+F( 0.0422836 ,0.007355256,1,30,5)
+
 
 library(car)
 
@@ -87,14 +87,15 @@ Residual standard error: 0.1401 on 28 degrees of freedom
 Multiple R-squared:  0.5403,    Adjusted R-squared:  0.5239 
 F-statistic: 32.91 on 1 and 28 DF,  p-value: 3.725e-06
 ### H0 (SUM = 0) is rejectet                                              ###
-SUM2<- log(PPUB)-(log(PALL)+log(INC))
-eq_d<- lm(y~ log(PGAS)+log(PALL)+log(INC)+SUM2)
+SUM2<- log(PPUB)+log(PALL)-log(INC)
+eq_d<- lm(y~ log(PGAS)+log(INC)+SUM2)
 summary(eq_d)
 res_d<- resid(eq_d)
 ssr_d<- sum(res_d^2)
 ssr_d
 [1] 0.5571564
-F( 0.3702383,0.007355256,1,30,5)
+F(0.01388671 ,0.007355256,1,30,5)
+
 anova(eq_c,eq_d)
 Analysis of Variance Table
 Model 1: y ~ SUM
