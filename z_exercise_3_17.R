@@ -7,7 +7,9 @@ str(xr317)
 attach(xr317)
 eq_adv<- lm(log(QUANTITY) ~ log(DEAL) + A)
 summary(eq_adv)
-### The Adv A is significant Call:lm(formula=log(QUANTITY) ~ log(DEAL)+ A) ###
+res<- resid(eq_adv)
+ssr<- sum(res^2)
+### Problem a The Adv A is significant: lm(log(QUANTITY) ~ log(DEAL)+ A)   ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.12421 -0.07053 -0.03182  0.05242  0.23452 
@@ -41,21 +43,27 @@ Model 1: log(QUANTITY) ~ log(DEAL) + A
 Model 2: log(QUANTITY) ~ log(DEAL)
   Res.Df     RSS Df Sum of Sq     F    Pr(>F)    
 1     15 0.15627                                 
-2     16 0.56548 -1  -0.40921 39.28 1.508e-05 ***
+2     16 0.56548 -1  -0.40921 39.28 1.508e-05 *** (t^2 = F) is valid
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+6.267^2= 39.27529  (t^2 = F) is valid
 ### F test also says A is significant.                                          ###
+
 ### Problem (b)                                                            ###
 b2= 1
 (5.02723 - 1)/0.44980 = [1] 8.953379   ### H0 is rejectet.                 ###
+
+### Problem (c) Confidence interval                                        ###
 confint(eq_adv)
-        2.5 %    97.5 %
+                2.5 %    97.5 %
 (Intercept) 5.7472780 5.9020222
 log(DEAL)   4.0685024 5.9859586
 A           0.2285653 0.4641463
 
+
+### Problem (d) Chow forecast test                                         ###
 eq_a<- lm(log(QUANTITY[A==1]) ~ log(DEAL[A==1]))
 summary(eq_a)
-### The Adv Moldel Call:lm(formula=log(QUANTITY[A == 1])~log(DEAL[A == 1])) ###
+### The Adv Moldel Call:lm(formula=log(QUANTITY[A == 1])~log(DEAL[A == 1]))###
 Residuals:
         1         2         3         4         5         6 
  0.034220 -0.032873 -0.001347 -0.015779  0.005940  0.009839 
@@ -69,7 +77,9 @@ Multiple R-squared:  0.9945,    Adjusted R-squared:  0.9931
 F-statistic: 717.2 on 1 and 4 DF,  p-value: 1.156e-05
 eq_no<- lm(log(QUANTITY[A==0]) ~ log(DEAL[A==0]))
 summary(eq_no)
-### no Adv model Call:lm(formula=log(QUANTITY[A == 0])~log(DEAL[A == 0]))  ###
+res_no<- resid(eq_no)
+ssr_no<- sum(res_no^2)
+### no Adv model: lm(formula=log(QUANTITY[A == 0])~log(DEAL[A == 0]))      ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.14130 -0.05791 -0.04034  0.03262  0.23512 
@@ -90,5 +100,22 @@ Residuals          4 0.00263 0.00066
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Warning message:
 In anova.lmlist(object, ...) :
-  models with response ‘"log(QUANTITY[A == 0])"’ removed because 
+models with response ‘"log(QUANTITY[A == 0])"’ removed because 
 response differs from model1 (The two models are diffent models.No predictable)
+Chow Test/F test
+F<- function(ssr_r, ssr, g,n,k){
+result<- ((ssr_r - ssr)/g)/(ssr/(n-k))
+return(result)
+}
+F(0.1323284, 0.1562672,6,18,3)
+-0.3829786
+H0 is rejected.
+pf(-0.3829786, 12,6)
+pf(0, 12,6)
+pf(0.838, 27, 442)
+### Problem (e) Chow forecast                                              ###
+fit<- fitted(eq_no)
+plot(fit,log(QUANTITY)[A==0])
+
+forecast_e<- 5.84174 + 4.66469*log(DEAL[A==1])
+plot(forecast_e, type="l")
