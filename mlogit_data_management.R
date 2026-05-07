@@ -16,6 +16,23 @@ str(Train)
  $ change_B : num  0 0 0 0 0 0 0 0 0 0 ...
  $ comfort_B: num  1 1 0 0 0 0 1 0 1 0 ...
 attach(Train)
+### Index variables                                                       ###
+str(id)
+ int [1:2929] 1 1 1 1 1 1 1 1 1 
+str(choiceid)
+int [1:2929] 1 2 3 4 5 6 7 8 9 10 
+str(choice)
+ Factor w/ 2 levels "A","B": 1 1 1 2 2 2 2 2 1 1 ...
+### alternative specific
+str(price_A)
+ num [1:2929] 2400 2400 2400 4000 2400 4000 
+str(time_A)
+ num [1:2929] 150 150 115 130 150 115 150 115 
+str(change_A)
+num [1:2929] 0 0 0 0 0 0 0 0 0 0 
+str(comfort_A)
+num [1:2929] 1 1 1 1 1 0 1 1 0 1 ...
+
 Train$choiceid <- 1:nrow(Train)
 head(Train, 3)
  id choiceid choice price_A time_A change_A comfort_A price_B time_B change_B
@@ -149,4 +166,4 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Log-Likelihood: -1230.8
 McFadden R^2:  0.17823 
 Likelihood ratio test : chisq = 533.88 (p.value = < 2.22e-16)
-> 
+
