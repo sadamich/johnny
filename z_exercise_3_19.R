@@ -47,8 +47,8 @@ ssr<- sum(res^2)
 ssr
 0.007355256
 
-SUM<- log(PPUB)+log(PGAS)-log(PALL)-log(INC)
-eq_c<- lm(y~ log(PALL)+log(INC)+SUM)
+SUM<- -log(PALL)+log(PPUB)+log(PGAS)+log(INC)
+eq_c<- lm(y~ log(PALL)+SUM)
 summary(eq_c)
 res_c<- resid(eq_c)
 ssr_c<- sum(res_c^2)
@@ -58,11 +58,10 @@ F<- function(ssr_r,ssr,g,n,k){
 result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
 return(result)
 }
-F( 0.0422836 ,0.007355256,1,30,5)
+F( 0.1447376 ,0.007355256,1,30,5)
 
 
 library(car)
-
 linearHypothesis(eq_b, "1*log(PGAS) + 1*log(PALL)+1*log(INC)+1*log(PPUB) = 0")
 r hypothesis test:
 log(PGAS)  + log(PALL)  + log(INC)  + log(PPUB) = 0
@@ -74,56 +73,46 @@ Model 2: y ~ log(PGAS) + log(PALL) + log(INC) + log(PPUB)
 2     25 0.0073553  1 0.0074352 25.272 3.475e-05 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-### The parameter restriction Call:lm(formula = y ~ SUM)
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.31271 -0.02331  0.02229  0.08930  0.20022 
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  5.43739    0.25992  20.920  < 2e-16 ***
-SUM          0.06937    0.01209   5.737 3.72e-06 ***
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Residual standard error: 0.1401 on 28 degrees of freedom
-Multiple R-squared:  0.5403,    Adjusted R-squared:  0.5239 
-F-statistic: 32.91 on 1 and 28 DF,  p-value: 3.725e-06
-### H0 (SUM = 0) is rejectet                                              ###
-SUM2<- log(PPUB)+log(PALL)-log(INC)
-eq_d<- lm(y~ log(PGAS)+log(INC)+SUM2)
-summary(eq_d)
-res_d<- resid(eq_d)
-ssr_d<- sum(res_d^2)
-ssr_d
-[1] 0.5571564
-F(0.01388671 ,0.007355256,1,30,5)
 
-anova(eq_c,eq_d)
-Analysis of Variance Table
-Model 1: y ~ SUM
-Model 2: y ~ SUM2
-  Res.Df     RSS Df Sum of Sq F Pr(>F)
-1     28 0.54946                      
-2     28 0.43894  0   0.11052   
-
+### Problem (d) (p.186)                                                   ###                     
 linearHypothesis(eq_b, "1*log(PALL)+1*log(INC)+1*log(PPUB) = 0")
 Linear hypothesis test:
 log(PALL)  + log(INC)  + log(PPUB) = 0
 Model 1: restricted model
 Model 2: y ~ log(PGAS) + log(PALL) + log(INC) + log(PPUB)
-
   Res.Df       RSS Df  Sum of Sq      F Pr(>F)
 1     26 0.0074022                            
 2     25 0.0073553  1 4.6927e-05 0.1595  0.693
 
-const<- rep(1,30)
-R<- c(0,1,1,1,1)
-r<- 0
-X<- cbind(const,log(PGAS),log(PALL),log(INC),log(PPUB))
-b<- c(b1,b2,b3,b4,b5)
-R*b
+eq_d<- lm(y~ log(PGAS)+x2+x4)
+summary(eq_d)
+Call:lm(formula = y ~ log(PGAS) + x2 + x4)
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.035442 -0.010769  0.003703  0.010092  0.024626 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  4.10575    0.09433  43.526   <2e-16 ***
+log(PGAS)   -0.31697    0.01160 -27.324   <2e-16 ***
+x2           1.27185    0.03580  35.523   <2e-16 ***
+x4           0.15672    0.04348   3.604   0.0013 ** 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.01687 on 26 degrees of freedom
+Multiple R-squared:  0.9938,    Adjusted R-squared:  0.9931 
+F-statistic:  1391 on 3 and 26 DF,  p-value: < 2.2e-16
+res_d<- resid(eq_d)
+ssr_d<- sum(res_d^2)
+ssr_d
+
 F<- function(ssr_r,ssr,g,n,k){
 result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
 return(result)
 }
-
-F( 0.43894,0.54946,1,30,2)
-
+F(0.007402183,0.007355256,1,30,5)
+[1] 0.1595016 ### The same coefficient with the parameter restriction test ###
+confint(eq_d)
+                 2.5 %     97.5 %
+(Intercept)  3.9118503  4.2996445
+log(PGAS)   -0.3408097 -0.2931210
+x2           1.1982530  1.3454417
+x4           0.0673357  0.2461045
