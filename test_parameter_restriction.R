@@ -55,6 +55,9 @@ Model 2: LOGSAL ~ EDUC + LOGSALBEGIN
 2    471 14.892 -2  -0.26416 4.2349 0.01504 * (H0 is rejectet.)
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
 ### H0 b4 = -b5                                                            ###
+### H0 (y= c+b2EDUC+b3LOGSALBEGIN+b4GENDER+b5MINORITY)                     ###
+### H0 (y= c+b2EDUC+b3LOGSALBEGIN+b4GENDER-b4MINORITY)                     ###
+### H0 (y= c+b2EDUC+b3LOGSALBEGIN+b4(GENDER-MINORITY))                     ###
 gm<- GENDER - MINORITY
 r_eq<- lm(LOGSAL ~ EDUC+LOGSALBEGIN +gm)
 summary(r_eq)
