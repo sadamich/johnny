@@ -12,6 +12,7 @@ x4<- log(PPUB/PALL)
 x5<- log(PNCAR/PALL)
 x6<- log(PUCAR/PALL)
 
+### Problem (a)                                                            ###                
 eq<- lm(y~ x2+x3+x4+x5+x6)
 summary(eq)
 eq_r<- lm(y~ x2+x3+x4)
@@ -24,6 +25,7 @@ Model 2: y ~ x2 + x3 + x4
 1     24 0.012512                            
 2     26 0.014790 -2 -0.0022789 2.1857 0.1343 (not joint significant)
 
+### Problem (b)                                                            ###
 eq_b<- lm(y~ log(PGAS)+log(PALL)+log(INC)+log(PPUB))
 summary(eq_b)
 ### The price elasticity of gasolin consumption 
@@ -47,19 +49,16 @@ ssr<- sum(res^2)
 ssr
 0.007355256
 
-SUM<- -log(PALL)+log(PPUB)+log(PGAS)+log(INC)
-eq_c<- lm(y~ log(PALL)+SUM)
-summary(eq_c)
-res_c<- resid(eq_c)
-ssr_c<- sum(res_c^2)
-ssr_c
+### Problem (c) 
+### H0 (b2*b3+b4+b5=0) leads to the model (a):y= c+b2x2+b3x3+b4x4          ###
+ssr_c:0.0147905
 
 F<- function(ssr_r,ssr,g,n,k){
 result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
 return(result)
 }
-F( 0.1447376 ,0.007355256,1,30,5)
-
+F(0.0147905,0.007355256,1,30,5)
+25.27187
 
 library(car)
 linearHypothesis(eq_b, "1*log(PGAS) + 1*log(PALL)+1*log(INC)+1*log(PPUB) = 0")
@@ -70,7 +69,7 @@ Model 2: y ~ log(PGAS) + log(PALL) + log(INC) + log(PPUB)
 
   Res.Df       RSS Df Sum of Sq      F    Pr(>F)    
 1     26 0.0147905                                  
-2     25 0.0073553  1 0.0074352 25.272 3.475e-05 ***
+2     25 0.0073553  1 0.0074352 25.272 3.475e-05 *** (the same cofficient)
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 
