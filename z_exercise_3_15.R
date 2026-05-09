@@ -21,7 +21,9 @@ Residual standard error: 0.2817 on 23 degrees of freedom
 Multiple R-squared:  0.9569,    Adjusted R-squared:  0.9531 
 F-statistic: 255.2 on 2 and 23 DF,p-value:2.2e-16 (H0 b2 = b3 = 0 is rejectet)
 res<- resid(eq_base)
-e<- sum(res^2)
+ssr<- sum(res^2)
+ssr
+[1] 1.825544
 library(car)
 linearHypothesis(eq_base, "1*LOGL + 1*LOGK = 0")
 Linear hypothesis test:
@@ -50,12 +52,17 @@ Residual standard error: 0.3144 on 24 degrees of freedom
 Multiple R-squared:  0.944,     Adjusted R-squared:  0.9416 
 F-statistic: 404.4 on 1 and 24 DF,  p-value: < 2.2e-16
 res<- resid(eq_same)
-e_r<- sum(res^2)
-e_r
+ssr<- sum(res^2)
+ssr
+
+### the constant returns to scale Model                                    ###
 log_lk_c<- LOGL - LOGK
 eq_c<- lm(LOGY - LOGK ~ log_lk_c)
 summary(eq_c)
-
+res_c<- resid(eq_c)
+ssr_c<- sum(res_c^2)
+ssr_c
+[1] 1.825652
 ### The constant return to scal model                                      ###
 ### lm(formula = LOGY - LOGK ~ log_lk_c)                                   ###
 Residuals:
@@ -69,64 +76,24 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.2758 on 24 degrees of freedom
 Multiple R-squared:  0.7514,    Adjusted R-squared:  0.741 
 F-statistic: 72.54 on 1 and 24 DF,  p-value: 1.023e-08
-res<- resid(eq_c)
-e_r<- sum(res^2)
-anova(eq_base, eq_same)
-Analysis of Variance Table
-Model 1: LOGY ~ LOGL + LOGK
-Model 2: LOGY ~ log_lk
-  Res.Df    RSS Df Sum of Sq      F  Pr(>F)  
-1     23 1.8255                              
-2     24 2.3720 -1  -0.54645 6.8847 0.01518 *
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-F<- function(n, k, g, R1,R2){
-result<- (n-k)/g * (R1 - R2)/(1-R1)
+### F tests                                                                ###
+anova(eq_base, eq_c)
+
+F<- function(n,k,g,R,R_r){
+result<- ((n-k)/g)*(R-R_r)/(1-R)
 return(result)
 }
-F(26,3,1,0.9569,0.944)
-[1] 6.883991
+F(26,3,1, 0.95688,0.751397)
 
-F<- function(e_r, e,n, k, g){
-result<- ((e_r - e)/g) / (e /(n-k))
+
+F<- function(n,k, g, ssr_r,ssr){
+result<- ((ssr_r - ssr)/g)/(ssr/(n-k))
 return(result)
 }
-F(2.371989,1.825544,26,3,1)
-[1] 6.884652
+F(26,3,1,1.825652,1.825544)
 
-### joint singnificance F Test                                            ###
-F<- function(n, k, R){
-result<- (n-k)/(k-1)* R/(1-R)
-return(result)
-}
-F(26,2, 0.944)
-F-statistic: 404.4 on 1 and 24 DF,  p-value: < 2.2e-16F<- function(n, k, R){
 
-anova(eq_base, eq_c) 
-Analysis of Variance Table
-Response: LOGY
-          Df Sum Sq Mean Sq  F value  Pr(>F)    
-LOGL       1 40.137  40.137 505.6820 < 2e-16 ***
-LOGK       1  0.382   0.382   4.8178 0.03853 *  
-Residuals 23  1.826   0.079                     
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Warning message:
-In anova.lmlist(object, ...) :
-  models with response ‘"LOGY - LOGK"’ removed because response
- differs from model 1
-
-F<- function(n, k, g, R1,R2){
-result<- (n-k)/g * (R1 - R2)/(1-R1)
-return(result)
-}
-F(26,3,2,0.9569, 0.7514)
-[1] 10.64293
-
-F<- function(e_r, e,n, k, g){
-result<- ((e_r - e)/g) / (e /(n-k))
-return(result)
-}
-F(1.825652,1.825544,26,3,2)
 [1] 0.0006803451
 
 F<- function(n, k, R){
