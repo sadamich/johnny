@@ -51,9 +51,26 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.3144 on 24 degrees of freedom
 Multiple R-squared:  0.944,     Adjusted R-squared:  0.9416 
 F-statistic: 404.4 on 1 and 24 DF,  p-value: < 2.2e-16
-res<- resid(eq_same)
-ssr<- sum(res^2)
-ssr
+res_b<- resid(eq_same)
+ssr_b<- sum(res_b^2)
+ssr_b
+[1] 2.371989
+
+F<- function(n,k,g,R,R_r){
+result<- ((n-k)/g)*(R-R_r)/(1-R)
+return(result)
+}
+F(26,3,1, 0.956888,0.943984)
+[1] 6.884209
+
+F<- function(n,k, g, ssr_r,ssr){
+result<- ((ssr_r - ssr)/g)/(ssr/(n-k))
+return(result)
+}
+F(26,3,1,2.371989,1.825652)
+[1] 6.882884
+### the both F Tests are the same coefficients                                  ###
+
 
 ### the constant returns to scale Model                                    ###
 log_lk_c<- LOGL - LOGK
@@ -78,28 +95,20 @@ Multiple R-squared:  0.7514,    Adjusted R-squared:  0.741
 F-statistic: 72.54 on 1 and 24 DF,  p-value: 1.023e-08
 
 ### F tests                                                                ###
-anova(eq_base, eq_c)
-
 F<- function(n,k,g,R,R_r){
 result<- ((n-k)/g)*(R-R_r)/(1-R)
 return(result)
 }
-F(26,3,1, 0.95688,0.751397)
-
+F(26,3,1,0.956888,0.751397)
+[1] 109.6282
 
 F<- function(n,k, g, ssr_r,ssr){
 result<- ((ssr_r - ssr)/g)/(ssr/(n-k))
 return(result)
 }
 F(26,3,1,1.825652,1.825544)
+[1] 0.00136069
+### the results are diffenrent. Why?
 
 
-[1] 0.0006803451
 
-F<- function(n, k, R){
-result<- (n-k)/(k-1)* R/(1-R)
-return(result)
-}
-F(26, 2, 0.7514)
-[1] 72.54063
-F-statistic: 72.54 on 1 and 24 DF,  p-value: 1.023e-08
