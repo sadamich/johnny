@@ -28,28 +28,28 @@ median(FEM)
 sd(FEM)
 [1] 0.5163978
 
-
+hist(FGPA)
 skew<- function(y,mean,n){
-result<- 1/n*(sum(y - mean)^3)
+result<- 1/n*(sum ((y - mean)^3))
 return(result)
 }
 skew(FGPA,mean(FGPA),10)
-[1] -2.955864e-47
+[1] -0.02025478
 skew(SATM,mean(SATM),10)
-[1] 7.006492e-47
+[1] -0.014796
 skew(FEM, mean(FEM),10)
-[1] 1.094764e-48
+[1] -0.048
 
 kurt<-  function(y,mean,n){
-result<- 1/n*(sum(y - mean)^4)
+result<- 1/n*(sum ((y - mean)^4))
 return(result)
 }
 kurt(FGPA,mean(FGPA),10)
-[1] 1.969001e-62
+[1] 0.1329145
 kurt(SATM, mean(SATM),10)
-[1] 6.223015e-62
+[1] 0.02054857
 kurt(FEM, mean(FEM),10)
-[1] 2.430865e-64
+[1] 0.0672
 
 ### Problem (b)                                                            ###
 var(FGPA)
