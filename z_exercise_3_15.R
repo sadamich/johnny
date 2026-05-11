@@ -110,5 +110,24 @@ F(26,3,1,1.825652,1.825544)
 [1] 0.00136069
 ### the results are diffenrent. Why?
 
+anova(eq_base,eq_c)
+f Variance Table
+Response: LOGY
+          Df Sum Sq Mean Sq  F value  Pr(>F)    
+LOGL       1 40.137  40.137 505.6820 < 2e-16 ***
+LOGK       1  0.382   0.382   4.8178 0.03853 *  
+Residuals 23  1.826   0.079                     
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Warning message:
+In anova.lmlist(object, ...) :
+models with response ‘"LOGY - LOGK"’ removed because response differs from 
+model 1
 
-
+linearHypothesis(eq_base, "1*LOGL + 1*LOGK = 1")
+Linear hypothesis test:
+LOGL  + LOGK = 1
+Model 1: restricted model
+Model 2: LOGY ~ LOGL + LOGK
+  Res.Df    RSS Df  Sum of Sq      F Pr(>F)
+1     24 1.8256                            
+2     23 1.8255  1 0.00010768 0.0014 0.9709
