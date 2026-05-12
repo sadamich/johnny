@@ -23,6 +23,18 @@ integrate(integrand, lower = 0, upper = 10)
 integrate(integrand, lower = 0, upper = 100000)
 integrate(integrand, lower = 0, upper = 1000000, stop.on.error = FALSE)
 
+### chisq distribution (p.32)                                             ###
+f(v)= v^(r/2 -1) *exp(-v/2)
+
+### t distribution (p.33)
+f(v) = 1 / (1 + v^2/r)^(r+1)/2
+
+### cauchy distribution (p.32)
+f(v) = 1 / pi*(1+v^2)
+
+
+
+
 ## some functions do not handle vector input properly
 f <- function(x) 2.0
 try(integrate(f, 0, 1))
