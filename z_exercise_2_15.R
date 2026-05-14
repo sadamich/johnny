@@ -47,7 +47,7 @@ RENDCYCO[94]
 [1] -35.56618
 
 
-
+### Example 2 11 (p.107)                                                  ###
 xm202<- read.csv("xm202.csv",header=TRUE)
 str(xm202)
 attach(xm202)
@@ -67,26 +67,33 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.2623 on 422 degrees of freedom
 Multiple R-squared:  0.2883,    Adjusted R-squared:  0.2866 
 F-statistic: 170.9 on 1 and 422 DF,  p-value: < 2.2e-16
+res<- resid(eq)
+ssr<- sum(res^2)
+s_sq<- ssr/(424-2)
+s_sq
+[1] 0.06878685    (the estimated variance)  
 
-f<- 9.387947 +0.068414*EDUC
+### the forecast function from estimation set                             ###
+f<- 9.387947 +0.068414*EDUC(forecast set) 
 
 f<- function(x){
 result<- 9.387947 +0.068414*x
 return(result)
 }
 f(12)
-
+### forecast for (425:474) from the set of estimation set (1:424)         ###
 f_50<- 9.387947 +0.068414*EDUC[425:474]
 f_e<- log(SALARY[425:474]) - f_50
+### the average squared prediction error                                  ###
 sum(f_e^2/50)
 [1] 0.2675874
 
+var(f_e)
 
 ### Full sample estimation                                                ###
 eq_full<- lm(log(SALARY)~EDUC)
 summary(eq_full)
-Call:
-lm(formula = log(SALARY) ~ EDUC)
+Call:lm(formula = log(SALARY) ~ EDUC)
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.66260 -0.19303 -0.03559  0.16538  0.95223
@@ -98,7 +105,18 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.2853 on 472 degrees of freedom
 Multiple R-squared:  0.4854,    Adjusted R-squared:  0.4844 
 F-statistic: 445.3 on 1 and 472 DF,  p-value: < 2.2e-16
+res_full<- resid(eq_full)
+ssr_full<- sum(res_full^2)
+ssr_full/48
+### forecast from full estimatio set                                      ###
 f_50full<- 9.062102+0.095963*EDUC[425:474]
 f_efull<- log(SALARY[425:474]) - f_50full
+### average squared residual                                              ###
 sum(f_efull^2/50)
 [1] 0.1423139
+
+### the variance of the forecast errors (2 39)                            ###
+x_1<- EDUC[1:424]
+x_2<- EDUC[425:474]
+0.06878685*(1 + 1/424+ (x_2 - mean(x_1))^2)/(var(x_1) )
+
