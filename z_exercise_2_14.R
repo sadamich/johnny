@@ -9,8 +9,7 @@ attach(xr111)
 ### Problem (a) and (b)
 eq<- lm(FGPA ~ SATM)
 summary(eq)
-Call:
-lm(formula = FGPA ~ SATM)
+Call:lm(formula = FGPA ~ SATM)
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.66124 -0.30806 -0.03127  0.25070  1.01576 
@@ -28,5 +27,10 @@ confint(eq)
 (Intercept) -7.1095119 6.452117
 SATM        -0.6435615 1.678724
 
-
+### Problem (d) forecast for students (SATM = 6)                          ###
+f<- -0.3287 +0.5176*SATM[SATM==6]
+f
+[1] 2.7769 2.7769
+FGPA[SATM==6]
+[1] 2.566 3.225
 
