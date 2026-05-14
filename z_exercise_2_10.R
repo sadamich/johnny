@@ -42,10 +42,13 @@ ssr<- sum(res^2)
 ssr/(12-2)
 sqrt(ssr/(12-2))
 [1] 10.62191 (sd) 
-
+X<- PRICE
+z<- solve(t(X)%*%X)
 ### Problem (e)
 (-693.33 -0)/10.62191
-
+[1] -65.27357
+z*(ssr/(12-2))
+sqrt(z*(ssr/(12-2)))
 ### Problem (f)
 confint(eq_b)
                 2.5 %    97.5 %
