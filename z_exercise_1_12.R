@@ -99,6 +99,27 @@ mean(s4)
 s5<- sample(FEM,5)
 mean(s5)
 [1] 0.4
+my_experiment <- NULL
+for (i in 1:100) {
+  my_sample <- sample(FEM, size = 5)
+  my_experiment <- c(my_experiment, mean(my_sample))
+  cat(sprintf("Sample number %s has a mean of %s.\n", i, round(mean(my_sample), 2)))
+}
+my_experiment
+summary(my_experiment)
+
+### t test                                                                 ###
+var(my_experiment)
+(0.6- 236/609)/sd(my_experiment)
+[1] 1.291515
+1 -pt(1.291515, 9)
+[1] 0.1143531
+### CLT base t test                                                        ###
+(0.6- 236/609)/sqrt(1/10*0.6*0.4)
+[1] 1.371549
+1 -pt(1.371549, 9)
+[1] 0.101712
+H0 (p=236/609) is not rejected    
 
 ### Repeating                                                              ###
 sampling<- c(0.6,0.8,0.6,0.6,0.4)
@@ -117,6 +138,10 @@ alternative hypothesis: true mean is greater than 0.3842365
 sample estimates:
 mean of x 
       0.6 
+
+
+
+
 
 xm101<- read.csv("xm101.csv", header=TRUE)
 str(xm101)
