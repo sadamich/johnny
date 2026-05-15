@@ -107,16 +107,17 @@ Multiple R-squared:  0.4854,    Adjusted R-squared:  0.4844
 F-statistic: 445.3 on 1 and 472 DF,  p-value: < 2.2e-16
 res_full<- resid(eq_full)
 ssr_full<- sum(res_full^2)
-ssr_full/48
+
 ### forecast from full estimatio set                                      ###
 f_50full<- 9.062102+0.095963*EDUC[425:474]
 f_efull<- log(SALARY[425:474]) - f_50full
 ### average squared residual                                              ###
 sum(f_efull^2/50)
 [1] 0.1423139
+var(f_efull)
 
 ### the variance of the forecast errors (2 39)                            ###
 x_1<- EDUC[1:424]
 x_2<- EDUC[425:474]
-0.06878685*(1 + 1/424+ (x_2 - mean(x_1))^2)/(var(x_1) )
+0.068*(1 + 1/424+ (mean(x_2) - mean(x_1))^2/sum((x_1 - mean(x_1))^2))
 
