@@ -3,23 +3,26 @@
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 ### Exercise 4 9 
+### Problem (a)
 x<- runif(100, 0, 20)
 plot(x)
 hist(x)
-library(maxLik)
 e<- rnorm(100, 0, 0.01)
+y<- 2+sqrt(x)+e
+plot(y)
+hist(y)
+
+### Problem (b) 
+library(maxLik)
 f<- function(theta){
 beta1<- theta[1]
 beta2<- theta[2]
-beta3<- theta[3]
-sigma<- theta[4]
-y<- beta1+beta2*x^beta3+e
-mu <- beta1+beta2*x^beta3
-N<- 100
-
--N*0.5*log(pi)-N*0.5*log(sigma^2)-((y - mu)^2/sigma^2)
+beta2<- theta[3]
+result<- beta1+beta2*x^beta3
+return(result)
 }
-m<- maxLik(f, start = c(0,1,1,1))
+
+m<- maxLik(f, start = c(0,0,0))
 summary(m)
 
 Maximum Likelihood estimation
