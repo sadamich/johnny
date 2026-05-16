@@ -119,5 +119,5 @@ var(f_efull)
 ### the variance of the forecast errors (2 39)                            ###
 x_1<- EDUC[1:424]
 x_2<- EDUC[425:474]
-0.068*(1 + 1/424+ (mean(x_2) - mean(x_1))^2/sum((x_1 - mean(x_1))^2))
-
+0.06878685 *(1 + 1/50+ sum((x_2 - mean(EDUC))^2)/sum((x_2 - mean(EDUC))^2))
+[1] 0.1389494
