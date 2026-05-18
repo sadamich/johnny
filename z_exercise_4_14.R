@@ -6,6 +6,7 @@ xr414<- read.csv("xr414.csv", header =TRUE)
 str(xr414)
 attach(xr414)
 
+### Problem (a)  ML 
 f<- function(theta){
 beta1<- theta[1]
 beta2<- theta[2]
@@ -41,7 +42,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.45572 -0.11508 -0.00516  0.10765  0.87060 
-
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
 (Intercept)  2.07965    0.31480   6.606 1.07e-10 ***
