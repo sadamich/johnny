@@ -37,7 +37,10 @@ Estimates:
 [6,]  8.069e-03  1.204e-05  670.13  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 --------------------------------------------
-
+res<- LOGSAL - 2.8- 2.327e-02*EDUC-0.8218*LOGSALBEGIN-0.04816*GENDER+0.04237*MINORITY
+s_sq<- sum(res^2)/472
+s_sq
+[1] 0.5521511
 ### Compare with OLS:lm(LOGSAL ~ EDUC + LOGSALBEGIN + GENDER + MINORITY)   ###
 Residuals:
      Min       1Q   Median       3Q      Max 
@@ -53,4 +56,156 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.1766 on 469 degrees of freedom
 Multiple R-squared:  0.8041,    Adjusted R-squared:  0.8024 
 F-statistic: 481.3 on 4 and 469 DF,  p-value: < 2.2e-16
+### OLS = ML 
+
+### b5 = 0
+f1<- function(theta){
+beta1<- theta[1]
+beta2<- theta[2]
+beta3<- theta[3]
+beta4<- theta[4]
+sigma<- theta[5]
+N<- 474
+mu<- beta1+ beta2*EDUC+ beta3*LOGSALBEGIN+beta4*GENDER
+
+-N*0.5*log(2*pi)- N*0.5*log(sigma^2)- 0.5*((LOGSAL - mu)^2/sigma^2)
+}
+library(maxLik)
+m1<- maxLik(f1, start = c(0,0,0,0,1))
+summary(m1)
+--------------------------------------------
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 29 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: 763047.7 
+5  free parameters
+Estimates:
+      Estimate Std. error t value Pr(> t)    
+[1,] 1.9322810  0.0140108  137.91  <2e-16 ***
+[2,] 0.0233781  0.0001774  131.80  <2e-16 ***
+[3,] 0.8364063  0.0016145  518.07  <2e-16 ***
+[4,] 0.0396000  0.0008931   44.34  <2e-16 ***
+[5,] 0.0081060  0.0000121  670.13  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+--------------------------------------------
+res1<- LOGSAL - 1.9322810- 0.0233781*EDUC - 0.8364063*LOGSALBEGIN-0.0396000*GENDER
+s_sq<- sum(res1^2)/472
+s_sq
+[1] 0.03127712
+ssr1<- sum(res1^2)
+ssr1
+### b4= b5=0 
+f2<- function(theta){
+beta1<- theta[1]
+beta2<- theta[2]
+beta3<- theta[3]
+sigma<- theta[4]
+N<- 474
+mu<- beta1+ beta2*EDUC+ beta3*LOGSALBEGIN
+
+-N*0.5*log(2*pi)- N*0.5*log(sigma^2)- 0.5*((LOGSAL - mu)^2/sigma^2)
+}
+library(maxLik)
+m2<- maxLik(f2, start = c(0,0,0,1))
+summary(m2)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 11 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: 762071.3 
+4  free parameters
+Estimates:
+      Estimate Std. error t value Pr(> t)    
+[1,] 1.647e+00  1.293e-02   127.4  <2e-16 ***
+[2,] 2.312e-02  1.800e-04   128.5  <2e-16 ***
+[3,] 8.685e-01  1.498e-03   579.8  <2e-16 ***
+[4,] 8.141e-03  1.215e-05   670.1  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+res2<- LOGSAL - 1.647-0.02312*EDUC-0.8685*LOGSALBEGIN-0.008141*GENDER
+s_sq2<- sum(res2^2)/472
+s_sq2
+[1] 0.03147417
+ssr2<- sum(res2^2)
+ssr2
+### b4+b5 =0
+f3<- function(theta){
+beta1<- theta[1]
+beta2<- theta[2]
+beta3<- theta[3]
+beta4<- theta[4]
+sigma<- theta[5]
+N<- 474
+mu<- beta1+ beta2*EDUC+ beta3*LOGSALBEGIN+beta4*(GENDER-MINORITY)
+
+-N*0.5*log(2*pi)- N*0.5*log(sigma^2)- 0.5*((LOGSAL - mu)^2/sigma^2)
+}
+
+m3<- maxLik(f3, start = c(0,1,0,1,1))
+summary(m3)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 4 iterations
+Return code 3: Last step could not find a value above the current.
+Boundary of parameter space?  
+Consider switching to a more robust optimisation method temporarily.
+Log-Likelihood: -72422.43 
+5  free parameters
+Estimates:
+     Estimate Std. error t value Pr(> t)    
+[1,]  0.04723    0.23706   0.199   0.842    
+[2,]  0.55370    0.01008  54.920  <2e-16 ***
+[3,]  0.45021    0.03044  14.789  <2e-16 ***
+[4,]  0.01003    0.04176   0.240   0.810    
+[5,] -0.54207        NaN     NaN     NaN    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Warning messages:
+1: In sqrt(diag(vc)) : NaNs produced
+2: In sqrt(diag(vc)) : NaNs produced
+
+res3<- LOGSAL -0.04723 -0.55370*EDUC-0.45021*LOGSALBEGIN-0.01003*gm
+s_sq3<- sum(res3^2)/472
+s_sq3
+[1] 4.408396
+ssr3<- sum(res3^2)
+ssr3
+
+### LR test
+2*(764082 - 763047.7)
+[1] 2068.6
+1- pchisq(2068.6,1)
+[1] 0
+
+2*(764082 - 762071.3)
+[1] 4021.4
+1- pchisq(4021.4,1)
+[1] 0
+
+2*(764082 +72422.43) 
+[1] 1673009
+1- pchisq(1673009,1)
+[1] 0
+
+### LM test
+eq_lm<- lm(res1~ EDUC+LOGSALBEGIN+GENDER)
+summary(eq_lm)
+474* 2.752e-13
+[1] 1.304448e-10
+1- pchisq(1.304448e-10,1)
+[1] 0.9999909
+
+eq_lm2<- lm(res2~ EDUC+LOGSALBEGIN)
+summary(eq_lm2)
+474* 0.0001572
+[1] 0.0745128
+1- pchisq(0.0745128,1)
+[1] 0.784876
+gm<- GENDER - MINORITY
+eq_lm3<- lm(res3~ EDUC+LOGSALBEGIN+ gm)
+summary(eq_lm3)
+474*  0.9852
+[1] 466.9848
+1 - pchisq(466.9848,1)
+[1] 0
+
+### Wald test  n/(n-k)* t^2
+474/(474-5)*(-45.55)^2
+[1] 2096.922
 
