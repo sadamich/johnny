@@ -33,9 +33,17 @@ res<- resid(eq)
 ssr<- sum(res^2)
 sd_sample<- sqrt(ssr/49)
 sd_sample
-0.5275/1.10347
-[1] 0.4780375
 
+### Problem (c)                                                            ###
 library(gmm)
-eq_gmm<- gmm(y ~ a -1, a=a)???
+x<- rep(1,50)
+eq_gmm<- gmm(y ~ 1, x=x)
 summary(eq_gmm)
+
+
+
+### Problem (d)
+cauchy
+
+### Problem (e)
+t3 distribution
