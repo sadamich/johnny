@@ -64,3 +64,9 @@ f(t) = lambda(t) s(t)
 
 s(t) = exp( - integrate (lambda(s) ds)
 
+### Integral and limit value                                               ###
+integrand <- function(x) {
+1/((x+1)*sqrt(x))}
+integrate(integrand, lower = 0, upper = Inf)
+
+
