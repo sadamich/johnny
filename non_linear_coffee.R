@@ -13,7 +13,8 @@ coef(non_3)
  beta_1        beta_2        beta_3 
   5.807117686  10.298318439 -13.430734856 
 summary(non_3)
-### Panel 1(p.248) Formula: LOGQ1 ~ beta_1 + (beta_2/beta_3) * (D1^beta_3 - 1)###
+### Panel 2(p.248) and Panel 2 (p.220)                                     ###
+### LOGQ1 ~ beta_1 + (beta_2/beta_3) * (D1^beta_3 - 1)                     ###
 Parameters:
         Estimate Std. Error t value Pr(>|t|)    
 beta_1   5.80712    0.04015 144.636   <2e-16 ***
@@ -23,11 +24,14 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.09835 on 9 degrees of freedom
 Number of iterations to convergence: 2 
 Achieved convergence tolerance: 2.369e-13
+logLik(non_3)
+'log Lik.' 12.52991 (df=4)
 For D2
 non_3_2 <- gsl_nls(fn = LOGQ2 ~ beta_1 + (beta_2/beta_3) * (D2^beta_3 -1), data = xm402, start = c(beta_1 = NA, beta_2 = NA, beta_3= NA))
 coef(non_3_2) 
 summary(non_3_2) 
-### Panel 4 (p.248)Formula: LOGQ2 ~ beta_1 + (beta_2/beta_3) * (D2^beta_3 - 1)###
+### Panel 4 (p.248) and Panel 4 (p.220)                                     ###
+### LOGQ2 ~ beta_1 + (beta_2/beta_3) * (D2^beta_3 - 1)                      ###
 Parameters:
        Estimate Std. Error t value Pr(>|t|)    
 beta_1  4.37780    0.04324 101.254 4.54e-15 ***
@@ -37,5 +41,5 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.1059 on 9 degrees of freedom
 Number of iterations to convergence: 2 
 Achieved convergence tolerance: 2.363e-13
-
-
+logLik(non_3_2)
+'log Lik.' 11.64129 (df=4)
