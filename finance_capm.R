@@ -23,32 +23,6 @@ J-Test: degrees of freedom is 0
                 J-test                P-value             
 Test E(g)=0:    8.07282570225798e-26  *******
 
-### Compare with the Panel 3 (p.264)                                       ###
-const<- rep(1, 240)
-set.seed(74)
-eps<- rt(240, 5)
-X<- cbind(const, RENDMARK, eps)
-y<- RENDCYCO
-negSSE <- function(beta) {
-e <- y- X %*% beta
--crossprod(e)
-}
-m <- maxLik(negSSE, start=c(0,0,1))
-summary(m, eigentol=1e-15)
-
-Maximum Likelihood estimation
-Newton-Raphson maximisation, 3 iterations
-Return code 8: successive function values within relative tolerance limit (reltol)
-Log-Likelihood: -7310.359 
-3  free parameters
-Estimates:
-     Estimate Std. error t value Pr(> t)    
-[1,] -0.44857    0.04634  -9.681  <2e-16 ***
-[2,]  1.17137    0.00962 121.766  <2e-16 ***
-[3,] -0.06745    0.03884  -1.736  0.0825 .  
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-
 ### ML estimation                                                           ###
 f<- function(theta){
 beta1<- theta[1]
@@ -106,4 +80,12 @@ hist(res_ml)
 summary(res_ml)
  Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 -20.60286  -3.62816   0.06664  -0.12296   3.30268  14.84975 
-> 
+
+
+### LR test (p. 246)                                                       ###
+
+2*(-747.16+750.54) 
+[1] 6.76
+1- pchisq(6.76,1)
+[1] 0.009322376
+### H0 (e is normal distributed) is rejected.                              ###                             
