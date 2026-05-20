@@ -6,13 +6,13 @@ xr417<- read.csv("xr417.csv", header=TRUE)
 str(xr417)
 attach(xr417)
 detach(xr417)
+library(maxLik)
 ### Problem (b) ML based on cauchy distribution                            ###
 f_cauchy<- function(theta){
 beta1<- theta[1]
 beta2<- theta[2]
 N<- 240
 mu<- beta1+beta2*RENDMARK
-
 
 }
 m_cauchy<- maxLik(f_cauchy, start = c(0,0))
@@ -27,6 +27,7 @@ Estimates:
 [1,] 0.136400   0.007844   17.39  <2e-16 ***
 [2,] 0.914571   0.001548  590.94  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
+res_cauchy<- RENDNCCO -0.136400 -0.914571*RENDMARK
 
 ### Problem (c) ML under normal distribution assumption                    ###
 f<- function(theta){
@@ -52,7 +53,7 @@ Estimates:
 [2,]  0.9315372  0.0025186  369.86  <2e-16 ***
 [3,] -0.1851793  0.0005456 -339.42  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
+res_ml<- RENDNCCO - 0.1978772 -0.9315372*RENDMARK
 eps<- rcauchy(n=240, location = 0, scale = 1)
 
 eq_ols<- lm(RENDNCCO ~ RENDMARK)
@@ -69,12 +70,23 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 2.881 on 238 degrees of freedom
 Multiple R-squared:  0.7037,    Adjusted R-squared:  0.7025 
 F-statistic: 565.2 on 1 and 238 DF,  p-value: < 2.2e-16
+res_ols<- resid(eq_ols)
+### ML = OLS under the assumption of normal distribution                   ###
+
 ### Problem (d) t test:H0 is rejected.                                     ###
 0.136400   0.007848    17.38  <2e-16 
 0.1978772  0.0121282   16.32  <2e-16
+0.19788    0.18864     1.049   0.295  but OLS not (sd is large)            ###
+
 ### Problem (e) 
 (0.914571 -1)/  0.001548 = -55.18669
+pt(-55.18669,239)*2        
+[1] 5.344467e-138            (P value)
 (0.9315372 -1)/  0.0025186 = -27.18288
+pt(-27.18288, 239)*2
+[1] 4.471433e-75             (P value) 
+
+
 ### Problem (f) Residuals                                                  ###
 f_res_c<- (RENDNCCO -(0.136400 +0.914571*RENDMARK))
 hist(f_res_c)
@@ -91,7 +103,12 @@ X-squared = 84.123, df = 2, p-value < 2.2e-16
 library("gmm")
 eq_gmm<- gmm(RENDNCCO~RENDMARK, x=RENDMARK)
 summary(eq_gmm)
-Call:gmm(g = RENDNCCO ~ RENDMARK, x = RENDMARK)
+vcov(eq_gmm)
+   (Intercept)     RENDMARK
+(Intercept) 0.0303510323 0.0009820434
+RENDMARK    0.0009820434 0.0019390105
+
+### GMM estimation:gmm(g = RENDNCCO ~ RENDMARK, x = RENDMARK)
 Method:  twoStep 
 Kernel:  Quadratic Spectral
 Coefficients:
