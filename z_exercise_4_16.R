@@ -9,10 +9,17 @@ y<- FOODCONS/TOTCONS
 x2<- TOTCONS
 x3<- AHSIZE
 
-### Problem a (p.271)                                                      ###
+### Problem (a) (p.271)                                                    ###
 plot(x2,y)
 ### Non linearity is existent. Therefore, beta3 = 1/2 is plausible.        ###
 
+### Promblem (b) Identification of parameter                               ###
+### beta3 = 0 lead to problems of the idendification 
+### To avoid problems in optimization one shuld work only with models      ###
+### with indentified parameters (p.206)                                    ###
+
+
+### Problem (c) 
 e<- function(theta){
 beta1<- theta[1]
 beta2<- theta[2]
