@@ -11,22 +11,27 @@ library(maxLik)
 f_cauchy<- function(theta){
 beta1<- theta[1]
 beta2<- theta[2]
-N<- 240
+N<- 50
 mu<- beta1+beta2*RENDMARK
-
+e<- RENDNCCO - mu
+ -N*log(pi) -N*log(1+e^2)
+}
+m_c<- maxLik(f_cauchy,start=c(0,1))
+summary(m_c)
 }
 m_cauchy<- maxLik(f_cauchy, start = c(0,0))
 summary(m_cauchy)
- Maximum Likelihood estimation
-Newton-Raphson maximisation, 8 iterations
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 4 iterations
 Return code 8: successive function values within relative tolerance limit (reltol)
-Log-Likelihood: -148185.8 
+Log-Likelihood: -30872.05 
 2  free parameters
 Estimates:
-     Estimate Std. error t value Pr(> t)    
-[1,] 0.136400   0.007844   17.39  <2e-16 ***
-[2,] 0.914571   0.001548  590.94  <2e-16 ***
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1
+     Estimate Std. error t value  Pr(> t)    
+[1,] 0.136400   0.017199   7.931 2.18e-15 ***
+[2,] 0.914571   0.003391 269.730  < 2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘
+
 res_cauchy<- RENDNCCO -0.136400 -0.914571*RENDMARK
 
 ### Problem (c) ML under normal distribution assumption                    ###
@@ -107,6 +112,8 @@ vcov(eq_gmm)
    (Intercept)     RENDMARK
 (Intercept) 0.0303510323 0.0009820434
 RENDMARK    0.0009820434 0.0019390105
+sqrt(0.0019390105)
+[1] 0.0440342
 
 ### GMM estimation:gmm(g = RENDNCCO ~ RENDMARK, x = RENDMARK)
 Method:  twoStep 
