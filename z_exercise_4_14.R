@@ -134,38 +134,34 @@ beta3<- theta[3]
 beta4<- theta[4]
 sigma<- theta[5]
 N<- 474
-mu<- beta1+ beta2*EDUC+ beta3*LOGSALBEGIN+beta4*(GENDER-MINORITY)
+mu<- beta1+ beta2*EDUC+ beta3*LOGSALBEGIN+beta4*GENDER-beta4*MINORITY
 
 -N*0.5*log(2*pi)- N*0.5*log(sigma^2)- 0.5*((LOGSAL - mu)^2/sigma^2)
 }
 
-m3<- maxLik(f3, start = c(0,1,0,1,1))
+m3<- maxLik(f3, start = c(1,1,1,1,1))
 summary(m3)
 Maximum Likelihood estimation
-Newton-Raphson maximisation, 4 iterations
-Return code 3: Last step could not find a value above the current.
-Boundary of parameter space?  
-Consider switching to a more robust optimisation method temporarily.
-Log-Likelihood: -72422.43 
+Newton-Raphson maximisation, 12 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: 764069.5 
 5  free parameters
 Estimates:
-     Estimate Std. error t value Pr(> t)    
-[1,]  0.04723    0.23706   0.199   0.842    
-[2,]  0.55370    0.01008  54.920  <2e-16 ***
-[3,]  0.45021    0.03044  14.789  <2e-16 ***
-[4,]  0.01003    0.04176   0.240   0.810    
-[5,] -0.54207        NaN     NaN     NaN    
+      Estimate Std. error t value Pr(> t)    
+[1,] 2.065e+00  1.455e-02  141.99  <2e-16 ***
+[2,] 2.324e-02  1.782e-04  130.38  <2e-16 ***
+[3,] 8.235e-01  1.659e-03  496.30  <2e-16 ***
+[4,] 4.534e-02  7.192e-04   63.04  <2e-16 ***
+[5,] 8.069e-03  1.204e-05  670.13  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Warning messages:
-1: In sqrt(diag(vc)) : NaNs produced
-2: In sqrt(diag(vc)) : NaNs produced
 
-res3<- LOGSAL -0.04723 -0.55370*EDUC-0.45021*LOGSALBEGIN-0.01003*gm
+res3<- LOGSAL -2.065 -0.02324*EDUC-0.8235*LOGSALBEGIN-0.04534*(GENDER-MINORITY)
 s_sq3<- sum(res3^2)/472
 s_sq3
-[1] 4.408396
+[1] 0.03099449
 ssr3<- sum(res3^2)
 ssr3
+[1] 14.6294
 
 ### LR test
 2*(764082 - 763047.7)
@@ -206,6 +202,16 @@ summary(eq_lm3)
 [1] 0
 
 ### Wald test  n/(n-k)* t^2
+H0 (beta5 = 0)
 474/(474-5)*(-45.55)^2
 [1] 2096.922
+
+H0 (beta4=beta5=0)
+not single restriction?
+
+H0 (beta4+beta5=0)
+not single restirction?
+
+### LM test problem (d)                                                    ###
+
 
