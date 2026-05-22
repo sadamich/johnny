@@ -127,7 +127,7 @@ Model 2: y ~ beta1 + beta2 * x2^(1/2) + beta4 * x3
 1     50   0.022408                            
 2     51   0.022469 -1 -6.07e-05  0.1354 0.7144
 ### H0 (beta3=1/2) is not rejected.                                         ###
-### Problem (f) LR test                                                     ###
+### LR test Problem (f)                                                     ###
 logLik(eq_nls)
 logLik(eq_nls_r)
 2* 133.6349 - 2*133.5618 =  0.1462
@@ -135,4 +135,31 @@ logLik(eq_nls_r)
 [1] 0.7021936
 ### H0 (beta3=1/2) is not rejected.                                         ###
 res<- resid(eq_nls_r)
-                                  
+       
+### LM test Problem (g) 
+### H0 (beta3 = 0)
+eq0<- lm(y~ x3)
+res0<- resid(eq0)
+lm_0<- lm(res0~ log(x2)+x3)
+summary(lm_0)  
+240* 0.7926
+1-pchisq(190.224,1)
+[1] 0            (H0 is rejected)
+
+### H0 (beta3 = 1/2)
+eq_05<- lm(y~ sqrt(x2)+x3)
+res_05<- resid(eq_05) 
+lm_05<- lm(res_05~sqrt(x2)+sqrt(x2)*log(x2)+x3)
+summary(lm_05)
+240*0.01318
+1-pchisq(3.1632,1)
+[1]0.07531542    (H0 is not rejected)
+
+### H0 (beta3=1)
+eq_1<- lm(y~x2+x3)
+res_1<- resid(eq_1)
+lm_1<- lm(res_1~x2+x2*log(x2)+x3)
+summary(lm_1)
+240*0.1404
+1-pchisq(33.696,1)
+[1] 6.443304e-09      (H0 is rejected) 
