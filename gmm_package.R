@@ -31,7 +31,6 @@ Objective function value:  0.01307637
     mu     sig  
 3.8939  1.7867  
 Convergence code =  0 
-
 summary(res)
 Call:
 gmm(g = g1, x = x1, t0 = c(mu = 0, sig = 0), gradv = Dg)
@@ -44,7 +43,6 @@ sig   1.7867e+00   8.3472e-02   2.1405e+01  1.1937e-101
 J-Test: degrees of freedom is 1 
                 J-test   P-value
 Test E(g)=0:    2.61527  0.10584
-
 Initial values of the coefficients
       mu      sig 
 4.022499 1.881766 
@@ -53,14 +51,12 @@ Information related to the numerical optimization
 Convergence code =  0 
 Function eval. =  63 
 Gradian eval. =  NA 
-
-
 specTest(res)
  ##  J-Test: degrees of freedom is 1  ## 
                 J-test   P-value
 Test E(g)=0:    2.61527  0.10584
 
-
+### ML estimation                                                          ###
 sim_ex <- function(n,iter)
 {
 tet1 <- matrix(0,iter,2)
@@ -82,7 +78,6 @@ return(list(bias=bias,Variance=Var,MSE=MSE))
 }
 
 sim_ex(50, 2000)
-$bias
                 ML          GMM
 mu     0.002257994 -0.008296646
 sigma -0.028431398 -0.083807864
