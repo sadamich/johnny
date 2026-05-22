@@ -13,21 +13,44 @@ plot(y)
 hist(y)
 const<- rep(1,100)
 X<- cbind(const, x)
-### Problem (b) 
+
+### Problem (b)
+g1<- 1
+g2<- x^beta3
+g3<- beta2*x^beta3*log(x)
+
+### Problem (c)
+f<- function(beta){
+beta1<- beta[1]
+beta2<- beta[2]
+beta3<- beta[3]
+g1<- 1
+g2<- x^beta3
+g3<- beta2*x^beta3*log(x)
+X<- cbind(g1,g2,g3)
+e<- y - X
+-crossprod(e)
+}
+library(maxLik)
+m<- maxLik(f,start= c(0,1,1)) 
+summary(m)
 
 library(gslnls)
-gsl_nls(fn= y ~ beta1 + beta2*x^(beta3), start = c(beta1= 0,beta2=1,beta3=0))
+gsl_nls(fn= y ~ beta1 + beta2*x^(beta3)+beta2*x^beta3*log(x)
+, start = c(beta1= 0,beta2=1,beta3=1))
 Nonlinear regression model
-  model: y ~ beta1 + beta2 * x^(beta3)
+  model: y ~ beta1 + beta2 * x^(beta3) + beta2 * x^beta3 * log(x)
  beta1  beta2  beta3 
-1.9989 1.0031 0.4989 
- residual sum-of-squares: 0.009069
+2.5985 0.3803 0.3112 
+ residual sum-of-squares: 0.01697
 
 Algorithm: multifit/levenberg-marquardt, (scaling: more, solver: qr)
 
-Number of iterations to convergence: 12 
-Achieved convergence tolerance: 3.477e-12
+Number of iterations to convergence: 14 
+Achieved convergence tolerance: 3.15e-15
 
+gsl_nls(fn= y ~ beta1 + beta2*x^(beta3)+beta2*x^beta3*log(x)
+, start = c(beta1= 0,beta2=1,beta3=0))
 
 
 
