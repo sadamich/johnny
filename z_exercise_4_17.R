@@ -106,6 +106,32 @@ X-squared = 84.123, df = 2, p-value < 2.2e-16
 
 ### Problem (g)                                                            ###
 library("gmm")
+x<- RENDMARK
+g1 <- function(theta,x){
+beta1<- theta[1]
+beta2<- theta[2]
+sigma<- theta[3]
+y<- RENDNCCO
+mu<- beta1+beta2*x
+e<- y - beta1-beta2*x
+m1 <- (x*(e))
+m2 <- (-theta[3]^2*N+sum(e^2))
+f <- cbind(m1,m2)
+return(f)
+}
+
+Dg <- function(theta,x)
+{
+G <- matrix(c( -x,-2*(e),-x^2,-2*x*e,0,2*N)
+,
+nrow=2,ncol=3)
+return(G)
+}
+N<-240
+print(res<-gmm(g1,x,c(beta1=0,beta2=1, sigma= 0), grad= Dg))???
+
+
+
 eq_gmm<- gmm(RENDNCCO~RENDMARK, x=RENDMARK)
 summary(eq_gmm)
 vcov(eq_gmm)
