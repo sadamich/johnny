@@ -6,6 +6,16 @@ xm404<- read.csv("xm404.csv", header = TRUE)
 attach(xm404)
 str(xm404)
 detach(xm404)
+### Panel 1 (p.264)                                                        ###
+eq<- lm(RENDCYCO~RENDMARK)
+summary(eq)
+sandwich(eq)
+ (Intercept)    RENDMARK
+(Intercept) 0.117062058 0.004241291
+RENDMARK    0.004241291 0.004613880
+sqrt(0.004613880)
+[1] 0.06792555  (the same with sd of the panel 2 (p.264) 
+
 ### Package gmm ###
 install.packages("gmm")
 library("gmm")
@@ -47,6 +57,13 @@ Estimates:
 [3,] -0.356290   0.001050 -339.41  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ### Compare with the panel 1 (p.264) the coeficients are the same (ML=OLS) ###
+vcov(m)
+ [,1]          [,2]         [,3]
+[1,]  5.439291e-04 -1.896482e-05 0.000000e+00
+[2,] -1.896482e-05  2.348025e-05 0.000000e+00
+[3,]  0.000000e+00  0.000000e+00 1.101909e-06
+sqrt(2.348025e-05)
+[1] 0.004845642
 
 ### 4 3 9 Example (p.245) 
 f_t2<- function(theta){
@@ -60,7 +77,7 @@ e<- RENDCYCO - mu
  N*log(5) -N*0.5*log(sigma^2)- 3*sum(log(1+ e^2/(5*sigma^2)))
 }
 m2<- maxLik(f_t2,start=c(0,1,1))
-summary(m2) 
+summary(m2)
 vcov(m2)
  [,1]          [,2]          [,3]
 [1,]  0.114318485 -0.0014309283 -0.0011605595
