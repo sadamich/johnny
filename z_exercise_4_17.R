@@ -106,30 +106,22 @@ X-squared = 84.123, df = 2, p-value < 2.2e-16
 
 ### Problem (g)                                                            ###
 library("gmm")
-x<- RENDMARK
-g1 <- function(theta,x){
-beta1<- theta[1]
-beta2<- theta[2]
-sigma<- theta[3]
-y<- RENDNCCO
-mu<- beta1+beta2*x
-e<- y - beta1-beta2*x
-m1 <- (x*(e))
-m2 <- (-theta[3]^2*N+sum(e^2))
+ (Intercept)    RENDMARK
+(Intercept) 0.031698674 0.000880282
+RENDMARK    0.000880282 0.001786079
+sqrt(0.001786079)
+[1] 0.04226203
+eq_ols<- lm(RENDNCCO~RENDMARK)
+sandwich(eq_ols)
+
+g1 <- function(beta,x)
+{
+m1 <- -RENDNCCO - beta[1]-beta[2]*RENDMARK
+m2 <- -RENDMARK*(RENDNCCO - beta[1]-beta[2]*RENDMARK)
 f <- cbind(m1,m2)
 return(f)
 }
-
-Dg <- function(theta,x)
-{
-G <- matrix(c( -x,-2*(e),-x^2,-2*x*e,0,2*N)
-,
-nrow=2,ncol=3)
-return(G)
-}
-N<-240
-print(res<-gmm(g1,x,c(beta1=0,beta2=1, sigma= 0), grad= Dg))???
-
+print(res<-gmm(g1,x=RENDMARK,c(beta1=1,beta2=1)))
 
 
 eq_gmm<- gmm(RENDNCCO~RENDMARK, x=RENDMARK)
