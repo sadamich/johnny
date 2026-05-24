@@ -142,4 +142,24 @@ summary(res_ml)
 (-0.344971)/0.334173  
 [1] -1.032313  
 2*pt(-1.032313,238)  
-[1] 0.3029734            
+[1] 0.3029734     
+
+
+g1<- function(beta,x){
+beta1<- beta[1]
+beta2<- beta[2]
+sigma<-beta[3]
+N<- 240
+m1<- sum(6*(RENDCYCO - beta[1]-beta[2]*RENDMARK)/
+        (5*sigma^2+(RENDCYCO - beta[1]-beta[2]*RENDMARK)^2))
+m2<- sum(RENDMARK*(RENDCYCO - beta[1]-beta[2]*RENDMARK)/
+        (5*sigma^2+(RENDCYCO - beta[1]-beta[2]*RENDMARK)^2))
+m3<- -N/2*sigma^2+ 3/sigma^2*sum((RENDCYCO - beta[1]-beta[2]*RENDMARK)^2/
+        (5*sigma^2+(RENDCYCO - beta[1]-beta[2]*RENDMARK)^2))
+f<- cbind(m1,m2,m3)
+return(f)
+}
+eq_gmm<- gmm(g1,x=RENDMARK,c(beta1=0,beta2=1,sigma=1))
+summary(eq_gmm)
+vcov(eq_gmm)
+       
