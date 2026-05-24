@@ -15,13 +15,14 @@ H <- cbind(x[4:(n-3)], x[3:(n-4)], x[2:(n-5)], x[1:(n-6)])
 g <- y ~ ym1 + ym2
 x <- H
 t0 <- c(0,.5,.5)
-
+### GEL                                                                    ###
 res <- gel(g, x, t0)
 
+###  the dependant variable y with its mean haty(the fitted values)        ###
 plot(res, which = 3)
+### the implied probabilities with the empirical density                   ###
 plot(res, which = 4)
 
-# GMM #
-
+### GMM                                                                    ###
 res <- gmm(g, x)
 plot(res, which = 3)
