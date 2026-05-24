@@ -12,24 +12,30 @@ x<- EDUC
 ### asymmetric/ skewness
 hist(y)
 hist(x)
-
+mean(y)
+hist(log(y))
 ### Problem (b)
 skew<- function(y,mean,n){
-result<- 1/n* (sum (y - mean)^3)
+result<- 1/n* (sum ((y - mean)^3))
 return(result)
 }
 skew(y,mean(y),474)
 
 kurt<-  function(y,mean,n){
-result<- 1/n*(sum(y - mean)^4)
+result<- 1/n*(sum((y - mean)^4))
 return(result)
 }
 kurt(y,mean(y),474)
 
 ### Problem (c)
-
+1.96* 17075.66/sqrt(474)-34419.57
+[1] -32882.32
+1.96* 17075.66/sqrt(474)+34419.57
+[1] 35956.82
+### 0<- mean(y) <= 35956.82 (the confidence interval) 
 ### Problem (d)
 z<- log(y)
+hist(z)
 mean(z)
 [1] 10.35679
 log(mean(y))
@@ -39,7 +45,26 @@ median(z)
 log(median(y))
 [1] 10.27073
 
+skew<- function(y,mean,n){
+result<- 1/n* (sum ((y - mean)^3))
+return(result)
+}
+skew(z,mean(z),474)
+[1] 0.06240749
+
+kurt<-  function(y,mean,n){
+result<- 1/n*(sum((y - mean)^4))
+return(result)
+}
+kurt(z,mean(z),474)
+[1] 0.09090392
+
 ### Problem (e)
+1.96*0.3973342/sqrt(474)-10.35679
+[1] -10.32102
+1.96*0.3973342/sqrt(474)+10.35679
+[1] 10.39256
+### 0< mean(z) <= 10.39256  (the confidence interval) 
 
 ### Problem (f)
 
