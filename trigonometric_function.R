@@ -16,4 +16,9 @@ sin(pi/6)^2+cos(pi/6)^2
 sin(pi/4)^2+cos(pi/4)^2
 sin(pi/3)^2+cos(pi/3)^2
 
-curve(cos(x), -10,10, lty =2 , ylim=c(-1.5,1.5), xlab= "x", yaxs ="i", ylab = "cos(x)")
+curve(cos(x), -10,10, lty =2 , ylim=c(-1.5,1.5), 
+           xlab= "x", yaxs ="i", ylab = "cos(x)")
+
+
+### Euler
+exp(*pi) + 1
