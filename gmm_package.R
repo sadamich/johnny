@@ -125,19 +125,14 @@ Convergence code =  1
 summary(res)
 Call:
 gmm(g = g2, x = x2, t0 = t0)
-
-
 Method:  twoStep 
-
 Kernel:  Quadratic Spectral(with bw =  0.89393 )
-
 Coefficients:
        Estimate     Std. Error   t value      Pr(>|t|)   
 alpha   1.1606e+00   1.7482e-01   6.6385e+00   3.1679e-11
 beta   -1.7842e+00   2.5618e-01  -6.9648e+00   3.2892e-12
 gamma   1.2468e+00   8.1003e-02   1.5392e+01   1.8627e-53
 delta   3.0203e+00   1.0181e+01   2.9666e-01   7.6672e-01
-
 J-Test: degrees of freedom is 16 
                 J-test      P-value   
 Test E(g)=0:    5.4753e+01  3.9034e-06
@@ -156,19 +151,14 @@ summary(res2)
 Call:
 gmm(g = g2, x = x2, t0 = t0, optfct = "nlminb", lower = c(0, 
     -1, 0, -Inf), upper = c(2, 1, Inf, Inf))
-
-
 Method:  twoStep 
-
 Kernel:  Quadratic Spectral(with bw =  0.89393 )
-
 Coefficients:
        Estimate     Std. Error   t value      Pr(>|t|)   
 alpha   6.9620e-01   1.0129e-01   6.8731e+00   6.2833e-12
 beta   -4.8492e-01   1.4545e-01  -3.3339e+00   8.5649e-04
 gamma   1.2090e+00   1.2961e-01   9.3279e+00   1.0797e-20
 delta   6.2014e-01   4.2371e-01   1.4636e+00   1.4331e-01
-
 J-Test: degrees of freedom is 16 
                 J-test      P-value   
 Test E(g)=0:    6.1215e+01  3.2621e-07
@@ -176,7 +166,6 @@ Test E(g)=0:    6.1215e+01  3.2621e-07
 Initial values of the coefficients
         alpha          beta         gamma         delta 
  1.999998e+00  0.000000e+00  3.944987e+00 -8.940697e-08 
-
 #############
 Information related to the numerical optimization
 Convergence code =  1 
@@ -185,7 +174,6 @@ Gradian eval. =  624
 Message:  iteration limit reached without convergence (10) 
 
 ### initialAlgoInfo’
-
 data(Finance)
 x3 <-Finance[1:1500,"WMK"]
 t0<-c(alpha= 1.8, beta= 0.1, gamma= sd(x3)/sqrt(2),delta= 0)
@@ -193,19 +181,14 @@ res3 <-gmm(g2,x3,t0,optfct="nlminb")
 summary(res3)
 Call:
 gmm(g = g2, x = x3, t0 = t0, optfct = "nlminb")
-
-
 Method:  twoStep 
-
 Kernel:  Quadratic Spectral(with bw =  0.80658 )
-
 Coefficients:
        Estimate   Std. Error  t value    Pr(>|t|) 
 alpha   1.908155   0.028692   66.504143   0.000000
 beta    0.900367   0.414593    2.171689   0.029879
 gamma   0.577074   0.013840   41.697298   0.000000
 delta   0.069057   0.028372    2.434002   0.014933
-
 J-Test: degrees of freedom is 16 
                 J-test      P-value   
 Test E(g)=0:    36.9139667   0.0021563
@@ -213,7 +196,6 @@ Test E(g)=0:    36.9139667   0.0021563
 Initial values of the coefficients
     alpha      beta     gamma     delta 
 1.6538600 0.3455514 0.5729315 0.1056138 
-
 #############
 Information related to the numerical optimization
 Convergence code =  0 
@@ -251,12 +233,8 @@ summary(res<-gmm(g3,x=h))
 
 Call:
 gmm(g = g3, x = h)
-
-
 Method:  twoStep 
-
 Kernel:  Quadratic Spectral(with bw =  0.36504 )
-
 Coefficients:
              Estimate   Std. Error  t value    Pr(>|t|) 
 (Intercept)  -0.126831   0.090976   -1.394113   0.163283
@@ -290,7 +268,6 @@ lines(w,fitted(lm(y~w)),col=3,lty=2)
 lines(w,.1*w,col=4,lty=3)
 legend("topleft",c("Data","Fitted GMM","Fitted LS","Trueline"),pch=c(1,NA,NA,NA),col=1:3,lty=c(NA,1,2,3))
 
-
 ### AR ARMA
 t <-400
 set.seed(345)
@@ -303,18 +280,13 @@ res<-gmm(g4,x5t[,4:7])
 summary(res)
 Call:
 gmm(g = g4, x = x5t[, 4:7])
-
-
 Method:  twoStep 
-
 Kernel:  Quadratic Spectral(with bw =  2.13425 )
-
 Coefficients:
              Estimate     Std. Error   t value      Pr(>|t|)   
 (Intercept)  -1.0341e-01   9.9513e-02  -1.0391e+00   2.9874e-01
 x5t[, 2]      1.2487e+00   1.2515e-01   9.9780e+00   1.9032e-23
 x5t[, 3]     -5.1032e-01   9.8712e-02  -5.1698e+00   2.3437e-07
-
 J-Test: degrees of freedom is 2 
                 J-test   P-value
 Test E(g)=0:    0.26575  0.87558
@@ -327,14 +299,10 @@ res2 <-gmm(g4,x=x5t[,4:7],kernel="Truncated")
 coef(res2)
 
 diag(vcov(res2))^.5
-
 plot(res,which=2)
-
 plot(res,which=3)
 
-
 ### CAPM 
-
 data(Finance)
 r <-Finance[1:500,1:5]
 rm <-Finance[1:500,"rm"]
@@ -360,7 +328,6 @@ Model 2: z ~ zm
 1    503                     
 2    498  5 0.6432     0.9859
 
-
 res2<-gmm(z~zm-1,cbind(1,zm))
 specTest(res2)
  ##  J-Test: degrees of freedom is 5  ## 
@@ -379,9 +346,7 @@ specTest(res_sdf)
 
                 J-test   P-value
 Test E(g)=0:    0.60775  0.89466
-
 ### Approximation discret
-
 g6 <- function(theta, x) {
 t <- length(x)
 et1 <- diff(x)- theta[1]- theta[2] * x[-t]
@@ -407,9 +372,7 @@ y <- rbind(y1,y2,y3)
 x <- rbind(x1,x2,x3)
 res <- gmm(y~x,h)
 
-
 ### Sandwich 
-
 gt <- g(t0, x)
 V <- kernHAC(lm(gt~1), sandwich = FALSE)
 W <- solve(V)
