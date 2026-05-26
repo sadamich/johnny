@@ -28,18 +28,16 @@ Coefficients:
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Residual standard error: 1.103 on 49 degrees of freedom
 ### H0 (b1 =0) is rejected.
-sd of the sample mean
-res<- resid(eq)
-ssr<- sum(res^2)
-sd_sample<- sqrt(ssr/49)
-sd_sample
+y1<- y^2 - mean(y)^2
+sd(y1)
+[1] 1.270746   (sd of the sample mean)
 
 ### Problem (c)                                                            ###
 library(gmm)
-x<- rep(1,50)
-eq_gmm<- gmm(y ~ 1, x=x)
-summary(eq_gmm)
-
+const<- rep(1,50)
+y_mu<- mean(y)
+eq_gmm<- gmm(y~y_mu, x=y_mu)
+summary(eq_gmm)???
 
 
 ### Problem (d)
