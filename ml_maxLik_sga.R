@@ -13,6 +13,16 @@ a <- maxSGA(loglik, gradlik, start=1, control=list(iterlim=1000,
             # note that loglik is not really needed, and is not used
             # here, unless more print verbosity is asked
 summary(a)
+
+Stochastic Gradient Ascent 
+Number of iterations: 1000 
+Return code: 4 
+Iteration limit exceeded (iterlim) 
+Function value: 
+Estimates:
+     estimate   gradient
+[1,] 2.099567 -0.1279617
+
 ### demonstrate the usage of index, and using                              ###
 ### fn for computing the objective function on validation data.            ###
 ### Create a linear model where variables are very unequally scaled        ###
@@ -55,22 +65,55 @@ a <- maxSGA(loglik, gradlik, start=c(10,10),
                         # no momentum
                         ), nObs=length(yTrain))
 print(summary(a))  # close to true value
-
+Stochastic Gradient Ascent 
+Number of iterations: 50 
+Return code: 4 
+Iteration limit exceeded (iterlim) 
+Function value: -816.6898 
+Estimates:
+     estimate     gradient
+[1,] 8.056228    -22.18443
+[2,] 1.568811 -10806.06327
 
 ### https://cran.r-project.org/web/packages/maxLik/vignettes/stochastic-gradient-maxLik.pdf
 ### 4 Example usage: Linear regression
 ### 4.1 Setting Up
+library(MASS)
+str(Boston)
+'data.frame':   506 obs. of  14 variables:
+ $ crim   : num  0.00632 0.02731 0.02729 0.03237 0.06905 ...
+ $ zn     : num  18 0 0 0 0 0 12.5 12.5 12.5 12.5 ...
+ $ indus  : num  2.31 7.07 7.07 2.18 2.18 2.18 7.87 7.87 7.87 7.87 ...
+ $ chas   : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ nox    : num  0.538 0.469 0.469 0.458 0.458 0.458 0.524 0.524 0.524 0.524 ...
+ $ rm     : num  6.58 6.42 7.18 7 7.15 ...
+ $ age    : num  65.2 78.9 61.1 45.8 54.2 58.7 66.6 96.1 100 85.9 ...
+ $ dis    : num  4.09 4.97 4.97 6.06 6.06 ...
+ $ rad    : int  1 2 2 3 3 3 5 5 5 5 ...
+ $ tax    : num  296 242 242 222 222 222 311 311 311 311 ...
+ $ ptratio: num  15.3 17.8 17.8 18.7 18.7 18.7 15.2 15.2 15.2 15.2 ...
+ $ black  : num  397 397 393 395 397 ...
+ $ lstat  : num  4.98 9.14 4.03 2.94 5.33 ...
+ $ medv   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
+
 i <- which(names(MASS::Boston) == "medv")
 X <- as.matrix(MASS::Boston[,-i])
-X <- cbind("const"=1, X) # add constant
-y <- MASS::Boston[,i]
 str(X)
-num [1:506, 1:14] 1 1 1 1 1 1 1 1 1 1 ...
+ num [1:506, 1:13] 0.00632 0.02731 0.02729 0.03237 0.06905 ...
+ - attr(*, "dimnames")=List of 2
+  ..$ : chr [1:506] "1" "2" "3" "4" ...
+  ..$ : chr [1:13] "crim" "zn" "indus" "chas" ...
+X <- cbind("const"=1, X) # add constant
+str(X)
+ num [1:506, 1:14] 1 1 1 1 1 1 1 1 1 1 ...
  - attr(*, "dimnames")=List of 2
   ..$ : chr [1:506] "1" "2" "3" "4" ...
   ..$ : chr [1:14] "const" "crim" "zn" "indus" ...
+
+y <- MASS::Boston[,i]
 str(y)
     num [1:506] 24 21.6 34.7 33.4 36.2 28.7 22.9 
+
 
 colMeans(X)
       const         crim           zn        indus         chas          nox 
@@ -85,8 +128,8 @@ ev<- eigen(z)
 (values<- ev$values)
 (vectors<- ev$vectors)
 
-betaX <- solve(crossprod(X)) %*% crossprod(X, y)
-betaX <- drop(betaX) # matrix to vector
+betaX<- solve(z)%*% t(X)%*%y
+betaX<- drop(betaX) # matrix to vector
 betaX
 
 gradloss <- function(theta, index) {
