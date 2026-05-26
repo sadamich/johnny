@@ -11,6 +11,10 @@ attach(xr201)
 eq<- lm(RENDCYCO ~ RENDMARK)
 summary(eq)
 res<- resid(eq)
+
+### Problem (b) the orthogonality condition                                ###
+sum(res)
+[1] -8.854029e-15
 sum((RENDMARK-mean(RENDMARK))*res)
 [1] -9.63396e-14    (2 11 OK)   the orthogonality
 sum(res)
@@ -18,19 +22,22 @@ sum(res)
 sst<- sum (y^2) - 1/240*(sum(y))^2
 sst
 [1] 14726.25
+sum(RENDCYCO^2)-1/240*(sum(RENDCYCO)^2)
 ssr<- sum(res^2)
 ssr
 [1] 7311.877
 1 - ssr/sst
 [1] 0.5034802
 
+### Without constant term                                                  ###
 eq_nc<- lm(RENDCYCO ~ RENDMARK -1)
 summary(eq_nc)
 res_nc<- resid(eq_nc)
-sum((RENDMARK-mean(RENDMARK))*res_nc)
-[1] 84.41826
 sum(res_nc)
 [1] -104.3639
+sum((RENDMARK-mean(RENDMARK))*res_nc)
+[1] 84.41826
+
 ssr_nc<- sum(res_nc^2)
 ssr_nc
 [1] 7358.578
@@ -42,7 +49,7 @@ sse
 [1] 7217.812
 sse/sst
 [1] 0.4901322  ???
-
+### Problem (c)                                                            ###
 plot(res, res_nc)
 cor(res,res_nc)
 [1] 0.9999099  (One to one relation) 
