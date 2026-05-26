@@ -116,13 +116,37 @@ sandwich(eq_ols)
 
 g1 <- function(beta,x)
 {
-m1 <- -RENDNCCO - beta[1]-beta[2]*RENDMARK
-m2 <- -RENDMARK*(RENDNCCO - beta[1]-beta[2]*RENDMARK)
+m1 <- RENDNCCO - beta[1]-beta[2]*RENDMARK
+m2 <- RENDMARK*(RENDNCCO - beta[1]-beta[2]*RENDMARK)
 f <- cbind(m1,m2)
 return(f)
 }
-print(res<-gmm(g1,x=RENDMARK,c(beta1=1,beta2=1)))
+print(res<-gmm(g1,x=RENDMARK,c(beta1=0,beta2=0)))
+ 
+summary(res)
+Call:
+gmm(g = g1, x = RENDMARK, t0 = c(beta1 = 0, beta2 = 0))
+Method:  twoStep 
+Kernel:  Quadratic Spectral
+Coefficients:
+       Estimate    Std. Error  t value     Pr(>|t|)  
+beta1  1.9952e-01  1.7421e-01  1.1453e+00  2.5209e-01
+beta2  9.3146e-01  4.4042e-02  2.1149e+01  2.8136e-99
+J-Test: degrees of freedom is 0 
+                J-test                P-value             
+Test E(g)=0:    0.000661884754576553  *******             
 
+#############
+Information related to the numerical optimization
+Convergence code =  0 
+Function eval. =  51 
+Gradian eval. =  NA 
+          
+#############
+Information related to the numerical optimization
+Convergence code =  0 
+Function eval. =  63 
+Gradian eval. =  NA 
 
 eq_gmm<- gmm(RENDNCCO~RENDMARK, x=RENDMARK)
 summary(eq_gmm)
