@@ -42,7 +42,7 @@ ssr<- sum(res^2)
 1/(240-2)*ssr
 [1] 30.72217
 sqrt(1/(240-2)*ssr)
-[1] 5.542759
+[1] 5.542759                  (the standard error of the regression)
 sst<- sum ((y - mean(y))^2)
 1 - ssr/sst
 [1] 0.5034802
