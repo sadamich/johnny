@@ -15,9 +15,26 @@ const<- rep(1,100)
 X<- cbind(const, x)
 
 ### Problem (b)
+grad<- function(beta1,beta2,beta3){
 g1<- 1
 g2<- x^beta3
 g3<- beta2*x^beta3*log(x)
+G<- cbind(g1,g2,g3)
+}
+G<- grad(0,1,1)
+head(G, 5)
+
+
+### Problem (d)                                                            ###
+G_0<- grad(0,1,0)
+head(G_0,5)
+     g1 g2          g3
+[1,]  1  1 -0.09932345
+[2,]  1  1  2.33476197
+[3,]  1  1  2.38829509
+[4,]  1  1  1.26166476
+[5,]  1  1  1.55030841
+### g1 = g2 =1. That means that the parameter is not idetified.            ###
 
 ### Problem (c)
 f<- function(beta){
@@ -32,97 +49,40 @@ e<- y - X
 -crossprod(e)
 }
 library(maxLik)
-m<- maxLik(f,start= c(0,1,1)) 
+m<- maxBHHH(f,start= c(1,1,1)) 
 summary(m)
 
 library(gslnls)
-gsl_nls(fn= y ~ beta1 + beta2*x^(beta3)+beta2*x^beta3*log(x)
+eq_nls<- gsl_nls(fn= y ~ beta1 + beta2*x^(beta3)
 , start = c(beta1= 0,beta2=1,beta3=1))
+summary(eq_nls)
 Nonlinear regression model
-  model: y ~ beta1 + beta2 * x^(beta3) + beta2 * x^beta3 * log(x)
+  model: y ~ beta1 + beta2 * x^(beta3)
  beta1  beta2  beta3 
-2.5985 0.3803 0.3112 
- residual sum-of-squares: 0.01697
-
+2.0002 0.9999 0.4997 
+ residual sum-of-squares: 0.01045
 Algorithm: multifit/levenberg-marquardt, (scaling: more, solver: qr)
+Number of iterations to convergence: 11 
+Achieved convergence tolerance: 7.841e-16
+res_nls<- resid(eq_nls)
 
-Number of iterations to convergence: 14 
-Achieved convergence tolerance: 3.15e-15
-
-gsl_nls(fn= y ~ beta1 + beta2*x^(beta3)+beta2*x^beta3*log(x)
-, start = c(beta1= 0,beta2=1,beta3=0))
-
-
-
+### Problem (e) LM test 
+eq_lm<- lm(res_nls ~ sqrt(x)+ sqrt(x)*log(x))
+summary(eq_lm)
+100* 0.007244
+[1] 0.7244
+1-pchisq(0.7244,1)
+[1] 0.3947044   (P value)
+### H0 (beta3=1/2) is not rejected.                                       ###
 
 library(maxLik)
 negSSE<- function(beta){
 beta1<- beta[1]
 beta2<- beta[2]
 beta3<- beta[3]
-X<- c(1,x^beta3,beta2*x^(beta3)*log(x))
-e<- y - X
+e<- y - (beta1+beta2*x^beta3)
 - crossprod(e)
 }
 
-m<- maxLik(negSSE, start = c(0,1,0))
+m<- maxLik(negSSE,start = c(0,1,1))
 summary(m)
-Maximum Likelihood estimation
-Newton-Raphson maximisation, 13 iterations
-Return code 1: gradient close to zero (gradtol)
-Log-Likelihood: -0.009069476 
-3  free parameters
-Estimates:
-     Estimate Std. error t value  Pr(> t)    
-[1,]   1.9989     0.6727   2.972 0.002963 ** 
-[2,]   1.0031     0.5478   1.831 0.067078 .  
-[3,]   0.4989     0.1396   3.573 0.000352 ***
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-
-
-
-
-
-
-
-### Problem (d)
-
---------------------------------------------
-Maximum Likelihood estimation
-Newton-Raphson maximisation, 1 iterations
-Return code 1: gradient close to zero (gradtol)
-Log-Likelihood: 0 
-3  free parameters
-Estimates:
-     Estimate Std. error t value Pr(> t)
-[1,]        0        Inf       0       1
-[2,]        1        Inf       0       1
-[3,]        0        Inf       0       1
--------------------------------------
-
-m_c<- maxLik(f, start = c(0,1,1,1),constraints=list(eqA=A, eqB=B) )
-summary(m_c)
---------------------------------------------
-Maximum Likelihood estimation
-Newton-Raphson maximisation, 2 iterations
-Return code 1: gradient close to zero (gradtol)
-Log-Likelihood: -0.5 
-4  free parameters
-Estimates:
-     Estimate Std. error t value Pr(> t)
-[1,]      0.0        Inf       0       1
-[2,]      1.0        Inf       0       1
-[3,]      0.5        Inf       0       1
-[4,]      1.0        Inf       0       1
-
-Warning: constrained likelihood estimation. Inference is probably wrong
-Constrained optimization based on SUMT 
-Return code: 1 
-penalty close to zero 
-1  outer iterations, barrier value 7.914374e-12 
---------------------------------------------
-m_c<- maxLik(f, start = c(0,1,1,0),constraints=list(eqA=A, eqB=B) )
-summary(m_c)
-
-
