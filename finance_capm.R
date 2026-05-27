@@ -101,6 +101,23 @@ Estimates:
 [2,]  1.19641    0.06912   17.31  <2e-16 ***
 [3,]  4.49424    0.25581   17.57  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+### QML (p.263)????
+y<- RENDCYCO
+x<- RENDMARK
+e<- y - (-0.34497+ 1.19641*x)
+a<- 6*e
+a<- 6*e/(22.4712+e^2)
+A<- 1/240*t(a)%*%a
+A1<- solve(A)
+A1
+sqrt(A1)
+b<- 6*e*x
+B<- 1/240*t(b)%*%b
+B1<- solve(B)
+B1
+sqrt(B1)
+
 ### Exhibit 4 18 f (p.245)                                                ###
 res_ml<- RENDCYCO -(-0.34497 +1.19641*RENDMARK)
 plot(res_ml, type="l")
