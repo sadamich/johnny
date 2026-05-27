@@ -122,10 +122,8 @@ f <- cbind(m1,m2)
 return(f)
 }
 print(res<-gmm(g1,x=RENDMARK,c(beta1=0,beta2=0)))
- 
 summary(res)
-Call:
-gmm(g = g1, x = RENDMARK, t0 = c(beta1 = 0, beta2 = 0))
+Call:  gmm(g = g1, x = RENDMARK, t0 = c(beta1 = 0, beta2 = 0))
 Method:  twoStep 
 Kernel:  Quadratic Spectral
 Coefficients:
@@ -136,18 +134,6 @@ J-Test: degrees of freedom is 0
                 J-test                P-value             
 Test E(g)=0:    0.000661884754576553  *******             
 
-#############
-Information related to the numerical optimization
-Convergence code =  0 
-Function eval. =  51 
-Gradian eval. =  NA 
-          
-#############
-Information related to the numerical optimization
-Convergence code =  0 
-Function eval. =  63 
-Gradian eval. =  NA 
-
 eq_gmm<- gmm(RENDNCCO~RENDMARK, x=RENDMARK)
 summary(eq_gmm)
 vcov(eq_gmm)
@@ -156,6 +142,26 @@ vcov(eq_gmm)
 RENDMARK    0.0009820434 0.0019390105
 sqrt(0.0019390105)
 [1] 0.0440342
+### H0 ( a = 0)
+0.0121282 (ML) (P value = 16.32) Significant
+0.18864 (OLS)  (P value = 0.295) Not significant
+### H0 (b = 1)
+
+0.0025186(ML)
+(0.9315372 -1)/0.0025186
+[1] -27.18288     (t value) 
+2*(pt(-27.18288,238))
+[1] 6.212503e-75  (H0 is rejected)
+0.03918  (OLS)
+(0.93154 -1)/0.03918
+[1] -1.74732      (t value)
+2*(pt(-1.74732,238))
+[1] 0.08187163    (H0 is not rejected)
+4.4034e-02 (GMM)
+(9.3154e-01 -1)/ 4.4034e-02 
+[1] -1.554708     (t value) 
+2*(pt(-1.554708,238))
+[1] 0.1213444     (H0 is not rejected)
 
 ### GMM estimation:gmm(g = RENDNCCO ~ RENDMARK, x = RENDMARK)
 Method:  twoStep 
@@ -169,12 +175,5 @@ J-Test: degrees of freedom is 0
 Test E(g)=0:    2.95041575704312e-27  *******   
 
 ### Problem (h)                                                            ###
-QML
-Step1 Loglikelihood
--N*log(pi) - N*log(1+(RENDNCCO - mu)^2)
-
-Step2 Moment conditon
-
-Step3 1/n*g(theta) = 0
-
-Step4 GMM standard errors 
+QML based on Cauchy
+ 
