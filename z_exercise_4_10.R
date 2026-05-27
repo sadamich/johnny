@@ -57,11 +57,12 @@ F-statistic: 0.06034 on 2 and 97 DF,  p-value: 0.9415
 
 LM = 100*0.001243=  0.1243
 ### H0 (b2=0) is not rejected.
+no_sample<- c(10, 100)
+eq<- lm(y~ x+x_sq)
+for (i in 1:1000)???
+eq<- lm(y ~ x+x_sq)
+eq_r<- lm(y~ x_sq)
+res_r<- resid(eq_r)
+eq_aux<- lm(res_r ~ x+x_sq)
 
-for (i in 1:1000){
-experiment<- NUll
-experiment<- sample(experiment, 
-eq[i]<- lm(y ~ x+x_sq)
-eq_[i]r<- lm(y~ x_sq)
-res_r[i]<- resid(eq_r)
-eq_aux[i]<- lm(res_r ~ x+x_sq)
+
