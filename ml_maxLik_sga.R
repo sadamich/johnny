@@ -2,6 +2,7 @@
 ### Source: https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html ###
 library(maxLik)
 ### estimate the exponential distribution parameter by ML                  ###
+### random variable of exponential distribution 
 set.seed(1)
 t <- rexp(100, 2)
 loglik <- function(theta, index) sum(log(theta) - theta*t[index])
@@ -56,14 +57,39 @@ a <- maxSGA(loglik, gradlik, start=c(10,10),
            control=list(printLevel=1, iterlim=50,
                         SG_batchSize=30, SG_learningRate=0.0001, SGA_momentum=0
                         ), nObs=length(yTrain))
+
+Initial function value: -144514.8 
+Iteration limit exceeded (iterlim) 
+50  iterations
+estimate: 7.70482733075221, 1.17322863612906 
+Function value: -60.63036 
+
+
 print(summary(a))  # the first component is off, the second one is close to the true value
+Stochastic Gradient Ascent 
+Number of iterations: 50 
+Return code: 4 
+Iteration limit exceeded (iterlim) 
+Function value: -60.63036 
+Estimates:
+     estimate   gradient
+[1,] 7.704827   -14.1322
+[2,] 1.173229 -3258.3841
+
+
 ### do with momentum 0.99
 cat("  Momentum 0.99:\n")
 a <- maxSGA(loglik, gradlik, start=c(10,10),
            control=list(printLevel=1, iterlim=50,
-                        SG_batchSize=30, SG_learningRate=0.0001, SGA_momentum=0.99
+           SG_batchSize=30, SG_learningRate=0.0001, SGA_momentum=0.99
                         # no momentum
                         ), nObs=length(yTrain))
+Initial function value: -144514.8 
+Iteration limit exceeded (iterlim) 
+50  iterations
+estimate: 0.981617257496255, 0.984151627705168 
+Function value: -0.4634487 
+
 print(summary(a))  # close to true value
 Stochastic Gradient Ascent 
 Number of iterations: 50 
@@ -74,6 +100,7 @@ Estimates:
      estimate     gradient
 [1,] 8.056228    -22.18443
 [2,] 1.568811 -10806.06327
+
 
 ### https://cran.r-project.org/web/packages/maxLik/vignettes/stochastic-gradient-maxLik.pdf
 ### 4 Example usage: Linear regression
@@ -123,18 +150,22 @@ colMeans(X)
        black        lstat 
 356.67403162  12.65306324        ### 14 columns  ###
 
-z<- t(X)%*%X
-ev<- eigen(z)
-(values<- ev$values)
-(vectors<- ev$vectors)
 
-betaX<- solve(z)%*% t(X)%*%y
+betaX<- solve(crossprod(X)) %*% crossprod(X, y)
 betaX<- drop(betaX) # matrix to vector
 betaX
+   const          crim            zn         indus          chas 
+ 3.645949e+01 -1.080114e-01  4.642046e-02  2.055863e-02  2.686734e+00 
+          nox            rm           age           dis           rad 
+-1.776661e+01  3.809865e+00  6.922246e-04 -1.475567e+00  3.060495e-01 
+          tax       ptratio         black         lstat 
+-1.233459e-02 -9.527472e-01  9.311683e-03 -5.247584e-01 
 
 gradloss <- function(theta, index) {
 e <- y[index]- X[index,,drop=FALSE] %*% theta
- }
+g <- t(e) %*% X[index,,drop=FALSE]
+           2*g/length(index)
+}
 
 set.seed(3)
 start <- setNames(rnorm(ncol(X), sd=0.1), colnames(X))
@@ -146,6 +177,18 @@ control=list(iterlim=1000)
 )
 )
 
+Iteration 63 
+Parameter:
+[1] 3.47655620157556e+298, 1.55792823742485e+299, 3.46679084058245e+299, 4.20148533450887e+299, 2.37932965325502e+297, 1.97831609274068e+298, 2.17080583489071e+299 ...
+Gradient:
+               [,1]           [,2]           [,3]           [,4]           [,5]
+[1,] -2.176452e+304 -9.753202e+304 -2.170338e+305 -2.630284e+305 -1.489548e+303
+               [,6]           [,7]
+[1,] -1.238498e+304 -1.359004e+305
+ reached getOption("max.cols") -- omitted 7 columns
+Error in maxSGACompute(fn = function (theta, fnOrig, gradOrig, hessOrig,  : 
+  NA/Inf in gradient
+
 
 res <- maxSGA(grad=gradloss,
 start=start,
@@ -155,3 +198,217 @@ SG_clip=1e4) # limit ||g|| <= 100
 )
 
 summary(res)
+
+Stochastic Gradient Ascent 
+Number of iterations: 1000 
+Return code: 4 
+Iteration limit exceeded (iterlim) 
+Function value: 
+Estimates:
+           estimate      gradient
+const   -0.07999887 -1.749115e-05
+crim     0.02785691 -7.755669e-05
+zn       0.22208281 -1.754769e-04
+indus    0.06456437 -2.106458e-04
+chas     0.02077633 -1.198114e-06
+nox      0.01196464 -9.941313e-06
+rm       0.11108882 -1.092356e-04
+age      1.20485974 -1.245784e-03
+dis     -0.06026450 -6.282687e-05
+rad      0.28567967 -1.921515e-04
+tax      6.62820142 -7.689873e-03
+ptratio  0.18507316 -3.261922e-04
+black    5.81629057 -6.246515e-03
+lstat    0.22176090 -2.326626e-04
+--------------------------------------------
+
+loss <- function(theta, index) {
+e <- y[index]- X[index,] %*% theta
+   -crossprod(e)/length(index)
+}
+
+
+res <- maxSGA(loss, gradloss,
+start=start,
+nObs=nrow(X),
+control=list(iterlim=1000,
+# will misbehave with larger numbers
+SG_clip=1e4,
+SG_learningRate=0.001,
+storeParameters=TRUE,
+storeValues=TRUE
+)
+)
+
+par <- storedParameters(res)
+val <- storedValues(res)
+par(mfrow=c(1,2))
+plot(par[,1], par[,2], type="b", pch=".",
+xlab=names(start)[1], ylab=names(start)[2], main="Parameters")
+## add some arrows to see which way the parameters move
+iB <- c(40, nrow(par)/2, nrow(par))
+iA <- iB- 10
+arrows(par[iA,1], par[iA,2], par[iB,1], par[iB,2], length=0.1)
+##
+plot(seq(length=length(val))-1,-val, type="l",
+xlab="epoch", ylab="MSE", main="Loss",
+log="y")
+
+### 4 2 Training and Validation sets 
+
+i <- sample(nrow(X), 0.8*nrow(X)) # training indices, 80% of data
+Xt <- X[i,] # training data
+yt <- y[i]
+Xv <- X[-i,] # validation data
+yv <- y[-i]
+
+
+gradloss <- function(theta, index) {
+e <- yt[index]- Xt[index,,drop=FALSE] %*% theta
+g <- 2*t(e) %*% Xt[index,,drop=FALSE]
+      -g/length(index)
+}
+
+loss <- function(theta, index) {
+e <- yv- Xv %*% theta
+-crossprod(e)/length(yv)
+}
+
+
+
+res <- maxSGA(loss, gradloss,
+start=start,
+nObs=nrow(Xt), # note: only training data now
+control=list(iterlim=100,
+SG_batchSize=1,
+SG_learningRate=1e-5,
+SG_clip=1e4,
+storeParameters=TRUE,
+storeValues=TRUE
+)
+)
+
+par <- storedParameters(res)
+val <- storedValues(res)
+par(mfrow=c(1,2))
+plot(par[,1], par[,2], type="b", pch=".",
+xlab=names(start)[1], ylab=names(start)[2], main="Parameters")
+ iB <- c(40, nrow(par)/2, nrow(par))
+iA <- iB- 1
+arrows(par[iA,1], par[iA,2], par[iB,1], par[iB,2], length=0.1)
+
+plot(seq(length=length(val))-1,-val, type="l",
+xlab="epoch", ylab="MSE", main="Loss",
+log="y")
+
+
+
+res <- maxSGA(loss, gradloss,
+start=start,
+nObs=nrow(Xt),
+control=list(iterlim=100,
+SG_batchSize=1,
+SG_learningRate=1e-6,
+SG_clip=1e4,
+SGA_momentum = 0.99,
+storeParameters=TRUE,
+storeValues=TRUE
+)
+)
+
+par <- storedParameters(res)
+val <- storedValues(res)
+par(mfrow=c(1,2))
+plot(par[,1], par[,2], type="b", pch=".",
+    xlab=names(start)[1], ylab=names(start)[2], main="Parameters")
+
+
+iB <- c(40, nrow(par)/2, nrow(par))
+iA <- iB- 1
+ arrows(par[iA,1], par[iA,2], par[iB,1], par[iB,2], length=0.1)
+
+ plot(seq(length=length(val))-1,-val, type="l",
+  xlab="epoch", ylab="MSE", main="Loss", log="y")
+
+
+
+res <- maxAdam(loss, gradloss,
+start=start,
+nObs=nrow(Xt),
+control=list(iterlim=100,
+SG_batchSize=1,
+SG_learningRate=1e-6,
+SG_clip=1e4,
+storeParameters=TRUE,
+storeValues=TRUE
+)
+)
+
+
+par <- storedParameters(res)
+val <- storedValues(res)
+par(mfrow=c(1,2))
+plot(par[,1], par[,2], type="b", pch=".",
+xlab=names(start)[1], ylab=names(start)[2], main="Parameters")
+iB <- c(40, nrow(par)/2, nrow(par))
+iA <- iB- 1
+arrows(par[iA,1], par[iA,2], par[iB,1], par[iB,2], length=0.1)
+plot(seq(length=length(val))-1,-val, type="l",
+xlab="epoch", ylab="MSE", main="Loss",
+log="y")
+
+
+### 4 3 Sequence of batch sizes
+
+val <- NULL
+# loop over batch sizes
+for(B in c(1,10,100)) {
+
+res <- maxAdam(loss, gradloss,
+start=start,
+nObs=nrow(Xt),
+control=list(iterlim=200,
+SG_batchSize=1,
+SG_learningRate=1e-6,
+SG_clip=1e4,
+SG_patience=5,
+# worse value allowed only 5 times
+storeValues=TRUE )
+)
+cat("Batch size", B, ",", nIter(res),
+"epochs, function value", maxValue(res), "\n")
+val <- c(val, na.omit(storedValues(res)))
+start <- coef(res)
+}
+Batch size 1 , 6 epochs, function value -9562.199 
+Batch size 10 , 6 epochs, function value -9562.199 
+Batch size 100 , 6 epochs, function value -9562.199 
+
+plot(seq(length=length(val))-1,-val, type="l",
+xlab="epoch", ylab="MSE", main="Loss",
+log="y")
+summary(res)
+
+Stochastic Gradient Ascent/Adam 
+Number of iterations: 6 
+Return code: 10 
+Lost patience (SG_patience) 
+Function value: -9562.199 
+Estimates:
+            estimate      gradient
+const   -0.126693661 -1.315825e-05
+crim    -0.041604939 -4.571544e-05
+zn       0.007896147  0.000000e+00
+indus   -0.141442527 -2.381643e-04
+chas     0.009374608 -1.315825e-05
+nox     -0.027019552 -9.447622e-06
+rm      -0.021607324 -1.155294e-04
+age      0.083454958 -1.090819e-03
+dis     -0.149897503 -2.506251e-05
+rad      0.102878604 -3.157979e-04
+tax     -0.103707917 -8.763393e-03
+ptratio -0.143457846 -2.657966e-04
+black   -0.101131181 -4.665257e-03
+lstat   -0.001377560 -6.960713e-05
+
+
