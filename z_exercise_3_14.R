@@ -84,7 +84,7 @@ Residual standard error: 0.5622 on 606 degrees of freedom
 Multiple R-squared:  0.1126,    Adjusted R-squared:  0.1096 
 F-statistic: 38.43 on 2 and 606 DF,  p-value: < 2.2e-16
 
-### Inflation factor ###
+### Inflation factor cf the panel 3:(p.160)###
 inflation factor
 1/ sqrt(1-0.1126)
 [1] 1.06155
