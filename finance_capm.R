@@ -102,22 +102,97 @@ Estimates:
 [3,]  4.49424    0.25581   17.57  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-### QML (p.263)????
+
+### BHHH
+### 4 3 9 Example (p.245) 
+f_b<- function(theta){
+beta1<- theta[1]
+beta2<- theta[2]
+sigma<- theta[3]
+N<- 240
+mu<- beta1+beta2*RENDMARK
+x<- RENDMARK
+e<- RENDCYCO - mu
+ N*log(5) -N*0.5*log(sigma^2)- 3*sum(log(1+ e^2/(5*sigma^2)))
+}
+
+grad_b<-function(beta){
+beta1<- beta[1]
+beta2<- beta[2]
+sigma<- beta[3]
+N<- 240
 y<- RENDCYCO
 x<- RENDMARK
-e<- y - (-0.34497+ 1.19641*x)
-a<- 6*e
-a<- 6*e/(22.4712+e^2)
-A<- 1/240*t(a)%*%a
-A1<- solve(A)
-A1
-sqrt(A1)
-b<- 6*e*x
-B<- 1/240*t(b)%*%b
-B1<- solve(B)
-B1
-sqrt(B1)
+e<- y - (beta1+ beta2*x)
+m1<- sum((6*e/(5*sigma^2 +e^2)))
+m2<-  sum((6*e*x/(5*sigma^2 +e^2)))
+m3<- -N/2*sigma^2 +3/sigma^2*sum((6*e/(5*sigma^2 +e^2)))
+f<- cbind(m1,m2,m3)
+return(f)
+}
 
+
+hess_b<- 
+mb<- maxBHHH(f_b,grad = grad_b,start=c(0,1,1))
+summary(mb)
+
+
+
+
+
+### QML (p.263)????
+g<- function(beta,y,x,e){
+y<- RENDCYCO
+x<- RENDMARK
+beta1<- beta[1]
+beta2<- beta[2]
+e<- y - (beta1+ beta2*x)
+m1<- (6*e/(5*4.49424 +e^2))
+m2<-  (6*e*x/(5*4.49424 +e^2))
+f<- cbind(m1,m2)
+return(f)
+}
+
+Dg<- function(beta,y,x,e){
+y<- RENDCYCO
+x<- RENDMARK
+beta1<- beta[1]
+beta2<- beta[2]
+e<- y - (beta1+ beta2*x)
+H<- matrix(c(-12*e/(5*4.49424 +e^2)+6*e/(5*4.49424 +e^2)^2,
+             -12*e*x/(5*4.49424 +e^2)+6*e*x/(5*4.49424 +e^2)^2,
+             -12*e*x/(5*4.49424 +e^2)+6*e*x/(5*4.49424 +e^2)^2,
+             -12*e*x^2/(5*4.49424 +e^2)+6*e*x^2/(5*4.49424 +e^2)^2,
+           nrow=2,ncol=2))
+return(H)
+}
+eq_gmm<- gmm(g,x=RENDMARK,c(beta1=0,beta2=0),grad =Dg)
+summary(eq_gmm)
+
+
+y<- RENDCYCO
+x<- RENDMARK
+beta1<- -0.34497
+beta2<- 1.19641 
+e<- y - (beta1+ beta2*x)
+m1<- (6*e/(5*4.49424 +e^2))
+m2<-  (6*e*x/(5*4.49424 +e^2))
+f<- cbind(m1,m2)
+j<- f%*%t(f)
+
+y<- RENDCYCO
+x<- RENDMARK
+beta1<- 0.34497
+beta2<- 1.19641 
+e<- y - (beta1+ beta2*x)
+H<- matrix(c(-12*e/(5*4.49424 +e^2)+6*e/(5*4.49424 +e^2)^2,
+             -12*e*x/(5*4.49424 +e^2)+6*e*x/(5*4.49424 +e^2)^2,
+             -12*e*x/(5*4.49424 +e^2)+6*e*x/(5*4.49424 +e^2)^2,
+             -12*e*x^2/(5*4.49424 +e^2)+6*e*x^2/(5*4.49424 +e^2)^2,
+           nrow=2,ncol=2))
+j_1<- 1/j
+H_t<- t(H)
+H%*%j_1%*%H_t
 ### Exhibit 4 18 f (p.245)                                                ###
 res_ml<- RENDCYCO -(-0.34497 +1.19641*RENDMARK)
 plot(res_ml, type="l")
