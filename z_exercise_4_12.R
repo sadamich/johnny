@@ -28,6 +28,15 @@ hist(res)
 
 ### Problem (c) GMM 
 library("gmm")
+sandwich(eq)
+(Intercept)           x
+(Intercept)  0.04319321 -0.03671665
+x           -0.03671665  0.04680081
+sqrt(0.04319321)
+[1] 0.2078298       GMM standard errors
+sqrt(0.04680081)
+[1] 0.2163349       GMM standard errors
+
 eq_gmm<- gmm(y~x, x=x)
 summary(eq_gmm)
 Call:gmm(g = y ~ x, x = x)
