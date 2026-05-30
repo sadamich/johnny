@@ -124,16 +124,15 @@ N<- 240
 y<- RENDCYCO
 x<- RENDMARK
 e<- y - (beta1+ beta2*x)
-m1<- sum((6*e/(5*sigma^2 +e^2)))
-m2<-  sum((6*e*x/(5*sigma^2 +e^2)))
-m3<- -N/2*sigma^2 +3/sigma^2*sum((6*e/(5*sigma^2 +e^2)))
-f<- cbind(m1,m2,m3)
-return(f)
+gradient<- matrix(0,N,3)
+gradient[ ,1]<- sum(6*e/(5*sigma^2 +e^2))
+gradient[ ,2]<- sum(6*e*x/(5*sigma^2 +e^2))
+gradient[ ,3] <- -N/2*sigma^2 +3/sigma^2*(sum(6*e/(5*sigma^2 +e^2)))
+gradient
 }
 
 
-hess_b<- 
-mb<- maxBHHH(f_b,grad = grad_b,start=c(0,1,1))
+mb<- maxBHHH(f_b,grad = grad_b,start=c(0,0,1))
 summary(mb)
 
 
@@ -193,6 +192,8 @@ H<- matrix(c(-12*e/(5*4.49424 +e^2)+6*e/(5*4.49424 +e^2)^2,
 j_1<- 1/j
 H_t<- t(H)
 H%*%j_1%*%H_t
+
+
 ### Exhibit 4 18 f (p.245)                                                ###
 res_ml<- RENDCYCO -(-0.34497 +1.19641*RENDMARK)
 plot(res_ml, type="l")
