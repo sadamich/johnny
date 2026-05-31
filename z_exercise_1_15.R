@@ -10,9 +10,14 @@ x<- rnorm(10, 0,1)
 x_s<- sample(x,5)
 x_s
 median(x_s)
-### Problem (b)
+### Problem (b)  Cauchy distribution
+set.seed(15)
+t_c<- rcauchy(30, location = 0, scale = 1)
+t_c_m<- mean(t_c)
+t_c_2<- median(t_c)
+sd(t_c_m)
 
-
+sd(t_c_2)
 ### Problem (c)
 set.seed(40)
 z<- rt(1000,1)
