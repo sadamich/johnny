@@ -43,12 +43,23 @@ y_mean - 2*y_sd/sqrt(10)
 ### Problem (c)
 n = 100,n= 1000
 
-### Problem (d)
-
+### Problem random sampling with mean statistics                           ###
+### trials = 30 , population= 10, sample size = 5
+set.seed(30)
 population <- rt(10,3)
 my_experiment <- NULL
 for (i in 1:30) {
-  my_sample <- sample(population, size = 10)
+  my_sample <- sample(population, size = 5)
+  my_experiment <- c(my_experiment, mean(my_sample))
+  cat(sprintf("Sample number %s has a mean of %s.\n", i, round(mean(my_sample), 2)))
+}
+
+### Trials = 100 , population = 100, sample size = 30 
+set.seed(35)
+population <- rt(100,3)
+my_experiment <- NULL
+for (i in 1:100) {
+  my_sample <- sample(population, size = 30)
   my_experiment <- c(my_experiment, mean(my_sample))
   cat(sprintf("Sample number %s has a mean of %s.\n", i, round(mean(my_sample), 2)))
 }
