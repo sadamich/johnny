@@ -21,6 +21,16 @@ install.packages("gmm")
 library("gmm")
 eq_gmm<- gmm(RENDCYCO~RENDMARK, x=RENDMARK)
 summary(eq_gmm)
+vcov(eq_gmm)
+            (Intercept)    RENDMARK
+(Intercept) 0.115135024 0.004962316
+RENDMARK    0.004962316 0.004803774
+### Compare with the panel 2 (p.264)                                       ###
+sqrt(0.115135024)
+[1] 0.3393155
+sqrt(0.004803774)
+[1] 0.06930926
+
 ### 4 4 6 Illustration Stock market returns (p.262)                        ###
 ### Panel 2 (p.264) Call:gmm(g = RENDCYCO ~ RENDMARK, x = RENDMARK)        ###
 Method:  twoStep 
@@ -64,6 +74,36 @@ vcov(m)
 [3,]  0.000000e+00  0.000000e+00 1.101909e-06
 sqrt(2.348025e-05)
 [1] 0.004845642
+
+### ML Matrix versiton                                                     ###
+f_m<- function(beta){
+beta1<- beta[1]
+beta2<- beta[2]
+N<- 240
+const<- rep(1,240)
+X<- cbind(const, RENDMARK)
+X<- as.matrix(X)
+y<- RENDCYCO
+b<- cbind(beta1, beta2)
+b<- as.vector(b)
+e<- y - X%*%b
+-crossprod(e)
+}
+m_m<- maxLik(f_m,start=c(0,1))
+summary(m_m)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 3 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: -7311.877 
+2  free parameters
+Estimates:
+      Estimate Std. error t value Pr(> t)    
+[1,] -0.447484   0.046151  -9.696  <2e-16 ***
+[2,]  1.171128   0.009621 121.728  <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+--------------------------------------------
+
 
 ### 4 3 9 Example (p.245) 
 f_t2<- function(theta){
@@ -110,10 +150,8 @@ beta1<- theta[1]
 beta2<- theta[2]
 sigma<- theta[3]
 N<- 240
-mu<- beta1+beta2*RENDMARK
-x<- RENDMARK
-e<- RENDCYCO - mu
- N*log(5) -N*0.5*log(sigma^2)- 3*sum(log(1+ e^2/(5*sigma^2)))
+e<- RENDCYCO - (beta1+beta2*RENDMARK)
+ N*log(5)-N*0.5*log(sigma^2)- 3*sum(log(1+e^2/5*sigma^2))
 }
 
 grad_b<-function(beta){
@@ -127,16 +165,25 @@ e<- y - (beta1+ beta2*x)
 gradient<- matrix(0,N,3)
 gradient[ ,1]<- sum(6*e/(5*sigma^2 +e^2))
 gradient[ ,2]<- sum(6*e*x/(5*sigma^2 +e^2))
-gradient[ ,3] <- -N/2*sigma^2 +3/sigma^2*(sum(6*e/(5*sigma^2 +e^2)))
+gradient[ ,3] <- -N/2*sigma^2 +3/sigma^2*(sum(6*e/(5*sigma^2+e^2)))
 gradient
 }
 
-
-mb<- maxBHHH(f_b,grad = grad_b,start=c(0,0,1))
+mb<- maxBHHH(f_b,grad = grad_b,start=c(0,1,1))
 summary(mb)
 
-
-
+BHHH maximisation 
+Number of iterations: 59 
+Return code: 3 
+Last step could not find a value above the current.
+Boundary of parameter space?  
+Consider switching to a more robust optimisation method temporarily. 
+Function value: 122.4739 
+Estimates:
+       estimate  gradient
+[1,] 0.03031732  953.5158
+[2,] 1.27735865 -706.8031
+[3,] 0.47413137 6250.5677
 
 
 ### QML (p.263)????
