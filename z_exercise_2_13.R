@@ -76,3 +76,5 @@ z<- confint(eq)
 }
 my_experiment
 summary(my_experiment)
+
+### Problem (d) the observations = 1000, trials = 100, sample size= ?
