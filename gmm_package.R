@@ -1,6 +1,6 @@
 ### https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf ###
 library(gmm)
-### The moment conditions  
+### 3 1 The moment conditions  
 g1 <- function(tet,x)
 {
 m1 <- (tet[1]-x)
@@ -93,7 +93,8 @@ mu    0.07267820 0.08822815
 sigma 0.03964058 0.05222715
 
 
-### the characteristic function   a stable distribution          ###
+### the characteristic function a stable distribution                      ###
+### if no a clear shape of a distribution                                  ###
 
 g2 <-function(theta,x)
 {
@@ -172,10 +173,13 @@ Convergence code =  1
 Function eval. =  155 
 Gradian eval. =  624 
 Message:  iteration limit reached without convergence (10) 
-
 ### initialAlgoInfo’
+
+### Example for the estimation of parameter (a stable distribution)        ###
 data(Finance)
+str(Finance)
 x3 <-Finance[1:1500,"WMK"]
+str(x3)
 t0<-c(alpha= 1.8, beta= 0.1, gamma= sd(x3)/sqrt(2),delta= 0)
 res3 <-gmm(g2,x3,t0,optfct="nlminb")
 summary(res3)
@@ -205,7 +209,6 @@ Message:  relative convergence (4)
 
 library(car) 
 linearHypothesis(res3,cbind(diag(2),c(0,0),c(0,0)),c(2,0))
-
 Linear hypothesis test:
 alpha = 2
 beta = 0
@@ -216,7 +219,8 @@ Model 2: res3
 2  2 22.238  1.483e-05 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-### linear iid moment conditions
+### 3 3 linear iid moment conditions
+### the instrumental variables 
 library(mvtnorm)
 set.seed(112233)
 sig <- matrix(c(1,.5,.5,1),2,2)
@@ -225,32 +229,26 @@ e <- rmvnorm(n,sigma=sig)
 x4 <- rnorm(n)
 w <- exp(-x4^2) + e[,1]
 y <- 0.1*w + e[,2]
-
 h <- cbind(x4, x4^2, x4^3)
 g3 <- y~w
-
 summary(res<-gmm(g3,x=h))
-
-Call:
-gmm(g = g3, x = h)
+### Call:gmm(g = g3, x = h)
 Method:  twoStep 
 Kernel:  Quadratic Spectral(with bw =  0.36504 )
 Coefficients:
              Estimate   Std. Error  t value    Pr(>|t|) 
 (Intercept)  -0.126831   0.090976   -1.394113   0.163283
 w             0.329674   0.135113    2.439992   0.014688
-
 J-Test: degrees of freedom is 2 
                 J-test    P-value 
 Test E(g)=0:    4.734496  0.093738
-
 Initial values of the coefficients
 (Intercept)           w 
 -0.06989787  0.23510008 
 
+
 res2 <-gmm(g3,x=h,type='iterative',crit=1e-8,itermax=200)
 coef(res2)
-
 
 res3 <-gmm(g3,x=h,res2$coef,type='cue')
 coef(res3)
@@ -268,7 +266,7 @@ lines(w,fitted(lm(y~w)),col=3,lty=2)
 lines(w,.1*w,col=4,lty=3)
 legend("topleft",c("Data","Fitted GMM","Fitted LS","Trueline"),pch=c(1,NA,NA,NA),col=1:3,lty=c(NA,1,2,3))
 
-### AR ARMA
+### 3 4 AR ARMA
 t <-400
 set.seed(345)
 x5<-arima.sim(n=t,list(ar=c(1.4,-0.6),ma=c(0.6,-0.3)))
@@ -278,8 +276,7 @@ x5t<-na.omit(x5t)
 g4<-x5t[,1]~x5t[,2]+x5t[,3]
 res<-gmm(g4,x5t[,4:7])
 summary(res)
-Call:
-gmm(g = g4, x = x5t[, 4:7])
+### Call:gmm(g = g4, x = x5t[, 4:7])
 Method:  twoStep 
 Kernel:  Quadratic Spectral(with bw =  2.13425 )
 Coefficients:
@@ -302,7 +299,7 @@ diag(vcov(res2))^.5
 plot(res,which=2)
 plot(res,which=3)
 
-### CAPM 
+### 3 5 CAPM 
 data(Finance)
 r <-Finance[1:500,1:5]
 rm <-Finance[1:500,"rm"]
@@ -312,6 +309,11 @@ zm <-as.matrix(rm-rf)
 res<-gmm(z~zm,x=zm)
 coef(res)
 
+### the hypothesis test 
+R<-cbind(diag(5),matrix(0,5,5))
+c <-rep(0,5)
+linearHypothesis(res,R,c,test = "Chisq")    
+### the same hypothesis test                                   
 test <-paste(names(coef(res)[1:5])," = 0",sep="")
 linearHypothesis(res,test)
 Linear hypothesis test:
@@ -323,7 +325,6 @@ ABAX_((Intercept) = 0
 
 Model 1: restricted model
 Model 2: z ~ zm
-
   Res.Df Df  Chisq Pr(>Chisq)
 1    503                     
 2    498  5 0.6432     0.9859
@@ -331,11 +332,10 @@ Model 2: z ~ zm
 res2<-gmm(z~zm-1,cbind(1,zm))
 specTest(res2)
  ##  J-Test: degrees of freedom is 5  ## 
-
                 J-test   P-value
 Test E(g)=0:    0.64322  0.98594
 
-### Discounting factor 
+### 3 6 CAPM and Discounting factor 
 g5 <- function(tet, x) {
 gmat <- (tet[1] + tet[2] * (1 + c(x[, 1]))) * (1 + x[, 2:6])- 1
 return(gmat)
@@ -343,10 +343,11 @@ return(gmat)
 res_sdf <- gmm(g5, x = as.matrix(cbind(rm, r)), c(0, 0))
 specTest(res_sdf)
 ##  J-Test: degrees of freedom is 3  ## 
-
                 J-test   P-value
 Test E(g)=0:    0.60775  0.89466
-### Approximation discret
+
+
+### 3 7 stochstic difference equation Approximation discret
 g6 <- function(theta, x) {
 t <- length(x)
 et1 <- diff(x)- theta[1]- theta[2] * x[-t]
@@ -364,7 +365,7 @@ names(tet0) <- c("alpha", "beta", "sigma^2", "gamma")
 res_rf <- gmm(g6, rf, tet0, control = list(maxit = 1000, reltol = 1e-10))
 coef(res_rf)
 
-### Panel data
+### 3 8 Panel data
 y <- rbind(y1 - mean(y1),y2 - mean(y2),y3 - mean(y3))
 x <- rbind(x1 - mean(x1),x2 - mean(x2),x3 - mean(x3))
 res <- gmm(y~x,h)
