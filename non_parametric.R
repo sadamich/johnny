@@ -28,11 +28,23 @@ set.seed(35)
 x<- runif(200, 0, 2.5)
 e<- rnorm(200, 0, 0.04)
 y<- sin(x)+e
+### Exhibit 5 6 (a)(p.294)                                                 ###
+plot(x,y)
+BW????
+plot(density(y, bw="nrd"))
+plot(density(y, bw="SJ-dpi", add=TRUE, col="blue"))
+plot(density(y, bw="SJ-ste"), add=TRUE, col="green")
+
+data_dgp<- data.frame(x,e,y)
+library(locfit)
+eq_dgp<- locfit(y ~ x, data=data_dgp)
+### Exhibit 5 6 (b) (p.264)                                                ###
+plot(eq_dgp)
 
 plot(x)
 xbw<- 0.6*x
 ybw<- 0.6*y
-plot(x,y)
+
 plot(xbw,ybw)
 data_bw<- data.frame(xbw, ybw)
 eq_locfit<- locfit(ybw ~ xbw, data=data_bw)
