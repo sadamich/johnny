@@ -1,4 +1,12 @@
 ### Source: https://finance.yahoo.co.jp/                                     ###
+aktien<- read.csv("aktien.csv", header = TRUE)
+str(aktien)
+attach(aktien)
+x<- cyber
+x<- ts(x, freq=5, start=1)
+y<- ts(sbux, freq =5, start =1)
+plot(x, main = "Time series", ylab = "x")
+
 ### Estimation of trend model                                              ###
 Call: lm(formula = x ~ t)
 Residuals:
