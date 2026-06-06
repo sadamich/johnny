@@ -37,7 +37,10 @@ Estimates:
 [6,]  8.069e-03  1.204e-05  670.13  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 --------------------------------------------
-res<- LOGSAL - 2.8- 2.327e-02*EDUC-0.8218*LOGSALBEGIN-0.04816*GENDER+0.04237*MINORITY
+res<- LOGSAL - 2.08- 2.327e-02*EDUC-0.8218*LOGSALBEGIN-0.04816*GENDER+0.04237*MINORITY
+ssr<- sum(res^2)
+ssr
+[1] 14.62757
 s_sq<- sum(res^2)/472
 s_sq
 [1] 0.5521511
@@ -205,13 +208,42 @@ summary(eq_lm3)
 H0 (beta5 = 0)
 474/(474-5)*(-45.55)^2
 [1] 2096.922
-
+library(car)
 H0 (beta4=beta5=0)
 not single restriction?
+R<- matrix(c(0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,0,0,
+             0,0,0,1,0,
+             0,0,0,0,1), nrow=5,ncol=5)
+R
+ [,1] [,2] [,3] [,4] [,5]
+[1,]    0    0    0    0    0
+[2,]    0    0    0    0    0
+[3,]    0    0    0    0    0
+[4,]    0    0    0    1    0
+[5,]    0    0    0    0    1
+r<- rep(0,5)
+linearHypothesis(f,R,r,test = "Chisq") ???
+### W = gF (p.235)                                                         ###
+F<- function(ssr_r,ssr,g,n,k){
+result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
+return(result)
+}
+ssr
+
+F(14.85581 , 14.62757  , 2, 474, 5)
+[1] 3.659
+W = ng/(n-k)F
+(474*2)/(474-5)*3.659
+[1] 7.396017
 
 H0 (beta4+beta5=0)
 not single restirction?
-
+F( 14.6294, 14.62757  , 2, 474, 5)
+[1] 0.02933741
+(474*2)/(474-5)*0.02933741
+[1] 0.05930035
 ### LM test problem (d)                                                    ###
 
 
