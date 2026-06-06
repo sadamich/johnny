@@ -311,7 +311,17 @@ coef(res)
 
 ### the hypothesis test 
 R<-cbind(diag(5),matrix(0,5,5))
+R
+ [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+[1,]    1    0    0    0    0    0    0    0    0     0
+[2,]    0    1    0    0    0    0    0    0    0     0
+[3,]    0    0    1    0    0    0    0    0    0     0
+[4,]    0    0    0    1    0    0    0    0    0     0
+[5,]    0    0    0    0    1    0    0    0    0     0
+
 c <-rep(0,5)
+c
+[1] 0 0 0 0 0
 linearHypothesis(res,R,c,test = "Chisq")    
 ### the same hypothesis test                                   
 test <-paste(names(coef(res)[1:5])," = 0",sep="")
