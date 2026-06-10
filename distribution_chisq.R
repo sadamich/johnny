@@ -1,20 +1,19 @@
 https://search.r-project.org/R/refmans/stats/html/Chisquare.html
 
 https://de.wikipedia.org/wiki/Chi-Quadrat-Verteilung
-
 dchisq(x, df, ncp = 0, log = FALSE)
 pchisq(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
 qchisq(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
 rchisq(n, df, ncp = 0)
 
-
-Examples
+### CLT     chisq(k) -> N(k,2k)                                            ###
+### Momenterzeugende Funktion Mx(t) = 1/(1-2t)^(n/2)                       ###
+### Charakteristische Funktion      = 1/(1- 2is)^(n/2)                     ###
+### Examples
 require(graphics)
-
 dchisq(1, df = 1:3)
 pchisq(1, df =  3)
 pchisq(1, df =  3, ncp = 0:4)  # includes the above
-
 x <- 1:10
 ## Chi-squared(df = 2) is a special exponential distribution
 all.equal(dchisq(x, df = 2), dexp(x, 1/2))
