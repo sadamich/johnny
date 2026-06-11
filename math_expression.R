@@ -1,27 +1,25 @@
 http://127.0.0.1:17106/library/grDevices/html/plotmath.html
-
-
-x<- c(2,5,1,5,4,6)
-y<- c(4,3,3,5,1,5)
-plot(x,y)
+### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
+### angewandte Statistik, Pearson                                           ###
+### Quelle: https://www.pearson.de/r-9783868942507                          ###
+### Seite 152 - 155
+par("lty")
+par(lty=2, lwd=2)
+oldpar<- par(lty="dotted")
+par(oldpar)
+par(mfrow= c(1,1))
+curve(dnorm(x), -10,10, xlab="x",ylab="y")
 ### Seite 153 - 155                                                         ###
-text(1,2,expression(phi == frac(sqrt(5) %+-% 1,2)))
+text(-5,0.1,expression(phi == frac(sqrt(5) %+-% 1,2)))
 
+text(-5,0.3,expression(hat(beta) == bgroup("(",X^T *X,")")^-1 * X^T *y))
 
-
-text(3,3,expression(hat(beta) == bgroup("(",X^T *X,")")^-1 * X^T *y))
-
-text(4,4,expression(italic(f) * (paste(x," | ", mu, ",",sigma^2))==
+text(5,0.3,expression(italic(f) * (paste(x," | ", mu, ",",sigma^2))==
       frac(1,sqrt(2*pi*sigma^2)) ~~exp *
       bgroup("[", -frac(group("(",x - mu, ")")^2,2 * sigma^2),"]")))
-
-
 text(2,2, expression(E * group("[", bolditalic(X), "]") == 
            integral(x * phantom(.) * italic (f) (x) ~~ dx, -infinity, infinity)))
-
-
 require(graphics)
-
 x <- seq(-4, 4, length.out = 101)
 y <- cbind(sin(x), cos(x))
 matplot(x, y, type = "l", xaxt = "n",
