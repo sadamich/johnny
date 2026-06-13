@@ -3,7 +3,6 @@
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 ### Illustration 3 4 2 Bank wages (p.166)                                  ###
-
 xm301<- read.csv("xm301.csv",header=TRUE)
 attach(xm301)
 str(xm301)
@@ -14,21 +13,38 @@ summary(panel01)
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.45572 -0.11508 -0.00516  0.10765  0.87060 
-
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
 (Intercept)  2.07965    0.31480   6.606 1.07e-10 ***
 EDUC         0.02327    0.00387   6.013 3.66e-09 ***
 LOGSALBEGIN  0.82180    0.03603  22.808  < 2e-16 ***
 GENDER       0.04816    0.01991   2.419   0.0160 *  
-MINORITY    -0.04237    0.02034  -2.083   0.0378 *  
+MINORITY    -0.04237    0.02034  -2.083   0.0378 * 
+
+### P values                                                               ###
+0.82180/0.03603 =  22.80877
+2*(1-pt(22.80877,469))
+[1] 0              (P value)
+0.04816/ 0.01991 = 2.418885
+2*(1-pt(2.418885,469))
+[1] 0.01594781     (P value)
+-0.04237/0.02034 = -2.083088
+2*pt(-2.083088, 469)
+[1] 0.0377843      (P value)
+
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Residual standard error: 0.1766 on 469 degrees of freedom
 Multiple R-squared:  0.8041,    Adjusted R-squared:  0.8024 
 F-statistic: 481.3 on 4 and 469 DF,  p-value: < 2.2e-16
+1- pf(481.3,4,469)
+[1] 0              (P value)
 ### H0 : b2 = b3 = b4 =b5 = 0 is rejectet(F- statistic as mentioned above) ###
 eq123<- lm(LOGSAL ~ EDUC+LOGSALBEGIN)
 summary(eq123)
+### H0 : b4=b5=0
+F = 4.190
+1- pf(4.19, 2,469)
+[1] 0.01571708     (P value) 
 ### H0 : b4 - b5 = 0                                                       ###
 ### Panel 2 (p.167) Call:lm(formula = LOGSAL ~ EDUC + LOGSALBEGIN)
 Residuals:
@@ -91,12 +107,12 @@ F<- function(ssr_r,ssr,g,n,k){
 result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
 return(result)
 }
-
 F(14.6291,14.6275,1,474,5)
 [1] 0.05130063
+1-pf(0.05130063, 1, 469)
+[1] 0.820914         (P value) 
 
 library(car)
-
 linearHypothesis(panel01, "1*GENDER + 1*MINORITY = 0")
 Linear hypothesis test:
 GENDER  + MINORITY = 0
