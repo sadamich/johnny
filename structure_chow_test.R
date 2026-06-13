@@ -8,6 +8,10 @@ attach(xm301)
 str(xm301)
 panel01<- lm(LOGSAL ~ EDUC + LOGSALBEGIN + GENDER + MINORITY)
 summary(panel01)
+res<- resid(panel01)
+ssr<- sum(res^2)
+ssr
+[1] 14.6275  
 LOGSAL_12<- LOGSAL[JOBCAT!=2]
 EDUC_12<- EDUC[JOBCAT!=2]
 LOGSALBEGIN_12<- LOGSALBEGIN[JOBCAT!=2]
@@ -15,6 +19,10 @@ GENDER_12<- GENDER[JOBCAT!=2]
 MINORITY_12<- MINORITY[JOBCAT!=2]
 panel02<- lm(LOGSAL_12 ~ EDUC_12 + LOGSALBEGIN_12 + GENDER_12 + MINORITY_12)
 summary(panel02)
+res2<- resid(panel02)
+ssr2<- sum(res2^2)
+ssr2
+[1] 13.91547
 LOGSAL_3<- LOGSAL[JOBCAT!=3]
 EDUC_3<- EDUC[JOBCAT!=3]
 LOGSALBEGIN_3<- LOGSALBEGIN[JOBCAT!=3]
@@ -22,7 +30,10 @@ GENDER_3<- GENDER[JOBCAT!=3]
 MINORITY_3<- MINORITY[JOBCAT!=3]
 panel03<- lm(LOGSAL_3 ~ EDUC_3 + LOGSALBEGIN_3 + GENDER_3 + MINORITY_3)
 summary(panel03)
-
+res3<- resid(panel03)
+ssr3<- sum(res3^2)
+ssr3
+[1] 10.05848
 anova(panel01,panel03)
 anova(panel01,panel02)
 Analysis of Variance Table
@@ -51,6 +62,11 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Warning message:
 In anova.lmlist(object, ...) :
   models with response ‘c("LOGSAL_12", "LOGSAL_3")’                     
+
+((14.6275 - 10.0585)/84)/(10.0585/385)= 2.081946
+F = 2.082
+1- pf(2.082, 84,385)
+[1] 1.549551e-06     (P value) 
 
 ### Exsample 5 9 Bank wages (p.317)                                        ###
 xm501<- read.csv("xm501.csv",header =TRUE)
