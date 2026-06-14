@@ -51,7 +51,6 @@ J-Test: degrees of freedom is 0
 Test E(g)=0:    3.58523799913339e-30  *******             
 
 ### Problem (d) ML cauchy version                                          ###
-f<- function(theta){
 library(maxLik)
 f_cauchy<- function(theta){
 beta1<- theta[1]
