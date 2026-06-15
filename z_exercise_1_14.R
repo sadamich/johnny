@@ -34,12 +34,62 @@ set.seed(17)
 y<- rt(10,3)
 y_mean<- mean(y)
 y_sd<- sd(y)
-
 y_mean + 2*y_sd/sqrt(10)
 [1] 0.7119812
 y_mean - 2*y_sd/sqrt(10)
 [1] -0.268698
 
+### Bootstraping confidence interval
+n<- 10
+y<- rt(10,3)
+values<- NULL
+t_sta<- NULL
+average<-NULL
+sterror<- NULL
+c_int<- NULL
+for (i in 1:10000){
+values<- c(values, sample(y,n))
+average<- c(average,mean(values))
+sterror<- c(sterror,sd(values))
+t_sta<- c(t_sta,average/(sterror/sqrt(n)))
+}
+library(boot)
+n<- 10
+set.seed(23)
+y<- rt(10,3)
+theta<- function(y){
+result<- mean(y)
+return(result)
+}
+y.boot <- boot(y,theta,R = 100, sim = "parametric")
+boot.ci(y.boot, conf = c(0.90, 0.95),
+        type = c("basic"))
+BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 100 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = y.boot, conf = c(0.9, 0.95), type = c("basic"))
+Intervals : 
+Level      Basic         
+90%   (-0.0572, -0.0572 )   
+95%   (-0.0572, -0.0572 )  
+Calculations and Intervals on Original Scale
+Some basic intervals may be unstable
+
+
+
+
+library(bootstrap)
+n<- 10
+y<- rt(10,3)
+theta<- function(y){
+result<- mean(y)/(sd(y)/sqrt(n))
+return(result)
+}
+z<- bootstrap(y, 10000,theta)
+perc95<- function(y){quantile(y, .95)}
+results <-  bootstrap(y,10000,theta, func=perc95) 
+results
 ### Problem (c)
 n = 100,n= 1000
 
