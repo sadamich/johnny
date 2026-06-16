@@ -140,25 +140,56 @@ mean of x
       0.6 
 
 
+fem<- FEM
+fem_sample<- sample(fem, 10)
+fem_sample
+summary(fem_sample)
+fem_sample1<- sample(fem, 10)
+summary(fem_sample1)
+fem_sample2<- sample(fem, 10)
+summary(fem_sample2) 
+fem_sample3<- sample(fem, 5)
+summary(fem_sample3)
+fem_sample4<- sample(fem, 5)
+summary(fem_sample4)
+fem_sample5<- sample(fem, 5)
+summary(fem_sample5)
+fem_sample6<- sample(fem, 5)
+summary(fem_sample6)
+fem_sample7<- sample(fem, 5)
+summary(fem_sample7)
+fem_sample8<- sample(fem, 5)
+summary(fem_sample8)
+fem_sample9<- sample(fem, 5)
+summary(fem_sample9)
+fem_sample10<- sample(fem, 5)
+summary(fem_sample10)
+fem_sample10
 
-
-
+b_clt<- c(0.6,0.4,0.4,0.8,0.4,0.4,0.6,0.6,0.6,1)
+summary(b_clt)
+236/609
 xm101<- read.csv("xm101.csv", header=TRUE)
 str(xm101)
 attach(xm101)
-fe<- FGPA[FEM==1]
+fem<- FEM
 
 ### mean simulation                                                        ###
 my_experiment <- NULL
 for (i in 1:100) {
-  my_sample <- sample(fe, size = 30)
+  my_sample <- sample(fem, size = 30)
   my_experiment <- c(my_experiment, mean(my_sample))
-  cat(sprintf("Sample number %s has a mean of %s.\n", i, round(mean(my_sample), 2)))
+  cat(sprintf("Sample number%s has a mean of %s.\n", i, round(mean(my_sample), 2)))
 }
 my_experiment
 summary(my_experiment)
 Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  2.682   2.819   2.890   2.883   2.942   3.049 
+ 0.2000  0.3333  0.4000  0.3907  0.4333  0.6000 
+### the sample mean = 0.3907                                               ###
+z<- FEM[FEM==1]
+str(z)
+int [1:236] 1 1 1 1 1 1 1 1 1 1 ...
+### the population mean 236/609 = 0.3875205 near = the sample mean=0.3907  ###
 hist(my_experiment)
 
 ### t values simulation                                                    ###
