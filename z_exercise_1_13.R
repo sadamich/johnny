@@ -16,7 +16,7 @@ mean(y)
 hist(log(y))
 ### Problem (b)
 skew<- function(y,mean,n){
-result<- 1/n* (sum ((y - mean)^3))
+result<- 1/n* (sum((y-mean)^3))
 return(result)
 }
 skew(y,mean(y),474)
