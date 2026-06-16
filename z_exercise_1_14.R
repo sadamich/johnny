@@ -66,7 +66,6 @@ boot.ci(y.boot, conf = c(0.90, 0.95),
         type = c("basic"))
 BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 Based on 100 bootstrap replicates
-
 CALL : 
 boot.ci(boot.out = y.boot, conf = c(0.9, 0.95), type = c("basic"))
 Intervals : 
@@ -75,6 +74,19 @@ Level      Basic
 95%   (-0.0572, -0.0572 )  
 Calculations and Intervals on Original Scale
 Some basic intervals may be unstable
+
+
+
+n<- 100
+y<- rt(10,3)
+theta<- function(y){
+result<- mean(y)/(sd(y)/sqrt(n))
+return(result)
+}
+y.boot <- boot(y,theta,R = 10000, sim = "parametric")
+boot.ci(y.boot, conf = c(0.90, 0.95),
+        type = c("norm", "basic"))
+
 
 
 
