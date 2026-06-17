@@ -1,5 +1,5 @@
 https://search.r-project.org/R/refmans/stats/html/integrate.html
-
+https://de.wikipedia.org/wiki/Tabelle_von_Ableitungs-_und_Stammfunktionen
 Examples
 integrate(dnorm, -1.96, 1.96)
 [1] 0.9500042 with absolute error < 1e-11
