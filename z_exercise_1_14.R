@@ -75,8 +75,6 @@ Level      Basic
 Calculations and Intervals on Original Scale
 Some basic intervals may be unstable
 
-
-
 n<- 100
 y<- rt(10,3)
 theta<- function(y){
@@ -86,7 +84,33 @@ return(result)
 y.boot <- boot(y,theta,R = 10000, sim = "parametric")
 boot.ci(y.boot, conf = c(0.90, 0.95),
         type = c("norm", "basic"))
+[1] "All values of t are equal to  6.79119383044368 \n Cannot calculate confidence intervals"
+NULL
+pt( 6.79119383044368,3)
+[1] 0.9967364
 
+n<- 1000
+y<- rt(10,3)
+theta<- function(y){
+result<- mean(y)/(sd(y)/sqrt(n))
+return(result)
+}
+y.boot <- boot(y,theta,R = 10000, sim = "parametric")
+boot.ci(y.boot, conf = c(0.90, 0.95),
+        type = c("norm", "basic"))
+
+BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 10000 bootstrap replicates
+CALL : 
+boot.ci(boot.out = y.boot, conf = c(0.9, 0.95), type = c("norm", 
+    "basic"))
+Intervals : 
+Level      Normal              Basic         
+90%   (-7.149, -7.149 )   (-7.149, -7.149 )   
+95%   (-7.149, -7.149 )   (-7.149, -7.149 )  
+Calculations and Intervals on Original Scale
+pt(-7.149,3)
+[1] 0.002817924
 
 
 
