@@ -8,7 +8,6 @@ attach(xr210)
 str(xr210)
 plot(PRICE, QUANTITY)
 ### Problem (a) 7 Assumptions
-
 ### Problem (b) 
 eq_b <- lm(QUANTITY ~ PRICE)
 summary(eq_b)
@@ -44,9 +43,12 @@ sqrt(ssr/(12-2))
 [1] 10.62191 (sd) 
 X<- PRICE
 z<- solve(t(X)%*%X)
+z
 ### Problem (e)
-(-693.33 -0)/10.62191
-[1] -65.27357
+(-693.33)/50.07 
+[1] -13.84721         (t value) 
+2*(pt(-13.84721,10))
+[1] 7.520607e-08      (P value)
 z*(ssr/(12-2))
 sqrt(z*(ssr/(12-2)))
 ### Problem (f)
@@ -54,3 +56,8 @@ confint(eq_b)
                 2.5 %    97.5 %
 (Intercept)  668.7073  881.1260
 PRICE       -804.9011 -581.7656
+
+-693.33-2.23*(50.07)
+[1] -804.9861
+-693.33+2.23*(50.07)
+[1] -581.6739
