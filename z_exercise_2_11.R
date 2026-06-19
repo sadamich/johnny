@@ -13,8 +13,6 @@ summary(eq)
 res<- resid(eq)
 
 ### Problem (b) the orthogonality condition                                ###
-sum(res)
-[1] -8.854029e-15
 sum((RENDMARK-mean(RENDMARK))*res)
 [1] -9.63396e-14    (2 11 OK)   the orthogonality
 sum(res)
@@ -44,11 +42,13 @@ ssr_nc
 1 - ssr_nc/sst
 [1] 0.5003089    (Adjusted R-squared:  0.5003)
 
-sse<- (1.1555)^2*(sum(x^2) -1/240*(sum(x))^2)
+sse<- (1.1555)^2*( sum(RENDMARK^2) - 1/240*(sum(RENDMARK))^2)
 sse
 [1] 7217.812
-sse/sst
-[1] 0.4901322  ???
+sst<- sum(RENDCYCO^2) - 240*mean(RENDCYCO)^2
+[1] 0.4901322???
+
+
 ### Problem (c)                                                            ###
 plot(res, res_nc)
 cor(res,res_nc)
