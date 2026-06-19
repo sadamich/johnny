@@ -18,6 +18,8 @@ confint(eq)
 (Intercept) -151.3130528 -56.294318
 x              0.5873473   1.487665
 ### Problem (c)
+### sample variances and theoretical variances                             ###
+### interval estimate                                                      ###
 
 e2<- rnorm(10, 0,1)
 y<- -100 + x +e2
@@ -78,3 +80,4 @@ my_experiment
 summary(my_experiment)
 
 ### Problem (d) the observations = 1000, trials = 100, sample size= ?
+### Interval estimation
