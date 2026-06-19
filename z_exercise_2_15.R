@@ -8,7 +8,7 @@ str(xr215)
 attach(xr215)
 ### Outlier: the crash observation i = 94 (October 1987)
 
-### Problem (a)
+### Problem (a) the regression with all observations                       ###
 eq<- lm(RENDCYCO ~ RENDMARK)
 summary(eq)
 Call:lm(formula = RENDCYCO ~ RENDMARK)
@@ -23,7 +23,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 5.543 on 238 degrees of freedom
 Multiple R-squared:  0.5035,    Adjusted R-squared:  0.5014 
 F-statistic: 241.3 on 1 and 238 DF,  p-value: < 2.2e-16
-
+### Problem (a) the regression without outliers                            ###
 eq_no<- lm(RENDCYCO[-94] ~ RENDMARK[-94])
 summary(eq_no)
 Call:lm(formula = RENDCYCO[-94] ~ RENDMARK[-94])
@@ -39,12 +39,37 @@ Residual standard error: 5.552 on 237 degrees of freedom
 Multiple R-squared:  0.4557,    Adjusted R-squared:  0.4534 
 F-statistic: 198.4 on 1 and 237 DF,  p-value: < 2.2e-16
 
+### Problem (b) The comparision all observations with no outliers         ###             
+### The cofficients became smaller, but s.e. larger. Then t- value smaller###
 ### Problem (c)                                                           ###
 y_94<- -0.44748+1.17113*RENDMARK[94]
 y_94
 [1] -33.08651
 RENDCYCO[94]
 [1] -35.56618
+(underestimated)
+
+### Problem (e) 
+eq_it<- lm(RENDIT~ RENDMARK)
+summary(eq_it)
+eq_it_no<- lm(RENDIT[-94] ~ RENDMARK[-94])
+summary(eq_it_no)
+
+### Problem (e)
+eq_n<- lm(RENDNCCO ~ RENDMARK)
+summary(eq_n)
+eq_n_no<- lm(RENDNCCO[-94] ~ RENDMARK[-94])
+summary(eq_n_no)
+
+### Problem (e)
+eq_tel<- lm(RENDTEL ~ RENDMARK)
+summary(eq_tel)
+eq_tel_no<- lm(RENDTEL[-94] ~ RENDMARK[-94])
+summary(eq_tel_no)
+
+
+### Problem (f)
+### H0 (b = 1)
 
 
 ### Example 2 11 (p.107)                                                  ###
