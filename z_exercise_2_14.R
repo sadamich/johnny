@@ -6,8 +6,11 @@
 xr111<- read.csv("xr111.csv",header=TRUE)
 str(xr111)
 attach(xr111)
+plot(FGPA,SATM)
 ### Problem (a) and (b)
 eq<- lm(FGPA ~ SATM)
+hist(FGPA)
+hist(SATM)
 summary(eq)
 Call:lm(formula = FGPA ~ SATM)
 Residuals:
@@ -40,10 +43,18 @@ sqrt(ssr/8/sum((SATM-mean(SATM))^2))
 ### full sample                                                           ###
 f<- -0.3287 +0.5176*SATM[SATM==6]
 f
-[1] 2.7769 2.7769
+[1] 2.7769                 2.7769
 FGPA[SATM==6]
-[1] 2.566 3.225
+[1] 2.566                  3.225
+    (overestimated)        (underestimated)
+
 u<- c(4,8)
+SATM[4]
+[1] 6
+SATM[8]
+[1] 6
+
+### The regression without the elements of SATM=6                         ###
 eq_8<- lm(FGPA[-u] ~ SATM[-u])
 summary(eq_8)
 Coefficients:
@@ -57,7 +68,10 @@ ssr_8/8*(1+ 1/8+ (6- mean(SATM[-u])^2/sum(SATM[-u]- mean(SATM[-u])^2)))
 
 f_8<- -0.08517+0.47037*SATM[SATM==6]
 f_8
-[1] 2.73705 2.73705
+[1] 2.73705        2.73705
+FGPA[SATM==6]
+[1] 2.566          3.225
+
 
 2.73705 - 1.94*sqrt( 1.87322)
 [1] 0.08185683
