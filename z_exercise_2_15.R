@@ -7,7 +7,6 @@ xr215<- read.csv("xr215.csv",header=TRUE)
 str(xr215)
 attach(xr215)
 ### Outlier: the crash observation i = 94 (October 1987)
-
 ### Problem (a) the regression with all observations                       ###
 eq<- lm(RENDCYCO ~ RENDMARK)
 summary(eq)
@@ -68,8 +67,26 @@ eq_tel_no<- lm(RENDTEL[-94] ~ RENDMARK[-94])
 summary(eq_tel_no)
 
 
-### Problem (f)
-### H0 (b = 1)
+### Problem (f)  RENDCYCO H0 (b = 1)
+(1.17113-1)/0.07539 
+[1] 2.26993         (t value)
+2*(1-pt(2.26993,238))
+[1] 0.02410697      (P value)  H0 is rejected.
+### Problem (f)  RENDIT H0 (b=1)
+(0.8227-1)/ 0.1229 
+[1] -1.442636       (t value)
+2*(pt(-1.442636,238))
+[1] 0.1504378       (P value)  H0 is not rejected.
+### Problem (f) RENNCCO H0 (b =1)
+(0.93154-1)/ 0.03918 
+[1] -1.74732        (t value)
+2*(pt(-1.74732,238))
+[1] 0.08187163      (P value)  H0 is not rejected.
+### Problem (f) RENDTEL H0 (b=1)
+(1.08970-1)/0.05099 
+[1] 1.759168        (t value)
+2*(1-pt(1.759168,238))
+[1] 0.07983393      (P value)  H0 is not rejected.
 
 
 ### Example 2 11 (p.107)                                                  ###
