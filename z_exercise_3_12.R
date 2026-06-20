@@ -14,16 +14,16 @@ x_2 <- 10 + omega
 x_3 <- 5 + eta
 y <- x_1+x_2
 z<- x_2+ x_3
-### Korrelationen zwischen random variablen ###
+### Problem (a) Korrelationen zwischen random variablen ###
 cor(x_1, x_3)
 [1] 0.2649096
 cor(x_2, x_3)
 [1] -0.04953621
 
-### Regression ###
+### Problem (b) Regression ###
 eq1<- lm(y ~ x_1+x_2)
 summary(eq1)
-### Call: ###
+### Call: the Multicollinearity, high t values                   ###
 lm(formula = y ~ x_1 + x_2)
 Residuals:
        Min         1Q     Median         3Q        Max 
@@ -38,10 +38,10 @@ Residual standard error: 2.173e-15 on 97 degrees of freedom
 Multiple R-squared:      1,     Adjusted R-squared:      1 
 F-statistic: 3.888e+31 on 2 and 97 DF,  p-value: < 2.2e-16
 
-### Regression ###
+### Problem (c)  Regression ###
 eq2<- lm(z ~ x_2+x_3)
 summary(eq2)
-Call:
+### Call: the Multicollinearity, high t values                  ###
 lm(formula = z ~ x_2 + x_3)
 Residuals:
        Min         1Q     Median         3Q        Max 
@@ -56,7 +56,7 @@ Residual standard error: 9.952e-15 on 97 degrees of freedom
 Multiple R-squared:      1,     Adjusted R-squared:      1 
 F-statistic: 9.442e+29 on 2 and 97 DF,  p-value: < 2.2e-16
 
-### Regression ###
+### Problem (d) Regression ###
 eq3<- lm(y ~ x_1)
 summary(eq3)
 ### Call:###
@@ -73,7 +73,7 @@ Residual standard error: 0.3007 on 98 degrees of freedom
 Multiple R-squared:  0.9759,    Adjusted R-squared:  0.9756 
 F-statistic:  3961 on 1 and 98 DF,  p-value: < 2.2e-16
 
-### Regression  ###
+### Problem (d) Regression  ###
 eq4<- lm(z ~ x_3)
 summary(eq4)
 ### Regression Call: ###
