@@ -4,9 +4,30 @@ str(aktien)
 attach(aktien)
 x<- cyber
 x<- ts(x, freq=5, start=1)
-y<- ts(sbux, freq =5, start =1)
 plot(x, main = "Time series", ylab = "x")
+library(tsDyn)
+### 
+autopairs(x, lag=1,type="regression")
+### the locally linear regression fit
+obj <- llar(x, m=3)
+plot(obj)
+obj <- data.frame(obj)
+names(obj)
+plot(RMSE~eps, data=obj, type="l", log="x")
+### Test
+delta.test(x)
+   eps
+m   17.07 34.15 51.22 68.29
+  2  0.18  0.02  0.02  0.02
+  3  0.50  0.06  0.02  0.02
+usual <- linear(x, m=3)
+summary(usual)
+usual_f<- predict(usual, n.ahead =5 )
+plot(usual_f, type="l")
+adf<- linear(lynx, m=2, type="ADF")
+adf
 
+y<- ts(sbux, freq =5, start =1)
 ### Estimation of trend model                                              ###
 Call: lm(formula = x ~ t)
 Residuals:
