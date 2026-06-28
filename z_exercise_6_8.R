@@ -23,3 +23,12 @@ y3<- -10 + 0.1*x3+e3
 
 ### Problem (c) The heteroskedasticity
 
+### Problem (d) the heteroskedasticity
+set.seed(100)
+x<- rnorm(100, 100,100)
+e_sp<- rnorm(100, 0, exp(x/100))
+
+
+### Problem (e) the inconsistence and no more Prbit 
+
+### Problem (f) the model adjustment
