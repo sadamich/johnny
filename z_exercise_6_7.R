@@ -47,10 +47,31 @@ P(y=1)/P(y=0) = 101/200* 200/99
 101/99
 [1] 1.020202
 ### Problem (c) the regression and the odds ratio
+eq<- lm(y~x)
+summary(eq)
 
+### The regression Call:lm(formula = y ~ x)
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-2.879e-15 -7.790e-16 -2.980e-16  2.990e-16  3.481e-14 
+Coefficients:
+              Estimate Std. Error    t value Pr(>|t|)    
+(Intercept) -1.000e+01  4.320e-16 -2.315e+16   <2e-16 ***
+x            1.000e-01  3.727e-18  2.683e+16   <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 3.043e-15 on 198 degrees of freedom
+Multiple R-squared:      1,     Adjusted R-squared:      1 
+F-statistic: 7.197e+32 on 1 and 198 DF,  p-value: < 2.2e-16
+Warning message:
+In summary.lm(eq) : essentially perfect fit: summary may be unreliable
+z<- fitted(eq)
+plot(z)
 ### Problem (d) the probit model
+eq_probit<- glm(formula = y_c ~ x, family = binomial(link = "probit"))
+summary(eq_probit)
 
 ### Problem (e) the logit model 
-
+eq_logit<- glm(formula = y_c ~ x, family = binomial)
+summary(eq_logit)
 ### Problem (f) the logit model and the odds ratio
 
