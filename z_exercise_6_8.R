@@ -3,24 +3,28 @@
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 ### Exercise 6 8 (p. 527)
-
+set.seed(10)
 x<- rnorm(10, 100, 100)
 e<- rnorm(10, 0, 1)
 y<- -10 + 0.1*x+e
+y_c<- ifelse(y <0, 0, 1)
+str(y_c)
 
-
+set.seed(100)
 x2<- rnorm(100, 100, 100)
 e2<- rnorm(100, 0, 1)
 y2<- -10 + 0.1*x2+e2
-
+set.seed(1000)
 x3<- rnorm(1000, 100, 100)
 e3<- rnorm(1000, 0, 1)
 y3<- -10 + 0.1*x3+e3
 
 ### Problem (a) The Probit model 
-
+eq_probit<- glm(formula = y_c ~ x, family = binomial(link = "probit"))
+summary(eq_probit)
 ### Problem (b) The Logit model
-
+eq_logit<- glm(formula = y_c~x, family = binomial)
+summary(eq_logit)
 ### Problem (c) The heteroskedasticity
 
 ### Problem (d) the heteroskedasticity
