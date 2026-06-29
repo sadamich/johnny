@@ -26,12 +26,21 @@ summary(eq_probit)
 eq_logit<- glm(formula = y_c~x, family = binomial)
 summary(eq_logit)
 ### Problem (c) The heteroskedasticity
-
+set.seed(10)
+x<- rnorm(10, 100, 100)
+e<- rnorm(10, 0, exp(x))
+y<- -10 + 0.1*x+e
+y_c_h<- ifelse(y< 0, 0,1)
+eq_probit_h<- glm(formula = y_c_h ~ x, family = binomial(link = "probit"))
+summary(eq_probit_h)
 ### Problem (d) the heteroskedasticity
 set.seed(100)
-x<- rnorm(100, 100,100)
-e_sp<- rnorm(100, 0, exp(x/100))
-
+x<- rnorm(10, 100,100)
+e_sp<- rnorm(10, 0, exp(x/100))
+y<- -10 + 0.1*x+e_sp
+y_c_h2<- ifelse(y< 0, 0,1)
+eq_probit_h2<- glm(formula = y_c_h2 ~ x, family = binomial(link = "probit"))
+summary(eq_probit_h2)
 
 ### Problem (e) the inconsistence and no more Prbit 
 
