@@ -2,6 +2,7 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
+### Example 6 2 (p.451): Example 6 3 (p.457)                               ###
 xm601<- read.csv("xm601.csv", header = TRUE)
 attach(xm601)
 str(xm601)
@@ -25,6 +26,19 @@ F-statistic: 20.42 on 4 and 920 DF,  p-value: 3.917e-16
 panel02<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
 family = binomial)
 summary(panel02)
+library(maxLik)
+logLik(panel02)
+'log Lik.' -601.8624 (df=5)
+panel02_r<- glm(formula = RESPONSE ~ GENDER + ACTIVITY +AGE, 
+family = binomial)
+summary(panel02_r)
+logLik(panel02_r)
+
+panel02_0<- glm(formula = RESPONSE ~ GENDER + ACTIVITY , 
+family = binomial)
+summary(panel02_0)
+logLik(panel02_0)
+2*(-603.9625)- 2*(-654.92959)
 glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, family = binomial)
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
@@ -41,6 +55,16 @@ Residual deviance: 1203.7  on 920  degrees of freedom
 panel03<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
 family = binomial(link = "probit"))
 summary(panel03)
+logLik(panel03)
+'log Lik.' -601.9497 (df=5)
+panel03_r<- glm(formula = RESPONSE ~ GENDER + ACTIVITY, 
+family = binomial(link = "probit"))
+summary(panel03_r)
+logLik(panel03_r)
+'log Lik.' -654.9355 (df=3)
+2*-601.9497 - 2*(-654.9355)
+[1] 105.9716     ( LR test)
+
 glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, family = binomial(link = "probit"))
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
