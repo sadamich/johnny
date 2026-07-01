@@ -39,6 +39,13 @@ family = binomial)
 summary(panel02_0)
 logLik(panel02_0)
 2*(-603.9625)- 2*(-654.92959)
+res_0<- resid(panel02_0)
+fit<- fitted(panel02_0)
+res_0s<- res_0/(sd(fit))
+eq_lm<- lm(res_0s~ GENDER+ACTIVITY+AGE+AGE_2)
+summary(eq_lm)
+925* 0.01127
+[1] 10.42475  (LM test: H0 is rejected)
 glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, family = binomial)
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
