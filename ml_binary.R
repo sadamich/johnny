@@ -26,6 +26,11 @@ F-statistic: 20.42 on 4 and 920 DF,  p-value: 3.917e-16
 panel02<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
 family = binomial)
 summary(panel02)
+fit_probit<- fitted(panel02)
+odds<- fit_probit/(1-fit_probit)
+AGE_c<- na.omit(AGE)
+### Exhibit 6 3 (p.452)                                                    ###
+plot(AGE_c, odds)
 library(maxLik)
 logLik(panel02)
 'log Lik.' -601.8624 (df=5)
@@ -50,7 +55,7 @@ glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, family = binomial)
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
 (Intercept) -2.48836    0.88999  -2.796  0.00517 ** 
-GENDER       0.95369    0.15818   6.029 1.65e-09 ***
+GENDER       0.95369    0.15818   6.029 1.65e-09 ***  
 ACTIVITY     0.91375    0.18478   4.945 7.61e-07 ***
 AGE          0.06995    0.03561   1.964  0.04948 *  
 AGE_2       -0.06869    0.03410  -2.015  0.04394 *  
@@ -58,12 +63,21 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 (Dispersion parameter for binomial family taken to be 1)
     Null deviance: 1282.1  on 924  degrees of freedom
 Residual deviance: 1203.7  on 920  degrees of freedom
+0.95369 *0.23
+[1] 0.2193487                    (the marginal effect of GENDER)
 ### Probit model (p. 451)                                                   ###
 panel03<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
 family = binomial(link = "probit"))
 summary(panel03)
 logLik(panel03)
 'log Lik.' -601.9497 (df=5)
+
+fit_logit<- fitted(panel03)
+odds_logit<- fit_logit/(1-fit_logit)
+### Exhibit 6 3 (p.452)                                                    ###
+plot(AGE_c, odds_logit)
+
+
 panel03_r<- glm(formula = RESPONSE ~ GENDER + ACTIVITY, 
 family = binomial(link = "probit"))
 summary(panel03_r)
@@ -85,3 +99,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
     Null deviance: 1282.1  on 924  degrees of freedom
 Residual deviance: 1203.9  on 920  degrees of freedom
 AIC: 1213.9
+0.58811*0.373
+[1] 0.219365                 (the marginal effect of GENDER)
+### (Marginal effect:OLS,Probit,Logit)=(0.224002,0.2193487,0.219365 )     ###
