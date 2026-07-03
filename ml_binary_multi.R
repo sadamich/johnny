@@ -8,16 +8,23 @@ attach(xm604)
 str(xm604)
 library(maxLik)
 y<- JOBCAT[GENDER==1]
+y2<- DUMJCAT2[GENDER==1]
+y3<- DUMJCAT3[GENDER==1]
 const<- rep(1, 258)
 p<- exp(beta1*const+beta2*EDUC+beta3*MINORITY)/sum(exp(beta1*const+beta2*EDUC+beta3*MINORITY))
 
 
 l<- function(beta){
-beta1<- beta[1]
-beta2<- beta[2]
-beta3<- beta[3]
-beta1<- 0
-sum(y*((beta1*const)+(beta2*EDUC)+(beta3*MINORITY))- sum(log(1+ sum(exp(beta2*EDUC+beta3*MINORITY)))))
+beta2_1<- beta[1]
+beta2_2<- beta[2]
+beta2_3<- beta[3]
+beta3_1<- beta[4]
+beta3_2<- beta[5]
+beta3_3<- beta[6]
+sum(y2*(beta2_1*const+beta2_2*EDUC+beta2_3*MINORITY)
+   +y3*(beta3_1*const+beta3_2*EDUC+beta3_3*MINORITY)
+- sum(log(1+ sum(exp(beta2_1*const+beta2_2*EDUC+beta2_3*MINORITY
+                 +beta3_1*const+beta3_2*EDUC+beta3_3*MINORITY)))))
 }
-m<- maxLik(l, start= c(0, 1, 1))
+m<- maxLik(l, start= c(0,0,0,0,0,0))
 summary(m)
