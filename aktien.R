@@ -4,6 +4,7 @@ str(aktien)
 attach(aktien)
 x<- cyber
 x<- ts(x, freq=5, start=1)
+### The time series of x 
 plot(x, main = "Time series", ylab = "x")
 library(tsDyn)
 ### 
