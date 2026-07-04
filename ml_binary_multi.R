@@ -21,10 +21,10 @@ beta2_3<- beta[3]
 beta3_1<- beta[4]
 beta3_2<- beta[5]
 beta3_3<- beta[6]
-sum(y2*(beta2_1*const+beta2_2*EDUC+beta2_3*MINORITY)
-   +y3*(beta3_1*const+beta3_2*EDUC+beta3_3*MINORITY)
-- sum(log(1+ sum(exp(beta2_1*const+beta2_2*EDUC+beta2_3*MINORITY
-                 +beta3_1*const+beta3_2*EDUC+beta3_3*MINORITY)))))
+y2*beta2_1*const+y2*beta2_2*EDUC+y2*beta2_3*MINORITY
+   +y3*beta3_1*const+y3*beta3_2*EDUC+y3*beta3_3*MINORITY
+ - log(1+exp(beta2_1*const+beta2_2*EDUC+beta2_3*MINORITY
+                 +beta3_1*const+beta3_2*EDUC+beta3_3*MINORITY))
 }
 m<- maxLik(l, start= c(0,0,0,0,0,0))
 summary(m)
