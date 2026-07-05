@@ -1,8 +1,9 @@
 https://cran.r-project.org/web/packages/tsDyn/vignettes/ThCointOverview.pdf
-
 library(tsDyn)
+### The one threshold case
 data(lynx)
 str(lynx)
+Time-Series [1:114] from 1821 to 1934: 269 321 585 871 147
 x<- ts(lynx, freq=1, start=1821)
 plot(x, main="Time series", ylab="lynx")
 grid<-selectSETAR(lynx, m=1, thDelay=0, trim=0.15, criterion="SSR")
@@ -19,7 +20,7 @@ print(grid)
    3        0 1475 124388924
    4        0 1676 124516444
 
-
+### a sharp U-shaped grid search
 set<-setar(lynx,m=1,thDelay=0,th=grid$th)
 summary(set)
 ### Non linear autoregressive model
@@ -32,7 +33,6 @@ summary(set)
     High regime:
         const.H      phiH.1 
     984.5047382   0.5595309 
-
 ### Threshold:
 -Variable: Z(t) = + (1) X(t)
 -Value: 1388 (fixed)
@@ -43,7 +43,6 @@ Residuals:
 Fit:
 residuals variance = 1079848,  AIC = 1592, MAPE = 119.8%
 Coefficient(s):
-
           Estimate  Std. Error  t value  Pr(>|t|)    
 const.L -150.29812   220.45996  -0.6817   0.49683    
 phiL.1     1.99786     0.39437   5.0659 1.651e-06 ***
@@ -53,6 +52,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Threshold
 Variable: Z(t) = + (1) X(t) 
 Value: 1388 (fixed)
+
 
 plot(grid)
 
