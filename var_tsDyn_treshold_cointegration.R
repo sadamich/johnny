@@ -106,11 +106,17 @@ Results of the grid search for 1 threshold
 8        0 2  957 1530.249
 9        0 2  784 1530.425
 10       0 2  758 1530.807
-### VECM 
+
+### Estimation and inference in the TVECM representation
 data(zeroyld)
 str(zeroyld)
+'data.frame':   482 obs. of  2 variables:
+ $ short.run: num  2.18 2.25 2.31 2.4 2.56 ...
+ $ long.run : num  1.57 1.54 1.76 1.77 1.81
 tvecm<-TVECM(zeroyld, nthresh=2,lag=1, ngridBeta=60, ngridTh=30, plot=TRUE,trim=0.05, beta=list(int=c(0.7, 1.1)))
 
+### Testing
+### Cointegration vs. threshold cointegration tests
 data(IIPUs)
 str(IIPUs)
 Time-Series [1:453] from 1960 to 1998: -8.83 -8.06 -6.55 -3.72 -2.08 
@@ -140,14 +146,14 @@ SETAR(2) 3465   NA
 SETAR(3) 1676 3465
 Number of bootstrap replications:  1000 
 
-
-
+### Criterion based approaches 
 sun<-(sqrt(sunspot.year+1)-1)*2
 lin<-linear(sun, m=11)
 set1<-setar(sun, m=11, th=7.4, thDelay=1, nested=TRUE)
 set2<-setar(sun, m=11, th=c(5.3,8),nthresh=2, thDelay=1, nested=TRUE)
 matrix(c(AIC(lin),AIC(set1),AIC(set2),BIC(lin),BIC(set1),BIC(set2)),ncol=2,dimnames=list(c("lin","set1", "set2"),c
 
+### Test based on the TVECM representation
 data(zeroyld)
 dat<-zeroyld
 testSeo<- TVECM.SeoTest(dat, lag=1, beta=1, nboot=1000)
