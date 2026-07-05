@@ -53,13 +53,59 @@ Threshold
 Variable: Z(t) = + (1) X(t) 
 Value: 1388 (fixed)
 
-
+### The result of the grid search                                         ###
 plot(grid)
 
-
+### The two threshold case
 selectSETAR(lynx, m=1, thDelay=0, trim=0.15, criterion="SSR", nthresh=2)
-selectSETAR(lynx, m=6, thDelay=0, trim=0.15, criterion="AIC", same.lags=TRUE)
+Using maximum autoregressive order for low regime: mL = 1 
+Using maximum autoregressive order for high regime: mH = 1 
+Using maximum autoregressive order for middle regime: mM = 1 
+Searching on 75 possible threshold values within regimes with sufficient ( 15% ) number of observations
+Searching on 75 combinations of thresholds (75) and thDelay (1) 
+Result of the one threshold search:
+ -Thresh:  1388         -Delay:  0      - SSR 123102676 
+Second best: 2577 (conditionnal on th= 1388 and Delay= 0 )       SSR/AIC: 114452658
+Second best: 1000 (conditionnal on th= 2577 and Delay= 0 )       SSR/AIC: 113310032
+Results of the grid search for 1 threshold
+         Conditional on m=  1 
+  thDelay   th       SSR
+1       0 1388 123102676
+2       0 1307 123951941
+3       0 1475 124388924
+4       0 1676 124516444
+5       0 1638 124557228
+Results of the grid search for 2 thresholds
+         Conditional on thDelay =  0  and m = 1 
+   th1  th2       SSR
+1 1000 2577 113310032
+Overall best results:
+  thDelay       th1       th2       SSR 
+        0      1000      2577 113310032 
+With lags:
+        -ML: 1 
+        -MM: 1 
+        -MH: 1 
 
+### Distribution of the estimator 
+### Estimation of the number of lags 
+selectSETAR(lynx, m=6, thDelay=0, trim=0.15, criterion="AIC", same.lags=TRUE)
+Using maximum autoregressive order for low regime: mL = 6 
+Using maximum autoregressive order for high regime: mH = 6 
+Searching on 70 possible threshold values within regimes with sufficient ( 15% ) number of observations
+Searching on  420  combinations of thresholds ( 70 ), thDelay ( 1 ) and m ( 6 ) 
+Results of the grid search for 1 threshold
+   thDelay m   th      AIC
+1        0 2 1388 1528.278
+2        0 2 1307 1528.471
+3        0 2  808 1529.596
+4        0 2 1000 1529.765
+5        0 2 1033 1529.830
+6        0 2 1292 1529.882
+7        0 2 1132 1529.940
+8        0 2  957 1530.249
+9        0 2  784 1530.425
+10       0 2  758 1530.807
 ### VECM 
 data(zeroyld)
 str(zeroyld)
