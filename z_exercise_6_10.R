@@ -9,8 +9,45 @@ str(xr610)
 attach(xr610)
 
 ### Problem (a) The Logit (H1) model: the hit rate 
+eq_logit<- glm(formula = TELEWORKING ~ GENDER, 
+family = binomial)
+summary(eq_logit)
+Call:
+glm(formula = TELEWORKING ~ GENDER, family = binomial)
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   0.5754     0.2946   1.953 0.050837 .  
+GENDER       -1.4227     0.4267  -3.334 0.000855 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+(Dispersion parameter for binomial family taken to be 1)
 
+    Null deviance: 138.27  on 99  degrees of freedom
+Residual deviance: 126.43  on 98  degrees of freedom
+AIC: 130.43
+
+Number of Fisher Scoring iterations: 4
+
+
+
+fit_probit<- fitted(eq_logit)
 ### Problem (b) The Logit (H0) model + additional variabe: the hit rate
+eq_logit2<- glm(formula = TELEWORKING ~ GENDER+DISTANCE, 
+family = binomial)
+summary(eq_logit2)
+Call:
+glm(formula = TELEWORKING ~ GENDER + DISTANCE, family = binomial)
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)   
+(Intercept) -0.71920    0.50167  -1.434  0.15169   
+GENDER      -0.58821    0.50440  -1.166  0.24355### GENDER is not significant
+DISTANCE     0.05136    0.01868   2.749  0.00598 **
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+(Dispersion parameter for binomial family taken to be 1)
+    Null deviance: 138.27  on 99  degrees of freedom
+Residual deviance: 113.59  on 97  degrees of freedom
+AIC: 119.59
+Number of Fisher Scoring iterations: 5
 
 ### Problem (c) The reason for the difference
 
