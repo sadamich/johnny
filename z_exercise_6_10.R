@@ -24,10 +24,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
     Null deviance: 138.27  on 99  degrees of freedom
 Residual deviance: 126.43  on 98  degrees of freedom
 AIC: 130.43
-
 Number of Fisher Scoring iterations: 4
-
-
+library(maxLik)
+logLik(eq_logit)
+'log Lik.' -63.21412 (df=2)
 
 fit_probit<- fitted(eq_logit)
 ### Problem (b) The Logit (H0) model + additional variabe: the hit rate
@@ -48,11 +48,15 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual deviance: 113.59  on 97  degrees of freedom
 AIC: 119.59
 Number of Fisher Scoring iterations: 5
-
+logLik(eq_logit2)
+'log Lik.' -56.7966 (df=3)
 ### Problem (c) The reason for the difference
 
 ### Problem (d) The LR test: H0 model vs H1 model
-
+ 2*(-56.7966)-2*(-63.21412)
+[1] 12.83504
+1-pchisq(12.83504,1)
+[1] 0.0003401882
 ### Problem (e) The distance preference of females and of males
 
 
