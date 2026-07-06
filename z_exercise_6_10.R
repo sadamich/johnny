@@ -58,6 +58,11 @@ logLik(eq_logit2)
 1-pchisq(12.83504,1)
 [1] 0.0003401882
 ### Problem (e) The distance preference of females and of males
-
+plot(TELEWORKING, DISTANCE)
+plot(GENDER, DISTANCE)
+tele_f<- TELEWORKING[GENDER==1]
+gender_f<- GENDER[GENDER==1]
+distance_f<- DISTANCE[GENDER==1]
+plot(gender_f, distance_f)
 
 detach(xr610)
