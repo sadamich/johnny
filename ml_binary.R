@@ -26,8 +26,8 @@ F-statistic: 20.42 on 4 and 920 DF,  p-value: 3.917e-16
 panel02<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
 family = binomial)
 summary(panel02)
-fit_probit<- fitted(panel02)
-odds<- fit_probit/(1-fit_probit)
+fit_logit<- fitted(panel02)
+odds<- fit_logit/(1-fit_logit)
 AGE_c<- na.omit(AGE)
 ### Exhibit 6 3 (p.452)                                                    ###
 plot(AGE_c, odds)
