@@ -8,6 +8,14 @@ xr615<- read.csv("xr615.csv", header=TRUE)
 str(xr615)
 attach(xr615)
 ### Problem (a) the ordered Logit model 
+str(LEVELMATH)
+y<- LEVELMATH
+head(y, 300)
+sat<- SATMATH/100
+eq_logit<- glm(formula = y~ sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1+
+                            ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY, 
+family = binomial)
+summary(eq_logit)???
 
 ### Problem (b) the comparison of the ordered logit with the probit model
 
