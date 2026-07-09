@@ -85,4 +85,22 @@ With lags:
         -MM: 1 
         -MH: 1 
 
-
+### Distribution of the estimator 
+### Estimation of the number of lags 
+selectSETAR(AAA, m=6, thDelay=0, trim=0.15, criterion="AIC", same.lags=TRUE)
+ive order for low regime: mL = 6 
+Using maximum autoregressive order for high regime: mH = 6 
+Searching on 288 possible threshold values within regimes with sufficient ( 15% ) number of observations
+Searching on  1728  combinations of thresholds ( 288 ), thDelay ( 1 ) and m ( 6 ) 
+Results of the grid search for 1 threshold
+   thDelay m   th       AIC
+1        0 6 9.10 -2082.969
+2        0 6 9.09 -2082.935
+3        0 6 9.22 -2082.633
+4        0 6 9.20 -2082.632
+5        0 6 9.04 -2082.580
+6        0 6 9.16 -2082.529
+7        0 6 9.13 -2082.468
+8        0 6 9.05 -2082.465
+9        0 6 9.23 -2082.395
+10       0 6 9.24 -2081.940
