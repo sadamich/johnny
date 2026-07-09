@@ -51,6 +51,38 @@ Threshold
 Variable: Z(t) = + (1) X(t) 
 Value: 7.14 (fixed)
 > 
+selectSETAR(AAA, m=1, thDelay=0, trim=0.15, criterion="SSR", nthresh=2)
 
+Using maximum autoregressive order for low regime: mL = 1 
+Using maximum autoregressive order for high regime: mH = 1 
+Using maximum autoregressive order for middle regime: mM = 1 
+Searching on 290 possible threshold values within regimes with sufficient ( 15% ) number of observations
+Searching on 290 combinations of thresholds (290) and thDelay (1) 
+
+ 1 T: Trim not respected:  0.8507223 0.1492777 from th: 9.57Result of the one threshold search:
+ -Thresh:  7.14         -Delay:  0      - SSR 27.56687 
+Second best: 9.3 (conditionnal on th= 7.14 and Delay= 0 )        SSR/AIC: 27.46431
+Second best: 7.53 (conditionnal on th= 9.3 and Delay= 0 )        SSR/AIC: 27.42975
+Results of the grid search for 1 threshold
+         Conditional on m=  1 
+  thDelay   th      SSR
+1       0 7.14 27.56687
+2       0 7.10 27.56707
+3       0 6.99 27.57016
+4       0 7.08 27.57203
+5       0 7.20 27.57205
+
+Results of the grid search for 2 thresholds
+         Conditional on thDelay =  0  and m = 1 
+   th1 th2      SSR
+1 7.53 9.3 27.42975
+
+Overall best results:
+ thDelay      th1      th2      SSR 
+ 0.00000  7.53000  9.30000 27.42975 
+With lags:
+        -ML: 1 
+        -MM: 1 
+        -MH: 1 
 
 
