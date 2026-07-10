@@ -104,3 +104,6 @@ Results of the grid search for 1 threshold
 8        0 6 9.05 -2082.465
 9        0 6 9.23 -2082.395
 10       0 6 9.24 -2081.940
+
+set<-setar(AAA, m=3, thDelay=1, th=0.3)???
+summary(set)
