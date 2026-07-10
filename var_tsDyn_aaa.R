@@ -107,3 +107,12 @@ Results of the grid search for 1 threshold
 
 set<-setar(AAA, m=3, thDelay=1, th=0.3)???
 summary(set)
+
+
+### Criterion based approaches ????
+sun<-(sqrt(AAA+1)-1)*2
+lin<-linear(sun, m=11)
+set1<-setar(sun, m=11, th=7.4, thDelay=1, nested=TRUE)
+set2<-setar(sun, m=11, th=c(5.3,8),nthresh=2, thDelay=1, nested=TRUE)
+matrix(c(AIC(lin),AIC(set1),AIC(set2),BIC(lin),BIC(set1),BIC(set2)),ncol=2,dimnames=list(c("lin","set1", "set2"),c
+
