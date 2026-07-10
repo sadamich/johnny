@@ -116,3 +116,6 @@ set1<-setar(sun, m=11, th=7.4, thDelay=1, nested=TRUE)
 set2<-setar(sun, m=11, th=c(5.3,8),nthresh=2, thDelay=1, nested=TRUE)
 matrix(c(AIC(lin),AIC(set1),AIC(set2),BIC(lin),BIC(set1),BIC(set2)),ncol=2,dimnames=list(c("lin","set1", "set2"),c
 
+var_data<- data.frame(AAA[25:624],US3MTBIL[25:624])
+testSeo<- TVECM.SeoTest(var_data, lag=1, beta=1, nboot=100)???
+summary(testSeo)
