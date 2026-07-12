@@ -55,9 +55,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Threshold
 Variable: Z(t) = + (1) X(t) 
 Value: 7.14 (fixed)
-> 
-selectSETAR(AAA, m=1, thDelay=0, trim=0.15, criterion="SSR", nthresh=2)
 
+### 4 1 2 The two threshold case
+selectSETAR(AAA, m=1, thDelay=0, trim=0.15, criterion="SSR", nthresh=2)
 Using maximum autoregressive order for low regime: mL = 1 
 Using maximum autoregressive order for high regime: mH = 1 
 Using maximum autoregressive order for middle regime: mM = 1 
@@ -90,7 +90,7 @@ With lags:
         -MM: 1 
         -MH: 1 
 
-### Distribution of the estimator 
+### 4 1 3 Distribution of the estimator 
 ### Estimation of the number of lags 
 selectSETAR(AAA, m=6, thDelay=0, trim=0.15, criterion="AIC", same.lags=TRUE)
 ive order for low regime: mL = 6 
