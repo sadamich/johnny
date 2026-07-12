@@ -113,6 +113,9 @@ Results of the grid search for 1 threshold
 set<-setar(AAA, m=3, thDelay=1, th=0.3)???
 summary(set)
 
+### 4 2 Estimation and inference in the TVECM representation
+var_data<- data.frame(AAA[25:624],US3MTBIL[25:624])
+tvecm<-TVECM(var_data, nthresh=2,lag=1, ngridBeta=60, ngridTh=30, plot=TRUE,trim=0.05, beta=list(int=c(0.7, 1.1)))
 
 ### Criterion based approaches ????
 sun<-(sqrt(AAA+1)-1)*2
