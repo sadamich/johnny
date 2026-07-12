@@ -10,8 +10,13 @@ attach(xm722)
 detach(xm722)
 x<- ts(AAA, freq=12, start=1948)
 plot(x, main="Time series", ylab="AAA")
+### 4 1 1 The one threshold case
 grid<-selectSETAR(AAA, m=1, thDelay=0, trim=0.15, criterion="SSR")
-
+### Using maximum autoregressive order for low regime: mL = 1 
+### Using maximum autoregressive order for high regime: mH = 1 
+### Searching on 290 possible threshold values within regimes with sufficient ( 15% ) number of observations
+### Searching on 290 combinations of thresholds (290) and thDelay (1) 
+###  1 T: Trim not respected:  0.8507223 0.1492777 from th: 9.57> 
 set<-setar(AAA,m=1,thDelay=0,th=grid$th)
 ### Warning message:
 ### Possible unit root in the low  regime. Roots are: 0.9891 
