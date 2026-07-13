@@ -78,7 +78,7 @@ With lags:
         -MH: 1 
 
 
-### Estimation of the number of lags 
+### 4 1 3 Estimation of the number of lags 
 selectSETAR(y, m=6, thDelay=0, trim=0.15, criterion="AIC", same.lags=TRUE)
 Using maximum autoregressive order for low regime: mL = 6 
 Using maximum autoregressive order for high regime: mH = 6 
