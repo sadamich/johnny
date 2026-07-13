@@ -110,6 +110,16 @@ summary(set)
 var_data<- data.frame(AAA[25:624],US3MTBIL[25:624])
 tvecm<-TVECM(var_data, nthresh=2,lag=1, ngridBeta=60, ngridTh=30, plot=TRUE,trim=0.05, beta=list(int=c(0.7, 1.1)))
 
+
+### 5 Testing 
+### 5.1 The problem of the unidentified parameter
+### 5.2 Cointegration vs. threshold cointegration tests
+### 5.2.1 Test based on the long-run relationship
+
+data(IIPUs)
+str(IIPUs)
+set<-setar(AAA, m=16, thDelay=5, th=0.23)
+Hansen.Test<-setarTest(AAA, m=1, nboot=1000)
 ### Criterion based approaches ????
 sun<-(sqrt(AAA+1)-1)*2
 lin<-linear(sun, m=11)
