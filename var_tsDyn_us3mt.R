@@ -19,7 +19,6 @@ grid<-selectSETAR(y, m=1, thDelay=0, trim=0.15, criterion="SSR")
 set<-setar(y,m=1,thDelay=0,th=grid$th)
 summary(set)
 Non linear autoregressive model
-
 SETAR model ( 2 regimes)
 Coefficients:
 Low regime:
@@ -35,10 +34,8 @@ Proportion of points in low regime: 76.24%       High regime: 23.76%
 Residuals:
        Min         1Q     Median         3Q        Max 
 -4.5292578 -0.1335745 -0.0096437  0.1436366  2.9571110 
-Fit:
-residuals variance = 0.2133,  AIC = -956, MAPE = 4.975%
+Fit: residuals variance = 0.2133,  AIC = -956, MAPE = 4.975%
 Coefficient(s):
-
 selectSETAR(y, m=1, thDelay=0, trim=0.15, criterion="SSR", nthresh=2)
          Estimate  Std. Error  t value  Pr(>|t|)    
 const.L  0.041252    0.052861   0.7804 0.4354638    
@@ -49,6 +46,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Threshold
 Variable: Z(t) = + (1) X(t) 
 Value: 6.81 (fixed)
+### 4 1 2 The two threshold case
+selectSETAR(y, m=1, thDelay=0, trim=0.15, criterion="SSR", nthresh=2)
 Using maximum autoregressive order for low regime: mL = 1 
 Using maximum autoregressive order for high regime: mH = 1 
 Using maximum autoregressive order for middle regime: mM = 1 
