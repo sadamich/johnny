@@ -10,12 +10,12 @@ attach(xm722)
 detach(xm722)
 y<- ts(US3MTBIL, freq=12, start=1948)
 plot(y, main="Time series", ylab="US3MTBIL")
+### 4 1 1 The one threshold case
 grid<-selectSETAR(y, m=1, thDelay=0, trim=0.15, criterion="SSR")
-Using maximum autoregressive order for low regime: mL = 1 
-Using maximum autoregressive order for high regime: mH = 1 
-Searching on 287 possible threshold values within regimes with sufficient ( 15% ) number of observations
-Searching on 287 combinations of thresholds (287) and thDelay (1) 
-
+### Using maximum autoregressive order for low regime: mL = 1 
+### Using maximum autoregressive order for high regime: mH = 1 
+### Searching on 287 possible threshold values within regimes with sufficient ( 15% ) number of observations
+### Searching on 287 combinations of thresholds (287) and thDelay (1) 
 set<-setar(y,m=1,thDelay=0,th=grid$th)
 summary(set)
 Non linear autoregressive model
