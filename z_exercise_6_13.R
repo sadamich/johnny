@@ -8,13 +8,11 @@ xr613<- read.csv("xr613.csv", header=TRUE)
 str(xr613)
 attach(xr613)
 
-
 ### Problem (a) Logit model
 eq_logit<- glm(formula = Y~ EDUC+ MINORITY+PREVEXP, 
 family = binomial)
 summary(eq_logit)
-Call:
-glm(formula = Y ~ EDUC + MINORITY + PREVEXP, family = binomial)
+Call: glm(formula = Y ~ EDUC + MINORITY + PREVEXP, family = binomial)
 Coefficients:
               Estimate Std. Error z value Pr(>|z|)    
 (Intercept) -26.952526   4.400955  -6.124 9.11e-10 ***
@@ -31,14 +29,34 @@ library(maxLik)
 logLik(eq_logit)
 'log Lik.' -63.39219 (df=4)
 ### Problem (b) Marginal effects
-
-### Problem (c) LR test: H0 model vs H1 Model: the heteroskedasticity
-eq_logit2<- glm(formula = Y~ EDUC+ MINORITY, 
+eq_logit2<- glm(formula = Y~ EDUC+PREVEXP, 
 family = binomial)
 summary(eq_logit2)
-Call:
-glm(formula = Y ~ EDUC + MINORITY, family = binomial)
+Call: glm(formula = Y ~ EDUC + PREVEXP, family = binomial)
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -2.506e+01  3.874e+00  -6.468 9.91e-11 ***
+EDUC         1.548e+00  2.457e-01   6.299 2.99e-10 ***
+PREVEXP      8.677e-04  2.884e-03   0.301    0.764    
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+(Dispersion parameter for binomial family taken to be 1)
+    Null deviance: 309.23  on 257  degrees of freedom
+Residual deviance: 137.92  on 255  degrees of freedom
+AIC: 143.92
+Number of Fisher Scoring iterations: 7
+logLik(eq_logit2)
+'log Lik.' -68.95922 (df=3)
+2*(-63.39219) - 2*(-68.95922)
+[1] 11.13406
+1- pchisq(11.13406,1)
+[1] 0.0008475687   (H0 is rejected) 
+-2.395242*the error correction facter (logit)
 
+### Problem (c) LR test: H0 model vs H1 Model: the heteroskedasticity
+eq_logit3<- glm(formula = Y~ EDUC+ MINORITY, 
+family = binomial)
+summary(eq_logit3)
+Call:glm(formula = Y ~ EDUC + MINORITY, family = binomial)
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
 (Intercept) -26.2147     4.3117  -6.080 1.20e-09 ***
@@ -50,7 +68,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual deviance: 128.30  on 255  degrees of freedom
 AIC: 134.3
 Number of Fisher Scoring iterations: 8
-logLik(eq_logit2)
+logLik(eq_logit3)
 'log Lik.' -64.15011 (df=3)
 2*(-63.39219)- 2*(-64.15011)
 [1] 1.51584
