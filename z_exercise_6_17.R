@@ -20,7 +20,7 @@ attach(xm609)
 
 ### Problem (f) the hazard rate
 
-
+cf) Example 6 9 (p.516)
 
 
 detach(xm609)
