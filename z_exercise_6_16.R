@@ -7,6 +7,11 @@
 xm601<- read.csv("xm601.csv", header=TRUE)
 str(xm601)
 attach(xm601)
+### Example 6 7 A tobit model
+### Example 6 2 A binary probit model
+panel03<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
+family = binomial(link = "probit"))
+summary(panel03)
 
 ### Problem (a) the comparison of the censored with the binary probit model
 
