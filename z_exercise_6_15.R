@@ -12,11 +12,24 @@ str(LEVELMATH)
 y<- LEVELMATH
 head(y, 300)
 sat<- SATMATH/100
-eq_logit<- glm(formula = y~ sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1+
-                            ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY, 
-family = binomial)
-summary(eq_logit)???
+library(maxLik)
+l<- function(beta){
+beta1<- beta[1]
+beta2<- beta[2]
+beta3<- beta[3]
+beta4<- beta[4]
+beta5<- beta[5]
+beta6<- beta[6]
+beta7<- beta[7]
+beta8<- beta[8]
+beta9<- beta[9]
+y*beta1*sat+y*beta2*FEMALE+y*beta3*MAJORESH+y*beta4*MAJORNAT
++y*beta5*ADVMATH1+y*beta6*ADVMATH2+y*beta7*ADVMATH3+y*beta8*PHYSICS
++y*beta9*CHEMISTRY
 
+}
+m<- maxLik(l, start= c(1,0,1,0,0,0,0,0,1))
+summary(m)???
 ### Problem (b) the comparison of the ordered logit with the probit model
 
 ### Problem (c) the MNL mode
