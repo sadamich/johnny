@@ -9,7 +9,8 @@ e<- rnorm(10, 0, 1)
 y<- -10 + 0.1*x+e
 y_c<- ifelse(y <0, 0, 1)
 str(y_c)
-
+plot(y_c)
+hist(y_c)
 set.seed(100)
 x2<- rnorm(100, 100, 100)
 e2<- rnorm(100, 0, 1)
@@ -22,10 +23,19 @@ y3<- -10 + 0.1*x3+e3
 ### Problem (a) The Probit model 
 eq_probit<- glm(formula = y_c ~ x, family = binomial(link = "probit"))
 summary(eq_probit)
+library(maxLik)
+logLik(eq_probit)
+log Lik.' -4.963141e-10 (df=2)
+
 ### Problem (b) The Logit model
 eq_logit<- glm(formula = y_c~x, family = binomial)
 summary(eq_logit)
+
+### Why the estimation of Logit model is not consistent???
+### Scaling (p. 445) 
+
 ### Problem (c) The heteroskedasticity
+### LR Test for the heteroskedasticity
 set.seed(10)
 x<- rnorm(10, 100, 100)
 e<- rnorm(10, 0, exp(x))
@@ -33,6 +43,11 @@ y<- -10 + 0.1*x+e
 y_c_h<- ifelse(y< 0, 0,1)
 eq_probit_h<- glm(formula = y_c_h ~ x, family = binomial(link = "probit"))
 summary(eq_probit_h)
+logLik(eq_probit_h)
+2*(-2.480862)-2*(-4.963141e-10)
+[1] -4.961724
+1- pchisq(-4.961724, 1)
+
 ### Problem (d) the heteroskedasticity
 set.seed(100)
 x<- rnorm(10, 100,100)
