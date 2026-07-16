@@ -12,6 +12,7 @@ plot(y)
 ### Vgl. Seite 117                                                         ###
 y_c<- ifelse(y<0, 0, 1)
 str(y_c)
+plot(y_c)
 y1<- y_c[y_c==1]
 str(y1)
 y0<- y_c[y_c==0]
@@ -31,7 +32,7 @@ x_v2<- c(55, 56, 57, 58, 59, 60, 61, 62, 63, 64)
 y_f(x_v2)
 [1]          -4.5 -4.4 -4.3 -4.2 -4.1 -4.0 -3.9 -3.8 -3.7 -3.6
 ### Censored   0   0    0    0    0   0    0    0    0      0
-### odds ration 0/10 * 10/10
+### odds ratio 0/10 * 10/10 = 0
 x_v3<- c(65, 66, 67, 68, 69, 70, 71, 72, 73, 74)
 y_f(x_v3)
  [1] -3.5 -3.4 -3.3 -3.2 -3.1 -3.0 -2.9 -2.8 -2.7 -2.6
@@ -49,7 +50,6 @@ P(y=1)/P(y=0) = 101/200* 200/99
 ### Problem (c) the regression and the odds ratio
 eq<- lm(y~x)
 summary(eq)
-
 ### The regression Call:lm(formula = y ~ x)
 Residuals:
        Min         1Q     Median         3Q        Max 
@@ -74,4 +74,21 @@ summary(eq_probit)
 eq_logit<- glm(formula = y_c ~ x, family = binomial)
 summary(eq_logit)
 ### Problem (f) the logit model and the odds ratio
+x_v<- c(60, 80, 100,120,140)
+y_f<- function(x_v){
+result<- -2976.55+ 29.92*x_v
+return(result)
+}
+y_f(x_v)
+[1] -1181.35  -582.95    15.45   613.85  1212.25
+          0         0        1        1        1
+
+x_v<- c(60, 80, 100,120,140)
+y_f<- function(x_v){
+result<- -957.056 +9.619 *x_v
+return(result)
+}
+y_f(x_v)
+[1] -379.916 -187.536    4.844  197.224  389.604
+           0        0        1        1        1
 
