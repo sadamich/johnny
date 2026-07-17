@@ -12,15 +12,13 @@ attach(xr610)
 eq_logit<- glm(formula = TELEWORKING ~ GENDER, 
 family = binomial)
 summary(eq_logit)
-Call:
-glm(formula = TELEWORKING ~ GENDER, family = binomial)
+### Call:glm(formula = TELEWORKING ~ GENDER, family = binomial)
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
 (Intercept)   0.5754     0.2946   1.953 0.050837 .  
 GENDER       -1.4227     0.4267  -3.334 0.000855 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 (Dispersion parameter for binomial family taken to be 1)
-
     Null deviance: 138.27  on 99  degrees of freedom
 Residual deviance: 126.43  on 98  degrees of freedom
 AIC: 130.43
@@ -28,8 +26,9 @@ Number of Fisher Scoring iterations: 4
 library(maxLik)
 logLik(eq_logit)
 'log Lik.' -63.21412 (df=2)
-
 fit_probit<- fitted(eq_logit)
+
+### Hits rate 
 ### Problem (b) The Logit (H0) model + additional variabe: the hit rate
 eq_logit2<- glm(formula = TELEWORKING ~ GENDER+DISTANCE, 
 family = binomial)
