@@ -21,12 +21,18 @@ AGE_2       -0.015209   0.007507  -2.026    0.043 *
 Residual standard error: 0.4804 on 920 degrees of freedom
 Multiple R-squared:  0.08154,   Adjusted R-squared:  0.07755 
 F-statistic: 20.42 on 4 and 920 DF,  p-value: 3.917e-16
-
+fit<- fitted(panel01)
+z<- 1/sqrt(2*pi)*exp(-1/2*fit^2)
+1/925*sum(z)
+[1] 0.3479649
 ### Logit model panel 2 (p. 451)                                           ###
 panel02<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
 family = binomial)
 summary(panel02)
 fit_logit<- fitted(panel02)
+r<- exp(fit_logit)/(1+exp(fit_logit))^2
+1/925*sum(r)
+[1] 0.2335569     (Example 6 2 :p.450)
 odds<- fit_logit/(1-fit_logit)
 AGE_c<- na.omit(AGE)
 ### Exhibit 6 3 (p.452)                                                    ###
@@ -73,6 +79,11 @@ Residual deviance: 1203.7  on 920  degrees of freedom
 panel03<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
 family = binomial(link = "probit"))
 summary(panel03)
+fit_pro<- fitted(panel03)
+z1<- 1/sqrt(2*pi)*exp(-1/2*fit_pro^2)
+1/925*sum(z1)
+[1] 0.3479573
+
 logLik(panel03)
 'log Lik.' -601.9497 (df=5)
 
