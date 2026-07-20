@@ -96,6 +96,8 @@ cbind(
 x           0.25 0.2465092 0.2466027 0.2481720 0.2514478
 
 
+### Bias ?????
+
 ################################
 ## Tobin's durable goods data ##
 ################################
@@ -155,5 +157,5 @@ pchisq(2 * diff(ll), diff(df), lower.tail = FALSE)
  Two-Part 
 0.01600393 
 -2 * ll + log(nrow(tobin)) * df
-  Tobit Two-Part 
+   Tobit Two-Part 
 70.96733 69.63057 
