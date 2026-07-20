@@ -4,7 +4,8 @@ library("survival")
 # Fit an exponential model: the two fits are the same
 survreg(Surv(futime, fustat) ~ ecog.ps + rx, ovarian, dist='weibull',
                                     scale=1)
-
+survreg(Surv(futime, fustat) ~ 1, ovarian, dist='weibull',
+                                    scale=1)
 ### futime:	survival or censoring time
 ### fustat:	censoring status
 ### age:	in years
