@@ -52,6 +52,14 @@ Estimates:
      Estimate Std. error t value  Pr(> t)    
 [1,] 0.023432   0.002976   7.874 3.44e-15 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+library("survival")
+survreg(Surv(t) ~ 1, xm609, dist='weibull',
+                                    scale=1)
+
+###Scale ????
+
 ### Panel 6 Proportional hazard model (p.518)                              ###
 loglik_pro <- function(theta) {
 beta0<- theta[1]
@@ -134,6 +142,13 @@ install.packages("censReg")
 library("censReg")
 cf) Arne Henningsen
 ### Panel 12 Tobit Model (p.519)                                           ###
+library("survival")
+t80<- STRIKECENS80
+survreg(Surv(t80) ~ 1, xm609, dist='weibull',scale=1)
+????
+
+
+
 panel_12<- censReg(log(STRIKECENS80)~ 1)
 summary(panel_12)
 Call: censReg(formula = log(STRIKECENS80) ~ 1)
