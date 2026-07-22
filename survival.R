@@ -55,11 +55,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 
 library("survival")
-survreg(Surv(t) ~ 1, xm609, dist='weibull',
-                                    scale=1)
-
-###Scale ????
-
+s<- survreg(Surv(t) ~ 1, xm609, dist='weibull',
+                                    scale=0)
+summary(s)
+????
 ### Panel 6 Proportional hazard model (p.518)                              ###
 loglik_pro <- function(theta) {
 beta0<- theta[1]
