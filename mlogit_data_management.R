@@ -1,5 +1,5 @@
-library("mlogit")
 install.packages("mlogit")
+library("mlogit")
 ### Wide format
 data("Train", package = "mlogit")
 str(Train)
@@ -16,23 +16,31 @@ str(Train)
  $ change_B : num  0 0 0 0 0 0 0 0 0 0 ...
  $ comfort_B: num  1 1 0 0 0 0 1 0 1 0 ...
 attach(Train)
+### the model A or B                                                      ###
 ### Index variables                                                       ###
 str(id)
- int [1:2929] 1 1 1 1 1 1 1 1 1 
+ int [1:2929] 1 1 1 1 1 1 1 1 1     ### the individuals (n)                 
 str(choiceid)
-int [1:2929] 1 2 3 4 5 6 7 8 9 10 
+int [1:2929] 1 2 3 4 5 6 7 8 9 10   ### the choice (m)  
 str(choice)
- Factor w/ 2 levels "A","B": 1 1 1 2 2 2 2 2 1 1 ...
+ Factor w/ 2 levels "A","B": 1 1 1 2 2 2 2 2 1 1 ..  ### the choice (y = m) .
 ### alternative specific
 str(price_A)
- num [1:2929] 2400 2400 2400 4000 2400 4000 
+ num [1:2929] 2400 2400 2400 4000 2400 4000 ### the explanatory variables (x1)
 str(time_A)
- num [1:2929] 150 150 115 130 150 115 150 115 
+ num [1:2929] 150 150 115 130 150 115 150 115 ### the explanatory variable(x2)
 str(change_A)
-num [1:2929] 0 0 0 0 0 0 0 0 0 0 
+num [1:2929] 0 0 0 0 0 0 0 0 0 0          ### the explanatory variable (x3)
 str(comfort_A)
-num [1:2929] 1 1 1 1 1 0 1 1 0 1 ...
-
+num [1:2929] 1 1 1 1 1 0 1 1 0 1         ### the explanatory variable (x4)
+str(price_B)
+ num [1:2929] 4000 3200 4000 3200 3200   ### the explanatory variable (x5)
+str(time_B)
+num [1:2929] 150 130 115 150 150 130 115 ### the explanatory variable (x6)
+str(change_B)
+ num [1:2929] 0 0 0 0 0 0 0 0 0 0        ### the explanatory variable (x7)
+str(comfort_B)
+ num [1:2929] 1 1 0 0 0 0 1 0 1 0        ### the explanatory variable (x8)
 Train$choiceid <- 1:nrow(Train)
 head(Train, 3)
  id choiceid choice price_A time_A change_A comfort_A price_B time_B change_B
@@ -64,8 +72,6 @@ head(Tr, 3)
 3        2  1   A
 indexes:  1, 1, 2 
 
-
-
 ### Long format
 data("ModeCanada", package = "mlogit")
 attach(ModeCanada)
@@ -84,29 +90,42 @@ str(ModeCanada)
  $ noalt : int  2 2 2 2 2 2 2 2 2 2 ..
 
 str(noalt)
+int [1:15520] 2 2 2 2 2 2 2 2 2 2       ### the explanatory variable (x)
 hist(noalt)
 str(alt)
-Factor w/ 4 levels "train","air",..: 1 4 1 4 1 4 1 4 1 4 ...
+Factor w/ 4 levels "train","air",: 1 4  ### the explanatory variable (m)
 hist(alt)
 alt_n<- as.numeric(alt)
 hist(alt_n)
+str(choice)
+int [1:15520] 0 1 0 1 0 1 0 1 0 1       ### the depandent variabe (y = m) 
+str(dist)
+int [1:15520] 83 83 83 83 83 83 83 83   ### the explanatory variable (x1)
+str(cost)
+num [1:15520] 28.2 15.8 28.2 15.8 28.2  ### the explanatory variable (x2)
+str(ivt)
+ int [1:15520] 50 61 50 61 50 61 50 61  ### the explanatory variable (x3)
+str(ovt)
+int [1:15520] 66 0 66 0 66 0 66 0 66 0  ### the explanatory variable (x4)
+str(freq)
+ int [1:15520] 4 0 4 0 4 0 4 0 4 0      ### the explanatory variable (x5)
+str(income)
+int [1:15520] 45 45 25 25 70 70 70 70   ### the explanatory variable (x6)
+str(urban)
+ int [1:15520] 0 0 0 0 0 0 0 0 0 0      ### the explanatory variable (x7)
+
 head(ModeCanada)
 MC <- dfidx(ModeCanada, subset = noalt == 4,
             alt.levels = c("train", "air", "bus", "car"))
 attach(noalt)
 hist(noalt)
 str(noalt)
-
 MC <- dfidx(ModeCanada, subset = noalt == 4, idx = "case",
-            alt.levels = c("train", "air", "bus", "car"))
-
+            alt.levels = c("train", "air", "bus", "car
 MC <- dfidx(ModeCanada, subset = noalt == 4, idx = c("case", "alt"))
-
 MC <- dfidx(ModeCanada, subset = noalt == 4)
-
 MC <- dfidx(ModeCanada, subset = noalt == 4, idx = c("case", "alt"),
             drop.index = FALSE)
-head(MC)
 library("Formula")
 f <- Formula(choice ~ cost | income + urban | ivt)
 f2 <- Formula(choice ~ cost + ivt | income + urban)
@@ -129,6 +148,7 @@ statpval <- function(x){
     round(result, 3)
 }
 
+### The model Fishing                                                      ###
 data(Fishing)
 attach(Fishing)
 str(Fishing)
@@ -144,11 +164,25 @@ str(Fishing)
  $ catch.charter: num  0.539 0.467 1.027 0.539 0.324 ...
  $ income       : num  7083 1250 3750 2083 4583
 str(mode)
-Factor w/ 4 levels "beach","pier",..: 4 4 3 2 3 4 1 4 3 3 ...
+Factor "beach","pier",: 4 4 3 ### the dependent variable = the option (y = m)
 str(price.beach)
-num [1:1182] 157.9 15.1 161.9 15.1 106.9 ...
+num [1:1182] 157.9 15.1 161.9 ### the explanatory variable (x1)
+str(price.pier)
+num [1:1182] 157.9 15.1 161.9 ### the explanatory variable (x2)
+str(price.boat)
+num [1:1182] 157.9 10.5 24.3  ### the explanatory variable (x3)
+str(price.charter)
+num [1:1182] 182.9 34.5 59.3  ### the explanatory variable (x4)
+str(catch.beach)
+num [1:1182] 0.0678 0.1049    ### the explanatory variable (x5)
+str(catch.pier) 
+num [1:1182] 0.0503 0.0451    ### the explanatory variable (x6)
+str(catch.boat)
+num [1:1182] 0.26 0.157 0.241 ### the explanatory variable (x7)
+str(catch.charter)
+num [1:1182] 0.539 0.467      ### the explanatory variable (x8)
 str(income)
-num [1:1182] 7083 1250 3750 2083 4583 ...
+num [1:1182] 7083 1250 3750   ### the explanatory variable (x9)
 Fish<- dfidx(Fishing, varying=2:9,shape="wide",choice="mode")
 head(Fish, 5)
 ~~~~~~~
