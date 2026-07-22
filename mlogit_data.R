@@ -1,5 +1,5 @@
 https://cran.r-project.org/web/packages/mlogit/refman/mlogit.html#mlogit-deprecated
-
+mlogit-deprecated
 choice	
 the variable indicating the choice made: it can be either a logical vector, 
 a numerical vector with 0 where the alternative is not chosen, a factor with
@@ -25,12 +25,42 @@ the name of the variable that contains the alternative index (for a 'long'
 
 chid.var	
 the name of the variable that contains the choice index or the name under
- which the choice index will be stored,
+which the choice index will be stored,
 
 
 alt.levels	
 the name of the alternatives: if null, for a 'wide' data.frame, they are 
 guessed from the variable names and the choice variable (both should be the 
 same), for a 'long' 'data.frame', they are guessed from the 'alt.var' argument,
+
+
+https://cran.r-project.org/web/packages/mlogit/refman/mlogit.html#mlogit
+
+mlogit(
+  formula,
+  data,
+  subset,
+  weights,
+  na.action,
+  start = NULL,
+  alt.subset = NULL,
+  reflevel = NULL,
+  nests = NULL,
+  un.nest.el = FALSE,
+  unscaled = FALSE,
+  heterosc = FALSE,
+  rpar = NULL,
+  probit = FALSE,
+  R = 40,
+  correlation = FALSE,
+  halton = NULL,
+  random.nb = NULL,
+  panel = FALSE,
+  estimate = TRUE,
+  seed = 10,
+  hessian = NULL,
+  param = NULL,
+  ...
+)
 
 
