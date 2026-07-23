@@ -5,6 +5,23 @@
 xm609<- read.csv("xm609.csv", header = TRUE)
 attach(xm609)
 str(xm609)
+'data.frame':   62 obs. of  4 variables:
+ $ OBS         : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ STRIKEDUR   : int  1 2 2 2 3 3 3 3 3 4 ...
+ $ PROD        : num  0.0645 -0.007 0.00535 0.0645 0.07427 ...
+ $ STRIKECENS80: int  1 2 2 2 3 3 3 3 3 4 .
+library(survival)
+with(xm609, Surv(STRIKEDUR))
+[1]   1   2   2   2   3   3   3   3   3   4   5   7   8   9   9  10  11  12  12
+[20]  13  14  15  17  19  21  21  22  23  25  26  27  27  28  29  32  33  35  37
+[39]  38  41  42  43  43  44  49  49  52  52  61  72  85  98  99 100 104 114 117
+[58] 119 130 152 153 216
+
+survfit(Surv(STRIKEDUR) ~ 1, data=xm609)
+### Call: survfit(formula = Surv(STRIKEDUR) ~ 1, data = xm609)
+      n events median 0.95LCL 0.95UCL
+[1,] 62     62     27      21      41
+
 ### Exhibit 6 14 a and b (p.512)                                           ###
 hist(STRIKEDUR)
 summary(STRIKEDUR)
@@ -55,10 +72,20 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 
 library("survival")
-s<- survreg(Surv(t) ~ 1, xm609, dist='weibull',
-                                    scale=0)
+s<- survreg(Surv(t, t>0, type="left") ~ 1, xm609, dist='exponential')
 summary(s)
-????
+
+Call:
+survreg(formula = Surv(t, t > 0, type = "left") ~ 1, data = xm609, 
+    dist = "exponential")
+            Value Std. Error    z      p
+(Intercept) 3.754      0.127 29.6 <2e-16
+Scale fixed at 1 
+Exponential distribution
+Loglik(model)= -294.7   Loglik(intercept only)= -294.7 ### the same value
+Number of Newton-Raphson Iterations: 5 
+
+
 ### Panel 6 Proportional hazard model (p.518)                              ###
 loglik_pro <- function(theta) {
 beta0<- theta[1]
@@ -77,6 +104,23 @@ Estimates:
 [1,] 9.332934   4.502091   2.073   0.0382 *  
 [2,] 0.022903   0.003122   7.335 2.21e-13 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’
+
+
+s2<- survreg(Surv(t, t>0, type="left") ~ PROD, xm609, dist='exponential')
+summary(s2)
+Call:
+survreg(formula = Surv(t, t > 0, type = "left") ~ PROD, data = xm609, 
+    dist = "exponential")
+             Value Std. Error     z      p
+(Intercept)  3.777      0.131 28.80 <2e-16
+PROD        -9.334      2.960 -3.15 0.0016
+Scale fixed at 1 
+Exponential distribution
+Loglik(model)= -289.8   Loglik(intercept only)= -294.7  ### the same value
+        Chisq= 9.93 on 1 degrees of freedom, p= 0.0016 
+Number of Newton-Raphson Iterations: 4 
+n= 62 
+
 ### Panel 7 Weibull Model (p.518)                                          ###
 loglik_w <- function(theta) {
 beta0<- theta[1]
