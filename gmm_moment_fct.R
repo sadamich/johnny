@@ -47,6 +47,25 @@ g <- y ~ ym1 + ym2
 x <- H
 res <- gmm(g, x,weightsMatrix = diag(5))
 summary(res)
+Call:
+gmm(g = g, x = x, weightsMatrix = diag(5))
+
+
+Method:  One step GMM with fixed W 
+
+Kernel:  Quadratic Spectral
+
+Coefficients:
+             Estimate    Std. Error  t value     Pr(>|t|)  
+(Intercept)  3.4105e-02  4.5474e-02  7.5000e-01  4.5325e-01
+ym1          1.9609e-01  4.8914e-02  4.0089e+00  6.1006e-05
+ym2          7.2739e-01  4.9997e-02  1.4549e+01  5.9526e-48
+
+J-Test: degrees of freedom is 2 
+                J-test   P-value
+Test E(g)=0:    0.19320  0.90792
+
+
 ### the structure of variables                                             ###
 str(y)
  num [1:494] 0.87 1.96 1.05 2.7 1.98
