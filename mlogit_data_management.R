@@ -16,7 +16,7 @@ str(Train)
  $ change_B : num  0 0 0 0 0 0 0 0 0 0 ...
  $ comfort_B: num  1 1 0 0 0 0 1 0 1 0 ...
 attach(Train)
-### the model A or B                                                      ###
+### the two trains: the model A or B                                                      ###
 ### Index variables                                                       ###
 str(id)
  int [1:2929] 1 1 1 1 1 1 1 1 1     ### the individuals (n)                 
@@ -42,7 +42,8 @@ str(change_B)
 str(comfort_B)
  num [1:2929] 1 1 0 0 0 0 1 0 1 0        ### the explanatory variable (x8)
 Train$choiceid <- 1:nrow(Train)
-head(Train, 3)
+head(Train, 30)
+### the wide format has rows of choiceid
  id choiceid choice price_A time_A change_A comfort_A price_B time_B change_B
 1  1        1      A    2400    150        0         1    4000    150        0
 2  1        2      A    2400    150        0         1    3200    130        0
@@ -72,6 +73,8 @@ head(Tr, 3)
 3        2  1   A
 indexes:  1, 1, 2 
 
+
+
 ### Long format
 data("ModeCanada", package = "mlogit")
 attach(ModeCanada)
@@ -92,7 +95,7 @@ str(ModeCanada)
 str(noalt)
 int [1:15520] 2 2 2 2 2 2 2 2 2 2       ### the explanatory variable (x)
 hist(noalt)
-str(alt)
+str(alt)  ### the four choices : train, air, bus, car 
 Factor w/ 4 levels "train","air",: 1 4  ### the explanatory variable (m)
 hist(alt)
 alt_n<- as.numeric(alt)
@@ -101,19 +104,25 @@ str(choice)
 int [1:15520] 0 1 0 1 0 1 0 1 0 1       ### the depandent variabe (y = m) 
 str(dist)
 int [1:15520] 83 83 83 83 83 83 83 83   ### the explanatory variable (x1)
+hist(dist)
 str(cost)
 num [1:15520] 28.2 15.8 28.2 15.8 28.2  ### the explanatory variable (x2)
+hist(cost)
 str(ivt)
  int [1:15520] 50 61 50 61 50 61 50 61  ### the explanatory variable (x3)
+hist(ivt)
 str(ovt)
 int [1:15520] 66 0 66 0 66 0 66 0 66 0  ### the explanatory variable (x4)
+hist(ovt)
 str(freq)
  int [1:15520] 4 0 4 0 4 0 4 0 4 0      ### the explanatory variable (x5)
+hist(freq)
 str(income)
 int [1:15520] 45 45 25 25 70 70 70 70   ### the explanatory variable (x6)
+hist(income)
 str(urban)
  int [1:15520] 0 0 0 0 0 0 0 0 0 0      ### the explanatory variable (x7)
-
+hist(urban)
 head(ModeCanada)
 MC <- dfidx(ModeCanada, subset = noalt == 4,
             alt.levels = c("train", "air", "bus", "car"))
