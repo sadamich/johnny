@@ -1,5 +1,14 @@
 install.packages("mlogit")
 library("mlogit")
+Format
+id: individual identifient,
+choiceid: choice identifient,
+choice: one of 'A' or 'B',
+price_z: price of proposition z (z = 'A', 'B') in cents of guilders,
+time_z: travel time of proposition z (z = 'A', 'B') in minutes,
+comfort_z: comfort of proposition z (z = 'A', 'B'), 0, 1 or 2 in decreasing comfort order,
+change_z: number of changes for proposition z (z = 'A', 'B').
+
 ### Wide format
 data("Train", package = "mlogit")
 str(Train)
