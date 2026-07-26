@@ -10,8 +10,12 @@ comfort_z: comfort of proposition z (z = 'A', 'B'), 0, 1 or 2 in decreasing comf
 change_z: number of changes for proposition z (z = 'A', 'B').
 
 ### Wide format
+2(A or B) * 4 (attributes)
+2^4
+[1] 16 scenarios
 data("Train", package = "mlogit")
 str(Train)
+A sample of 235 Dutch individuals facing 2929 choice situations
 'data.frame':   2929 obs. of  11 variables:
  $ id       : int  1 1 1 1 1 1 1 1 1 1 ...
  $ choiceid : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -29,10 +33,21 @@ attach(Train)
 ### Index variables                                                       ###
 str(id)
  int [1:2929] 1 1 1 1 1 1 1 1 1     ### the individuals (n)                 
+str(id[id==1])
+int [1:10] 1 1 1 1 1 1 1 1 1 1
+str(id[id==5])
+[1:15] 5 5 5 5 5 5 5 5 5 5 ...
+str(id[id==50])
+int [1:13] 50 50 50 50 50 50 50 50 50 50 ...
+str(id[id==150])
+[1:10] 150 150 150 150 150 150 150 150 150 150
+str(id[id==200])
+int [1:12] 200 200 200 200 200 200 200 200 200 200 .
+
 str(choiceid)
 int [1:2929] 1 2 3 4 5 6 7 8 9 10   ### the choice (m)  
 str(choice)
- Factor w/ 2 levels "A","B": 1 1 1 2 2 2 2 2 1 1 ..  ### the choice (y = m) .
+ Factor w/ 2 levels "A","B": 1 1 1 2 2 2 2 2 1 1 ### the choice (y = m) [2929] .
 ### alternative specific
 str(price_A)
  num [1:2929] 2400 2400 2400 4000 2400 4000 ### the explanatory variables (x1)
@@ -74,15 +89,12 @@ head(Tr, 3)
 1      A  2400  150      0       1 1:A
 2      A  4000  150      0       1 1:B
 3      A  2400  150      0       1 2:A
-
 ~~~ indexes ~~~~
   choiceid id alt
 1        1  1   A
 2        1  1   B
 3        2  1   A
 indexes:  1, 1, 2 
-
-
 
 ### Long format
 data("ModeCanada", package = "mlogit")
@@ -135,6 +147,58 @@ hist(urban)
 head(ModeCanada)
 MC <- dfidx(ModeCanada, subset = noalt == 4,
             alt.levels = c("train", "air", "bus", "car"))
+str(MC)
+Classes ‘tbl_dfidx’, ‘dfidx’, ‘tbl_df’, ‘tbl’ and 'data.frame': 11116 obs. of  10 variables:
+ $ choice: 'xseries' int  0 1 0 0 0 1 0 0 0 1 ...
+  ..- attr(*, "idx")=Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':     11116 obs. of  2 variables:
+  .. ..$ case: int [1:11116] 109 109 109 109 110 110 110 110 111 111 ...
+  .. ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  .. ..- attr(*, "ids")= num [1:2] 1 2
+ $ dist  : 'xseries' num  377 377 377 377 377 377 377 377 377 377 ...
+  ..- attr(*, "idx")=Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':     11116 obs. of  2 variables:
+  .. ..$ case: int [1:11116] 109 109 109 109 110 110 110 110 111 111 ...
+  .. ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  .. ..- attr(*, "ids")= num [1:2] 1 2
+ $ cost  : 'xseries' num  58.2 142.8 27.5 71.6 58.2 ...
+  ..- attr(*, "idx")=Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':     11116 obs. of  2 variables:
+  .. ..$ case: int [1:11116] 109 109 109 109 110 110 110 110 111 111 ...
+  .. ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  .. ..- attr(*, "ids")= num [1:2] 1 2
+ $ ivt   : 'xseries' num  215 56 301 262 215 56 301 262 215 56 ...
+  ..- attr(*, "idx")=Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':     11116 obs. of  2 variables:
+  .. ..$ case: int [1:11116] 109 109 109 109 110 110 110 110 111 111 ...
+  .. ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  .. ..- attr(*, "ids")= num [1:2] 1 2
+ $ ovt   : 'xseries' num  74 85 63 0 74 85 63 0 74 85 ...
+  ..- attr(*, "idx")=Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':     11116 obs. of  2 variables:
+  .. ..$ case: int [1:11116] 109 109 109 109 110 110 110 110 111 111 ...
+  .. ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  .. ..- attr(*, "ids")= num [1:2] 1 2
+ $ freq  : 'xseries' num  4 9 8 0 4 9 8 0 4 9 ...
+  ..- attr(*, "idx")=Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':     11116 obs. of  2 variables:
+  .. ..$ case: int [1:11116] 109 109 109 109 110 110 110 110 111 111 ...
+  .. ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  .. ..- attr(*, "ids")= num [1:2] 1 2
+ $ income: 'xseries' num  45 45 45 45 70 70 70 70 35 35 ...
+  ..- attr(*, "idx")=Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':     11116 obs. of  2 variables:
+  .. ..$ case: int [1:11116] 109 109 109 109 110 110 110 110 111 111 ...
+  .. ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  .. ..- attr(*, "ids")= num [1:2] 1 2
+ $ urban : 'xseries' num  0 0 0 0 0 0 0 0 0 0 ...
+  ..- attr(*, "idx")=Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':     11116 obs. of  2 variables:
+  .. ..$ case: int [1:11116] 109 109 109 109 110 110 110 110 111 111 ...
+  .. ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  .. ..- attr(*, "ids")= num [1:2] 1 2
+ $ noalt : 'xseries' int  4 4 4 4 4 4 4 4 4 4 ...
+  ..- attr(*, "idx")=Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':     11116 obs. of  2 variables:
+  .. ..$ case: int [1:11116] 109 109 109 109 110 110 110 110 111 111 ...
+  .. ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  .. ..- attr(*, "ids")= num [1:2] 1 2
+ $ idx   :Classes ‘idx’, ‘tbl_df’, ‘tbl’ and 'data.frame':        11116 obs. of  2 variables:
+  ..$ case: int  109 109 109 109 110 110 110 110 111 111 ...
+  ..$ alt : Factor w/ 4 levels "train","air",..: 1 2 3 4 1 2 3 4 1 2 ...
+  ..- attr(*, "ids")= num [1:2] 1 2
+ - attr(*, "clseries")= chr "xseries"
 attach(noalt)
 hist(noalt)
 str(noalt)
