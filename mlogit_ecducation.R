@@ -10,16 +10,65 @@ detach(xm604)
 xm604_s<- subset(xm604, GENDER==1)
 attach(xm604_s)
 str(xm604_s)
+data_s<- data.frame(OBS, JOBCAT, EDUC, MINORITY)
+
+head(data_s, 10)
 library(mlogit)
+EDUC_1<- EDUC*DUMJCAT1
+EDUC_2<- EDUC*DUMJCAT2
+EDUC_3<- EDUC*DUMJCAT3
+MINORITY_1<- MINORITY*DUMJCAT1
+MINORITY_2<- MINORITY*DUMJCAT2
+MINORITY_3<- MINORITY*DUMJCAT3
+data_ed<- data.frame(OBS,JOBCAT,EDUC_1,EDUC_2,EDUC_3,
+            MINORITY_1,MINORITY_2,MINORITY_3)
+data_ed$OBS<- 1:nrow(data_ed)
+head(data_ed, 10)
+ED <- dfidx(data_ed,shape= "wide", varying = 3:8, sep ="_",
+            choice = "JOBCAT"
+)
+m<- mlogit(JOBCAT~ 1|EDUC + MINORITY , ED)
+summary(m)
+jobcat<- factor(JOBCAT, levels = c("1","2","3"))
+str(jobcat)
+Call:
+mlogit(formula = JOBCAT ~ 1 | EDUC | MINORITY, data = ED, method = "nr")
+
+Frequencies of alternatives:choice
+      1       2       3 
+0.33333 0.33333 0.33333 
+
+nr method
+1 iterations, 0h:0m:0s 
+g'(-H)^-1g = 1E+10 
+successive function values within tolerance limits 
+
+Coefficients :
+              Estimate Std. Error z-value Pr(>|z|)
+(Intercept):2 0.000000   0.734483       0        1
+(Intercept):3 0.000000   0.739815       0        1
+EDUC:2        0.000000   0.054699       0        1
+EDUC:3        0.000000   0.017369       0        1
+MINORITY:1    0.000000   0.797108       0        1
+MINORITY:2    0.000000   0.783476       0        1
+MINORITY:3    0.000000   1.064001       0        1
+
+Log-Likelihood: 7.7716e-16
+McFadden R^2:  -Inf 
+Likelihood ratio test : chisq = 1700.7 (p.value = < 2.22e-16)
+> 
+
+
+method = c("bfgs", "nr", "bhhh")
 nojob<- rep(3, 258)
-data_s<- data.frame(OBS, JOBCAT, DUMJCAT2,EDUC, MINORITY, nojob)
+data_s<- data.frame(OBS,JOBCAT,EDUC,MINORITY,nojob)
 ED<- dfidx(data_s)
 attach(ED)
 str(JOBCAT)
 library("Formula")
-f<- Formula(DUMJCAT2~1 | EDUC | MINORITY)
+f<- Formula(JOBCAT ~ EDUC | MINORITY)
 mf<- model.frame(ED,f)
-m<- mlogit(f, ED, method ="mt")
+md<- mlogit.data(data_s, JOBCAT, EDUC, MINORITY, shape = "wide", sep= FALSE)
 ????
 head(ED, 10)
 
