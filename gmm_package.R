@@ -81,20 +81,17 @@ sim_ex(50, 2000)
                 ML          GMM
 mu     0.002257994 -0.008296646
 sigma -0.028431398 -0.083807864
-
 $Variance
               ML        GMM
 mu    0.07270946 0.08820341
 sigma 0.03885166 0.04522601
-
 $MSE
               ML        GMM
 mu    0.07267820 0.08822815
 sigma 0.03964058 0.05222715
 
-
-### the characteristic function a stable distribution                      ###
-### if no a clear shape of a distribution                                  ###
+### 3.2 Estimatingtheparametersofastabledistribution
+### The moment conditon of the characteristic function (the closed form)   ###
 
 g2 <-function(theta,x)
 {
