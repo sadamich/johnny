@@ -1,6 +1,16 @@
 library("mlogit")
 http://www.civil.northwestern.edu/research/transportation_systems/koppelman.html
 data("ModeCanada", package = "mlogit")
+case: the individual index,
+alt: the alternative, one of train, car, bus and air,
+choice: one if the mode is chosen, zero otherwise,
+cost: monetary cost,
+ivt: in vehicule time,
+ovt: out vehicule time,
+frequency: frequency,
+income: income,
+urban: urban,
+noalt: the number of alternatives available.
 str(ModeCanada)
 'data.frame':   15520 obs. of  11 variables:
  $ case  : int  1 1 2 2 3 3 4 4 5 5 ...
@@ -16,8 +26,15 @@ str(ModeCanada)
  $ noalt : int  2 2 2 2 2 2 2 2 2 2 ...
 attach(ModeCanada)
 head(ModeCanada,10)
+A sample of 3880 travellers for the Montreal-Toronto corridor
 str(case)
 int [1:15520] 1 1 2 2 3 3 4 4 5 5 ...
+str(case[case==1])
+int [1:2] 1 1
+str(case[case==200])
+int [1:3] 200 200 200
+str(case[case==3880])
+ int [1:4] 3880 3880 3880 3880
 str(alt)
  Factor w/ 4 levels "train","air",..: 1 4 1 4 1 4 1 4 1 4 ...
 str(choice)
