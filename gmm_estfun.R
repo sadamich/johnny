@@ -1,3 +1,5 @@
+https://cran.r-project.org/web/packages/gmm/refman/gmm.html#estfun
+
 ### min g'Wg    ###
 library(gmm)
 n = 500
@@ -35,8 +37,7 @@ head(x,5)
 
 res <- gmm(g, x,weightsMatrix = diag(5))
 summary(res)
-Call:
-gmm(g = g, x = x, weightsMatrix = diag(5))
+### GMM estimation Call: gmm(g = g, x = x, weightsMatrix = diag(5))
 Method:  One step GMM with fixed W 
 Kernel:  Quadratic Spectral
 Coefficients:
