@@ -111,12 +111,13 @@ library(stabledist)
 set.seed(345)
 x2<-rstable(500,1.5,.5,pm=1)
 t0 <-c(alpha =2, beta= 0,gamma =sd(x2)/sqrt(2),delta =0)
+### x2 stable randam variable
+### t0 theta parameters
 
+### GMM estimate
 print(res<-gmm(g2,x2,t0))
-Method
- twoStep 
+Method   twoStep 
 Objective function value:  0.1095069 
-
   alpha     beta    gamma    delta  
  1.1606  -1.7842   1.2468   3.0203  
 Convergence code =  1 
