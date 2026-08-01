@@ -37,6 +37,7 @@ Log-Likelihood: -118.74
 McFadden R^2:  0.48676 
 Likelihood ratio test : chisq = 225.22 (p.value = < 2.22e-16)
 
+
 fm_mlogit_c <- mlogit(JOBCAT ~ 1 , data = xm604,
   subset = GENDER == "1", shape = "wide", reflevel = "1")
 summary(fm_mlogit_c)
