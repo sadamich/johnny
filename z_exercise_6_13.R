@@ -7,8 +7,12 @@
 xr613<- read.csv("xr613.csv", header=TRUE)
 str(xr613)
 attach(xr613)
-
+j<- ifelse(JOBCAT==3, 1, 0)
 ### Problem (a) Logit model
+eq_logit_j<- glm(formula = j~ EDUC+ MINORITY+PREVEXP, 
+family = binomial)
+summary(eq_logit_j)
+
 eq_logit<- glm(formula = Y~ EDUC+ MINORITY+PREVEXP, 
 family = binomial)
 summary(eq_logit)
@@ -77,6 +81,31 @@ logLik(eq_logit3)
 ### Problem (d) McFadden R_sq: hit rate
 
 ### Problem (e) Compare with binary logit model and the multinomial logit model
+mlogit(formula = JOBCAT ~ 1 | EDUC + MINORITY, data = xm604, 
+    subset = GENDER == "1", reflevel = "1", shape = "wide", method = "nr")
+Frequencies of alternatives:choice
+      1       2       3 
+0.60853 0.10465 0.28682 
+nr method
+8 iterations, 0h:0m:0s 
+g'(-H)^-1g = 9.15E-06 
+successive function values within tolerance limits 
+Coefficients :
+                Estimate Std. Error z-value  Pr(>|z|)    
+(Intercept):2   4.760722   1.172774  4.0594 4.921e-05 ***
+(Intercept):3 -26.014104   4.314443 -6.0295 1.644e-09 ***
+EDUC:2         -0.553399   0.099041 -5.5876 2.303e-08 ***
+EDUC:3          1.633370   0.276848  5.8999 3.638e-09 ***
+MINORITY:2      0.426952   0.502708  0.8493  0.395712    
+MINORITY:3     -2.109089   0.794193 -2.6556  0.007916 ** 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Log-Likelihood: -118.74
+McFadden R^2:  0.48676 
+Likelihood ratio test : chisq = 225.22 (p.value = < 2.22e-16)
+
+
+
+
 
 ### Problem (f) Logit, multinomial, ordered Logit model
 
