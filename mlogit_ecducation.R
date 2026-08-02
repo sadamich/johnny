@@ -37,7 +37,40 @@ Log-Likelihood: -118.74
 McFadden R^2:  0.48676 
 Likelihood ratio test : chisq = 225.22 (p.value = < 2.22e-16)
 
+### Marginal effects 
+effects(fm_mlogit, covariate = "EDUC", data = xm604)
+effects(fm_mlogit, covariate = "MINORITY", data = xm604)
+### Prediction 
+preds(fm_mlogit)
 
+### LM < LR < Wald tests                                                  ###
+library("mlogit")
+library("lmtest")
+fm_mlogit_h <- mlogit(JOBCAT ~ 1 | EDUC + MINORITY, data = xm604,
+  subset = GENDER == "1", shape = "wide", reflevel = "1",heterosc = TRUE)
+summary(fm_mlogit_h)
+### LR test
+lrtest(fm_mlogit, fm_mlogit_h)
+Likelihood ratio test
+Model 1: JOBCAT ~ 1 | EDUC + MINORITY
+Model 2: JOBCAT ~ 1 | EDUC + MINORITY
+  #Df  LogLik Df  Chisq Pr(>Chisq)    
+1   6 -118.74                         
+2   8 -219.26  2 201.05  < 2.2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+### Wald test 
+waldtest(fm_mlogit_h)
+  Wald test
+data:  homoscedasticity
+chisq = 0.56119, df = 2, p-value = 0.7553
+### LM test
+scoretest(fm_mlogit, heterosc = TRUE)
+ score test
+data:  heterosc = TRUE
+chisq = 17.749, df = 2, p-value = 0.0001399
+alternative hypothesis: heteroscedastic model
+
+### Without the explanatory variables                                      ###
 fm_mlogit_c <- mlogit(JOBCAT ~ 1 , data = xm604,
   subset = GENDER == "1", shape = "wide", reflevel = "1")
 summary(fm_mlogit_c)
