@@ -1,5 +1,10 @@
 ### https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-OOP.pdf ###
-### 4 1 Bread 
+### 4 1 The Bread : the Hessian 
+
+### 4 2 The meat:estfun():Outer product estimators:HC HAC estimators
+
+### 4 3 The sandwich
+
 ### https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-CL.pdf ###
 ### 3 Methods 3 1 Sandwich covariances
 Sandwich
