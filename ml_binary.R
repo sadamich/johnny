@@ -29,6 +29,7 @@ z<- 1/sqrt(2*pi)*exp(-1/2*fit^2)
 panel02<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
 family = binomial)
 summary(panel02)
+
 fit_logit<- fitted(panel02)
 r<- exp(fit_logit)/(1+exp(fit_logit))^2
 1/925*sum(r)
