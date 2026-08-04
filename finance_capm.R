@@ -10,27 +10,25 @@ detach(xm404)
 eq<- lm(RENDCYCO~RENDMARK)
 summary(eq)
 sandwich(eq)
- (Intercept)    RENDMARK
+            (Intercept)    RENDMARK
 (Intercept) 0.117062058 0.004241291
 RENDMARK    0.004241291 0.004613880
 sqrt(0.004613880)
 [1] 0.06792555  (the same with sd of the panel 2 (p.264) 
-
 ### Package gmm ###
 install.packages("gmm")
 library("gmm")
 eq_gmm<- gmm(RENDCYCO~RENDMARK, x=RENDMARK)
 summary(eq_gmm)
-vcov(eq_gmm)
-            (Intercept)    RENDMARK
-(Intercept) 0.115135024 0.004962316
-RENDMARK    0.004962316 0.004803774
 ### Compare with the panel 2 (p.264)                                       ###
-sqrt(0.115135024)
-[1] 0.3393155
-sqrt(0.004803774)
-[1] 0.06930926
-
+sandwich(eq_gmm)
+            [,1]        [,2]
+[1,] 0.117062058 0.004241291
+[2,] 0.004241291 0.004613880
+sqrt(0.117062058)
+[1] 0.3421433
+sqrt(0.004613880)
+[1] 0.06792555
 ### 4 4 6 Illustration Stock market returns (p.262)                        ###
 ### Panel 2 (p.264) Call:gmm(g = RENDCYCO ~ RENDMARK, x = RENDMARK)        ###
 Method:  twoStep 
@@ -52,9 +50,22 @@ N<- 240
 mu<- beta1+beta2*RENDMARK
 -N*0.5*log(2*pi)-N*0.5*log(sigma^2)- 0.5*((RENDCYCO - mu)^2/sigma^2)
 }
+library(maxLik)
 m<- maxLik(f,start=c(0,0,1))
 summary(m)            
  --------------------------------------------
+library(sandwich)
+sandwich(m)
+            [,1]         [,2]         [,3]
+[1,] 0.116919021 0.0042480265 0.0010152213
+[2,] 0.004248026 0.0046139174 0.0001640118
+[3,] 0.001015221 0.0001640118 0.0004025973
+
+sqrt(0.116919021) 
+[1] 0.3419342
+sqrt(0.0046139174) 
+[1] 0.06792582
+
 Maximum Likelihood estimation
 Newton-Raphson maximisation, 6 iterations
 Return code 8: successive function values within relative tolerance limit (reltol)
@@ -118,17 +129,6 @@ e<- RENDCYCO - mu
 }
 m2<- maxLik(f_t2,start=c(0,1,1))
 summary(m2)
-vcov(m2)
- [,1]          [,2]          [,3]
-[1,]  0.114318485 -0.0014309283 -0.0011605595
-[2,] -0.001430928  0.0047779829 -0.0003659251
-[3,] -0.001160559 -0.0003659251  0.0654406510
-### Compare with the Panel 4 (p.264)                                       ###
-sqrt(0.114318485)
-[1] 0.3381102  (for a)
-sqrt(0.0047779829)
-[1] 0.06912295 (for b)
-
 ### Exhibit 4 18 (p.245) and panel 3 (p.264)
 Maximum Likelihood estimation
 Newton-Raphson maximisation, 8 iterations
@@ -142,7 +142,29 @@ Estimates:
 [3,]  4.49424    0.25581   17.57  <2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
+m2_g<- maxLik(f_t2,start=c(0,1,1),grad = grad_b)
+summary(m2_g)
 
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 10 iterations
+Return code 1: gradient close to zero (gradtol)
+Log-Likelihood: -128.9477 
+3  free parameters
+Estimates:
+      Estimate Std. error t value Pr(> t)    
+[1,] -0.344971   0.021767  -15.85  <2e-16 ***
+[2,]  1.196406   0.004462  268.14  <2e-16 ***
+[3,]  4.494241   0.049552   90.70  <2e-16 ***
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+--------------------------------------------
+sandwich(m2_g)
+              [,1]          [,2]          [,3]
+[1,]  1.906557e-30  3.488348e-31 -9.534681e-28
+[2,]  3.488348e-31  6.382487e-32 -1.744521e-28
+[3,] -9.534681e-28 -1.744521e-28  4.768289e-25
+
+sqrt(1.906557e-30)
+sqrt(6.382487e-32)???
 ### BHHH
 ### 4 3 9 Example (p.245) 
 f_b<- function(theta){
@@ -165,11 +187,11 @@ e<- y - (beta1+ beta2*x)
 gradient<- matrix(0,N,3)
 gradient[ ,1]<- sum(6*e/(5*sigma^2 +e^2))
 gradient[ ,2]<- sum(6*e*x/(5*sigma^2 +e^2))
-gradient[ ,3] <- -N/2*sigma^2 +3/sigma^2*(sum(6*e/(5*sigma^2+e^2)))
+gradient[ ,3] <- -N/(2*sigma^2) +3/(sigma^2)*(sum(e^2/(5*sigma^2+e^2)))
 gradient
 }
 
-mb<- maxBHHH(f_b,grad = grad_b,start=c(0,1,1))
+mb<- maxBHHH(f_b,grad = grad_b,start=c(1,1,1))
 summary(mb)
 
 BHHH maximisation 
