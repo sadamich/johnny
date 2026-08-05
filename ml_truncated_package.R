@@ -1,8 +1,7 @@
 https://cran.r-project.org/web/packages/truncreg/refman/truncreg.html
 library(truncreg)
 ### Yves Croissant [aut, cre], Achim Zeileis [aut]
-
-## simulate a data.frame
+### simulate a data.frame
 set.seed(1071)
 n <- 10000
 sigma <- 4
@@ -12,29 +11,27 @@ x <- rnorm(n, mean = 0, sd = 2)
 eps <- rnorm(n, sd = sigma)
 y <- alpha + beta * x + eps
 d <- data.frame(y = y, x = x)
-
 str(d)
 data.frame':   10000 obs. of  2 variables:
  $ y: num  5.436 -0.569 14.537 8.094 7.384 ...
  $ x: num  0.754 -1.869 4.86 2.639 0.901 
-
-
-## truncated response
+plot(y)
+hist(y)
+### truncated response
 d$yt <- ifelse(d$y > 1, d$y, NA)
 plot(d$yt)
 hist(d$yt)
-
-## binary threshold response
+### binary threshold response
 d$yb <- factor(d$y > 0)
+d_th<- as.numeric(d$yb)
 plot(d$yb)
-
-## censored response
+hist(d_th)
+### censored response
 d$yc <- pmax(1, d$y)
 plot(d$yc)
 hist(d$yc)
 
-
-## compare estimates for full/truncated/censored/threshold response
+### compare estimates for full/truncated/censored/threshold response
 fm_full <- lm(y ~ x, data = d)
 fm_trunc <- truncreg(yt ~ x, data = d, point = 1, direction = "left")
 summary(fm_trunc)
@@ -68,7 +65,6 @@ Number of Fisher Scoring iterations: 4
 library("survival")
 fm_cens <- survreg(Surv(yc, yc > 1, type = "left") ~ x, data = d, dist = "gaussian")
 summary(fm_cens)
-
 survreg(formula = Surv(yc, yc > 1, type = "left") ~ x, data = d, 
     dist = "gaussian")
               Value Std. Error     z      p
@@ -102,7 +98,7 @@ x           0.25 0.2465092 0.2466027 0.2481720 0.2514478
 ## Tobin's durable goods data ##
 ################################
 
-## Tobit model (Tobin 1958)
+### Tobit model (Tobin 1958)
 data("tobin", package = "survival")
 str(tobin)
 'data.frame':   20 obs. of  3 variables:
