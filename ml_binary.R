@@ -30,6 +30,7 @@ panel02<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2,
 family = binomial)
 summary(panel02)
 
+
 fit_logit<- fitted(panel02)
 r<- exp(fit_logit)/(1+exp(fit_logit))^2
 1/925*sum(r)
@@ -80,6 +81,24 @@ Residual deviance: 1203.7  on 920  degrees of freedom
 panel03<- glm(formula = RESPONSE ~ GENDER + ACTIVITY + AGE + AGE_2, 
 family = binomial(link = "probit"))
 summary(panel03)
+library(sampleSelection)
+invMillsRatio( panel03, all = FALSE )
+  IMR1    delta1      IMR0        delta0
+1    1.1110672 0.7247298 0.5305671  0.0380854383
+2    0.7049237 0.6026383 0.8957489  0.9367059937
+3    0.7340944 0.6137834 0.8639435  0.8345337008
+4    0.7601580 0.6233593 0.8363929  0.7496371877
+predict(panel03) 
+ 1             2             3             4             5 
+-4.587846e-01  1.499750e-01  1.020151e-01  5.988116e-02 -6.372958e-02 
+            6             7             8             9            10 
+ 1.830247e-06  8.258742e-02  1.362406e-01 -4.699489e-01  2.927915e-02 
+residuals(panel03, type = "response" )
+ 1          2          3          4          5          6          7 
+ 0.6768056  0.4403922  0.4593723  0.4761251  0.5254072  0.4999993  0.4670898 
+         8          9         10         11         12         13         14 
+ 0.4458156  0.6808042  0.4883210  0.4560066  0.4728006  0.8054931  0.4700798 
+
 fit_pro<- fitted(panel03)
 z1<- 1/sqrt(2*pi)*exp(-1/2*fit_pro^2)
 1/925*sum(z1)
