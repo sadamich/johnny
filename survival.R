@@ -70,6 +70,21 @@ Estimates:
 [1,] 0.023432   0.002976   7.874 3.44e-15 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
+### Panel 14 (p.519)                                                     ###
+t80 <- STRIKECENS80
+loglik_c <- function(theta) log(theta) - theta*t80
+a_c <- maxLik(loglik_c, start=1 )
+summary(a_c)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 6 iterations
+Return code 8: successive function values within relative tolerance limit (reltol)
+Log-Likelihood: -280.957 
+1  free parameters
+Estimates:
+     Estimate Std. error t value  Pr(> t)    
+[1,] 0.029259   0.003716   7.874 3.44e-15 ***    ????( bias???)
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
 
 library("survival")
 s<- survreg(Surv(t, t>0, type="left") ~ 1, xm609, dist='exponential')
