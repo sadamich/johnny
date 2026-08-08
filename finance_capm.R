@@ -129,6 +129,7 @@ e<- RENDCYCO - mu
 }
 m2<- maxLik(f_t2,start=c(0,1,1))
 summary(m2)
+
 ### Exhibit 4 18 (p.245) and panel 3 (p.264)
 Maximum Likelihood estimation
 Newton-Raphson maximisation, 8 iterations
@@ -165,6 +166,7 @@ sandwich(m2_g)
 
 sqrt(1.906557e-30)
 sqrt(6.382487e-32)???
+
 ### BHHH
 ### 4 3 9 Example (p.245) 
 f_b<- function(theta){
@@ -206,61 +208,6 @@ Estimates:
 [1,] 0.03031732  953.5158
 [2,] 1.27735865 -706.8031
 [3,] 0.47413137 6250.5677
-
-
-### QML (p.263)????
-g<- function(beta,y,x,e){
-y<- RENDCYCO
-x<- RENDMARK
-beta1<- beta[1]
-beta2<- beta[2]
-e<- y - (beta1+ beta2*x)
-m1<- (6*e/(5*4.49424 +e^2))
-m2<-  (6*e*x/(5*4.49424 +e^2))
-f<- cbind(m1,m2)
-return(f)
-}
-
-Dg<- function(beta,y,x,e){
-y<- RENDCYCO
-x<- RENDMARK
-beta1<- beta[1]
-beta2<- beta[2]
-e<- y - (beta1+ beta2*x)
-H<- matrix(c(-12*e/(5*4.49424 +e^2)+6*e/(5*4.49424 +e^2)^2,
-             -12*e*x/(5*4.49424 +e^2)+6*e*x/(5*4.49424 +e^2)^2,
-             -12*e*x/(5*4.49424 +e^2)+6*e*x/(5*4.49424 +e^2)^2,
-             -12*e*x^2/(5*4.49424 +e^2)+6*e*x^2/(5*4.49424 +e^2)^2,
-           nrow=2,ncol=2))
-return(H)
-}
-eq_gmm<- gmm(g,x=RENDMARK,c(beta1=0,beta2=0),grad =Dg)
-summary(eq_gmm)
-
-
-y<- RENDCYCO
-x<- RENDMARK
-beta1<- -0.34497
-beta2<- 1.19641 
-e<- y - (beta1+ beta2*x)
-m1<- (6*e/(5*4.49424 +e^2))
-m2<-  (6*e*x/(5*4.49424 +e^2))
-f<- cbind(m1,m2)
-j<- f%*%t(f)
-
-y<- RENDCYCO
-x<- RENDMARK
-beta1<- 0.34497
-beta2<- 1.19641 
-e<- y - (beta1+ beta2*x)
-H<- matrix(c(-12*e/(5*4.49424 +e^2)+6*e/(5*4.49424 +e^2)^2,
-             -12*e*x/(5*4.49424 +e^2)+6*e*x/(5*4.49424 +e^2)^2,
-             -12*e*x/(5*4.49424 +e^2)+6*e*x/(5*4.49424 +e^2)^2,
-             -12*e*x^2/(5*4.49424 +e^2)+6*e*x^2/(5*4.49424 +e^2)^2,
-           nrow=2,ncol=2))
-j_1<- 1/j
-H_t<- t(H)
-H%*%j_1%*%H_t
 
 
 ### Exhibit 4 18 f (p.245)                                                ###
