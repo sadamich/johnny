@@ -299,6 +299,7 @@ plot(res,which=3)
 
 ### 3 5 CAPM 
 data(Finance)
+str(Finance)
 r <-Finance[1:500,1:5]
 rm <-Finance[1:500,"rm"]
 rf <-Finance[1:500,"rf"]
