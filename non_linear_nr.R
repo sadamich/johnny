@@ -2,17 +2,17 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
-###
-
-
-### The Newton Raphson iterations (4 15) (p.    )
-
+### The Newton Raphson iterations (4 15) (p.210)
+### https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html#maxNR
 theta_h_1<- function(theta){
 result<- theta - (H_h)^(-1)*G_h
 return(result)
-
 }
-
+### Marquardt
+theta_h_2<- function(theta){
+result<- theta - (H_h +cI)^(-1)*G_h
+return(result)
+}
 library(maxLik)
 f <- function(a) exp(-a[1]^2 - a[2]^2)
 ### maximize wrt. both parameters                                          ###
@@ -81,7 +81,6 @@ Estimates:
           estimate      gradient
 [1,] -1.562501e-07 -9.375007e-07
 
-
 free7<- maxNR(f7, start=1.5)
 summary(free7)
 Newton-Raphson maximisation 
@@ -92,6 +91,23 @@ Function value: 4
 Estimates:
      estimate     gradient
 [1,]        2 6.554757e-07
+
+
+f8<- function(x){
+x^3-3*x^2+4
+}
+free8<- maxNR(f8, start=0)
+summary(free8)
+Newton-Raphson maximisation 
+Number of iterations: 1 
+Return code: 1 
+gradient close to zero (gradtol) 
+Function value: 4 
+Estimates:
+     estimate gradient
+[1,]        0        0
+free8<- maxNR(f8, start=1.9)
+summary(free8)
 
 
 
