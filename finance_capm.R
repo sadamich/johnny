@@ -220,7 +220,9 @@ G <- matrix(c( -m1*m1, -m1*m2, -m1*m3,
 nrow=3,ncol=3)
 return(G)
 }
-eq<- gmm(RENDCYCO~RENDMARK, x=RENDMARK, grandv= mc, hessianv=Dg)
+const<- rep(1,240)
+h<- as.matrix(cbind(const,RENDMARK))
+eq<- gmm(mc, x=h, t0=c(0,0,1))
 summary(eq)
 sandwich(eq)
 [,1]        [,2]
