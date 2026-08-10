@@ -115,7 +115,7 @@ Estimates:
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 --------------------------------------------
 
-
+library(maxLik)
 ### 4 3 9 Example (p.245) 
 f_t2<- function(theta){
 beta1<- theta[1]
@@ -129,6 +129,12 @@ e<- RENDCYCO - mu
 }
 m2<- maxLik(f_t2,start=c(0,1,1))
 summary(m2)
+g1<- gradient(m2)
+h1<- hessian(m2)
+str(g1)
+ num [1:3] -4.26e-07 4.55e-07 8.81e-07
+str(h1)
+ num [1:3, 1:3] -8.782 -2.643 -0.171 -2.643 -210.179 
 
 ### Exhibit 4 18 (p.245) and panel 3 (p.264)
 Maximum Likelihood estimation
@@ -178,7 +184,7 @@ e<- RENDCYCO - (beta1+beta2*RENDMARK)
  N*log(5)-N*0.5*log(sigma^2)- 3*sum(log(1+e^2/5*sigma^2))
 }
 
-grad_b<-function(beta){
+mc<-function(beta){
 beta1<- beta[1]
 beta2<- beta[2]
 sigma<- beta[3]
@@ -186,28 +192,42 @@ N<- 240
 y<- RENDCYCO
 x<- RENDMARK
 e<- y - (beta1+ beta2*x)
-gradient<- matrix(0,N,3)
-gradient[ ,1]<- sum(6*e/(5*sigma^2 +e^2))
-gradient[ ,2]<- sum(6*e*x/(5*sigma^2 +e^2))
-gradient[ ,3] <- -N/(2*sigma^2) +3/(sigma^2)*(sum(e^2/(5*sigma^2+e^2)))
-gradient
+m1<- sum(6*e/(5*sigma^2 +e^2))
+m2<- sum(6*e*x/(5*sigma^2 +e^2))
+m3<- -N/(2*sigma^2) +3/(sigma^2)*(sum(e^2/(5*sigma^2+e^2)))
+f<- cbind(m1,m2,m3)
+return(f)
 }
 
-mb<- maxBHHH(f_b,grad = grad_b,start=c(1,1,1))
-summary(mb)
+Dg <- function(beta,x)
+{
+beta1<- beta[1]
+beta2<- beta[2]
+sigma<- beta[3]
+N<- 240
+y<- RENDCYCO
+x<- RENDMARK
+e<- y - (beta1+ beta2*x)
+m1<- sum(6*e/(5*sigma^2 +e^2))
+m2<- sum(6*e*x/(5*sigma^2 +e^2))
+m3<- -N/(2*sigma^2) +3/(sigma^2)*(sum(e^2/(5*sigma^2+e^2)))
+f<- cbind(m1,m2,m3)
+return(f)
 
-BHHH maximisation 
-Number of iterations: 59 
-Return code: 3 
-Last step could not find a value above the current.
-Boundary of parameter space?  
-Consider switching to a more robust optimisation method temporarily. 
-Function value: 122.4739 
-Estimates:
-       estimate  gradient
-[1,] 0.03031732  953.5158
-[2,] 1.27735865 -706.8031
-[3,] 0.47413137 6250.5677
+G <- matrix(c( -m1*m1, -m1*m2, -m1*m3,
+               -m2*m1, -m2*m2, -m2*m3,
+               -m3*m1, -m3*m2, -m3*m3),   
+nrow=3,ncol=3)
+return(G)
+}
+eq<- gmm(RENDCYCO~RENDMARK, x=RENDMARK, grandv= mc, hessianv=Dg)
+summary(eq)
+sandwich(eq)
+[,1]        [,2]
+[1,] 0.117062058 0.004241291
+[2,] 0.004241291 0.004613880
+sqrt(0.117062058)
+sqrt(0.004613880)
 
 
 ### Exhibit 4 18 f (p.245)                                                ###
@@ -268,6 +288,28 @@ m3<- -N/2*sigma^2+ 3/sigma^2*sum((RENDCYCO - beta[1]-beta[2]*RENDMARK)^2/
 f<- cbind(m1,m2,m3)
 return(f)
 }
+????
+Dg <- function(beta,x)
+{
+beta1<- beta[1]
+beta2<- beta[2]
+sigma<-beta[3]
+N<- 240
+G<- matrix(c(
+
+6*(RENDCYCO - beta[1]-beta[2]*RENDMARK)/
+        (5*sigma^2+(RENDCYCO - beta[1]-beta[2]*RENDMARK)^2),
+(RENDMARK*(RENDCYCO - beta[1]-beta[2]*RENDMARK)/
+        (5*sigma^2+(RENDCYCO - beta[1]-beta[2]*RENDMARK)^2).
+-N/2*sigma^2+ 3/sigma^2*sum((RENDCYCO - beta[1]-beta[2]*RENDMARK)^2/
+        (5*sigma^2+(RENDCYCO - beta[1]-beta[2]*RENDMARK)^2)),
+nrow=3, ncol=1
+))
+return(G)
+H<- -(G%*%G)
+}
+
+
 eq_gmm<- gmm(g1,x=RENDMARK,c(beta1=0,beta2=1,sigma=1))
 summary(eq_gmm)
 vcov(eq_gmm)
