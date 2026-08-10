@@ -70,6 +70,18 @@ Estimates:
 [1,] 0.023432   0.002976   7.874 3.44e-15 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
+cen<- ifelse(STRIKEDUR < 80, 1, 0)
+Surv(STRIKEDUR,cen, 
+    type=c('right'))
+
+survfit(Surv(STRIKEDUR, cen) ~ 1, data=xm609)
+Call: survfit(formula = Surv(STRIKEDUR, cen) ~ 1, data = xm609)
+      n events median 0.95LCL 0.95UCL
+[1,] 62     50     27      21      41
+
+survreg(Surv(STRIKEDUR, cen) ~ 1,scale=0,
+        dist="logistic")
+
 ### Panel 14 (p.519)                                                     ###
 t80 <- STRIKECENS80
 loglik_c <- function(theta) log(theta) - theta*t80
@@ -243,6 +255,5 @@ Log-likelihood: -96.10716 on 3 Df
 
 e<- 0.023*STRIKEDUR*exp(9.33*PROD)
 plot(STRIKEDUR, e, type="l")
-
-
 Theoretical quantile 
+e_theory<- exp(e)
