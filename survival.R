@@ -238,6 +238,11 @@ Newton-Raphson maximisation, 3 iterations
 Return code 8: successive function values within relative tolerance limit (reltol)
 Log-likelihood: -96.10716 on 3 Df
 
+### The diagnostic of the hazard rate models 
+### The generalized residulals
+
+e<- 0.023*STRIKEDUR*exp(9.33*PROD)
+plot(STRIKEDUR, e, type="l")
 
 
-
+Theoretical quantile 
