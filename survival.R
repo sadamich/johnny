@@ -57,6 +57,7 @@ F-statistic: 7.273 on 1 and 60 DF,  p-value: 0.009073
 ### Panel 5 ML estimation of exponential duration model (p.518)            ###
 library(maxLik)
 t <- STRIKEDUR
+t1<- STRIKECENS80
 loglik <- function(theta) log(theta) - theta*t
 a <- maxLik(loglik, start=1 )
 summary(a)
@@ -70,8 +71,13 @@ Estimates:
 [1,] 0.023432   0.002976   7.874 3.44e-15 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
+s<- exp(-0.023432*STRIKEDUR)
+str(s)
+### Exhibit 6 16 (i) (p.518)
+hist(STRIKEDUR)
+plot(STRIKEDUR,s, type ="l", add= TRUE)
 cen<- ifelse(STRIKEDUR < 80, 1, 0)
-Surv(STRIKEDUR,cen, 
+Surv(log(STRIKEDUR),cen, 
     type=c('right'))
 
 survfit(Surv(STRIKEDUR, cen) ~ 1, data=xm609)
@@ -79,9 +85,18 @@ Call: survfit(formula = Surv(STRIKEDUR, cen) ~ 1, data = xm609)
       n events median 0.95LCL 0.95UCL
 [1,] 62     50     27      21      41
 
-survreg(Surv(STRIKEDUR, cen) ~ 1,scale=0,
-        dist="logistic")
+survreg(Surv(STRIKEDUR, cen) ~ 1,
+        dist="exponential")
+st1<- STRIKEDUR[STRIKEDUR<50]
+st2<- STRIKEDUR[STRIKEDUR< 100]
+st3<- STRIKEDUR[STRIKEDUR< 150]
+st4<- STRIKEDUR[STRIKEDUR< 200]
+st5<- STRIKEDUR[STRIKEDUR<= 250]
 
+number<- c(46,7,6,2,1)
+rel<- 1/62*number
+### The empirical distribution 
+plot(rel,type="l")
 ### Panel 14 (p.519)                                                     ###
 t80 <- STRIKECENS80
 loglik_c <- function(theta) log(theta) - theta*t80
@@ -132,7 +147,8 @@ Estimates:
 [2,] 0.022903   0.003122   7.335 2.21e-13 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’
 
-
+s1<- exp(9.332934*PROD)*0.022903   ????
+plot(STRIKEDUR,s1,type="l")
 s2<- survreg(Surv(t, t>0, type="left") ~ PROD, xm609, dist='exponential')
 summary(s2)
 Call:
@@ -254,6 +270,13 @@ Log-likelihood: -96.10716 on 3 Df
 ### The generalized residulals
 
 e<- 0.023*STRIKEDUR*exp(9.33*PROD)
-plot(STRIKEDUR, e, type="l")
+f_e<- dexp(e,1)
+q_e<- qexp(f_e,1)
+plot(f_e, type="l")
+plot(e,q_e, type="l")
 Theoretical quantile 
 e_theory<- exp(e)
+### Compare with the Exhibit 6 16 (j) 
+s2<- (exp(-0.023*STRIKEDUR))^(exp(9.33*PROD))
+plot(s2, ylim= c(0,1),xlim=c(0, 120), type ="l")
+plot(STRIKEDUR, s2, type="l")
