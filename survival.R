@@ -270,6 +270,19 @@ Log-likelihood: -96.10716 on 3 Df
 ### The generalized residulals
 
 e<- 0.023*STRIKEDUR*exp(9.33*PROD)
+summary(e)
+### The Quantile  
+ Min.   1st Qu.  Median    Mean  3rd Qu.    Max. 
+0.04198 0.25855 0.70335 1.00422 1.45122  4.19836 
+e1<- e[e<=0.25855]
+e2<- e[e<=0.70335]
+e3<- e[e<=1.45122]
+e4<- e[e<=4.19836]
+
+quan<- c(e1,e2,e3,e4)
+plot(quan)
+
+
 f_e<- dexp(e,1)
 q_e<- qexp(f_e,1)
 plot(f_e, type="l")
