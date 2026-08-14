@@ -73,6 +73,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 s<- exp(-0.023432*STRIKEDUR)
 str(s)
+
+
 ### Exhibit 6 16 (i) (p.518)
 hist(STRIKEDUR)
 plot(STRIKEDUR,s, type ="l", add= TRUE)
