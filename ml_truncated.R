@@ -53,15 +53,15 @@ sigma<- beta[6]
 y<- log(1+INVEST)
 y1<- y[INVEST>0]
 n<- 470
-mu<- beta1+beta2*GENDER[log(1 + INVEST) > 0]+beta3*ACTIVITY[log(1 + INVEST) > 0]
-     +beta4*AGE[log(1 + INVEST) > 0]+beta5*AGE_2[log(1 + INVEST) > 0]
+mu<- (beta1+ beta2*GENDER[y>0] +beta3*ACTIVITY[y>0]
+      +beta4*AGE[y>0]+beta5*AGE_2[y>0])
 
 -n/2*log(2*pi) -n/2*log(sigma^2) -1/(2*sigma^2)*sum((y1-mu)^2)
             -sum(log(pnorm(mu/sigma,0,1)))
 }
-m<- maxLik(l, start= c(0,1,1,0,0,1))
+m<- maxLik(l, start= c(1,1,1,1,1,1))
 summary(m)
-
+????
 
 
 library(truncreg)
