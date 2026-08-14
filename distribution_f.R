@@ -6,9 +6,8 @@ pf(q, df1, df2, ncp, lower.tail = TRUE, log.p = FALSE)
 qf(p, df1, df2, ncp, lower.tail = TRUE, log.p = FALSE)
 rf(n, df1, df2, ncp)
 
+
 ### F value and P-value                                                      ###
-
-
 (p.174)
 pf(0.838, 27, 442)
 1-pf(0.838, 27, 442)
