@@ -2,7 +2,21 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
-### Panel 2 Tobit Model (p.498)                                            ###
+xm601<- read.csv("xm601.csv", header = TRUE)
+attach(xm601)
+str(xm601)
+detach(xm601)
+AGE_2<- AGE^2/100
+
+### Panel 2 Tobit Model (p.498) 
+
+
+
+
+
+
+
+                                           ###
 library("censReg")
 cf) Arne Henningsen
 eq_cen<- censReg(LOGINV~GENDER+ACTIVITY+AGE+AGE_2)
