@@ -1,3 +1,15 @@
+### Source:Christiaan Heij, Paul de Boer, Philip Hans Franses, Teun Kloek, ###
+### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
+### Business and Economics. Oxford University Press                        ###
+### https://global.oup.com/booksites/content/0199268010/                   ### 
+### P.32 - 33
+
+### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
+### angewandte Statistik, Pearson                                           ###
+### Quelle: https://www.pearson.de/r-9783868942507                          ###
+### Seite
+
+
 https://search.r-project.org/R/refmans/stats/html/TDist.html
 https://de.wikipedia.org/wiki/Studentsche_t-Verteilung
 Usage
