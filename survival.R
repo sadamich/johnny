@@ -5,6 +5,13 @@
 xm609<- read.csv("xm609.csv", header = TRUE)
 attach(xm609)
 str(xm609)
+### Vergleich: R(Seite 325) Empirische Verteilungsfunktion                ###
+x<- ecdf(STRIKEDUR)
+F(x): Nicht S(t)
+plot(x, main = "STRIKEDUR")
+Inverse???
+
+
 'data.frame':   62 obs. of  4 variables:
  $ OBS         : int  1 2 3 4 5 6 7 8 9 10 ...
  $ STRIKEDUR   : int  1 2 2 2 3 3 3 3 3 4 ...
@@ -73,11 +80,14 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 s<- exp(-0.023432*STRIKEDUR)
 str(s)
-
+s<- function(STRIKEDUR){
+result<- exp(-0.023432*STRIKEDUR)
+return(result)
+}
 
 ### Exhibit 6 16 (i) (p.518)
 hist(STRIKEDUR)
-plot(STRIKEDUR,s, type ="l", add= TRUE)
+curve(s, from = min(STRIKEDUR), to = max(STRIKEDUR))
 cen<- ifelse(STRIKEDUR < 80, 1, 0)
 Surv(log(STRIKEDUR),cen, 
     type=c('right'))
@@ -94,11 +104,14 @@ st2<- STRIKEDUR[STRIKEDUR< 100]
 st3<- STRIKEDUR[STRIKEDUR< 150]
 st4<- STRIKEDUR[STRIKEDUR< 200]
 st5<- STRIKEDUR[STRIKEDUR<= 250]
-
 number<- c(46,7,6,2,1)
 rel<- 1/62*number
+
 ### The empirical distribution 
+par(mfrow = c(1,3))
+hist(STRIKEDUR)
 plot(rel,type="l")
+curve(s, from = min(STRIKEDUR), to = max(STRIKEDUR))
 ### Panel 14 (p.519)                                                     ###
 t80 <- STRIKECENS80
 loglik_c <- function(theta) log(theta) - theta*t80
@@ -118,9 +131,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 library("survival")
 s<- survreg(Surv(t, t>0, type="left") ~ 1, xm609, dist='exponential')
 summary(s)
-
-Call:
-survreg(formula = Surv(t, t > 0, type = "left") ~ 1, data = xm609, 
+Call:survreg(formula = Surv(t, t > 0, type = "left") ~ 1, data = xm609, 
     dist = "exponential")
             Value Std. Error    z      p
 (Intercept) 3.754      0.127 29.6 <2e-16
@@ -270,9 +281,9 @@ Log-likelihood: -96.10716 on 3 Df
 
 ### The diagnostic of the hazard rate models 
 ### The generalized residulals
-
 e<- 0.023*STRIKEDUR*exp(9.33*PROD)
 summary(e)
+plot(e)
 ### The Quantile  
  Min.   1st Qu.  Median    Mean  3rd Qu.    Max. 
 0.04198 0.25855 0.70335 1.00422 1.45122  4.19836 
@@ -280,7 +291,6 @@ e1<- e[e<=0.25855]
 e2<- e[e<=0.70335]
 e3<- e[e<=1.45122]
 e4<- e[e<=4.19836]
-
 quan<- c(e1,e2,e3,e4)
 plot(quan)
 
