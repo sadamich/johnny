@@ -1,11 +1,27 @@
-https://search.r-project.org/R/refmans/stats/html/Chisquare.html
+### Source:Christiaan Heij, Paul de Boer, Philip Hans Franses, Teun Kloek, ###
+### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
+### Business and Economics. Oxford University Press                        ###
+### https://global.oup.com/booksites/content/0199268010/                   ### 
+### P. 31 - 32
 
+### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
+### angewandte Statistik, Pearson                                           ###
+### Quelle: https://www.pearson.de/r-9783868942507                          ###
+### Seite 264 - 266 
+https://search.r-project.org/R/refmans/stats/html/Chisquare.html
 https://de.wikipedia.org/wiki/Chi-Quadrat-Verteilung
 dchisq(x, df, ncp = 0, log = FALSE)
 pchisq(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
 qchisq(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
 rchisq(n, df, ncp = 0)
-
+set.seed(37)
+x<- rchisq(30, 4)
+plot(x)
+### Exhibit 1 8 (p.32)
+par(mfrow=c(1,3))
+curve(dchisq(x,4),0,20)
+curve(dchisq(x,8),0,20)
+curve(dchisq(x,13),0,20)
 ### CLT     chisq(k) -> N(k,2k)                                            ###
 ### Momenterzeugende Funktion Mx(t) = 1/(1-2t)^(n/2)                       ###
 ### Charakteristische Funktion      = 1/(1- 2is)^(n/2)                     ###
