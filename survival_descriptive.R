@@ -6,10 +6,8 @@ xm609<- read.csv("xm609.csv", header = TRUE)
 attach(xm609)
 
 x<- STRIKEDUR
-
 hist(x)
 summary(x)
-
    Min.  1st Qu.  Median   Mean  3rd Qu.    Max. 
    1.00   10.25   27.00   42.68   51.25  216.00
 
@@ -49,4 +47,25 @@ maximum   216.00
 
 ### Boxplot Seite 317 
 boxplot(x, ylab= "Strike duration in days")
+
+x1<- x[x<=25]
+str(x1)
+x2<- x[x<=50]
+str(x2)
+x3<- x[x<=100]
+str(x3)
+x4<- x[x<=125]
+str(x4)
+x5<- x[x<=150]
+str(x5)
+x6<- x[x<=175]
+str(x6)
+x7<- x[x<=200]
+str(x7)
+x8<- x[x<=225]
+str(x8)
+
+xx<- 1/62*c(29,17,8,4,1,2,0,1)
+plot(xx, type="l", sub= "STRIKEDUR")
+
 
