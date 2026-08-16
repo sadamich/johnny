@@ -68,6 +68,11 @@ t1<- STRIKECENS80
 loglik <- function(theta) log(theta) - theta*t
 a <- maxLik(loglik, start=1 )
 summary(a)
+
+
+loglik2 <- function(theta) log(theta) - theta*t + log(pnorm(t))
+a2 <- maxLik(loglik2, start=1 )
+summary(a2)
 Maximum Likelihood estimation
 Newton-Raphson maximisation, 5 iterations
 Return code 8: successive function values within relative tolerance limit (reltol)
