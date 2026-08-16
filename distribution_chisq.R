@@ -18,10 +18,21 @@ set.seed(37)
 x<- rchisq(30, 4)
 plot(x)
 ### Exhibit 1 8 (p.32)
-par(mfrow=c(1,3))
-curve(dchisq(x,4),0,20)
-curve(dchisq(x,8),0,20)
-curve(dchisq(x,13),0,20)
+par(mfrow=c(4,3))
+curve(dchisq(x,5),0,20)
+curve(dchisq(x,20),0,20)
+curve(dchisq(x,100),0,20)
+curve(pchisq(x,5),0,20)
+curve(pchisq(x,20),0,20)
+curve(pchisq(x,100),0,20)
+
+curve(dchisq(x,5),0,100)
+curve(dchisq(x,20),0,100)
+curve(dchisq(x,100),0,100)
+curve(pchisq(x,5),0,100)
+curve(pchisq(x,20),0,100)
+curve(pchisq(x,100),0,100)
+
 ### CLT     chisq(k) -> N(k,2k)                                            ###
 ### Momenterzeugende Funktion Mx(t) = 1/(1-2t)^(n/2)                       ###
 ### Charakteristische Funktion      = 1/(1- 2is)^(n/2)                     ###
@@ -61,3 +72,11 @@ p00 <- pchisq(0,      df = 0, ncp = lam)
 p.0 <- pchisq(1e-300, df = 0, ncp = lam)
 stopifnot(all.equal(p00, exp(-lam/2)),
           all.equal(p.0, exp(-lam/2)))
+stppifnot(object =TRUE)
+
+http://127.0.0.1:25314/library/base/html/stopifnot.html
+plot(lam)
+plot(p00)
+plot(p.0)
+
+y<- seq(0, 100)
