@@ -7,7 +7,7 @@ ppois(q, lambda, lower.tail = TRUE, log.p = FALSE)
 qpois(p, lambda, lower.tail = TRUE, log.p = FALSE)
 rpois(n, lambda)
 
-
+plot(dpois(0:7, lambda = 1))
 ### CLT Pois(   -> N(lambda, lambda)     
 
 ### Examples
