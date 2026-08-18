@@ -65,7 +65,12 @@ str(x7)
 x8<- x[x<=225]
 str(x8)
 
-xx<- 1/62*c(29,17,8,4,1,2,0,1)
+xx<- 1/62*c(29, 46, 54,58,59,61,62)
+
+### The empirical survival function                                                
+sur<- 1 - xx
+str(sur)
+plot(sur,type ="l", main = "Suvival function",xlab= "STRIKEDURATION")
 plot(xx, type="l", sub= "STRIKEDUR")
 
 
