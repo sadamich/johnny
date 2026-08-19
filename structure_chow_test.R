@@ -6,6 +6,39 @@
 xm301<- read.csv("xm301.csv",header=TRUE)
 attach(xm301)
 str(xm301)
+
+### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
+### angewandte Statistik, Pearson                                           ###
+### Quelle: https://www.pearson.de/r-9783868942507                          ###
+### Kapitel 6 (Kategoriale Variable): Seite 230  
+table(JOBCAT)
+JOBCAT
+  1   2   3 
+363  27  84 
+table(JOBCAT)/length(JOBCAT)
+JOBCAT
+         1          2          3 
+0.76582278 0.05696203 0.17721519 
+prop.table(table(JOBCAT))
+JOBCAT
+         1          2          3 
+0.76582278 0.05696203 0.17721519 
+100*prop.table(table(JOBCAT))
+JOBCAT
+        1         2         3 
+76.582278  5.696203 17.721519 
+job<- factor(JOBCAT, levels= c("1","2","3"), labels=c("administration","custodias","management"))
+
+absH<- table(JOBCAT)
+relH<- prop.table(table(JOBCAT))
+proz<- 100*relH
+relH<- round(relH, digit =2)
+proz<- round(proz, digit =0)
+cbind(absH, relH,proz)
+
+barplot(absH)
+pie(absH)
+
 panel01<- lm(LOGSAL ~ EDUC + LOGSALBEGIN + GENDER + MINORITY)
 summary(panel01)
 res<- resid(panel01)
