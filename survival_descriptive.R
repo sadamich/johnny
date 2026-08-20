@@ -4,12 +4,39 @@
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 xm609<- read.csv("xm609.csv", header = TRUE)
 attach(xm609)
-
+str(xm609)
 x<- STRIKEDUR
 hist(x)
+### Exhibit 6 14  (a)(p.512)
 summary(x)
    Min.  1st Qu.  Median   Mean  3rd Qu.    Max. 
    1.00   10.25   27.00   42.68   51.25  216.00
+skew<- function(y,mean,n){
+result<- 1/n*(sum ((y - mean)^3))
+return(result)
+}
+skew(x,mean(x),62)
+[1] 152673.6
+kurt<-  function(y,mean,n){
+result<- 1/n*(sum ((y - mean)^4))
+return(result)
+}
+kurt(x,mean(x),62)
+[1] 23092401
+
+### Exhibit 6 14 (b) (p.512) 
+y<- log(x)
+summary(y)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   2.326   3.296   3.104   3.936   5.375 
+
+hist(y)
+skew(y,mean(y),62)
+[1] -0.9493688
+
+kurt(y,mean(y),62)
+[1] 6.611412
+
 
 x1<- x[x<=10.25]
 str(x1)
