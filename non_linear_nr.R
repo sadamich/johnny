@@ -2,6 +2,22 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
+### Example 4 6 Coffee sales                                               ###
+xm402 <- read.csv("xm402.csv", header = TRUE)
+str(xm402)
+attach(xm402)
+
+f_cof <- function(theta) {
+beta_1<- theta[1]
+beta_2<- theta[2]
+beta_3<- theta[3]
+LOGQ1-(beta_1 + (beta_2/beta_3) * (D1^beta_3 -1))
+}
+### maximize wrt. both parameters                                          ###
+free2 <- maxNR(f_cof, start=c(0,0,0))
+summary(free2)????
+
+
 ### The Newton Raphson iterations (4 15) (p.210)
 ### https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html#maxNR
 theta_h_1<- function(theta){
@@ -109,6 +125,22 @@ Estimates:
 free8<- maxNR(f8, start=1.9)
 summary(free8)
 
+### The factorization: z^n -1 = pi*pnorm(z)
+pi*pnorm(1)
+### (x-1)(x-2)(2x+1)                                                   ###
+f9<- function(x){
+2*x^3-5*x^2+x+2
+}
+free9<- maxNR(f9, start=1.5)
+summary(free9)
+Newton-Raphson maximisation 
+Number of iterations: 3 
+Return code: 1 
+gradient close to zero (gradtol) 
+Function value: 2.052205 
+Estimates:
+      estimate      gradient
+[1,] 0.1068502 -2.664535e-09
 
 
 
