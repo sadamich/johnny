@@ -5,24 +5,35 @@
 xm609<- read.csv("xm609.csv", header = TRUE)
 attach(xm609)
 str(xm609)
+table(STRIKEDUR)
+STRIKEDUR
+  1   2   3   4   5   7   8   9  10  11  12  13  14  15  17  19  21  22  23  25 
+  1   3   5   1   1   1   1   2   1   1   2   1   1   1   1   1   2   1   1   1 
+ 26  27  28  29  32  33  35  37  38  41  42  43  44  49  52  61  72  85  98  99 
+  1   2   1   1   1   1   1   1   1   1   1   2   1   2   2   1   1   1   1   1 
+100 104 114 117 119 130 152 153 216 
+  1   1   1   1   1   1   1   1   1 
+
 x<- STRIKEDUR
 hist(x)
 ### Exhibit 6 14  (a)(p.512)
 summary(x)
    Min.  1st Qu.  Median   Mean  3rd Qu.    Max. 
    1.00   10.25   27.00   42.68   51.25  216.00
-skew<- function(y,mean,n){
-result<- 1/n*(sum ((y - mean)^3))
+
+skew<- function(y,mean,n,sd){
+result<- 1/n*(sum ((y - mean)^3))/sd^3
 return(result)
 }
-skew(x,mean(x),62)
-[1] 152673.6
-kurt<-  function(y,mean,n){
-result<- 1/n*(sum ((y - mean)^4))
+skew(x,mean(x),62,sd)
+[1] 1.58493
+kurt<-  function(y,mean,n,sd){
+result<- (1/n*(sum ((y - mean)^4)))/s^4
 return(result)
 }
-kurt(x,mean(x),62)
-[1] 23092401
+
+kurt(x,mean(x),62,sd(x))
+[1] 5.229548
 
 ### Exhibit 6 14 (b) (p.512) 
 y<- log(x)
@@ -31,11 +42,11 @@ summary(y)
   0.000   2.326   3.296   3.104   3.936   5.375 
 
 hist(y)
-skew(y,mean(y),62)
-[1] -0.9493688
+skew(y,mean(y),62,sd(y))
+[1] -0.4376157
 
-kurt(y,mean(y),62)
-[1] 6.611412
+kurt(y,mean(y),62,s)
+[1] 2.354172
 
 
 x1<- x[x<=10.25]
