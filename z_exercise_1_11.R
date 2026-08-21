@@ -6,6 +6,19 @@
 xr111<- read.csv("xr111.csv", header=TRUE)
 str(xr111)
 attach(xr111)
+a<- FGPA[FEM==1]
+str(a)
+E[FGPA|FEM=1]
+sum(1/6*a)
+[1] 2.599667
+b<- FGPA[FEM==0]
+sum(1/4*b)
+[1] 2.8225
+
+1/10*sum(FGPA)
+[1] 2.6888
+
+
 ### Problem (a)                                                            ###
 mean(FGPA)
 [1] 2.6888
@@ -29,26 +42,26 @@ sd(FEM)
 [1] 0.5163978
 
 hist(FGPA)
-skew<- function(y,mean,n){
-result<- 1/n*(sum ((y - mean)^3))
+skew<- function(y,mean,n,sd){
+result<- 1/n*(sum ((y - mean)^3))/sd^3
 return(result)
 }
-skew(FGPA,mean(FGPA),10)
+skew(FGPA,mean(FGPA),10,sd(FGPA))
 [1] -0.02025478
-skew(SATM,mean(SATM),10)
+skew(SATM,mean(SATM),10,sd(SATM))
 [1] -0.014796
-skew(FEM, mean(FEM),10)
+skew(FEM, mean(FEM),10,sd(FEM))
 [1] -0.048
 
 kurt<-  function(y,mean,n){
-result<- 1/n*(sum ((y - mean)^4))
+result<- 1/n*(sum ((y - mean)^4))/sd^4
 return(result)
 }
-kurt(FGPA,mean(FGPA),10)
+kurt(FGPA,mean(FGPA),10,sd(FGPA))
 [1] 0.1329145
-kurt(SATM, mean(SATM),10)
+kurt(SATM, mean(SATM),10,sd(SATM))
 [1] 0.02054857
-kurt(FEM, mean(FEM),10)
+kurt(FEM, mean(FEM),10,sd(FEM))
 [1] 0.0672
 
 ### Problem (b)                                                            ###
