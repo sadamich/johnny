@@ -16,6 +16,9 @@ STRIKEDUR
 
 x<- STRIKEDUR
 hist(x)
+library(REdaS)
+densbox(x~1, main="Strike")
+
 ### Exhibit 6 14  (a)(p.512)
 summary(x)
    Min.  1st Qu.  Median   Mean  3rd Qu.    Max. 
