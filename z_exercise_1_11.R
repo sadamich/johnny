@@ -6,6 +6,10 @@
 xr111<- read.csv("xr111.csv", header=TRUE)
 str(xr111)
 attach(xr111)
+plot(FGPA)
+hist(FGPA)
+table(FGPA)
+
 a<- FGPA[FEM==1]
 str(a)
 E[FGPA|FEM=1]
