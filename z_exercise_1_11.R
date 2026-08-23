@@ -111,21 +111,11 @@ plot(SATM,FEM)
 ### Problem (d)
 
 ### Problem (e)
-
-Mean[FGPA| 4 male]
-FGPA_m<- FGPA[FEM==0]
-mean(FGPA_m)
-[1] 2.8225
-Mean[SATM | 4 male]
-SATM_m<- SATM[FEM==0]
-mean(SATM_m)
-[1] 5.725
-
-Female[FGPA | 6 female]
-FGPA_f<- FGPA[FEM==1]
-mean(FGPA_f)
-[1] 2.599667
-Female[SATM | 6 female]
-SATM_f<- SATM[FEM==1]
-mean(SATM_f)
-[1] 5.9
+6/10*(mean(FGPA[FEM==1]))+4/10*(mean(FGPA[FEM==0]))
+[1] 2.6888
+mean(FGPA)
+[1] 2.6888
+6/10*(mean(SATM[FEM==1]))+4/10*(mean(SATM[FEM==0]))
+[1] 5.83
+mean(SATM)
+[1] 5.83
