@@ -18,6 +18,12 @@ x<- STRIKEDUR
 hist(x)
 library(REdaS)
 densbox(x~1, main="Strike")
+curve(dweibull(x, shape=1, scale = 1, log = FALSE))
+curve(dweibull(x, shape=1.5, scale = 1, log = FALSE))
+curve(dweibull(x, shape=3, scale = 1, log = FALSE))
+curve(dweibull(x, shape=1, scale = 3, log = FALSE))
+curve(dweibull(x, shape=0.5, scale = 1, log = FALSE))
+
 
 ### Exhibit 6 14  (a)(p.512)
 summary(x)
