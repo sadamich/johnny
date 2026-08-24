@@ -17,7 +17,12 @@ dt(x, df, ncp, log = FALSE)
 pt(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
 qt(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
 rt(n, df, ncp)
+par(mfrow=c(1,3))
 
+### Exhibit 1 9 (p.33)
+curve(dt(x, 1),-4,4, ylim = c(0, 0.5))
+curve(dt(x, 4),-4,4, add=TRUE, col = "blue")
+curve(dt(x, 100),-4,4, add = TRUE, col = "red")
 set.seed(32)
 x<- rt(30, 1)
 x
