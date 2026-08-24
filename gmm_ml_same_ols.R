@@ -8,9 +8,31 @@ set.seed(43)
 x<- rnorm(30, 0, 1)
 e<- rnorm(30, 0, 1)
 y<- 2*x+e
-
+plot(x)
+plot(y)
+hist(x)
+hist(y)
 eq<- lm(y~x)
 summary(eq)
+res<- resid(eq)
+plot(x,res)
+hist(res)
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.17000 -0.29924 -0.05075  0.72563  1.58898 
+skew<- function(y,mean,n,sd){
+result<- 1/n*(sum ((y - mean)^3))/sd^3
+return(result)
+}
+skew(res,mean(res),30,sd(res))
+[1] -0.2155924
+kurt<-  function(y,mean,n,sd){
+result<- 1/n*(sum ((y - mean)^4))/sd^4
+return(result)
+}
+kurt(res,mean(res),30,sd(res))
+[1] 2.54831
+
 ### OLS Call: lm(formula = y ~ x)
 Residuals:
      Min       1Q   Median       3Q      Max 
