@@ -6,7 +6,10 @@ pf(q, df1, df2, ncp, lower.tail = TRUE, log.p = FALSE)
 qf(p, df1, df2, ncp, lower.tail = TRUE, log.p = FALSE)
 rf(n, df1, df2, ncp)
 
-
+### Exhibit 1 10 (p.34)
+curve(df(x,4,4), xlim = c(0, 6), ylim = c(0,0.8))
+curve(df(x,4,100),add=TRUE, col = "blue")
+curve(df(x,100, 4), add = TRUE, col = "red")
 ### F value and P-value                                                      ###
 (p.174)
 pf(0.838, 27, 442)
