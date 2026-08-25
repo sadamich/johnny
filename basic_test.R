@@ -16,3 +16,15 @@ alternative hypothesis: true mean is greater than 2.7
 sample estimates:
 mean of x 
  2.792796 
+### Test for variance
+z0<- FGPA[FEM==0]
+var0<- var(z0)
+z1<- FGPA[FEM==1]
+var1<- var(z1)
+### The F test for the equality of two variances
+var1/var0
+[1] 1.143897
+2*(1-pf(1.143897,235,372))
+[1] 0.2484457   (The P value)
+2*(1-pf(1.14,235,372))
+[1] 0.2606152   (The P value)
