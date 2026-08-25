@@ -2,7 +2,9 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ### 
-### P. 29 - 31
+### Exhibit 1 7 (P.30)
+curve(dnorm(x,0,1), -4,10, ylim=c(0,0.5))
+curve(dnorm(x,3,2), add=TRUE, col= "red")
 
 ### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
 ### angewandte Statistik, Pearson                                           ###
