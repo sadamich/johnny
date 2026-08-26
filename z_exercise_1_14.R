@@ -127,6 +127,7 @@ z<- bootstrap(y, 10000,theta)
 perc95<- function(y){quantile(y, .95)}
 results <-  bootstrap(y,10000,theta, func=perc95) 
 results
+hist(results)
 ### Problem (c)
 n = 100,n= 1000
 
