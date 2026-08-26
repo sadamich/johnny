@@ -61,8 +61,8 @@ theta<- function(y){
 result<- mean(y)
 return(result)
 }
-y.boot <- boot(y,theta,R = 100, sim = "parametric")
-boot.ci(y.boot, conf = c(0.90, 0.95),
+v<- y.boot <- boot(y,theta,R = 100, sim = "parametric")
+z<- boot.ci(y.boot, conf = c(0.90, 0.95),
         type = c("basic"))
 BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 Based on 100 bootstrap replicates
@@ -117,6 +117,7 @@ pt(-7.149,3)
 
 library(bootstrap)
 n<- 10
+set.seed(37)
 y<- rt(10,3)
 theta<- function(y){
 result<- mean(y)/(sd(y)/sqrt(n))
