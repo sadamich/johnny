@@ -30,3 +30,12 @@ cos(3/8*pi)
 
 ### Euler
 exp(*pi) + 1
+
+
+f_euler<- function(x){
+result <- exp(pi*x)+1
+return(result)
+}
+m<- maxLik(f_euler, start= pi)????
+summary(m)
+curve(f_euler, -5,5, xlab="x",ylab="f(x)_m")
