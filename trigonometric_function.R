@@ -19,6 +19,14 @@ sin(pi/3)^2+cos(pi/3)^2
 curve(cos(x), -10,10, lty =2 , ylim=c(-1.5,1.5), 
            xlab= "x", yaxs ="i", ylab = "cos(x)")
 
+### The half angle formel
+sin(pi/8)
+[1] 0.3826834
+sin(3/8*pi)
+[1] 0.9238795
+cos(3/8*pi)
+[1] 0.3826834     ### sin(pi/8) = cos(3/8*pi)
+
 
 ### Euler
 exp(*pi) + 1
