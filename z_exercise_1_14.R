@@ -151,6 +151,20 @@ for (i in 1:100) {
   my_experiment <- c(my_experiment, mean(my_sample))
   cat(sprintf("Sample number %s has a mean of %s.\n", i, round(mean(my_sample), 2)))
 }
+summary(my_experiment)
+ Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-0.41864 -0.08231  0.08090  0.06794  0.24647  0.45289 
+hist(my_experiment)
+conf.int(my_experiment)
+t.test(my_experiment)
+ One Sample t-test
 
-
+data:  my_experiment
+t = 3.299, df = 99, p-value = 0.001349
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.0270764 0.1088035
+sample estimates:
+ mean of x 
+0.06793996 
 
