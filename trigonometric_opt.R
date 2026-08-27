@@ -28,6 +28,7 @@ return(result)
 }
 m2<- maxLik(f_m2, start= pi)
 summary(m2)
+curve(f_m2, -5,5, xlab="x",ylab="f(x)_m")
 f_m2(0)
 [1] 0
 f_m2(pi)
@@ -44,6 +45,7 @@ return(result)
 }
 m3<- maxLik(f_m2, start= pi)
 summary(m3)
+curve(f_m3, -5,5, xlab="x",ylab="f(x)_m")
 
 f_m4<- function(x){
 result<- sin(x)- sqrt(3)*cos(x)
@@ -51,7 +53,7 @@ return(result)
 }
 m4<- maxLik(f_m2, start= pi)
 summary(m4)
-
+curve(f_m4, -5,5, xlab="x",ylab="f(x)_m")
 f_m4(5/6*pi)
 [1] 2      (Max value)
 f_m4(11/6*pi)
