@@ -7,6 +7,39 @@ set.seed(27)
 x<- rnorm(30,0,1)
 e<- rnorm(30,0,1)
 y<- x+e
+
+### The method of moments
+summary(x)
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+-2.998304 -1.068748 -0.009477 -0.171357  0.325714  2.134638 
+### The method of OLS
+eq0<- lm(x~1)
+summary(eq0)
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  -0.1714     0.2112  -0.811    0.424
+###  The method of ML
+library(maxLik)
+f<- function(beta){
+beta1<- beta[1]
+sigma<- beta[2]
+mu<- beta1
+n<- 30
+-0.5*n*log(2*pi)- 0.5*n*log(sigma^2)-1/(2*sigma^2)*sum((x-mu)^2)
+}
+m<- maxLik(f, start = c(0,1))
+summary(m)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 4 iterations
+Return code 1: gradient close to zero (gradtol)
+Log-Likelihood: -46.42529 
+2  free parameters
+Estimates:
+     Estimate Std. error t value  Pr(> t)    
+[1,]  -0.1714     0.2076  -0.825    0.409    
+[2,]   1.1372     0.1468   7.747 9.42e-15 
+
+### The version of the linear model
 ### The method of moments
 summary(y)
   Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
@@ -51,8 +84,37 @@ attach(xm101)
 str(xm101)
 ### The method of moments
 summary(FGPA)
- Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   Min. 1st Qu.  Median    Mean  3rd Qu.    Max. 
   1.500   2.485   2.773   2.793   3.116   3.971 
+### The method of OLS
+eq0<- lm(FGPA~1)
+summary(eq0)
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  2.79280    0.01865   149.8   <2e-16 ***
+
+###  The method of ML
+library(maxLik)
+f<- function(beta){
+beta1<- beta[1]
+sigma<- beta[2]
+mu<- beta1
+n<- 30
+-0.5*n*log(2*pi)- 0.5*n*log(sigma^2)-1/(2*sigma^2)*sum((FGPA-mu)^2)
+}
+m<- maxLik(f, start = c(0,1))
+summary(m)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 13 iterations
+Return code 1: gradient close to zero (gradtol)
+Log-Likelihood: -64.42244 
+2  free parameters
+Estimates:
+     Estimate Std. error t value  Pr(> t)    
+[1,]  2.79280    0.08396  33.264  < 2e-16 ***
+[2,]  2.07192    0.26728   7.752 9.06e-15 ***
+
+### The version of linear model
 ### The method of OLS
 e<- rnorm(609,0,1)
 y<- FGPA+e
