@@ -83,13 +83,32 @@ Estimates:
 [1,] 0.023432   0.002976   7.874 3.44e-15 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
+### Generalized residuals (p.516, p.520
+### Exhibit 6 16 (k) (p.518)
+e<- 0.023*STRIKEDUR*exp(9.33*PROD)
+qq<- qnorm(e, mean = mean(e),sd = sd(e))
+qqplot(qq, e, main = "Residuals")
+abline(0,1)
+
+qq<- qexp(e, rate=0.75)
+qqplot(e, qq, main = "Residuals")
+abline(0,1)
+### rate = 0.75 ??? ###
+
+
+### Survival function 
 s<- exp(-0.023432*STRIKEDUR)
 str(s)
+hist(s)
+summary(s)
+Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+0.006337 0.301067 0.531175 0.520308 0.786528 0.976840 
+### Exhibit 6 16 (p.518)
 s<- function(STRIKEDUR){
 result<- exp(-0.023432*STRIKEDUR)
 return(result)
 }
-
+hist(s)
 ### Exhibit 6 16 (i) (p.518)
 hist(STRIKEDUR)
 curve(s, from = min(STRIKEDUR), to = max(STRIKEDUR))
