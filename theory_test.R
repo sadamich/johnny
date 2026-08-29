@@ -1,7 +1,16 @@
 ### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
 ### angewandte Statistik, Pearson                                           ###
 ### Quelle: https://www.pearson.de/r-9783868942507                          ###
-### Chi square test: Seite 240, 243,248,281,283,288
+### Chi square test: Seite 240, 243,248,281,283,288,340
+
+### Source:Christiaan Heij, Paul de Boer, Philip Hans Franses, Teun Kloek, ###
+### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
+### Business and Economics. Oxford University Press                        ###
+### https://global.oup.com/booksites/content/0199268010/                   ###
+### p. 61 - 62 
+
+
+
 eyes<- 1:6
 probs<- rep(1/length(eyes), length(eyes))
 expected_value<- round(sum(eyes*probs),2)
