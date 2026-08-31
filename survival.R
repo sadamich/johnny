@@ -86,15 +86,20 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 ### Generalized residuals (p.516, p.520
 ### Exhibit 6 16 (k) (p.518)
 e<- 0.023*STRIKEDUR*exp(9.33*PROD)
-qq<- qnorm(e, mean = mean(e),sd = sd(e))
-qqplot(qq, e, main = "Residuals")
+n<- 62
+xx<- (1:n -0.5)/n
+qq<- qexp(xx, rate=1)
+qqplot(e,qq, main = "Residuals")
 abline(0,1)
-
-qq<- qexp(e, rate=0.75)
-qqplot(e, qq, main = "Residuals")
+### Seite 334
+par(mfrow=c(1,2))
+qqnorm(e,main="N(., .)")
+qqline(e)
+n<- length(e)
+xx<- (1:n -0.5)/n
+quantil_erw<- qexp(xx, rate=1)
+qqplot(e,quantil_erw,main="NV(1.004218, . )")
 abline(0,1)
-### rate = 0.75 ??? ###
-
 
 ### Survival function 
 s<- exp(-0.023432*STRIKEDUR)
