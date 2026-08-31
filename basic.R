@@ -2,9 +2,83 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
+
+### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
+### angewandte Statistik, Pearson                                           ###
+### Quelle: https://www.pearson.de/r-9783868942507                          ###
+
 xm101<- read.csv("xm101.csv", header=TRUE)
 str(xm101)
 attach(xm101)
+### Seite 288: Unabhaengigkeitstest 
+a<- table(FGPA,SATM)
+chisq.test(a, correct=FALSE)
+        Pearson's Chi-squared test
+data:  a
+X-squared = 16923, df = 16038, p-value = 5.903e-07
+Warning message:
+In chisq.test(a, correct = FALSE) :
+  Chi-squared approximation may be incorrect
+cor(FGPA,SATM)
+[1] 0.1950404
+
+
+### Seite: 332 
+hist(FGPA, freq=FALSE)
+curve(dnorm(x,mean= mean(FGPA),sd=sd(FGPA)),from = min(FGPA),
+to = max(FGPA),add =TRUE, col="red")
+### Seite: 334
+par(mfrow=c(1,2))
+qqnorm(FGPA,main="N(., .)")
+qqline(FGPA)
+n<- length(FGPA)
+xx<- (1:n -0.5)/n
+quantil_erw<- qnorm(xx, mean=mean(FGPA),sd=sd(FGPA))
+qqplot(quantil_erw, FGPA,main="NV(2.792796, . )")
+abline(0,1)
+
+### The empirical cdf
+n<- length(FGPA)
+n
+[1] 609
+x<- 1:n
+str(x)
+int [1:609] 1 2 3 4 5 6 7 8 9 10
+x1<- (1:n - 0.5)
+str(x1)
+num [1:609] 0.5 1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 ...
+xx<- (1:n -0.5)/n
+str(xx)
+num [1:609] 0.000821 0.002463 0.004105 0.005747 0.007389 
+0.5/609
+[1] 0.0008210181
+1.5/609
+[1] 0.002463054
+2.5/609
+[1] 0.00410509
+3.5/609
+[1] 0.005747126
+4.5/609
+[1] 0.007389163
+### The theoritical uniform cdf 
+plot(xx)
+
+### Die empirische Verteilungsfunktion
+Fn<- ecdf(FGPA)
+plot(Fn,main = "Kolmogorov-Smirnov-Test")
+xx<- seq(min(FGPA), max(FGPA),0.1)
+mg<- 2.792796
+sdg<- 0.4602375
+lines(xx, pnorm(xx, mean=mg,sd=sdg))
+diffs<- Fn(xx)-pnorm(xx, mean=mg, sd=sdg)
+maxdiff<- which.max(abs(diffs))
+xmax<- xx[maxdiff]
+segments(xmax, pnorm(xmax, mean = mg, sd=sdg), xmax, Fn(xmax), lwd=3)
+text(xmax, Fn(xmax) - diffs[maxdiff]/2, "Kolmogorov-Smirnov-D",pos=4)
+### Seite 337 Kolmogorov-Smirnow Test
+ks.test(FGPA,"pnorm", mean=2.792796, sd = 0.4602375)
+### Seite 338 Shapiro Wilk test
+shapiro.test(FGPA)
 ### Exhibit 1 5 (p.19)
 var(FGPA)
 cov(FGPA,SATM)
