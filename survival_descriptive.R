@@ -79,7 +79,14 @@ plot(q)
 ### angewandte Statistik, Pearson                                           ###
 ### Quelle: https://www.pearson.de/r-9783868942507                          ###
 ### Seite 306
-
+grenzen<- c(0,10,20,30,40,50,60,70,80,90,100,150,200) ???
+hist(STRIKEDUR, breaks=grenzen, main = "Strike duration", xlab  = "days")
+### seite 308 
+tdauer<- table(STRIKEDUR)
+n<- sum(tdauer)
+prozent<- tdauer*100/n
+kumproz<- cumsum(prozent)
+round(cbind(absolut = tdauer, Prozent = prozent, kumuliert = kumproz), digits=2)
 ### Quantile Seite 313
 minimum <- min(x)
 quartil_1<- quantile(x, 0.25)
@@ -115,9 +122,14 @@ str(x8)
 xx<- 1/62*c(29, 46, 54,58,59,61,62)
 
 ### The empirical survival function                                                
+hist(STRIKEDUR)
+hist(STRIKEDUR, freq=FALSE)
+
 sur<- 1 - xx
 str(sur)
 plot(sur,type ="l", main = "Suvival function",xlab= "STRIKEDURATION")
 plot(xx, type="l", sub= "STRIKEDUR")
 
-
+### Seite 333  ???
+hist(STRIKEDUR, freq=FALSE, main="Strike duration")
+curve(dexp(x, rate=1),add=TRUE, col="red")
