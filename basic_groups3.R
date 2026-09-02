@@ -31,3 +31,17 @@ Bartlett's K-squared = 42.388, df = 2, p-value = 6.245e-10
 
 ### Seite 417
 boxplot(LOGSAL ~ (jobcat + GENDER), ylab="Log Salary")
+mw<- tapply(LOGSAL, list(jobcat, GENDER), mean)
+round(mw,digits=2)
+ 0     1
+1 10.10 10.33
+2    NA 10.34
+3 10.75 11.07
+
+par(mfrow= c(1,2))
+interaction.plot(GENDER, jobcat,LOGSAL, ylab = "Mean (Log salary)")
+interaction.plot(jobcat, GENDER, LOGSAL, ylab ="Mean (LOG salary)")
+
+### Seite 419 Varianzanalyse
+eq1<- lm(LOGSAL ~ jobcat *GENDER)
+anova(eq1)
