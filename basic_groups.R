@@ -39,7 +39,8 @@ bartlett.test(FGPA, FEM)
 
 data:  FGPA and FEM
 Bartlett's K-squared = 1.3115, df = 1, p-value = 0.2521
-### F test
+
+### F test: Exercise 3 10 (d) (p.182) 
 eq<- aov(FGPA ~ FEM)
 summary(eq)
  Df Sum Sq Mean Sq F value   Pr(>F)    
