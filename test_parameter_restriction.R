@@ -102,6 +102,22 @@ Model 2: LOGSAL ~ EDUC + LOGSALBEGIN + gm
 1    469 14.627                            
 2    470 14.629 -1 -0.0016242 0.0521 0.8196 (H0 is not rejectet.)
 
+### Exhibit 3 16 (p.167)                                                  ###
+eq_gender<- lm(LOGSAL ~ EDUC + LOGSALBEGIN+GENDER)
+eq_minority<- lm(LOGSAL ~ EDUC + LOGSALBEGIN +MINORITY)
+anova(eq123,eq_gender, eq_minority, r_eq,panel01)
+Model 1: LOGSAL ~ EDUC + LOGSALBEGIN
+Model 2: LOGSAL ~ EDUC + LOGSALBEGIN + GENDER
+Model 3: LOGSAL ~ EDUC + LOGSALBEGIN + MINORITY
+Model 4: LOGSAL ~ EDUC + LOGSALBEGIN + gm
+Model 5: LOGSAL ~ EDUC + LOGSALBEGIN + GENDER + MINORITY
+  Res.Df    RSS Df Sum of Sq      F  Pr(>F)  
+1    471 14.892                              
+2    470 14.763  1  0.128861 4.1317 0.04265 *
+3    470 14.810  0 -0.047142                 
+4    470 14.629  0  0.180822                 
+5    469 14.627  1  0.001624 0.0521 0.81959  
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 
 
 F<- function(ssr_r,ssr,g,n,k){
 result<- ((ssr_r-ssr)/g)/(ssr/(n-k))
