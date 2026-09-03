@@ -45,3 +45,13 @@ interaction.plot(jobcat, GENDER, LOGSAL, ylab ="Mean (LOG salary)")
 ### Seite 419 Varianzanalyse
 eq1<- lm(LOGSAL ~ jobcat *GENDER)
 anova(eq1)
+eq2<- lm(LOGSAL ~ jobcat + GENDER)
+anova(eq1,eq2)
+
+
+eq0<- lm(LOGSAL ~1)
+anova(eq1,eq0)
+eq01<- lm(LOGSAL ~ jobcat)
+anova(eq1, eq01)
+eq02<- lm(LOGSAL ~ GENDER)
+anova(eq1,eq02)
