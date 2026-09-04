@@ -55,3 +55,44 @@ eq01<- lm(LOGSAL ~ jobcat)
 anova(eq1, eq01)
 eq02<- lm(LOGSAL ~ GENDER)
 anova(eq1,eq02)
+
+
+### Seite 509
+g_m<- table(GENDER,MINORITY)
+addmargins(g_m)
+ MINORITY
+GENDER   0   1 Sum
+   0   176  40 216
+   1   194  64 258
+   Sum 370 104 474
+g_m
+  MINORITY
+GENDER   0   1
+     0 176  40
+     1 194  64
+chisq.test(g_m)
+  Pearson's Chi-squared test with Yates' continuity correction
+data:  g_m
+X-squared = 2.3592, df = 1, p-value = 0.1245 (H0 ist nicht verworfen)
+
+table(GENDER)
+GENDER
+  0   1 
+216 258
+chit_g<- chisq.test(table(GENDER))
+ Chi-squared test for given probabilities
+data:  table(GENDER)
+X-squared = 3.7215, df = 1, p-value = 0.05372
+
+chit_m<- chisq.test(table(MINORITY))
+ Chi-squared test for given probabilities
+data:  table(MINORITY)
+X-squared = 149.27, df = 1, p-value < 2.2e-16
+
+erwart<- chit_g$expected
+erwart
+0   1 
+237 237 
+
+
+
