@@ -43,8 +43,47 @@ Bartlett's K-squared = 1.3115, df = 1, p-value = 0.2521
 ### F test: Exercise 3 10 (d) (p.182) 
 eq<- aov(FGPA ~ FEM)
 summary(eq)
- Df Sum Sq Mean Sq F value   Pr(>F)    
+              Df Sum Sq Mean Sq F value   Pr(>F)    
 FEM           1   4.01   4.012   19.52 1.18e-05 ***
 Residuals   607 124.77   0.206                     
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 
 
+t = -4.3513
+(-4.3513)^2
+[1] 18.93381
+
+t.test(FGPA ~ FEM)
+sqrt(19.52)
+
+[1] 4.418144
+### Exercise 3 10 (b) (p.182) 
+F<- function(e_f, e_1,e_2,n){
+result<- (e_f - e_1 - e_2)/((e_1 + e_2)/(n - 2))
+return(result)
+}
+
+F(128.7857 ,52.34152,72.43263, 609)
+[1] 19.51535 : F value
+(1 -pf(19.51535, 1,607))
+[1] 1.181812e-05  P value
+
+e_f<- (FGPA -mean(FGPA))^2
+sum(e_f)
+[1] 128.7857
+e_1<- (FGPA[FEM==1]-mean(FGPA[FEM==1]))^2
+sum(e_1)
+[1] 52.34152
+e_2<- (FGPA[FEM==0]-mean(FGPA[FEM==0]))^2
+sum(e_2)
+[1]72.43263
+
+### t Test
+t<- function(n1,n2,e_1,e_2,mean1,mean2){
+result<- sqrt((n1*n2)/(n1+n2))*((mean2 - mean1)/
+       sqrt((e_1 + e_2)/(n1 + n2-2)))
+return(result)
+}
+t(236,373, 52.34152,72.43263, mean(FGPA[FEM==1]), mean(FGPA[FEM==0]))
+[1] -4.417613
+(-4.417613)^2
+[1] 19.5153   : F value = t value^2
