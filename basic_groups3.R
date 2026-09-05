@@ -94,5 +94,18 @@ erwart
 0   1 
 237 237 
 
+### Seite 518
 
+eq_logit<- glm(LOGSAL ~ GENDER, family= poisson, data=xm301)
+summary(eq_logit)
+1 - pchisq(5.1937 ,3)
+obs<- OBS
+erw<- fitted(eq_logit)
+resLR<- residuals(eq_logit)
+resx2<- (obs - erw)/sqrt(erw)
+cbind(obs,erw,resx2,resLR)
+PearsonX2<- sum(resx2^2)
+PearsonX2
 
+eq<- lm(LOGSAL~EDUC+GENDER+MINORITY+GENDER*MINORITY)
+summary(eq)
