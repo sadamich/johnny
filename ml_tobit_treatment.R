@@ -2,7 +2,8 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
-### Example 6 8 student learning (p.507)                                   ###
+### Example 6 8 student learning (p.507) 
+### Compare with the chapter 1 (FGPA):principal_micro.R                                        
 xm608micro<- read.csv("xm608micro.csv", header =TRUE)
 str(xm608micro)
 attach(xm608micro)
