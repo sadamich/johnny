@@ -14,9 +14,20 @@ attach(xm608macro)
 library(sampleSelection)
 sat<- SATMATH/100
 verb<- SATVERB/100
+
+
+summary( selection(MATHHIGH ~ sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
+                    +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
+              GRINTERMICRO ~ SELCORMICRO +MATHHIGH+GRADELOW+
+              GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
+              +sat+verb, data=xm608micro) )
+
+
+
+### Model with treatReg
 panel <- treatReg(MATHHIGH ~ sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
                     +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
-              GRINTERMICRO ~ MATHHIGH+GRADELOW+
+              GRINTERMICRO ~ SELCORMICRO +MATHHIGH+GRADELOW+
               GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
               +sat+verb, data=xm608micro)
 summary(panel)
