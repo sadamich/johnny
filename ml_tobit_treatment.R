@@ -14,11 +14,11 @@ attach(xm608macro)
 library(sampleSelection)
 sat<- SATMATH/100
 verb<- SATVERB/100
-panel <- treatReg(MATHHIGH~sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
+panel <- treatReg(MATHHIGH ~ sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
                     +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
-              GRINTERMICRO ~ SELCORMICRO+MATHHIGH+GRADELOW+
+              GRINTERMICRO ~ MATHHIGH+GRADELOW+
               GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
-              +sat+verb)
+              +sat+verb, data=xm608micro)
 summary(panel)
 ### Compare with the panel 1 (p.509)                                       ###
 Tobit treatment model (switching regression model)
