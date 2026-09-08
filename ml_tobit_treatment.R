@@ -16,20 +16,12 @@ sat<- SATMATH/100
 verb<- SATVERB/100
 
 
-summary( selection(MATHHIGH ~ sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
-                    +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
-              GRINTERMICRO ~ SELCORMICRO +MATHHIGH+GRADELOW+
-              GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
-              +sat+verb, data=xm608micro) )
-
-
-
 ### Model with treatReg
-panel <- treatReg(MATHHIGH ~ sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
+panel <- treatReg(MATHHIGH ~ SATMATH+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
                     +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
               GRINTERMICRO ~ SELCORMICRO +MATHHIGH+GRADELOW+
               GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
-              +sat+verb, data=xm608micro)
+              +SATMATH+SATVERB, data=xm608micro)
 summary(panel)
 ### Compare with the panel 1 (p.509)                                       ###
 Tobit treatment model (switching regression model)
@@ -200,6 +192,7 @@ print(summary(tm))
 install.packages("Ecdat")
 library(Ecdat)
 data(Treatment, package="Ecdat")
+str(Treatment)
 er <- treatReg(treat~poly(age,2) + educ + u74 + u75 + ethn,
 log(re78)~treat + poly(age,2) + educ + ethn,
 data=Treatment)
