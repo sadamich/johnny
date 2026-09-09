@@ -5,13 +5,12 @@
 xm609<- read.csv("xm609.csv", header = TRUE)
 attach(xm609)
 str(xm609)
+detach(xm609)
 ### Vergleich: R(Seite 325) Empirische Verteilungsfunktion                ###
 x<- ecdf(STRIKEDUR)
 F(x): Nicht S(t)
 plot(x, main = "STRIKEDUR")
 Inverse???
-
-
 'data.frame':   62 obs. of  4 variables:
  $ OBS         : int  1 2 3 4 5 6 7 8 9 10 ...
  $ STRIKEDUR   : int  1 2 2 2 3 3 3 3 3 4 ...
@@ -68,7 +67,6 @@ t1<- STRIKECENS80
 loglik <- function(theta) log(theta) - theta*t
 a <- maxLik(loglik, start=1 )
 summary(a)
-
 
 loglik2 <- function(theta) log(theta) - theta*t + log(pnorm(t))
 a2 <- maxLik(loglik2, start=1 )
