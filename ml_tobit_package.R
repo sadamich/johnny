@@ -12,6 +12,14 @@ xo <- runif(500)
 yoX <- xo + eps[,2]
 yo <- yoX*(ys > 0)
 
+str(ys)
+ logi [1:500] TRUE TRUE FALSE TRUE FALSE TRUE 
+str(xs)
+num [1:500] 0.624 0.185 0.973 0.986 0.875 
+str(yo)
+ num [1:500] 0.02 1.06 0 1.62 0
+str(xo)
+num [1:500] 0.57 0.924 0.877 0.658 0.027 
 summary( selection(ys~xs, yo ~xo))
 
 Tobit 2 model (sample selection model)
