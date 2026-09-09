@@ -8,6 +8,7 @@ xm608micro<- read.csv("xm608micro.csv", header =TRUE)
 str(xm608micro)
 attach(xm608micro)
 detach(xm608micro)
+
 xm608macro<- read.csv("xm608macro.csv", header =TRUE)
 str(xm608macro)
 attach(xm608macro)
@@ -23,6 +24,7 @@ panel <- treatReg(MATHHIGH ~ SATMATH+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
               GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
               +SATMATH+SATVERB, data=xm608micro)
 summary(panel)
+
 ### Compare with the panel 1 (p.509)                                       ###
 Tobit treatment model (switching regression model)
 Maximum Likelihood estimation
@@ -67,6 +69,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
  
 panel01<- glm(formula = MATHHIGH ~ sat+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
 +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,family = binomial(link = "probit"))
+coeftest(panel01,vcov = sandwich)
 summary(panel01)
 
 Call:
