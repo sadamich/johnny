@@ -13,8 +13,10 @@ STRIKEDUR
   1   2   1   1   1   1   1   1   1   1   1   2   1   2   2   1   1   1   1   1 
 100 104 114 117 119 130 152 153 216 
   1   1   1   1   1   1   1   1   1 
-
-### Seite 308
+### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
+### angewandte Statistik, Pearson                                           ###
+### Quelle: https://www.pearson.de/r-9783868942507                          ###
+### Seite 306, Seite 308
 x<- STRIKEDUR
 hist(x, breaks = 50, freq=FALSE, main= "Strike duration")
 strikecut<- cut(x, breaks = 50, dig.lab=4)
@@ -65,7 +67,6 @@ skew(y,mean(y),62,sd(y))
 kurt(y,mean(y),62,s)
 [1] 2.354172
 
-
 x1<- x[x<=10.25]
 str(x1)
 int [1:16] 1 2 2 2 3 3 3 3 3 4 ...
@@ -82,19 +83,6 @@ quan<- c(x1,x2,x3,x4)
 q<- c(16,16,14,16)
 plot(q)
 
-
-### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
-### angewandte Statistik, Pearson                                           ###
-### Quelle: https://www.pearson.de/r-9783868942507                          ###
-### Seite 306
-grenzen<- c(0,10,20,30,40,50,60,70,80,90,100,150,200) ???
-hist(STRIKEDUR, breaks=grenzen, main = "Strike duration", xlab  = "days")
-### seite 308 
-tdauer<- table(STRIKEDUR)
-n<- sum(tdauer)
-prozent<- tdauer*100/n
-kumproz<- cumsum(prozent)
-round(cbind(absolut = tdauer, Prozent = prozent, kumuliert = kumproz), digits=2)
 ### Quantile Seite 313
 minimum <- min(x)
 quartil_1<- quantile(x, 0.25)
@@ -109,35 +97,46 @@ maximum   216.00
 
 ### Boxplot Seite 317 
 boxplot(x, ylab= "Strike duration in days")
-
 x1<- x[x<=25]
 str(x1)
-x2<- x[x<=50]
-str(x2)
-x3<- x[x<=100]
-str(x3)
-x4<- x[x<=125]
-str(x4)
-x5<- x[x<=150]
-str(x5)
-x6<- x[x<=175]
-str(x6)
-x7<- x[x<=200]
-str(x7)
-x8<- x[x<=225]
-str(x8)
-
-xx<- 1/62*c(29, 46, 54,58,59,61,62)
-
+### Exhibit 6 16 (i) CDF of Strike duration (p.518)
+dauer<- c(0,10,25,50,75,100,125,150,175,200,220)
+dichte<- 1/62*c(0,16,29,46,50,54,58,59,61,61,62)
+komu<- 1- dichte
+z<- cbind(dauer, komu)
+plot(z, type="l", ylab="CDF", xlab="Strike duration")
+s<- function(STRIKEDUR){
+result<- exp(-0.023432*STRIKEDUR)
+return(result)
+}
+curve(s, 0, 220, add=TRUE, col="red")
+s2<- function(STRIKEDUR){
+result<- exp(-0.022902*STRIKEDUR)
+return(result)
+}
+curve(s2, 0, 220,add= TRUE,col="blue")
 ### The empirical survival function                                                
 hist(STRIKEDUR)
 hist(STRIKEDUR, freq=FALSE)
-
 sur<- 1 - xx
 str(sur)
 plot(sur,type ="l", main = "Suvival function",xlab= "STRIKEDURATION")
 plot(xx, type="l", sub= "STRIKEDUR")
 
-### Seite 333  ???
+### Seite 333  
 hist(STRIKEDUR, freq=FALSE, main="Strike duration")
-curve(dexp(x, rate=1),add=TRUE, col="red")
+x<- STRIKEDUR
+f_cdf<- function(x){
+result<- 1 - pexp(x, rate=1)
+return(result)
+}
+curve(f_cdf, 0, 5)
+
+pexp(1, rate=1)
+.6321206
+pexp(3, rate=1)
+[1] 0.9502129
+pexp(5, rate=1)
+[1] 0.9932621
+pexp(200, rate=1)
+[1] 1
