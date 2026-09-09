@@ -14,11 +14,19 @@ STRIKEDUR
 100 104 114 117 119 130 152 153 216 
   1   1   1   1   1   1   1   1   1 
 
+### Seite 308
 x<- STRIKEDUR
-hist(x)
+hist(x, breaks = 50, freq=FALSE, main= "Strike duration")
+strikecut<- cut(x, breaks = 50, dig.lab=4)
+tdauer<- table(strikecut)
+tdauer
+n<- sum(tdauer)
+prozent<- tdauer*100/n
+kumproz<- cumsum(prozent)
+round(cbind(absolut = tdauer, Prozent = prozent, kumuliert= kumproz), digits=2)
 library(REdaS)
 densbox(x~1, main="Strike")
-curve(dweibull(x, shape=1, scale = 1, log = FALSE))
+curve(dweibull(x, shape=1, scale = 0.2, log = FALSE))
 curve(dweibull(x, shape=1.5, scale = 1, log = FALSE))
 curve(dweibull(x, shape=3, scale = 1, log = FALSE))
 curve(dweibull(x, shape=1, scale = 3, log = FALSE))
