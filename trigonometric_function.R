@@ -1,4 +1,7 @@
 ### Trigonometric function ###
+curve(sin(x), -6*pi,6*pi)
+curve(cos(x), -6*pi,6*pi , add= TRUE, col="red")
+curve(tan(x), -10, 10, col="blue")
 sin(pi/6)
 cos(pi/6)
 tan(pi/6)
