@@ -10,7 +10,7 @@ detach(xm609)
 x<- ecdf(STRIKEDUR)
 F(x): Nicht S(t)
 plot(x, main = "STRIKEDUR")
-Inverse???
+
 'data.frame':   62 obs. of  4 variables:
  $ OBS         : int  1 2 3 4 5 6 7 8 9 10 ...
  $ STRIKEDUR   : int  1 2 2 2 3 3 3 3 3 4 ...
@@ -187,8 +187,6 @@ Estimates:
 [2,] 0.022903   0.003122   7.335 2.21e-13 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’
 
-s1<- exp(9.332934*PROD)*0.022903   ????
-plot(STRIKEDUR,s1,type="l")
 s2<- survreg(Surv(t, t>0, type="left") ~ PROD, xm609, dist='exponential')
 summary(s2)
 Call:
@@ -258,7 +256,6 @@ summary(eq_ex)
 lfit <- aareg(Surv(time, status) ~ age + sex + ph.ecog, data=lung,
                      nmin=1)
 
-
 survreg(, data, weights, subset, 
         na.action, dist="weibull", init=NULL, scale=0, 
         control,parms=NULL,model=FALSE, x=FALSE,
@@ -272,8 +269,6 @@ library("survival")
 t80<- STRIKECENS80
 survreg(Surv(t80) ~ 1, xm609, dist='weibull',scale=1)
 ????
-
-
 
 panel_12<- censReg(log(STRIKECENS80)~ 1)
 summary(panel_12)
@@ -307,7 +302,7 @@ Return code 8: successive function values within relative tolerance limit (relto
 Log-likelihood: -96.10716 on 3 Df
 
 ### The diagnostic of the hazard rate models 
-### The generalized residulals
+### The generalized residulals (p.520)
 e<- 0.023*STRIKEDUR*exp(9.33*PROD)
 summary(e)
 plot(e)
@@ -321,14 +316,38 @@ e4<- e[e<=4.19836]
 quan<- c(e1,e2,e3,e4)
 plot(quan)
 
-
 f_e<- dexp(e,1)
 q_e<- qexp(f_e,1)
 plot(f_e, type="l")
 plot(e,q_e, type="l")
 Theoretical quantile 
 e_theory<- exp(e)
-### Compare with the Exhibit 6 16 (j) 
+### Compare with the Exhibit 6 16 (j) (p.518)
 s2<- (exp(-0.023*STRIKEDUR))^(exp(9.33*PROD))
 plot(s2, ylim= c(0,1),xlim=c(0, 120), type ="l")
 plot(STRIKEDUR, s2, type="l")
+
+### Expected strike duration : the proportional exponential hazard model (p.520)
+f_e_d<- function(x){
+result<- 1/0.022902*exp(-9.333815*x)
+return(result)
+}
+curve(f_e_d, 0, 10)
+f_e_d(-0.1)
+[1] 111.0424 : 111 days (bad economy)
+f_e_d(0)
+[1] 43.66431 : 44 days  (neutral economy)
+f_e_d(0.07)
+[1] 22.71815 : 23 days  (good economy)
+
+### The expected proportional hazard rate (p.520)
+f_h<- function(x){
+result<- 0.022902*exp(9.333815*x)
+return(result)
+}
+f_h(-0.1)
+[1] 0.009005565   : 1 %
+f_h(0)
+[1] 0.022902      : 2.3 %
+f_h(0.07)
+[1] 0.04401768    : 4.5 %
