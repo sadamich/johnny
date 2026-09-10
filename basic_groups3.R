@@ -95,17 +95,48 @@ erwart
 237 237 
 
 ### Seite 518
+jobcat<- factor(JOBCAT)
+levels(jobcat)<- c("Admistration","Custdials","management")
+gendertab<- table(jobcat, GENDER)
+gendertab
+  GENDER
+jobcat           0   1
+  Admistration 206 157
+  Custdials      0  27
+  management    10  74
 
-eq_logit<- glm(LOGSAL ~ GENDER, family= poisson, data=xm301)
+gender_dfr<- as.data.frame(gendertab)
+eq_logit<- glm(Freq ~ GENDER, family= poisson, data=gender_dfr)
 summary(eq_logit)
-1 - pchisq(5.1937 ,3)
-obs<- OBS
-erw<- fitted(eq_logit)
-resLR<- residuals(eq_logit)
+Residual deviance: 497.81  on 4  degrees of freedom
+1 - pchisq(497.81,3)
+[1] 0
+eq_logit2<- glm(Freq ~ GENDER+jobcat, family= poisson, data=gendertab)
+summary(eq_logit2)
+Residual deviance:  95.463  on 2  degrees of freedom
+1 - pchisq(95.463  ,2)
+obs<- eq_logit2$y
+erw<- fitted(eq_logit2)
+resLR<- residuals(eq_logit2)
 resx2<- (obs - erw)/sqrt(erw)
 cbind(obs,erw,resx2,resLR)
 PearsonX2<- sum(resx2^2)
 PearsonX2
 
-eq<- lm(LOGSAL~EDUC+GENDER+MINORITY+GENDER*MINORITY)
-summary(eq)
+eq_logit3<- glm(Freq ~ GENDER*jobcat, family= poisson, data=gendertab)
+summary(eq_logit3)
+Residual deviance: 4.1225e-10  on 0  degrees of freedom
+1 - pchisq(4.1225e-10,1)
+obs<- eq_logit2$y
+erw<- fitted(eq_logit3)
+resLR<- residuals(eq_logit3)
+resx2<- (obs - erw)/sqrt(erw)
+cbind(obs,erw,resx2,resLR)
+  obs          erw         resx2 resLR
+1 206 2.060000e+02 -2.772328e-14     0
+2   0 2.061154e-10 -1.435672e-05     0
+3  10 1.000000e+01 -3.595093e-14     0
+4 157 1.570000e+02 -1.814639e-14     0
+5  27 2.700000e+01 -1.846044e-14     0
+6  74 7.400000e+01 -1.156385e-14     0
+> 
