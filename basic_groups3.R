@@ -13,14 +13,19 @@ str(xm301)
 jobcat<- factor(JOBCAT)
 levels(jobcat)<- c("Admistration","Custdials","management")
 boxplot(LOGSAL~jobcat, xlab="Job categories", ylab="Log Salary")
+boxplot(JOBCAT~GENDER, xlab="Gender", ylab="Job categories")
+
 ### Seite 410
 mws<- tapply(LOGSAL, jobcat, mean)
 sds<- tapply(LOGSAL, jobcat, sd)
 rbind(Mean = mws,Sd= sds)
- Admistration   Custdials management
+     Admistration   Custdials management
 Mean   10.2025355 10.33745249  11.029622
 Sd      0.2458633  0.07000588   0.268648
 
+mws<- tapply(JOBCAT, GENDER,mean)
+sds<- tapply(JOBCAT, GENDER,sd)
+rbind(Mean = mws,Sd= sds)
 ### Seite 411 
 bartlett.test(LOGSAL, jobcat) 
   Bartlett test of homogeneity of variances
@@ -28,7 +33,11 @@ data:  LOGSAL and jobcat
 Bartlett's K-squared = 42.388, df = 2, p-value = 6.245e-10
 (keine gleiche Varianzen zwischen 1,2 und 3te Gruppen)F test nicht anwendbar
 
-
+bartlett.test(JOBCAT,GENDER) 
+ Bartlett test of homogeneity of variances
+data:  JOBCAT and GENDER
+Bartlett's K-squared = 116.06, df = 1, p-value < 2.2e-16
+ 
 ### Seite 417
 boxplot(LOGSAL ~ (jobcat + GENDER), ylab="Log Salary")
 mw<- tapply(LOGSAL, list(jobcat, GENDER), mean)
