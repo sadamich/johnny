@@ -47,7 +47,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 1.295 on 61 degrees of freedom
 panel04<- lm(LOGSTRIKE~PROD)
 summary(panel04)
-### Panel 4 (p.517) Call:lm(formula = LOGSTRIKE ~ PROD)                    ###
+### Panel 4 (p.517) OLS :lm(formula = LOGSTRIKE ~ PROD)                    ###
 Residuals:
     Min      1Q  Median      3Q     Max 
 -2.6135 -0.7850  0.2115  0.9307  1.9917 
@@ -80,6 +80,11 @@ Estimates:
      Estimate Std. error t value  Pr(> t)    
 [1,] 0.023432   0.002976   7.874 3.44e-15 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+library(MASS)
+fit_exp <- fitdistr(STRIKEDUR, "exponential")
+summary(fit_exp)
+
 
 ### Generalized residuals (p.516, p.520
 ### Exhibit 6 16 (k) (p.518)
@@ -187,20 +192,11 @@ Estimates:
 [2,] 0.022903   0.003122   7.335 2.21e-13 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’
 
-s2<- survreg(Surv(t, t>0, type="left") ~ PROD, xm609, dist='exponential')
-summary(s2)
-Call:
-survreg(formula = Surv(t, t > 0, type = "left") ~ PROD, data = xm609, 
-    dist = "exponential")
-             Value Std. Error     z      p
-(Intercept)  3.777      0.131 28.80 <2e-16
-PROD        -9.334      2.960 -3.15 0.0016
-Scale fixed at 1 
-Exponential distribution
-Loglik(model)= -289.8   Loglik(intercept only)= -294.7  ### the same value
-        Chisq= 9.93 on 1 degrees of freedom, p= 0.0016 
-Number of Newton-Raphson Iterations: 4 
-n= 62 
+library("survival")
+Time<- rep(1,62)
+pro_exp <- survreg(Surv(STRIKEDUR,Time) ~ PROD, 
+dist = "exponential", data = xm609)
+summary(pro_exp)
 
 ### Panel 7 Weibull Model (p.518)                                          ###
 loglik_w <- function(theta) {
@@ -220,6 +216,15 @@ Estimates:
 beta   0.92469    0.09160  10.095  <2e-16 ***
 beta1  0.03218    0.01300   2.476  0.0133 *  
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+library(MASS)
+fit_wei <- fitdistr(STRIKEDUR, "weibull")
+fit_wei
+ shape         scale   
+   0.92468222   41.10764952 
+ ( 0.09156075) ( 5.96082380)
+
+
 ### Panel 8 Propotional Weibull model (p.518)                              ###
 loglik_w_pro <- function(theta) {
 beta0<- theta[1]
