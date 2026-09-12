@@ -85,3 +85,19 @@ summary(m)
 ???
  -0.5*N*log(2*pi)- N*log(sigma) + (lambda -1)*sum(log(S)) 
 - sum(0.5*(y- mu)^2/sigma^2)
+
+### Package MASS
+https://cran.r-project.org/web/packages/MASS/refman/MASS.html#boxcox
+library(MASS)
+str(trees)
+'data.frame':   31 obs. of  3 variables:
+ $ Girth : num  8.3 8.6 8.8 10.5 10.7 10.8 11 11 11.1 11.2 ...
+ $ Height: num  70 65 63 72 81 83 66 75 80 75 ...
+ $ Volume: num  10.3 10.3 10.2 16.4 18.8 19.7 1
+boxcox(Volume ~ log(Height) + log(Girth), data = trees,
+       lambda = seq(-0.25, 0.25, length.out = 10))
+boxcox(Days+1 ~ Eth*Sex*Age*Lrn, data = quine,
+       lambda = seq(-0.05, 0.45, length.out = 20))
+
+boxcox(S ~ GENDER+MINORITY+EDUC, data = xm501,
+       lambda = seq(-0.25, 0.25, length.out = 10))
