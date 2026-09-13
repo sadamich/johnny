@@ -23,7 +23,8 @@ panel <- treatReg(mathhigh ~ SATMATH+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
               GRINTERMICRO ~ SELCORMICRO +mathhigh+GRADELOW+
               GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
               +SATMATH+SATVERB,data=xm608micro)
-summary(panel)
+summary(panel,vcov = function(x) vcovHC(x, method = "HC2"))
+
 eq2 <- selection(mathhigh ~ SATMATH+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
                     +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
               GRINTERMICRO ~ SELCORMICRO +mathhigh+GRADELOW+
