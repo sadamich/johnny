@@ -83,7 +83,14 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 library(MASS)
 fit_exp <- fitdistr(STRIKEDUR, "exponential")
-summary(fit_exp)
+fit_exp
+library(survival)
+### survfit : cox
+fit2 <- survfit(Surv(STRIKEDUR) ~ 1, data = xm609) 
+summary(fit2)
+fit2
+plot(fit2, lty = 2:3) 
+legend(100, .8, c("min", "neutrak","max"))
 
 
 ### Generalized residuals (p.516, p.520
@@ -194,7 +201,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’
 
 library("survival")
 Time<- rep(1,62)
-pro_exp <- survreg(Surv(STRIKEDUR,Time) ~ PROD, 
+pro_exp <- survreg(Surv(STRIKEDUR) ~ PROD, 
 dist = "exponential", data = xm609)
 summary(pro_exp)
 
