@@ -8,7 +8,7 @@ xm608micro<- read.csv("xm608micro.csv", header =TRUE)
 str(xm608micro)
 attach(xm608micro)
 detach(xm608micro)
-
+mathhigh<- as.logical(MATHHIGH)
 xm608macro<- read.csv("xm608macro.csv", header =TRUE)
 str(xm608macro)
 attach(xm608macro)
@@ -18,12 +18,24 @@ verb<- SATVERB/100
 
 
 ### Model with treatReg
-panel <- treatReg(MATHHIGH ~ SATMATH+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
+panel <- treatReg(mathhigh ~ SATMATH+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
                     +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
-              GRINTERMICRO ~ SELCORMICRO +MATHHIGH+GRADELOW+
+              GRINTERMICRO ~ SELCORMICRO +mathhigh+GRADELOW+
+              GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
+              +SATMATH+SATVERB,data=xm608micro)
+summary(panel)
+eq2 <- selection(mathhigh ~ SATMATH+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
+                    +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
+              GRINTERMICRO ~ SELCORMICRO +mathhigh+GRADELOW+
+              GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
+              +SATMATH+SATVERB, method="2step",data=xm608micro)
+summary(eq2)
+eq3 <- heckit(mathhigh ~ SATMATH+FEMALE+MAJORESH+MAJORNAT+ADVMATH1
+                    +ADVMATH2+ADVMATH3+PHYSICS+CHEMISTRY,
+              GRINTERMICRO ~ SELCORMICRO +mathhigh+GRADELOW+
               GRADEHIGH+GRDFINTERMICRO+GRMACRO1+GRMICRO1+FRESHMAN+FEMALE
               +SATMATH+SATVERB, data=xm608micro)
-summary(panel)
+summary(eq3)
 
 ### Compare with the panel 1 (p.509)                                       ###
 Tobit treatment model (switching regression model)
@@ -196,11 +208,55 @@ install.packages("Ecdat")
 library(Ecdat)
 data(Treatment, package="Ecdat")
 str(Treatment)
+ $ treat  : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
+ $ age    : num  37 30 27 33 22 23 32 22 19 21 ...
+ $ educ   : num  11 12 11 8 9 12 11 16 9 13 ...
+ $ ethn   : Factor w/ 3 levels "other","black",..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ married: logi  TRUE FALSE FALSE FALSE FALSE FALSE ...
+ $ re74   : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ re75   : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ re78   : num  9930 24910 7506 290 4056 ...
+ $ u74    : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
+ $ u75    : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
+attach(Treatment)
 er <- treatReg(treat~poly(age,2) + educ + u74 + u75 + ethn,
 log(re78)~treat + poly(age,2) + educ + ethn,
 data=Treatment)
 print(summary(er))
+Tobit treatment model (switching regression model)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 4 iterations
+Return code 1: gradient close to zero (gradtol)
+Log-Likelihood: -2651.502 
+2344 observations: 2204 non-participants (selection FALSE) and 140 participants (selection TRUE)
 
+17 free parameters (df = 2327)
+Probit selection equation:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    -1.94272    0.38051  -5.106 3.57e-07 ***
+poly(age, 2)1 -41.64058    7.63374  -5.455 5.42e-08 ***
+poly(age, 2)2   2.65968    4.97762   0.534 0.593166    
+educ           -0.13661    0.03207  -4.260 2.13e-05 ***
+u74TRUE         0.79452    0.22374   3.551 0.000391 ***
+u75TRUE         2.31494    0.21291  10.873  < 2e-16 ***
+ethnblack       1.35300    0.18734   7.222 6.89e-13 ***
+ethnhispanic    1.31932    0.29465   4.478 7.91e-06 ***
+Outcome equation:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    8.983926   0.069341 129.561  < 2e-16 ***
+treatTRUE     -0.963132   0.075837 -12.700  < 2e-16 ***
+poly(age, 2)1  6.512273   0.797670   8.164 5.25e-16 ***
+poly(age, 2)2 -4.428831   0.773235  -5.728 1.15e-08 ***
+educ           0.080227   0.005231  15.338  < 2e-16 ***
+ethnblack     -0.256112   0.035865  -7.141 1.23e-12 ***
+ethnhispanic  -0.007786   0.079273  -0.098    0.922    
+   Error terms:
+      Estimate Std. Error t value Pr(>|t|)    
+sigma  0.69304    0.01014  68.359  < 2e-16 ***
+rho    0.17699    0.06502   2.722  0.00654 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+-----------
 noer <- treatReg(treat~poly(age,2) + educ + u74 + u75 + ethn,
 log(re78)~treat + poly(age,2) + educ + u74 + u75 + ethn,
 data=Treatment)
