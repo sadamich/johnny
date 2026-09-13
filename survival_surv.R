@@ -1,18 +1,25 @@
 https://cran.r-project.org/web/packages/survival/refman/survival.html#Surv
-
 library(survival)
 str(aml)
 'data.frame':   23 obs. of  3 variables:
  $ time  : num  9 13 13 18 23 28 31 34 45 48 ...
  $ status: num  1 1 0 1 1 0 1 1 0 1 ...
  $ x     : Factor w/ 2 levels "Maintained","Nonmaintained": 1 1 1 1 1 1 1 1 1 1 ...
-
 attach(aml)
 plot(x)
-
-with(aml, Surv(time, status))
+z<- with(aml, Surv(time, status))
 [1]   9   13   13+  18   23   28+  31   34   45+  48  161+   5    5    8    8 
 [16]  12   16+  23   27   30   33   43   45 
+plot(z)
+https://cran.r-project.org/web/packages/survival/refman/survival.html#survfit
+#fit a Kaplan-Meier and plot it 
+fit <- survfit(Surv(time, status) ~ x, data = aml) 
+plot(fit, lty = 2:3) 
+legend(100, .8, c("Maintained", "Nonmaintained"), lty = 2:3)
+
+
+
+
 
 str(lung)
 .frame':   228 obs. of  10 variables:
