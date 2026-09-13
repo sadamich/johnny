@@ -51,40 +51,33 @@ Fn<- ecdf(res)
 plot(Fn, main="Residuals")
 ks.test(res,"pnorm",mean=0, sd=5.53)
 shapiro.test(res)
+
 ### The removing of outliers
 u<- c(9,33)
 res2<- res[-u]
 summary(res2)
    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 -13.5881  -3.3595   0.2544   0.1679   3.4824  15.1150 
-m2<- function(res2){
-n<- 238
-sum(res2^2)/n
-}
-m2(res2)
+m2r<- sum(res2^2)/238
+m2r
 
-m3<- function(res2){
-n<- 238
-sum(res2^3)/n
-}
-m3(res2)
+m3r<- sum(res2^3)/238
+m3r
 
-m4<- function(res2){
-n<- 238
-sum(res2^4)/n
-}
-m4(res2)
+m4r<- sum(res2^4)/238
+m4r
 
-s<- m3(res2)/(m2(res2))^(3/2)
-s
+sr<- m3r/(m2r)^(3/2)
+sr
 
-k<- m4(res2)/m2(res2)^2
-k
+kr<- m4r/m2r^2
+kr
 
-JB<- (sqrt(238/6)*s)^2+(sqrt(238/24)*(k-3))^2
-JB 
-1 - pchisq(     ,2)
-????
+JB2<- (sqrt(238/6)*sr)^2+(sqrt(238/24)*(kr-3))^2
+JB2 
+1 - pchisq(1.420541 ,2)
+[1]0.4915112:compare with the Exhibit 5 40(c):H0(the normality)is not rejected
+
 ks.test(res2,"pnorm",mean=0.167, sd=5.23)
 shapiro.test(res2)
 
