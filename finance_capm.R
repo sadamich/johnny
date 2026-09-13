@@ -6,6 +6,88 @@ xm404<- read.csv("xm404.csv", header = TRUE)
 attach(xm404)
 str(xm404)
 detach(xm404)
+
+### The JB test (p.387)                     ###
+eq<- lm(RENDCYCO~RENDMARK)
+res<- resid(eq)
+m2<- function(res){
+n<- 240
+sum(res^2)/n
+}
+m2(res)
+[1] 30.46616
+m3<- function(res){
+n<- 240
+sum(res^3)/n
+}
+m3(res)
+[1] -47.13548
+m4<- function(res){
+n<- 240
+sum(res^4)/n
+}
+m4(res)
+[1] 3754.283
+s<- m3(res)/(m2(res))^(3/2)
+s
+[1] -0.2802989
+k<- m4(res)/m2(res)^2
+k
+[1] 4.044751
+JB<- (sqrt(240/6)*s)^2+(sqrt(240/24)*(k-3))^2
+JB
+[1] 14.05774
+1 - pchisq(14.05774,2)
+[1] 0.0008859323  : H0 (the normality is rejected)
+### Exhibit 5 40 (p.388)
+x<- ts(res, freq=12, start=1980)
+plot(x, main = "Time series", ylab = "x")
+hist(x)
+summary(x)
+ Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-20.4122  -3.5274   0.2316   0.0000   3.4774  15.1150 
+### Seite 337 
+Fn<- ecdf(res)
+plot(Fn, main="Residuals")
+ks.test(res,"pnorm",mean=0, sd=5.53)
+shapiro.test(res)
+### The removing of outliers
+u<- c(9,33)
+res2<- res[-u]
+summary(res2)
+   Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-13.5881  -3.3595   0.2544   0.1679   3.4824  15.1150 
+m2<- function(res2){
+n<- 238
+sum(res2^2)/n
+}
+m2(res2)
+
+m3<- function(res2){
+n<- 238
+sum(res2^3)/n
+}
+m3(res2)
+
+m4<- function(res2){
+n<- 238
+sum(res2^4)/n
+}
+m4(res2)
+
+s<- m3(res2)/(m2(res2))^(3/2)
+s
+
+k<- m4(res2)/m2(res2)^2
+k
+
+JB<- (sqrt(238/6)*s)^2+(sqrt(238/24)*(k-3))^2
+JB 
+1 - pchisq(     ,2)
+????
+ks.test(res2,"pnorm",mean=0.167, sd=5.23)
+shapiro.test(res2)
+
 ### Panel 1 (p.264)                                                        ###
 eq<- lm(RENDCYCO~RENDMARK)
 summary(eq)
