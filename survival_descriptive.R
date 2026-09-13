@@ -5,6 +5,14 @@
 xm609<- read.csv("xm609.csv", header = TRUE)
 attach(xm609)
 str(xm609)
+library(survival)
+https://cran.r-project.org/web/packages/survival/refman/survival.html#survfit.formula
+fit <- survfit(Surv(STRIKEDUR) ~ PROD, data = xm609) 
+plot(fit, lty = 2:3) 
+legend(100, .8, c("min", "neutrak","max"))
+fit2 <- survfit(Surv(STRIKEDUR) ~ 1, data = xm609) 
+plot(fit2, lty = 2:3) 
+legend(100, .8, c("min", "neutrak","max"))
 table(STRIKEDUR)
 STRIKEDUR
   1   2   3   4   5   7   8   9  10  11  12  13  14  15  17  19  21  22  23  25 
