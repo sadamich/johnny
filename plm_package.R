@@ -17,7 +17,6 @@ attach(Produc)
  $ emp   : num  1010 1022 1072 1136 1170 ...
  $ unemp : num  4.7 5.2 4.7 3.9 5.5 7.7 6.8 7.4 6.3 7.1 ...
 
-
 index = c("state","year")
 48 states (units) * 17 years (observations)
 m= 48               n= 17
@@ -119,12 +118,11 @@ R-Squared:      0.81241
 Adj. R-Squared: 0.8105
 F-statistic: 426.576 on 2 and 197 DF, p-value: < 2.22e-16
 
-
+### Twoways effects Within Model
 wi <- plm(inv ~ value + capital,
           data = Grunfeld, model = "within", effect = "twoways")
 summary(wi)
 Twoways effects Within Model
-
 Call:
 plm(formula = inv ~ value + capital, data = Grunfeld, effect = "twoways", 
     model = "within")
@@ -143,17 +141,15 @@ R-Squared:      0.72015
 Adj. R-Squared: 0.67047
 F-statistic: 217.442 on 2 and 169 DF, p-value: < 2.22e-16
 
-
+### Twoways effects Random Effect Model 
 swar <- plm(inv ~ value + capital,
             data = Grunfeld, model = "random", effect = "twoways")
 summary(swar)
 Twoways effects Random Effect Model 
    (Swamy-Arora's transformation)
-
 Call:
 plm(formula = inv ~ value + capital, data = Grunfeld, effect = "twoways", 
     model = "random")
-
 Balanced Panel: n = 10, T = 20, N = 200
 Effects:
                   var std.dev share
@@ -176,14 +172,13 @@ R-Squared:      0.7694
 Adj. R-Squared: 0.76706
 Chisq: 657.295 on 2 DF, p-value: < 2.22e-16
 
-
+### Twoways effects Random Effect Model 
 amemiya <- plm(inv ~ value + capital,
                data = Grunfeld, model = "random", random.method = "amemiya",
                effect = "twoways")
 summary(amemiya)
 Twoways effects Random Effect Model 
    (Amemiya's transformation)
-
 Call:
 plm(formula = inv ~ value + capital, data = Grunfeld, effect = "twoways", 
     model = "random", random.method = "amemiya")
@@ -210,7 +205,7 @@ R-Squared:      0.74927
 Adj. R-Squared: 0.74673
 Chisq: 588.717 on 2 DF, p-value: < 2.22e-16
 
-
+### Twoways effects Random Effect Model 
 walhus <- plm(inv ~ value + capital,
               data = Grunfeld, model = "random", random.method = "walhus",
               effect = "twoways")
@@ -223,7 +218,6 @@ summary(wi, vcov = vcovHC)
 summary(wi, vcov = function(x) vcovHC(x, method = "white2"))
 Twoways effects Random Effect Model 
    (Wallace-Hussain's transformation)
-
 Call:
 plm(formula = inv ~ value + capital, data = Grunfeld, effect = "twoways", 
     model = "random", random.method = "walhus")
@@ -260,7 +254,6 @@ form <- log(gsp) ~ log(pc) + log(emp) + log(hwy) + log(water) + log(util) + unem
 summary(plm(form, data = pProduc, model = "random", effect = "nested"))
 Nested effects Random Effect Model 
    (Swamy-Arora's transformation)
-
 Call:
 plm(formula = form, data = pProduc, effect = "nested", model = "random")
 
@@ -294,12 +287,11 @@ R-Squared:      0.97387
 Adj. R-Squared: 0.97368
 Chisq: 20213.5 on 6 DF, p-value: < 2.22e-16
 
-
+### Nested effects Random Effect Model 
 summary(plm(form, data = pProduc, model = "random", effect = "nested",
             random.method = "walhus"))
 Nested effects Random Effect Model 
    (Wallace-Hussain's transformation)
-
 Call:
 plm(formula = form, data = pProduc, effect = "nested", model = "random", 
     random.method = "walhus")
