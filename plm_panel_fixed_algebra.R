@@ -22,14 +22,20 @@ d
 ###  (1* 3) *(3 * 3) = 1 * 3 
 a<- c(1,1,1)
 t(a)%*%d
-
-### 26 * 26
-d<- diag(26)
+### Das Ziel : mn * m = 26*37 * 26
+26*37  : matrix(vector, nrow = 26*37, ncol = 26)
+[1] 962
+### Diagonalmatrix : n * 1 : 37 * 1
+d<- diag(37)
 d
+str(37)
 ###  (1* 26) *(26* 26) = 1 * 26
-a<- rep(1,26)
-t(a)%*%d
-
+i<- rep(1,676)
+I<- matrix(i, nrow=26, ncol=26)
+head(I)
+I%*%d
+D<- rep(d, 26)
+str(D)
 z<- d%*%a
 str(z)
 
