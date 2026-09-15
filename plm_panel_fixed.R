@@ -6,13 +6,187 @@
 xm729<- read.csv("xm729.csv", header = TRUE)
 attach(xm729)
 str(xm729)
+attach(xm729)
+library(systemfit)
+eq1<- LOGPROD_1~LOGLAB_1+LOGCAP_1+ID_1 -1
+eq2<- LOGPROD_2~LOGLAB_2+LOGCAP_2+ID_2 -1
+eq3<- LOGPROD_3~LOGLAB_3+LOGCAP_3+ID_3 -1
+eq4<- LOGPROD_4~ LOGLAB_4+LOGCAP_4+ID_4 -1
+eq5<- LOGPROD_5~ LOGLAB_5+LOGCAP_5+ID_5 -1
+eq6<- LOGPROD_6~ LOGLAB_6+LOGCAP_6+ID_6 -1
+eq7<- LOGPROD_7~ LOGLAB_7+LOGCAP_7+ID_7 -1
+eq8<- LOGPROD_8~ LOGLAB_8+LOGCAP_8+ID_8 -1
+eq9<- LOGPROD_9~ LOGLAB_9+LOGCAP_9+ID_9 -1
+eq10<- LOGPROD_10~ LOGLAB_10+LOGCAP_10+ID_10 -1
+eq11<- LOGPROD_11~ LOGLAB_11+LOGCAP_11+ID_11 -1
+eq12<- LOGPROD_12~ LOGLAB_12+LOGCAP_12+ID_12 -1
+eq13<- LOGPROD_13~ LOGLAB_13+LOGCAP_13+ID_13 -1
+eq14<- LOGPROD_14~ LOGLAB_14+LOGCAP_14+ID_14 -1
+eq15<- LOGPROD_15~ LOGLAB_15+LOGCAP_15+ID_15 -1
+eq16<- LOGPROD_16~ LOGLAB_16+LOGCAP_16+ID_16 -1
+eq17<- LOGPROD_17~ LOGLAB_17+LOGCAP_17+ID_17 -1
+eq18<- LOGPROD_18~ LOGLAB_18+LOGCAP_18+ID_18 -1
+eq19<- LOGPROD_19~ LOGLAB_19+LOGCAP_19+ID_19 -1
+eq20<- LOGPROD_20~ LOGLAB_20+LOGCAP_20+ID_20 -1
+eq21<- LOGPROD_21~ LOGLAB_21+LOGCAP_21+ID_21 -1
+eq22<- LOGPROD_22~ LOGLAB_22+LOGCAP_22+ID_22 -1
+eq23<- LOGPROD_23~ LOGLAB_23+LOGCAP_23+ID_23 -1
+eq24<- LOGPROD_24~ LOGLAB_24+LOGCAP_24+ID_24 -1
+eq25<- LOGPROD_25~ LOGLAB_25+LOGCAP_25+ID_25 -1
+eq26<- LOGPROD_26~ LOGLAB_26+LOGCAP_26+ID_26 -1
+system<- list(eq1,eq2,eq3,eq4,eq5,eq6,eq7,eq8,eq9,eq10,eq11,eq12,eq13,eq14,eq15,
+          eq16,eq17,eq18,eq19,eq20,eq21,eq22,eq23,eq24,eq25,eq26)
 
-LOGPROD<- LOGPROD_1+ LOGPROD_2+LOGPROD_3+LOGPROD_4+LOGPROD_5+
+fit<- systemfit(system, data = xm729)
+model.matrix(fit)
+model.matrix( fit$eq[[ 1 ]] )
+summary(fit)
+
+eq1<- lm(LOGPROD_1~LOGLAB_1+LOGCAP_1+ID_1 -1)
+summary(eq1)
+library(plm)
+
+p_data<- pdata.frame(xm729, index=c("OBS", "ID_1"))
+str(p_data)
+eq<- plm(LOGPROD_1~LOGLAB_1+LOGCAP_1, data= p_data, model"within")
+
+Y<- rbind(LOGPROD_1, LOGPROD_2,LOGPROD_3,LOGPROD_4,LOGPROD_5,
+          LOGPROD_6, LOGPROD_7,LOGPROD_8,LOGPROD_9,LOGPROD_10,
+          LOGPROD_11,LOGPROD_12,LOGPROD_13,LOGPROD_14,LOGPROD_15,
+          LOGPROD_16,LOGPROD_17,LOGPROD_18,LOGPROD_19,LOGPROD_20,
+          LOGPROD_21,LOGPROD_22,LOGPROD_23,LOGPROD_24,LOGPROD_25,
+          LOGPROD_26)
+str(Y)
+
+X1<- rbind(LOGLAB_1, LOGLAB_2,LOGLAB_3,LOGLAB_4,LOGLAB_5,
+          LOGLAB_6, LOGLAB_7,LOGLAB_8,LOGLAB_9,LOGLAB_10,
+          LOGLAB_11,LOGLAB_12,LOGLAB_13,LOGLAB_14,LOGLAB_15,
+          LOGLAB_16,LOGLAB_17,LOGLAB_18,LOGLAB_19,LOGLAB_20,
+          LOGLAB_21,LOGLAB_22,LOGLAB_23,LOGLAB_24,LOGLAB_25,
+          LOGLAB_26)
+str(X1)
+ num [1:26, 1:37] 4.462 0.563 1.033 0.526 1.314 ...
+ - attr(*, "dimnames")=List of 2
+  ..$ : chr [1:26] "LOGLAB_1" "LOGLAB_2" "LOGLAB_3" "LOGLAB_4" ...
+  ..$ : NULL
+head(X1)
+
+
+X2<- rbind(LOGCAP_1, LOGCAP_2,LOGCAP_3,LOGCAP_4,LOGCAP_5,
+          LOGCAP_6, LOGCAP_7,LOGCAP_8,LOGCAP_9,LOGCAP_10,
+          LOGCAP_11,LOGCAP_12,LOGCAP_13,LOGCAP_14,LOGCAP_15,
+          LOGCAP_16,LOGCAP_17,LOGCAP_18,LOGCAP_19,LOGCAP_20,
+          LOGCAP_21,LOGCAP_22,LOGCAP_23,LOGCAP_24,LOGCAP_25,
+          LOGCAP_26)
+eq<- lm(Y~X1+X2)
+summary(eq)
+Y<- LOGPROD_1+ LOGPROD_2+LOGPROD_3+LOGPROD_4+LOGPROD_5+
+          LOGPROD_6+ LOGPROD_7+LOGPROD_8+LOGPROD_9+LOGPROD_10+
+          LOGPROD_11+LOGPROD_12+LOGPROD_13+LOGPROD_14+LOGPROD_15+
+          LOGPROD_16+LOGPROD_17+LOGPROD_18+LOGPROD_19+LOGPROD_20+
+          LOGPROD_21+LOGPROD_22+LOGPROD_23+LOGPROD_24+LOGPROD_25+
+          LOGPROD_26
+str(Y)
+num [1:37] 47.1 50.9 50.3 49.2 51.6  : n*1
+
+X1<- LOGLAB_1+ LOGLAB_2+LOGLAB_3+LOGLAB_4+LOGLAB_5+
+          LOGLAB_6+LOGLAB_7+LOGLAB_8+LOGLAB_9+LOGLAB_10+
+          LOGLAB_11+LOGLAB_12+LOGLAB_13+LOGLAB_14+LOGLAB_15+
+          LOGLAB_16+LOGLAB_17+LOGLAB_18+LOGLAB_19+LOGLAB_20+
+          LOGLAB_21+LOGLAB_22+LOGLAB_23+LOGLAB_24+LOGLAB_25+
+          LOGLAB_26
+str(X1)
+ num [1:37] 22.2 25.2 25.3 24.7 26.8 : n*1
+
+X2<- LOGCAP_1+LOGCAP_2+LOGCAP_3+LOGCAP_4+LOGCAP_5+
+          LOGCAP_6+ LOGCAP_7+LOGCAP_8+LOGCAP_9+LOGCAP_10+
+          LOGCAP_11+LOGCAP_12+LOGCAP_13+LOGCAP_14+LOGCAP_15+
+          LOGCAP_16+LOGCAP_17+LOGCAP_18+LOGCAP_19+LOGCAP_20+
+          LOGCAP_21+LOGCAP_22+LOGCAP_23+LOGCAP_24+LOGCAP_25+
+          LOGCAP_26
+str(X2)
+ num [1:37] 173 174 175 175 176 : n*1
+p_data<- pdata.frame(xm729)
+eq<- plm(LOGPROD_1+ LOGPROD_2+LOGPROD_3+LOGPROD_4+LOGPROD_5+
+          LOGPROD_6+ LOGPROD_7+LOGPROD_8+LOGPROD_9+LOGPROD_10+
+          LOGPROD_11+LOGPROD_12+LOGPROD_13+LOGPROD_14+LOGPROD_15+
+          LOGPROD_16+LOGPROD_17+LOGPROD_18+LOGPROD_19+LOGPROD_20+
+          LOGPROD_21+LOGPROD_22+LOGPROD_23+LOGPROD_24+LOGPROD_25+
+          LOGPROD_2
+~LOGLAB_1+ LOGLAB_2+LOGLAB_3+LOGLAB_4+LOGLAB_5+
+          LOGLAB_6+LOGLAB_7+LOGLAB_8+LOGLAB_9+LOGLAB_10+
+          LOGLAB_11+LOGLAB_12+LOGLAB_13+LOGLAB_14+LOGLAB_15+
+          LOGLAB_16+LOGLAB_17+LOGLAB_18+LOGLAB_19+LOGLAB_20+
+          LOGLAB_21+LOGLAB_22+LOGLAB_23+LOGLAB_24+LOGLAB_25+
+          LOGLAB_26
+
++LOGCAP_1+LOGCAP_2+LOGCAP_3+LOGCAP_4+LOGCAP_5+
+          LOGCAP_6+ LOGCAP_7+LOGCAP_8+LOGCAP_9+LOGCAP_10+
+          LOGCAP_11+LOGCAP_12+LOGCAP_13+LOGCAP_14+LOGCAP_15+
+          LOGCAP_16+LOGCAP_17+LOGCAP_18+LOGCAP_19+LOGCAP_20+
+          LOGCAP_21+LOGCAP_22+LOGCAP_23+LOGCAP_24+LOGCAP_25+
+          LOGCAP_26, 
+
+
+data= p_data,index = c("ID_1","ID_2","ID_3","ID_4",
+          "ID_5","ID_6","ID_7","ID_8","ID_9","ID_10","ID_11","ID_12","ID_13",
+          "ID_14","ID_15","ID_16","ID_17","ID_18","ID_19","ID_20","ID_21",
+          "ID_22","ID_23","ID_24","ID_25","ID_26"))
+summary(eq)
+
+
+
+
+id<- t(ID)%*%d
+d<- as.matrix(diag(26))
+str(d)
+i<- rep(1,37)
+D<- i*26
+p_data<- pdata.frame(xm729)
+z<- make.dummies(ID)
+
+
+
+a<- matrix(rep(rep(1,37), 26))
+D<- a*d
+X<- cbind(X1,X2)
+a<- a*t(D)
+eq<- lm(Y~ X1+X2+a -1)
+summary(eq)
+res_Y<- resid(eq)
+
+eq1<- lm(X1~d -1)
+res_x1<- resid(eq1)
+
+eq2<- lm(X2~d -1 )
+res_x2<- resid(eq2)
+
+eq_res<- lm(res_Y~ res_x1+res_x2 -1)
+summary(eq_res)
+ID<- ID_1+ID_2+ID_3+ID_4+ID_5+
+ID_6+ID_7+ID_8+ID_9+ID_10+
+ID_11+ID_12+ID_13+ID_14+ID_15+
+ID_16+ID_17+ID_18+ID_19+ID_20+
+ID_21+ID_22+ID_23+ID_24+ID_25+
+ID_26 
+str(ID)
+
+IDc<- cbind(ID_1,ID_2,ID_3,ID_4,ID_5,
+           ID_6,ID_7,ID_8,ID_9,ID_10,
+           ID_11,ID_12,ID_13,ID_14,ID_15,
+           ID_16,ID_17,ID_18,ID_19,ID_20,
+           ID_21,ID_22,ID_23,ID_24,ID_25,
+           ID_26) 
+d<- IDc#*#t(D)
+str(d)
+
+eq2<- plm(LOGPROD~ LOGPROD_1+ LOGPROD_2+LOGPROD_3+LOGPROD_4+LOGPROD_5+
           LOGPROD_6+ LOGPROD_7+LOGPROD_8+LOGPROD_9+LOGPROD_10+
           LOGPROD_11+ LOGPROD_22+LOGPROD_13+LOGPROD_14+LOGPROD_15+
           LOGPROD_15+ LOGPROD_17+LOGPROD_18+LOGPROD_19+LOGPROD_20+
           LOGPROD_21+ LOGPROD_22+LOGPROD_23+LOGPROD_24+LOGPROD_25+
-          LOGPROD_26
+          LOGPROD_26, data=xm729)
+summary(eq)
 
 LOGLAB<-  LOGLAB_1+ LOGLAB_2+LOGLAB_3+LOGLAB_4+LOGLAB_5+
           LOGLAB_6+ LOGLAB_7+LOGLAB_8+LOGLAB_9+LOGLAB_10+
@@ -26,6 +200,40 @@ LOGCAP<-  LOGCAP_1+ LOGCAP_2+LOGCAP_3+LOGCAP_4+LOGCAP_5+
           LOGCAP_15+ LOGCAP_17+LOGCAP_18+LOGCAP_19+LOGCAP_20+
           LOGCAP_21+ LOGCAP_22+LOGCAP_23+LOGCAP_24+LOGCAP_25+
           LOGCAP_26
+
+
+d1<- c(log(0),rep(log(1),36))
+d2<- c(0,1, rep(0,35))
+d3<- c(0,0,1,rep(0,34))
+d4<- c(0,0,0,1,rep(0,33))
+d5<- c(rep(0,4),1,rep(0,32))
+d6<- c(rep(0,5),1,rep(0,31))
+d7<- c(rep(0,6),1,rep(0,30))
+d8<- c(rep(0,7),1,rep(0,29))
+d9<- c(rep(0,8),1,rep(0,28))
+d10<- c(rep(0,9,),1,rep(0,27))
+d11<- c(rep(0,10),1,rep(0,26))
+d12<- c(rep(0,11),1,rep(0,25))
+d13<- c(rep(0,12),1,rep(0,24))
+d14<- c(rep(0,13),1,rep(0,23))
+d15<- c(rep(0,14),1,rep(0,22))
+d16<- c(rep(0,15),1,rep(0,21))
+d17<- c(rep(0,16),1,rep(0,20))
+d18<- c(rep(0,17),1,rep(0,19))
+d19<- c(rep(0,18),1,rep(0,18))
+d20<- c(rep(0,19),1,rep(0,17))
+d21<- c(rep(0,20),1,rep(0,16))
+d22<- c(rep(0,21),1,rep(0,15))
+d23<- c(rep(0,22),1,rep(0,14))
+d24<- c(rep(0,23),1,rep(0,13))
+d25<- c(rep(0,24),1,rep(0,12))
+d26<- c(rep(0,25),1,rep(0,11))
+
+D<- cbind(d1,d2,d3,d4,d5,d6,d7,d8, d9, d10,
+          d11,d12,d13,d14,d15,d16,d17,d18,d19,d20,
+          d21,d22,d23,d24,d25,d26)    
+
+
 d1<- c(1,rep(0,36))
 d2<- c(0,1, rep(0,35))
 d3<- c(0,0,1,rep(0,34))
@@ -106,4 +314,5 @@ Residual standard error: 2.741 on 9 degrees of freedom
 Multiple R-squared:  0.9995,    Adjusted R-squared:  0.9979 
 F-statistic: 638.6 on 28 and 9 DF,  p-value: 6.571e-12
 
-
+eq1<- lm(LOGPROD_1~LOGLAB_1+LOGCAP_1)
+summary(eq1)
