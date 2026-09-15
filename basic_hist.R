@@ -1,3 +1,7 @@
+### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
+### angewandte Statistik, Pearson                                           ###
+### Quelle: https://www.pearson.de/r-9783868942507                          ###
+### Seite 305 : 8 1 1 Klassifizieren, Tabellen, Histgramme
 
 ## Default S3 method:
 hist(x, breaks = "Sturges",
@@ -9,8 +13,10 @@ hist(x, breaks = "Sturges",
      xlab = xname, ylab,
      axes = TRUE, plot = TRUE, labels = FALSE,
      nclass = NULL, warn.unused = TRUE, ...)
-
 op <- par(mfrow = c(2, 2))
+str(islands)
+ Named num [1:48] 11506 5500 16988 2968 16 ...
+ - attr(*, "names")= chr [1:48] "Africa" "Antarctica" "Asia" "Australia" ...
 hist(islands)
 utils::str(hist(islands, col = "gray", labels = TRUE))
 
