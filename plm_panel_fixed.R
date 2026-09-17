@@ -6,136 +6,132 @@
 xm729<- read.csv("xm729.csv", header = TRUE)
 attach(xm729)
 str(xm729)
-attach(xm729)
-library(systemfit)
-eq1<- LOGPROD_1~LOGLAB_1+LOGCAP_1+ID_1 -1
-eq2<- LOGPROD_2~LOGLAB_2+LOGCAP_2+ID_2 -1
-eq3<- LOGPROD_3~LOGLAB_3+LOGCAP_3+ID_3 -1
-eq4<- LOGPROD_4~ LOGLAB_4+LOGCAP_4+ID_4 -1
-eq5<- LOGPROD_5~ LOGLAB_5+LOGCAP_5+ID_5 -1
-eq6<- LOGPROD_6~ LOGLAB_6+LOGCAP_6+ID_6 -1
-eq7<- LOGPROD_7~ LOGLAB_7+LOGCAP_7+ID_7 -1
-eq8<- LOGPROD_8~ LOGLAB_8+LOGCAP_8+ID_8 -1
-eq9<- LOGPROD_9~ LOGLAB_9+LOGCAP_9+ID_9 -1
-eq10<- LOGPROD_10~ LOGLAB_10+LOGCAP_10+ID_10 -1
-eq11<- LOGPROD_11~ LOGLAB_11+LOGCAP_11+ID_11 -1
-eq12<- LOGPROD_12~ LOGLAB_12+LOGCAP_12+ID_12 -1
-eq13<- LOGPROD_13~ LOGLAB_13+LOGCAP_13+ID_13 -1
-eq14<- LOGPROD_14~ LOGLAB_14+LOGCAP_14+ID_14 -1
-eq15<- LOGPROD_15~ LOGLAB_15+LOGCAP_15+ID_15 -1
-eq16<- LOGPROD_16~ LOGLAB_16+LOGCAP_16+ID_16 -1
-eq17<- LOGPROD_17~ LOGLAB_17+LOGCAP_17+ID_17 -1
-eq18<- LOGPROD_18~ LOGLAB_18+LOGCAP_18+ID_18 -1
-eq19<- LOGPROD_19~ LOGLAB_19+LOGCAP_19+ID_19 -1
-eq20<- LOGPROD_20~ LOGLAB_20+LOGCAP_20+ID_20 -1
-eq21<- LOGPROD_21~ LOGLAB_21+LOGCAP_21+ID_21 -1
-eq22<- LOGPROD_22~ LOGLAB_22+LOGCAP_22+ID_22 -1
-eq23<- LOGPROD_23~ LOGLAB_23+LOGCAP_23+ID_23 -1
-eq24<- LOGPROD_24~ LOGLAB_24+LOGCAP_24+ID_24 -1
-eq25<- LOGPROD_25~ LOGLAB_25+LOGCAP_25+ID_25 -1
-eq26<- LOGPROD_26~ LOGLAB_26+LOGCAP_26+ID_26 -1
-system<- list(eq1,eq2,eq3,eq4,eq5,eq6,eq7,eq8,eq9,eq10,eq11,eq12,eq13,eq14,eq15,
-          eq16,eq17,eq18,eq19,eq20,eq21,eq22,eq23,eq24,eq25,eq26)
 
-fit<- systemfit(system, data = xm729)
-model.matrix(fit)
-model.matrix( fit$eq[[ 1 ]] )
-summary(fit)
+ID<- c(rep(1,37), rep(2,37), rep(3,37), rep(4,37), rep(5,37),
+       rep(6,37), rep(7,37), rep(8,37), rep(9,37), rep(10,37),
+       rep(11,37),rep(12,37),rep(13,37),rep(14,37),rep(15,37),
+       rep(16,37),rep(17,37),rep(18,37),rep(19,37),rep(20,37),
+       rep(21,37),rep(22,37),rep(23,37),rep(24,37),rep(25,37),
+       rep(26,37))
+ID<- as.integer(ID)
+str(ID)
 
-eq1<- lm(LOGPROD_1~LOGLAB_1+LOGCAP_1+ID_1 -1)
-summary(eq1)
-library(plm)
-
-p_data<- pdata.frame(xm729, index=c("OBS", "ID_1"))
-str(p_data)
-eq<- plm(LOGPROD_1~LOGLAB_1+LOGCAP_1, data= p_data, model"within")
-
-Y<- rbind(LOGPROD_1, LOGPROD_2,LOGPROD_3,LOGPROD_4,LOGPROD_5,
+y<- rbind(LOGPROD_1, LOGPROD_2,LOGPROD_3,LOGPROD_4,LOGPROD_5,
           LOGPROD_6, LOGPROD_7,LOGPROD_8,LOGPROD_9,LOGPROD_10,
           LOGPROD_11,LOGPROD_12,LOGPROD_13,LOGPROD_14,LOGPROD_15,
           LOGPROD_16,LOGPROD_17,LOGPROD_18,LOGPROD_19,LOGPROD_20,
           LOGPROD_21,LOGPROD_22,LOGPROD_23,LOGPROD_24,LOGPROD_25,
           LOGPROD_26)
-str(Y)
+y<- as.numeric(y)
+str(y)
 
-X1<- rbind(LOGLAB_1, LOGLAB_2,LOGLAB_3,LOGLAB_4,LOGLAB_5,
+x1<- rbind(LOGLAB_1, LOGLAB_2,LOGLAB_3,LOGLAB_4,LOGLAB_5,
           LOGLAB_6, LOGLAB_7,LOGLAB_8,LOGLAB_9,LOGLAB_10,
           LOGLAB_11,LOGLAB_12,LOGLAB_13,LOGLAB_14,LOGLAB_15,
           LOGLAB_16,LOGLAB_17,LOGLAB_18,LOGLAB_19,LOGLAB_20,
           LOGLAB_21,LOGLAB_22,LOGLAB_23,LOGLAB_24,LOGLAB_25,
           LOGLAB_26)
-str(X1)
- num [1:26, 1:37] 4.462 0.563 1.033 0.526 1.314 ...
- - attr(*, "dimnames")=List of 2
-  ..$ : chr [1:26] "LOGLAB_1" "LOGLAB_2" "LOGLAB_3" "LOGLAB_4" ...
-  ..$ : NULL
-head(X1)
+x1<- as.numeric(x1)
+str(x1)
 
-
-X2<- rbind(LOGCAP_1, LOGCAP_2,LOGCAP_3,LOGCAP_4,LOGCAP_5,
+x2<- rbind(LOGCAP_1, LOGCAP_2,LOGCAP_3,LOGCAP_4,LOGCAP_5,
           LOGCAP_6, LOGCAP_7,LOGCAP_8,LOGCAP_9,LOGCAP_10,
           LOGCAP_11,LOGCAP_12,LOGCAP_13,LOGCAP_14,LOGCAP_15,
           LOGCAP_16,LOGCAP_17,LOGCAP_18,LOGCAP_19,LOGCAP_20,
           LOGCAP_21,LOGCAP_22,LOGCAP_23,LOGCAP_24,LOGCAP_25,
           LOGCAP_26)
-eq<- lm(Y~X1+X2)
-summary(eq)
-Y<- LOGPROD_1+ LOGPROD_2+LOGPROD_3+LOGPROD_4+LOGPROD_5+
-          LOGPROD_6+ LOGPROD_7+LOGPROD_8+LOGPROD_9+LOGPROD_10+
-          LOGPROD_11+LOGPROD_12+LOGPROD_13+LOGPROD_14+LOGPROD_15+
-          LOGPROD_16+LOGPROD_17+LOGPROD_18+LOGPROD_19+LOGPROD_20+
-          LOGPROD_21+LOGPROD_22+LOGPROD_23+LOGPROD_24+LOGPROD_25+
-          LOGPROD_26
-str(Y)
-num [1:37] 47.1 50.9 50.3 49.2 51.6  : n*1
-
-X1<- LOGLAB_1+ LOGLAB_2+LOGLAB_3+LOGLAB_4+LOGLAB_5+
-          LOGLAB_6+LOGLAB_7+LOGLAB_8+LOGLAB_9+LOGLAB_10+
-          LOGLAB_11+LOGLAB_12+LOGLAB_13+LOGLAB_14+LOGLAB_15+
-          LOGLAB_16+LOGLAB_17+LOGLAB_18+LOGLAB_19+LOGLAB_20+
-          LOGLAB_21+LOGLAB_22+LOGLAB_23+LOGLAB_24+LOGLAB_25+
-          LOGLAB_26
-str(X1)
- num [1:37] 22.2 25.2 25.3 24.7 26.8 : n*1
-
-X2<- LOGCAP_1+LOGCAP_2+LOGCAP_3+LOGCAP_4+LOGCAP_5+
-          LOGCAP_6+ LOGCAP_7+LOGCAP_8+LOGCAP_9+LOGCAP_10+
-          LOGCAP_11+LOGCAP_12+LOGCAP_13+LOGCAP_14+LOGCAP_15+
-          LOGCAP_16+LOGCAP_17+LOGCAP_18+LOGCAP_19+LOGCAP_20+
-          LOGCAP_21+LOGCAP_22+LOGCAP_23+LOGCAP_24+LOGCAP_25+
-          LOGCAP_26
-str(X2)
- num [1:37] 173 174 175 175 176 : n*1
-p_data<- pdata.frame(xm729)
-eq<- plm(LOGPROD_1+ LOGPROD_2+LOGPROD_3+LOGPROD_4+LOGPROD_5+
-          LOGPROD_6+ LOGPROD_7+LOGPROD_8+LOGPROD_9+LOGPROD_10+
-          LOGPROD_11+LOGPROD_12+LOGPROD_13+LOGPROD_14+LOGPROD_15+
-          LOGPROD_16+LOGPROD_17+LOGPROD_18+LOGPROD_19+LOGPROD_20+
-          LOGPROD_21+LOGPROD_22+LOGPROD_23+LOGPROD_24+LOGPROD_25+
-          LOGPROD_2
-~LOGLAB_1+ LOGLAB_2+LOGLAB_3+LOGLAB_4+LOGLAB_5+
-          LOGLAB_6+LOGLAB_7+LOGLAB_8+LOGLAB_9+LOGLAB_10+
-          LOGLAB_11+LOGLAB_12+LOGLAB_13+LOGLAB_14+LOGLAB_15+
-          LOGLAB_16+LOGLAB_17+LOGLAB_18+LOGLAB_19+LOGLAB_20+
-          LOGLAB_21+LOGLAB_22+LOGLAB_23+LOGLAB_24+LOGLAB_25+
-          LOGLAB_26
-
-+LOGCAP_1+LOGCAP_2+LOGCAP_3+LOGCAP_4+LOGCAP_5+
-          LOGCAP_6+ LOGCAP_7+LOGCAP_8+LOGCAP_9+LOGCAP_10+
-          LOGCAP_11+LOGCAP_12+LOGCAP_13+LOGCAP_14+LOGCAP_15+
-          LOGCAP_16+LOGCAP_17+LOGCAP_18+LOGCAP_19+LOGCAP_20+
-          LOGCAP_21+LOGCAP_22+LOGCAP_23+LOGCAP_24+LOGCAP_25+
-          LOGCAP_26, 
+x2<- as.numeric(x2)
+str(x2)
+const<- rep(1,962)       
+p_data<- data.frame(y,x1,x2,const, ID)
+p_data<- pdata.frame(p_data, index ="ID")
+w1 <- plm(y ~ x1 + x2,
+          data = p_data, model = "within", effect = "twoways")
+summary(w1)
+fixef(w1, type = "dmean")
+   1          2          3          4          5          6          7 
+-0.0968665 -0.0711004 -0.1385356 -0.0680962 -0.0464899  0.0200483  0.0101323 
+         8          9         10         11         12         13         14 
+ 0.0049056 -0.0270432 -0.1198352 -0.0020711  0.1173438  0.0444627  0.0605440 
+        15         16         17         18         19         20         21 
+ 0.0323359  0.1257796 -0.0794206 -0.2006385 -0.0616342 -0.1845308  0.0251244 
+        22         23         24         25         26 
+ 0.1991426  0.1412854  0.0630665  0.0514385  0.2006525 
+summary(fixef(w1, type = "dmean"))
+w1a <- plm(y ~ x1 + x2,
+          data = p_data, model="within", effect="twoways")
+fixef(w1, effect = "time")
+        1         2         3         4         5         6         7         8 
+0.0576200 0.1570055 0.0907879 0.0906551 0.0876245 0.1229756 0.1135150 0.0323085 
+        9        10        11        12        13        14        15        16 
+0.0317052 0.0255569 0.1166953 0.0349479 0.0120585 0.0458207 0.0825160 0.0515052 
+       17        18        19        20        21        22        23        24 
+0.0082198 0.1013312 0.1200264 0.0537757 0.0759650 0.1106077 0.0675382 0.0973387 
+       25        26        27        28        29        30        31        32 
+0.0896300 0.1519655 0.0868522 0.1200996 0.0869674 0.1253925 0.1163397 0.1244531 
+       33        34        35        36        37 
+0.1274016 0.0682101 0.0586205 0.1074465 0.1510440 
 
 
-data= p_data,index = c("ID_1","ID_2","ID_3","ID_4",
-          "ID_5","ID_6","ID_7","ID_8","ID_9","ID_10","ID_11","ID_12","ID_13",
-          "ID_14","ID_15","ID_16","ID_17","ID_18","ID_19","ID_20","ID_21",
-          "ID_22","ID_23","ID_24","ID_25","ID_26"))
-summary(eq)
+w2 <- plm(y ~ x1 + x2 + factor(id)-1,
+          data = p_data, model = "within")
+summary(w2)
+library(knitr)
+library(broom)
+kable(tidy(w2), digits=3, 
+      caption="Fixed effects in a subsample")
+Table: Fixed effects in a subsample
 
+|term | estimate| std.error| statistic| p.value|
+|:----|--------:|---------:|---------:|-------:|
+|x1   |    0.784|     0.016|    47.529|       0|
+|x2   |    0.161|     0.017|     9.748|       0|
 
+w3 <- lm(y ~ x1 + x2 + factor(ID)-1)
+summary(w3)
+Call:
+lm(formula = y ~ x1 + x2 + factor(ID) - 1)
 
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-3.04228 -0.15501 -0.00818  0.16320  1.12634 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+x1            0.78407    0.01650  47.529  < 2e-16 ***
+x2            0.16092    0.01651   9.748  < 2e-16 ***
+factor(ID)1   0.08911    0.10686   0.834  0.40457    
+factor(ID)2   0.11487    0.10737   1.070  0.28495    
+factor(ID)3   0.04748    0.10809   0.439  0.66055    
+factor(ID)4   0.11788    0.10717   1.100  0.27164    
+factor(ID)5   0.13954    0.10682   1.306  0.19176    
+factor(ID)6   0.20609    0.10631   1.938  0.05286 .  
+factor(ID)7   0.19623    0.10783   1.820  0.06909 .  
+factor(ID)8   0.19110    0.10921   1.750  0.08047 .  
+factor(ID)9   0.15912    0.11120   1.431  0.15279    
+factor(ID)10  0.06639    0.11155   0.595  0.55192    
+factor(ID)11  0.18412    0.11165   1.649  0.09948 .  
+factor(ID)12  0.30358    0.11127   2.728  0.00649 ** 
+factor(ID)13  0.23070    0.11396   2.024  0.04321 *  
+factor(ID)14  0.24680    0.11359   2.173  0.03004 *  
+factor(ID)15  0.21865    0.11277   1.939  0.05282 .  
+factor(ID)16  0.31206    0.11496   2.715  0.00676 ** 
+factor(ID)17  0.10690    0.11521   0.928  0.35374    
+factor(ID)18 -0.01435    0.11968  -0.120  0.90456    
+factor(ID)19  0.12467    0.11782   1.058  0.29027    
+factor(ID)20  0.00172    0.11972   0.014  0.98854    
+factor(ID)21  0.21142    0.12036   1.757  0.07933 .  
+factor(ID)22  0.38543    0.11852   3.252  0.00119 ** 
+factor(ID)23  0.32753    0.12123   2.702  0.00702 ** 
+factor(ID)24  0.24934    0.11882   2.098  0.03613 *  
+factor(ID)25  0.23766    0.12034   1.975  0.04858 *  
+factor(ID)26  0.38689    0.11839   3.268  0.00112 ** 
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.2761 on 934 degrees of freedom
+Multiple R-squared:  0.9883,    Adjusted R-squared:  0.988 
+F-statistic:  2823 on 28 and 934 DF,  p-value: < 2.2e-16
+
+fixef(w2, type = "dmean")
 
 id<- t(ID)%*%d
 d<- as.matrix(diag(26))
