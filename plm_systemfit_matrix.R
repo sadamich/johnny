@@ -1,3 +1,5 @@
+library(systemfit)
+data( "Kmenta" )
 str(Kmenta)
 'data.frame':   20 obs. of  5 variables:
  $ consump  : num  98.5 99.2 102.2 101.5 104.2 ...
@@ -5,7 +7,7 @@ str(Kmenta)
  $ income   : num  87.4 97.6 96.7 98.2 99.8 ...
  $ farmPrice: num  98 99.1 99.1 98.1 110.8 ...
  $ trend    : int  1 2 3 4 5 6 7 8 9 10 ...
-data( "Kmenta" )
+
 eqDemand <- consump ~ price + income
 eqSupply <- consump ~ price + farmPrice + trend
 system <- list( demand = eqDemand, supply = eqSupply )
