@@ -3,12 +3,6 @@
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 ### Example 5 5 Bank wages (p.300)                                         ###
-data(morths)
-str(morths)
-
-plot(aicplot(deaths~age,weights=n,data=morths,family="binomial",
-  alpha=seq(0.2,1.0,by=0.05)))
-
 xm501<- read.csv("xm501.csv",header =TRUE)
 str(xm501)
 attach(xm501)
@@ -23,10 +17,23 @@ summary(eq)
              Estimate Std. Error t value Pr(>|t|)    
 (Intercept) 10.213658   0.014756   692.1   <2e-16 ***
 educ         0.095963 
+### Compare with the Exhibit 5 7 (p.295)
 fit<- fitted(eq)
 plot(fit, type="l")
+
+educ<- EDUC - median(EDUC)
+w<- kweights(fit_2, kernel =  "Quadratic", normalize = TRUE)
+plot(w, type="l")
+eq2<- lm(LOGSALARY~EDUC)
+summary(eq2)
+fit_2<- fitted(eq2)
+plot(fit_2, type ="l")
+w<- kweights(fit_2, kernel =  "Quadratic", normalize = TRUE)
+plot(w)
+
 ### Conditionally parametric term for a Locfit model
 ### https://cran.r-project.org/web/packages/locfit/refman/locfit.html#cpar
+### Compare with the Exhibit 5 7 (c), (d), (e)
 fit_loc <- locfit(LOGSALARY~ cpar(EDUC), data=xm501)
 plot(fit_loc)
 crit(fit_loc) <- crit(fit_loc,cov=0.99)
