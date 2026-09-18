@@ -21,7 +21,12 @@ hist(res_sd)
 summary(res_sd)
    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 -3.23439 -0.36931  0.05546  0.00000  0.54729  3.96471 
-
+### ARMA (2,5)
+library(tseries)
+z<- arma(D4Y_61, order = c(2, 5), lag = NULL, coef = NULL,
+     include.intercept = TRUE, series = NULL, qr.tol = 1e-07)
+### plot,residulas, acf, pacf
+plot(z)
 ### Exhibit 7 9 (p.563)Call: lm(formula = D4Y_61 ~ d4_1 + d4_2)            ###
 Residuals:
       Min        1Q    Median        3Q       Max 
