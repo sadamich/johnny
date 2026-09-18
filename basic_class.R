@@ -1,3 +1,7 @@
+### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
+### angewandte Statistik, Pearson                                           ###
+### Quelle: https://www.pearson.de/r-9783868942507                          ###
+### Seite 124,200,202,208
 x <- 10
 class(x) # "numeric"
 oldClass(x) # NULL
