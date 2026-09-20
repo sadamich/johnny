@@ -10,6 +10,7 @@ library("vars")
 VAR_data <- data.frame(DAAA[25:624], DUS3MT[25:624])
 eq_var<- VAR(VAR_data, p = 1)
 eq_var
+roots(eq_var)
 ### VAR(1) Estimation Results: ###
 Estimated coefficients for equation DAAA.25.624.: 
 Call:DAAA.25.624. = DAAA.25.624..l1 + DUS3MT.25.624..l1 + const 
@@ -21,6 +22,9 @@ Call:DUS3MT.25.624. = DAAA.25.624..l1 + DUS3MT.25.624..l1 + const
       0.605138840       0.106807596       0.001374641
 eq_var2<- VAR(VAR_data, p = 2)
 eq_var2
+roots(eq_var2)
+[1] 0.4686267 0.4686267 0.4402689 0.4402689
+
 ### VAR(2) Estimation Results:###
 Estimated coefficients for equation DAAA.25.624.: 
 Call:DAAA.25.624. = DAAA.25.624..l1 + DUS3MT.25.624..l1 + DAAA.25.624..l2 + DUS3MT.25.624..l2 + const 
