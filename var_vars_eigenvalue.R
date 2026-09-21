@@ -63,3 +63,49 @@ return(result)
 }
 curve(f2, -10, 10 , add=TRUE, col="red")
 
+### The decomposition : A = VDV'
+x1<- c(1/2, 3/2,7/2)
+y<- c(1/2, 5/2, 2)
+plot(x1,y)
+eq<- lm(y~x1)
+summary(eq)
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)   0.9464     1.2345   0.767    0.584
+x1            0.3929     0.5567   0.706    0.609
+
+fit<- fitted(eq)
+lines(fit, add=TRUE, col="red")
+x0<- c(1,1,1)
+X<- cbind(x0,x1)
+
+XX<- t(X)%*%X
+eigen(XX)
+eigen() decomposition
+$values
+[1] 16.9227093  0.8272907
+$vectors
+          [,1]       [,2]
+[1,] 0.3674089 -0.9300595
+[2,] 0.9300595  0.3674089
+v1<- c(0.3674089, 0.9300595 )
+v2<- c(-0.9300595, 0.3674089)
+V<- cbind(v1,v2)
+d1<- c( 16.9227093, 0)
+d2<- c(0, 0.8272907)
+D<- cbind(d1,d2)
+A<- V%*%D%*%t(V)
+A
+  [,1]  [,2]
+[1,]  3.0  5.50
+[2,]  5.5 14.75
+XX
+    x0    x1
+x0 3.0  5.50
+x1 5.5 14.75
+### XX==A==VDV' : the decomposition is OK
+b<- solve(XX)%*%t(X)%*%y
+b
+        [,1]
+x0 0.9464286
+x1 0.3928571
+
