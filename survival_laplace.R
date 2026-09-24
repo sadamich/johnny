@@ -1,4 +1,4 @@
-
+https://cran.r-project.org/web/packages/BivLaplaceRL/refman/BivLaplaceRL.html#biv_brlmr_order
 
 library(BivLaplaceRL)
 sX <- function(x1, x2) sgumbel_biv(x1, x2, k1 = 2, k2 = 1)
