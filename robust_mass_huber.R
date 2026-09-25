@@ -1,16 +1,31 @@
 https://cran.r-project.org/web/packages/MASS/refman/MASS.html#huber
 library(MASS)
+data(chem)
 str(chem)
+Description
+A numeric vector of 24 determinations of copper in wholemeal flour, 
+in parts per million.
 num [1:24] 2.9 3.1 3.4 3.4 3.7 3.7 2.8 2.5 2.4 2.4 ...
 hist(chem,freq=FALSE)
 summary(chem)
  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   2.200   2.775   3.385   4.280   3.700  28.950 
+### Huber M-estimator of Location with MAD Scale
 huber(chem)
 $mu
 [1] 3.206724
 $s
 [1] 0.526323
+hubers(chem, mu=3.68)
+$mu
+[1] 3.68
+$s
+[1] 0.9409628
+hubers(chem)
+$mu
+[1] 3.205498
+$s
+[1] 0.673652
 hubers(chem, mu=3.68)
 $mu
 [1] 3.68
@@ -36,8 +51,6 @@ z<- rlm(stack.loss ~ ., stackloss, psi = psi.hampel, init = "lts")
 summary(z)
 fit<- fitted(z)
 plot(fit, type="l")
-rlm(stack.loss ~ ., stackloss, psi = psi.bisquare)
-
 psi:	the psi function is specified by this argument. It must give (possibly
  by name) a function g(x, ..., deriv) that for deriv=0 returns psi(x)/x and
  for deriv=1 returns psi'(x). Tuning constants will be passed in via
