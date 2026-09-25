@@ -1,8 +1,6 @@
 AB+BD+CA=CD
-
 a<- c(3,-1)
 b<- c(-4,2)
-
 3*a+2*b
 4*a-3*b
 -2*(a-b)
@@ -32,3 +30,27 @@ a<- c(-2,1)
 b<- c(6,-3)
 k<- t(a)*b
 k
+### Linear equation
+A<- matrix(c(5,3,2,1), nrow=2, ncol=2)
+y<- c(8,6)
+x<- solve(A)%*%y
+x
+    [,1]
+[1,]    4
+[2,]   -6
+
+A<- matrix(c(2,4,3,6), nrow=2, ncol=2)
+y<- c(1,2)
+x<- solve(A)%*%y
+Error in solve.default(A) : 
+Lapack routine dgesv: system is exactly singular: U[2,2] = 0
+Linear dependent
+
+### A^2 + (a+d)A+(ad-bc)E =0
+A<- matrix(c(4,0,-3,1), nrow=2, ncol=2)
+A%*%A -(4+1)*A+(4-0)*diag(2)
+     [,1] [,2]
+[1,]    0    0
+[2,]    0    0
+
+
