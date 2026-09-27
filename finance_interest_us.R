@@ -1,5 +1,7 @@
 https://cran.r-project.org/web/packages/tseries/refman/tseries.html#tcm
 https://www.federalreserve.gov/Releases/H15/
+https://www.ecb.europa.eu/stats/html/index.de.html
+https://genesis.destatis.de/datenbank/online/
 library(tseries)
 
 data(tcm)
