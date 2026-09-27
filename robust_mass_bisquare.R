@@ -1,3 +1,14 @@
+https://www.john-fox.ca/Companion/appendices/Appendix-Robust-Regression.pdf
+
+bs<- function(e){
+k<- 4.685
+(k^2/6)*(1-(1-(e/k)^2)^3)
+}
+curve(bs, -3,3)
+k<- 4.685
+k^2/6
+[1] 3.658204
+
 https://cran.r-project.org/web/packages/MASS/refman/MASS.html#rlm
 library(MASS)
 str(stackloss)
