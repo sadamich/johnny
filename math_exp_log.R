@@ -13,7 +13,6 @@ return(result)
 }
 curve(f_2_e, -5, 5, col="red")
 
-
 ### To the exponential function : Approximation
 for (i in 1:10){
 x<- -5:5
