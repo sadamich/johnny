@@ -2,7 +2,7 @@ f_exp<- function(k){
 result<- (1+k)^(1/k)
 return(result)
 }
-curve(f_exp, -3,3)
+curve(f_exp, -3,3, main="f(x)=(1+x)^(1/x)")
 f_exp(-0.1)
 [1] 2.867972
 f_exp(-0.2)
