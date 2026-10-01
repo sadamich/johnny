@@ -25,11 +25,31 @@ for (i in 1:5){
 w_colsum[i]<- sum(w_testmt[i,]*c(1,0.5,0.3))
 }
 w_colsum
-
 W<- w_testmt
 v<- c(1,0.5,0.3)
 W%*%v
+### Arithmetrische Folge : Arithmetric progression
+https://de.wikipedia.org/wiki/Arithmetische_Folge
+arth<- function(a, d, n){
+result<- sum(a+ d*(n-1))
+return(result)
+}
+arth(2, 2, 5)
 
+s_arth<- function(a, d, n){
+result<- n/2*(2*a+(n-1)*d)
+return(result)
+}
+s_arth(2,2,5)
+
+s_arth2<- function(a0,a1,n){
+result<- n/2*(a0+a1)
+return(result)
+}
+s_arth2(2,10,5)
+
+### Geometrische Folge : Geometric progression
+https://de.wikipedia.org/wiki/Geometrische_Folge
 aq<- function(a, q){
 result<- sum(a*1/10^q)
 return(result)
@@ -43,37 +63,4 @@ aq(0.3,5)
 aq(0.3, 1:6)
 [1] 0.0333333
 
-### pi^2/6 
-n<- 1:5
-s<- sum(1/n^2)
-s
-[1] 1.463611
-1+1/2^2+1/3^2+1/4^2+1/5^2
-[1] 1.463611
-text(1,3,sum(1/n^2, n==1,100))
-n<- 1:100000
-s<- sum(1/n^2)
-s
-[1] 1.644924     (near to pi^2/6) 
-pi^2/6
-[1] 1.644934
-plot.new()
-plot.window(c(0,15),c(15,1))
-text(6,2, expression(sum(1/n^2,n==1,Inf)==pi^2/6))
-text(6,4, expression(sum(1/n^2,n==1,10)==1.549768))
-text(6,6, expression(sum(1/n^2,n==1,100)==1.634984))
-text(6,8, expression(sum(1/n^2,n==1,10000)==1.644834))
-text(6,10, expression(pi^2/6==1.644934))
-### 1/3       
 
-n<- 0:10
-n2<- 0:100
-s<- sum(0.3*(0.1^n))
-s
-[1] 0.3333333
-n1<- 0:50
-s1<- sum(0.3*(0.1^n1))
-s1
-n2<- 0:100
-s2<- sum(0.3*(0.1^n2))
-s2
