@@ -1,5 +1,64 @@
 library(tseries)
+par(mfrow=c(2,2))
+### DAX
+con <- url("https://finance.yahoo.com")
+if(!inherits(try(open(con), silent = TRUE), "try-error")) {
+  close(con)
+nDays <- 50
+  instrument <- "^GDAXI"
+  start <- strftime(as.POSIXlt(Sys.time() - nDays * 24 * 3600),
+                    format="%Y-%m-%d") 
+  end <- strftime(as.POSIXlt(Sys.time()), format = "%Y-%m-%d") 
+  x <- get.hist.quote(instrument = instrument, start = start, end = end,
+                      retclass = "ts")
 
+  plotOHLC(x, ylab = "price", main = instrument)
+}
+
+### DJI
+con <- url("https://finance.yahoo.com")
+if(!inherits(try(open(con), silent = TRUE), "try-error")) {
+  close(con)
+nDays <- 50
+  instrument <- "^DJI"
+  start <- strftime(as.POSIXlt(Sys.time() - nDays * 24 * 3600),
+                    format="%Y-%m-%d") 
+  end <- strftime(as.POSIXlt(Sys.time()), format = "%Y-%m-%d") 
+  x <- get.hist.quote(instrument = instrument, start = start, end = end,
+                      retclass = "ts")
+
+  plotOHLC(x, ylab = "price", main = instrument)
+}
+
+### FTSE
+con <- url("https://finance.yahoo.com")
+if(!inherits(try(open(con), silent = TRUE), "try-error")) {
+  close(con)
+nDays <- 50
+  instrument <- "^FTSE"
+  start <- strftime(as.POSIXlt(Sys.time() - nDays * 24 * 3600),
+                    format="%Y-%m-%d") 
+  end <- strftime(as.POSIXlt(Sys.time()), format = "%Y-%m-%d") 
+  x <- get.hist.quote(instrument = instrument, start = start, end = end,
+                      retclass = "ts")
+
+  plotOHLC(x, ylab = "price", main = instrument)
+}
+
+### NIKKEI
+con <- url("https://finance.yahoo.com")
+if(!inherits(try(open(con), silent = TRUE), "try-error")) {
+  close(con)
+nDays <- 50
+  instrument <- "^N225"
+  start <- strftime(as.POSIXlt(Sys.time() - nDays * 24 * 3600),
+                    format="%Y-%m-%d") 
+  end <- strftime(as.POSIXlt(Sys.time()), format = "%Y-%m-%d") 
+  x <- get.hist.quote(instrument = instrument, start = start, end = end,
+                      retclass = "ts")
+
+  plotOHLC(x, ylab = "price", main = instrument)
+}
 ### S&P 500 : The time series
 con <- url("https://finance.yahoo.com")
 if(!inherits(try(open(con), silent = TRUE), "try-error")) {
