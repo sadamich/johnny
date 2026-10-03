@@ -32,7 +32,7 @@ P1%*%P1
 [2,] 5    4
 
 ### The case 2 
-
+https://de.wikipedia.org/wiki/Jordan-Chevalley-Zerlegung
 A<- matrix(c(2,-1,1,0,3,-1,1,1,2), nrow=3,ncol=3)
 rank(A)
 I<- diag(3)
