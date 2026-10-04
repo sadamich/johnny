@@ -6,9 +6,10 @@
 xm301<- read.csv("xm301.csv",header=TRUE)
 attach(xm301)
 str(xm301)
+### Case 1 : Deviations from sample mean (p. 147)                          
 regression1<- lm(LOGSAL ~ 1)
 summary(regression1)
-### Regression 1 (p.149) Call:lm(formula = LOGSAL ~ 1)                     ###
+### Regression 1 (p.149) Call:lm(formula = LOGSAL ~ 1) : Y -> X2          ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.69220 -0.27098 -0.08606  0.16018  1.45624 
@@ -20,7 +21,7 @@ Residual standard error: 0.3973 on 473 degrees of freedom
 
 regression2<- lm(EDUC ~ 1)
 summary(regression2)
-### Regression 2 (p.149) Call:lm(formula = EDUC ~ 1)                       ###
+### Regression 2 (p.149) Call:lm(formula = EDUC ~ 1) : X1 -> X2           ###
 Residuals:
    Min     1Q Median     3Q    Max 
 -5.492 -1.492 -1.492  1.508  7.508 
@@ -32,7 +33,7 @@ Residual standard error: 2.885 on 473 degrees of freedom
 
 regression3 <- lm(LOGSALBEGIN ~ 1)
 summary(regression3)
-### Regression 3 (p.149) Call:lm(formula = LOGSALBEGIN ~ 1)                ###
+### Regression 3 (p.149) Call:lm(formula = LOGSALBEGIN ~ 1): X1 -> X2     ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.56442 -0.23693 -0.05360  0.09998  1.62013 
@@ -47,7 +48,7 @@ dmeduc<- resid(regression2)
 dmlogsalbegin<- resid(regression3)
 regression4<- lm(dmlogsal ~ dmeduc + dmlogsalbegin -1)
 summary(regression4)
-### regression4(p.149)Call:lm(formula = dmlogsal ~ dmeduc + dmlogsalbegin - 1)###
+### regression4(p.149) : M2Y = M2X1 + M2e                                  ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.45035 -0.11750 -0.01215  0.11453  0.90229 
@@ -62,7 +63,7 @@ F-statistic: 947.4 on 2 and 472 DF,  p-value: < 2.2e-16
 
 regression5<- lm(LOGSAL ~ LOGSALBEGIN)
 summary(regression5)
-### Regression 5 (p.149) Call:lm(formula = LOGSAL ~ LOGSALBEGIN)           ###
+### Regression 5 (p.149) Call:lm(formula = LOGSAL ~ LOGSALBEGIN): Y-> X2   ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.46515 -0.12758 -0.01248  0.10985  0.93779 
@@ -77,7 +78,7 @@ F-statistic:  1730 on 1 and 472 DF,  p-value: < 2.2e-16
 
 regression6<- lm(EDUC ~ LOGSALBEGIN)
 summary(regression6)
-### Regression 6 (p.149) Call:lm(formula = EDUC ~ LOGSALBEGIN)             ###
+### Regression 6 (p.149) Call:lm(formula = EDUC ~ LOGSALBEGIN): X1 -> X2   ###
 Residuals:
     Min      1Q  Median      3Q     Max 
 -6.4421 -1.0776  0.4218  1.5354  4.7201 
@@ -94,7 +95,7 @@ res_logsal<- resid(regression5)
 res_educ<- resid(regression6)
 regression7<- lm(res_logsal ~ res_educ -1)
 summary(regression7)
-### Regression 7 (p.149) Call:lm(formula = res_logsal ~ res_educ - 1)      ###
+### Regression 7 (p.149) : M2Y = M2X1 + M2e                                ###
 Residuals:
      Min       1Q   Median       3Q      Max 
 -0.45035 -0.11750 -0.01215  0.11453  0.90229 
