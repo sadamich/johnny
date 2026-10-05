@@ -12,6 +12,13 @@ str(xm301)
 ### Exhibit 3 1 (p.119)
 par(mfrow= c(3,2))
 plot(EDUC, LOGSAL)
+eq<- lm(LOGSAL~EDUC)
+summary(eq)
+f<- function(x){
+result<- 9.062102 + 0.095963*x
+return(result)
+}
+curve(f, 8, 20, add=TRUE, col="red")
 plot(LOGSALBEGIN, LOGSAL)
 plot(GENDER, LOGSAL)
 plot(EDUC, LOGSALBEGIN)
