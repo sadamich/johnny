@@ -7,7 +7,6 @@ plot(data1)
 curve.circular(dcircularuniform, join=TRUE, xlim=c(-1.2, 1.2), 
   ylim=c(-1.2, 1.2), main="Density of a Circular Uniform Distribution")
 
-
 ### Inverse of A1
 #Generate data from a von Mises distribution
 data <- rvonmises(n=50, mu=circular(pi), kappa=4)
@@ -91,4 +90,73 @@ curve.circular(ff, shrink=1.2, join=TRUE)
 x <- rvonmises(100, circular(0), 5)
 trigonometric.moment(x, control.circular=list(units="degrees"))
 
+set.seed(1234)
+x <- cbind(rnorm(20), rnorm(20))
+y <- coord2rad(x)
+plot(y)
+
+
+  x <- rvonmises(100, circular(pi), 10)  
+  res <- intersect.modal.region(x, breaks=circular(matrix(c(pi,pi+pi/12,
+    pi-pi/12, pi), ncol=2, byrow=TRUE)), bw=50)
+  res$tot
+
+  x <- rvonmises(100, circular(0), 10)
+  res <- intersect.modal.region(x, breaks=circular(matrix(c(pi,pi+pi/12),
+    ncol=2)), bw=50)
+  res$tot
+  
+  res <- intersect.modal.region(x, breaks=circular(matrix(c(pi/12,
+    2*pi-pi/12), ncol=2, byrow=TRUE)), bw=50)
+  res$tot
+plot(x)
+
+
+x <- rvonmises(20, circular(0), 10)
+y <- runif(20, 0.5, 1)
+plot(x, shrink=2)
+lines(x, y)
+
+
+# Generate a data set of dependent circular variables.
+x <- circular(runif(50, 0, 2*pi))
+y <- atan2(0.15*cos(x) + 0.25*sin(x), 0.35*sin(x)) + 
+  rvonmises(n=50, mu=circular(0), kappa=5)
+# Fit a circular-circular regression model.
+circ.lm <- lm.circular(y, x, order=1)
+# Obtain a crude plot of the data and fitted regression line.
+plot.default(x, y)
+circ.lm$fitted[circ.lm$fitted>pi] <- circ.lm$fitted[circ.lm$fitted>pi] - 2*pi 
+points.default(x[order(x)], circ.lm$fitted[order(x)], type='l')
+
+# Fit a circular-linear regression model and show predictions.
+set.seed(1234)
+x <- cbind(rnorm(10), rep(1, 10))
+x <- cbind(rnorm(10), rep(1,10))
+y <- circular(2*atan(c(x%*%c(5,1))))+rvonmises(10, mu=circular(0), kappa=100)
+lm.circular(y=y, x=x, init=c(5,1), type='c-l', verbose=TRUE)
+plot(y)
+lmC <- lm.circular(y=y, x=x, init=c(5,1), type='c-l', verbose=TRUE)
+p <- circular(lmC$mu+2*atan(x%*%lmC$coefficients))
+points(p, col=2, pch= "+")
+
+
+
+x <- circular(c(0, 90, 180, 270), units="degrees")
+  minusPiPlusPi(x)
+
+# Examples on using radii.scale and prop with a dummy dataset where 
+# highest proportion is 50% in bin 2
+x <- c(2, 2, 2, 2, 5, 5, 10, 20)
+circ.x <- circular::circular(x, units = "hours", template = "clock24")
+old_par <- par(mfrow = c(2, 2))
+rose.diag(circ.x, bins=24, main="radii.scale=linear, prop=1",
+          radii.scale="linear", prop=1)
+rose.diag(circ.x, bins=24, main = "radii.scale=linear, prop=2",
+          radii.scale="linear", prop=2)
+rose.diag(circ.x, bins=24, main = "radii.scale=sqrt, prop=1",
+          radii.scale="sqrt", prop=1)
+rose.diag(circ.x, bins=24, main = "radii.scale=sqrt, prop=sqrt(2)",
+          radii.scale="sqrt", prop=sqrt(2))
+par(old_par)
 
