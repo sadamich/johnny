@@ -1,4 +1,20 @@
 library(numbers)
+### Fibonacci and Lucas Series
+https://en.wikipedia.org/wiki/Recurrence_relation
+fibonacci(10, sequence= TRUE) 
+[1]  1  1  2  3  5  8 13 21 34 55
+
+n <- 5; P <- pascal_triangle(n)
+for (i in 1:(n+1)) {
+    cat(P[i, 1:i], '\n')
+}
+1 
+1 1 
+1 2 1 
+1 3 3 1 
+1 4 6 4 1 
+1 5 10 10 5 1
+
 
 #-- Continued fraction of sqrt(2) is [1; 2, 2, 2, ...] -----------------
 b0 <- 1; b <- rep(2, 20)                # sqrt(2)
