@@ -2,15 +2,12 @@
 ### angewandte Statistik, Pearson                                           ###
 ### Quelle: https://www.pearson.de/r-9783868942507                          ###
 ### Seite 210 - 211 
-
 f<- function(x){
 result<- ((1-cos(x)-(pi/2 -x)*sin(x)))^2
 return(result)
 }
 optimize(f, c(0.1,pi/2))
-
 curve(f(x), -5,5, xlab= "x", ylab="f(x)")
-
 ### Use of maxLik
 library(maxLik)
 f_m<- function(x){
@@ -70,3 +67,29 @@ f_m4(pi/4)
 [1] -0.5176381
 f_m4(pi/3)
 [1] 0 : -2.220446e-16
+
+### negative values of x
+sin(-pi/2)
+[1] -1
+sin(-pi)
+[1] 0
+sin(0)
+[1] 0
+cos(pi/2)
+[1] 0 
+cos(0)
+[1] 1
+cos(-pi/2)
+[1] 0
+cos(-pi)
+[1] -1
+cos(-3/2*pi)
+[1] 0
+
+curve(tan(x), -10, 10)
+tan(-3/2*pi)
+[1] Inf
+tan(-pi)
+[1] 0
+tan(-pi/2)
+[1] Inf
