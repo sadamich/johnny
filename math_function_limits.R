@@ -79,3 +79,16 @@ f8(3.9)
 [1] 3.974842
 f8(3.9999)
 [1] 3.999975   : lim (f8) = 4
+
+f9<- function(x){
+result<- (1/2)^x
+return(result)
+}
+curve(f9, -3,3)
+
+
+f10<- function(x){
+result<- (1/3)^(x-1)
+return(result)
+}
+curve(f10, -3,30)
