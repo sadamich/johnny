@@ -4,15 +4,14 @@ f<- function(x){
 result <- x
 return(x)
 }
-
 curve(f, -10, 10)
+
 f1<- function(x){
 p<- 1
 result<- x +p
 return(result)
 }
 curve(f1,add=TRUE, col="red", -10,10)
-
 
 f2<- function(x){
 p<-3
