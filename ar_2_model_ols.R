@@ -77,23 +77,17 @@ beta5<- theta[5]
 beta6<- theta[6]
 beta7<- theta[7]
 beta8<- theta[8]
-beta9<- theta[9]
-sigma<- theta[10]
+sigma<- theta[9]
 N<- 136
-y1<- predict(ar_2)
-e<- D4Y_61 - y1
-e1<- lag(e)
-e2<- lag(e1)
-e3<- lag(e2)
-e4<- lag(e3)
-e5<- lag(e4)
-mu<- beta1+ beta2*d4_1+beta3*d4_2+beta4*e+beta5*e1+beta6*e2+beta7*e3+beta8*e4
-     +beta9*e5
 
--(N-9)*0.5*log(2*pi) - (N-9)*0.5*log(sigma^2) - 0.5/sigma^2*sum((D4Y_61 -mu)^2)
+e<- D4Y_61 - beta4*D4Y[44:179] - beta5*D4Y[43:178] - beta6*D4Y[42:177]
+           - beta7*D4Y[41:176] - beta8*D4Y[40:175]
+D4Y_61 <- beta1+ beta2*D4Y[44:179]+beta3*D4Y[43:178]
+
+-(N- 8)/2*log(2*pi)- (N-8)/2*log(sigma^2) -1/2*sigma^2*sum(e^2)
 }
 library(maxLik)
-m25<- maxLik(eq_ml_arma, start=c(1,1,1,1,1,1,1,1,1,1))
+m25<- maxLik(eq_ml_arma, start=c(1,1,1,1,0,0,0,0,1))
 summary(m25)
 
 
