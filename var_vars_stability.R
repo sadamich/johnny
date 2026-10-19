@@ -1,6 +1,5 @@
-
 https://cran.r-project.org/web/packages/vars/refman/vars.html#stability
-
+library(vars)
 
 data(Canada)
 var.2c <- VAR(Canada, p = 2, type = "const")
