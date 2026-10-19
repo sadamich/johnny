@@ -25,6 +25,12 @@ $e
  [9,] -0.313059778  0.427131741 -0.005842792
 [10,] -0.335382897  0.489230185  0.053372767
 [11,] -0.343203150  0.529860661  0.101208799
+plot(irf(var.2c, impulse = "e", response = c("prod", "rw", "U"), boot =
++ FALSE))
+https://cran.r-project.org/web/packages/vars/refman/vars.html#topic+Phi
+Phi(var.2c, nstep=4)
+https://cran.r-project.org/web/packages/vars/refman/vars.html#topic+Psi
+Psi(var.2c, nstep=4)
 
 ## For SVAR
 amat <- diag(4)
@@ -47,4 +53,6 @@ $e
  [9,] -0.02039436  0.44809056 -0.2342600
 [10,] -0.06469598  0.54753637 -0.1750896
 [11,] -0.10009271  0.63288686 -0.1190199
+
+
 
