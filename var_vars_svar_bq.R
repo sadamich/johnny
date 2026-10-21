@@ -22,3 +22,7 @@ e    104.37  0.0000  0.00 0.0000
 prod  45.35  5.1971  0.00 0.0000
 rw   168.41 -2.1145 10.72 0.0000
 U    -19.26 -0.4562  1.41 0.5331
+
+https://de.wikipedia.org/wiki/Neukeynesianismus
+https://de.wikipedia.org/wiki/Olivier_Blanchard
+https://de.wikipedia.org/wiki/Stanley_Fischer
