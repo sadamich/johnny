@@ -26,3 +26,16 @@ f_exp(0.00001)
 
 exp(1)
 [1] 2.718282
+
+
+f_e<- function(x){
+result<- (exp(x)-1)/x
+return(result)
+}
+curve(f_e, -5,5)
+f_e(- 0.0001)
+[1] 0.99995
+f_e( 0.0001)
+[1] 1.00005
+
+### f_e convert to 1 as x => 0  ###
