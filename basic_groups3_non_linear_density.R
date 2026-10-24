@@ -14,9 +14,13 @@ densityPlot(~ EDUC, from=0, normalize=TRUE, show.bw=TRUE, data=xm301)
 densityPlot(EDUC ~ type, data=xm301)
 densityPlot(~ EDUC, show.bw=TRUE, method="kernel", data=xm301)
 densityPlot(~ EDUC, show.bw=TRUE, data=xm301)
-densityPlot(~ EDIC, from=0, normalize=TRUE, show.bw=TRUE, data=xm301)
+densityPlot(~ EDUC, from=0, normalize=TRUE, show.bw=TRUE, data=xm301)
 
-densityPlot(LOGSAL ~ educ,kernel=depan,data=xm301)
+
+educ<- factor(educ,labels=c("NA","12","14","15","16","17","NA","NA","NA","NA"))
+densityPlot(LOGSAL ~educ,kernel=depan,data=xm301)
+Error in densityPlot.default(mf[[response]], g, xlab = xlab, ylab = ylab,  : 
+  argument g must be a factor
 densityPlot(LOGSAL ~ educ, kernel=depan, legend=list(location="top"), data=xm301)
 
 plot(adaptiveKernel(UN$infantMortality, from=0, adjust=0.75), col="magenta")
