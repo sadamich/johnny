@@ -1,0 +1,11 @@
+### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
+### Business and Economics. Oxford University Press                        ###
+### https://global.oup.com/booksites/content/0199268010/                   ###
+xm301<- read.csv("xm301.csv",header=TRUE)
+attach(xm301)
+str(xm301)
+library(car)
+https://cran.r-project.org/web/packages/car/refman/car.html#panel.car
+
+coplot(LOGSAL ~ EDUC|GENDER, panel=panel.car, 
+  col="red", data=xm301)
