@@ -26,3 +26,11 @@ Levene's Test for Homogeneity of Variance (center = mean: 0.1)
 group   9  3.1782 0.0009669 ***
       464                      
 ---
+
+jobcat<- as.factor(JOBCAT)
+leveneTest(LOGSAL ~ jobcat, xm301)
+Levene's Test for Homogeneity of Variance (center = median)
+       Df F value    Pr(>F)    
+group   2  13.114 2.869e-06 ***
+      471                      
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.
