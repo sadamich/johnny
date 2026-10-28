@@ -26,3 +26,7 @@ https://cran.r-project.org/web/packages/car/refman/car.html#mmps
 Marginal Model Plotting
 m1<- lm(RENDCYCO ~ RENDMARK, data=xm404)
 mmps(m1)
+https://cran.r-project.org/web/packages/car/refman/car.html#outlierTest
+outlierTest(lm(RENDCYCO ~ RENDMARK, data=xm404))
+   rstudent unadjusted p-value Bonferroni p
+9 -3.795411         0.00018724     0.044937
