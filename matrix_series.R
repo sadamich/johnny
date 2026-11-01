@@ -64,3 +64,21 @@ aq(0.3, 1:6)
 [1] 0.0333333
 
 
+### Limits 
+f1<- function(x){
+result<- x^(1/x)
+return(result)
+}
+curve(f1, 0,100)
+
+f2
+f2<- function(x){
+result<- 2^(1/x)
+return(result)
+}
+curve(f2, 0,100)
+
+
+f4<- function(x){
+result<- 2*x
+
