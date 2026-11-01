@@ -60,9 +60,10 @@ Residual standard error: 0.2562 on 470 degrees of freedom
 Multiple R-squared:  0.5869,    Adjusted R-squared:  0.5842 
 F-statistic: 222.5 on 3 and 470 DF,  p-value: < 2.2e-16
 
-
+### Compare with the panel 2 (p.300) 
+library(maxLik)
 loglik <- function(theta) {
-   beta<- theta[1]
+   beta1<- theta[1]
    beta2<- theta[2]
    beta3<- theta[3]
    beta4<- theta[4]                        
@@ -73,31 +74,37 @@ loglik <- function(theta) {
    EDUC_lam <- (EDUC^lambda -1)/lambda
    GENDER_lam <- (GENDER^lambda -1)/lambda
    MINORITY_lam <- (MINORITY^lambda -1)/lambda
-   mu<- (beta^lambda -1)/lambda + beta2*GENDER_lam + beta3*MINORITY_lam + 
+   N <- 474
+   mu<- (beta1^lambda -1)/lambda + beta2*GENDER_lam + beta3*MINORITY_lam + 
          beta4*EDUC_lam
    ll <- -0.5*N*log(2*pi) - 0.5*N*log(sigma^2) 
-          -(lambda -1)*sum(log(S))- sum(0.5*(y_lam - mu)^2/sigma^2)                           
+          -(lambda -1)*sum(log(S))- 1/(2*sigma^2)*sum(0.5*(y_lam - mu)^2)                           
 }
-N <- 474
-library(maxLik)
-m<- maxLik(loglik, start=c(0,0,0,0,0,0))
+
+
+m<- maxLik(loglik, start=c(1,1,1,1,1,1))
 summary(m)
-???
- -0.5*N*log(2*pi)- N*log(sigma) + (lambda -1)*sum(log(S)) 
-- sum(0.5*(y- mu)^2/sigma^2)
 
-### Package MASS
-https://cran.r-project.org/web/packages/MASS/refman/MASS.html#boxcox
-library(MASS)
-str(trees)
-'data.frame':   31 obs. of  3 variables:
- $ Girth : num  8.3 8.6 8.8 10.5 10.7 10.8 11 11 11.1 11.2 ...
- $ Height: num  70 65 63 72 81 83 66 75 80 75 ...
- $ Volume: num  10.3 10.3 10.2 16.4 18.8 19.7 1
-boxcox(Volume ~ log(Height) + log(Girth), data = trees,
-       lambda = seq(-0.25, 0.25, length.out = 10))
-boxcox(Days+1 ~ Eth*Sex*Age*Lrn, data = quine,
-       lambda = seq(-0.05, 0.45, length.out = 20))
 
-boxcox(S ~ GENDER+MINORITY+EDUC, data = xm501,
-       lambda = seq(-0.25, 0.25, length.out = 10))
+loglik2 <- function(theta) {
+   beta1<- theta[1]
+   beta2<- theta[2]
+   beta3<- theta[3]
+   beta4<- theta[4]                        
+   lambda<- theta[5]
+   sigma <- theta[6]
+   S<- SALARY/10000
+   y_lam<- (S^lambda - 1)/lambda
+  
+   N <- 474
+   mu<- beta1+ beta2*GENDER+ beta3*MINORITY+ 
+         beta4*EDUC
+   ll <- -0.5*N*log(2*pi) - 0.5*N*log(sigma^2) 
+          -(lambda -1)*sum(log(S))- 1/(2*sigma^2)*sum(0.5*(y_lam - mu)^2)                           
+}
+
+
+m2<- maxLik(loglik2, start=c(1,1,1,1,1,1))
+summary(m2)
+
+      
