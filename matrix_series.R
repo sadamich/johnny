@@ -71,14 +71,29 @@ return(result)
 }
 curve(f1, 0,100)
 
+### a^(1/n)
 f2
 f2<- function(x){
 result<- 2^(1/x)
 return(result)
 }
 curve(f2, 0,100)
+### a^x/ n!
+f3<- function(x){
+result<- 2^x/factorial(x)
+return(result)
+}
+curve(f3, 0, 100)
 
-
+### a^x   a< 1   Convergence
 f4<- function(x){
-result<- 2*x
-
+result<- (0.5)^x
+return(result)
+}
+curve(f4, 0, 100)
+### a^x   a> 1   Devergence
+f4_d<- function(x){
+result<- (2)^x
+return(result)
+}
+curve(f4_d, 0, 100)
