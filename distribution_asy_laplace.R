@@ -1,6 +1,24 @@
 https://cran.r-project.org/web/packages/ald/refman/ald.html#ALD
 library(ald)
 
+### i.i.d distributed variables        
+x<- 1:30
+z<- dALD(x, mu = mean(x), sigma = sd(x), p = 1/30)
+plot(z, type="l")
+likALD(z, mu = mean(x), sigma = sd(x), p = 1/30, loglik = TRUE)
+mleALD(x, initial = NA)
+[1] 3
+$par
+[1] 15.0000031  3.7416574  0.4833147   ### the ML estimation ###
+median(x)
+[1] 15.5
+
+### The random laplace distributed variables                               ###
+set.seed(26)
+z<- rALD(30, mu = 0, sigma = 1, p = 0.5)
+plot(z, type="l")
+hist(z)
+
 ##Density
 sseq = seq(-40,80,0.5)
 dens = dALD(y=sseq,mu=50,sigma=3,p=0.75)
