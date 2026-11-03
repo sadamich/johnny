@@ -1,13 +1,29 @@
 ### Package maxLik ###
 ### Source: https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html ###
+https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html#maxSGA
+
 library(maxLik)
 ### estimate the exponential distribution parameter by ML                  ###
 ### random variable of exponential distribution 
 set.seed(1)
 t <- rexp(100, 2)
+hist(t)
 loglik <- function(theta, index) sum(log(theta) - theta*t[index])
+
 ### Note the log-likelihood and gradient are summed over observations      ###
 gradlik <- function(theta, index) sum(1/theta - t[index])
+m<- maxLik(loglik,gradlik, start=1)
+summary(m)
+Maximum Likelihood estimation
+Newton-Raphson maximisation, 5 iterations
+Return code 1: gradient close to zero (gradtol)
+Log-Likelihood: -33.70681 
+1  free parameters
+Estimates:
+     Estimate Std. error t value Pr(> t)    
+[1,]    1.940      0.194      10  <2e-16 
+
+
 ### Estimate with full-batch                                               ###
 a <- maxSGA(loglik, gradlik, start=1, control=list(iterlim=1000,
             SG_batchSize=10), nObs=100)
