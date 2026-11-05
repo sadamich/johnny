@@ -1,8 +1,9 @@
 ### Package maxLik ###
 ### Source: https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html ###
 https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html#maxSGA
-
+https://cran.r-project.org/web/packages/maxLik/vignettes/stochastic-gradient-maxLik.pdf
 library(maxLik)
+
 ### estimate the exponential distribution parameter by ML                  ###
 ### random variable of exponential distribution 
 set.seed(1)
@@ -375,7 +376,7 @@ log="y")
 
 
 ### 4 3 Sequence of batch sizes
-
+### Simulated Annealing
 val <- NULL
 # loop over batch sizes
 for(B in c(1,10,100)) {
