@@ -1,6 +1,7 @@
 ### Package maxLik                                                         ###
 ### Source:https://cran.r-project.org/web/packages/maxLik/refman/maxLik.html###
 ### Parameter estimation: A univariate variable                            ###
+https://cran.r-project.org/web/packages/maxLik/vignettes/intro-to-maximum-likelihood.pdf
 library(maxLik)
 set.seed(123)
 x <- rnorm(50, 1, 2 )
