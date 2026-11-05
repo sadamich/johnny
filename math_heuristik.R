@@ -10,3 +10,9 @@ https://de.wikipedia.org/wiki/Heuristik
 backward (Analse) 
 
 forward (Synthese) 
+
+
+### Francis Bacon : Aristoteles ###
+
+
+### Gottfried Wilhelm Leibniz :  René Descartes ###
