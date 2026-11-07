@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/survival/index.html
 library(MASS)
 Description
 Tests of the presence of the bacteria H. influenzae in children with otitis 
