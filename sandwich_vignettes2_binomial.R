@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/sandwich/index.html
 https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-OOP.pdf
 
 set.seed(123)
