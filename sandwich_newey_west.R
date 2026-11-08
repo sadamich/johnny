@@ -3,6 +3,7 @@
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 ### 5 5 2 OLS and autocorrelation (p. 358-360)                             ###
+https://cran.r-project.org/web/packages/sandwich/index.html
 https://cran.r-project.org/web/packages/sandwich/refman/sandwich.html#NeweyWest
 library(sandwich)
 ## fit investment equation
