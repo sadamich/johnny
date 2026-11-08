@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/sandwich/index.html
 https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich.pdf
 library(sandwich)
 ### 4.3. Testing and dating structural changes in the presence of
