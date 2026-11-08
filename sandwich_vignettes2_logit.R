@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/sandwich/index.html
 https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-OOP.pdf
 ### 5.2. Probit and tobit models
 library(sandwich)
