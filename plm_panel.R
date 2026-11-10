@@ -3,6 +3,7 @@
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 ### Example 7 29  Primary metal industries ###
+https://cran.r-project.org/web/packages/plm/index.html
 xm729<- read.csv("xm729.csv", header = TRUE)
 attach(xm729)
 str(xm729)
