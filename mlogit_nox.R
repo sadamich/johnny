@@ -1,3 +1,5 @@
+https://cran.r-project.org/web/packages/mlogit/index.html
+
 https://haas.berkeley.edu/faculty/meredith-fowlie/
 
 https://cran.r-project.org/web/packages/mlogit/refman/mlogit.html#NOx
