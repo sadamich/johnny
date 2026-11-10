@@ -2,6 +2,7 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
+https://cran.r-project.org/web/packages/plm/index.html
 ### Example 7 29  Primary metal industries ###
 xm729<- read.csv("xm729.csv", header = TRUE)
 attach(xm729)
