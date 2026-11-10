@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/mlogit/index.html
 library("mlogit")
 http://www.civil.northwestern.edu/research/transportation_systems/koppelman.html
 data("ModeCanada", package = "mlogit")
