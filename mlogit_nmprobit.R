@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/mlogit/index.html
 https://cran.r-project.org/web/packages/mlogit/vignettes/c6.mprobit.html
 
 ### Multinomial probit
