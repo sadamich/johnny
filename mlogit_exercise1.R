@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/mlogit/index.html
 library(mlogit)
 data("Heating", package = "mlogit")
 attach(Heating)
