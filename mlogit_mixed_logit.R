@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/mlogit/index.html
 https://cran.r-project.org/web/packages/mlogit/vignettes/c5.mxl.html
 
 ### The random parameters (or mixed) logit model
