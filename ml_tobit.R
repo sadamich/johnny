@@ -2,6 +2,7 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
+https://cran.r-project.org/web/packages/censReg/index.html
 xm601<- read.csv("xm601.csv", header = TRUE)
 attach(xm601)
 str(xm601)
