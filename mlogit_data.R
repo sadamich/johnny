@@ -1,5 +1,11 @@
-https://cran.r-project.org/web/packages/mlogit/refman/mlogit.html#mlogit-deprecated
-mlogit-deprecated
+https://cran.r-project.org/web/packages/mlogit/index.html
+https://cran.r-project.org/web/packages/mlogit/refman/mlogit.html#mlogit
+
+Multinomial logit model
+Description
+Estimation by maximum likelihood of the multinomial logit model, with 
+alternative-specific and/or individual specific variables.
+
 choice	
 the variable indicating the choice made: it can be either a logical vector, 
 a numerical vector with 0 where the alternative is not chosen, a factor with
