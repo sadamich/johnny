@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/mlogit/index.html
 https://cran.r-project.org/web/packages/dfidx/refman/dfidx.html
 library(dfidx)
 # the first two columns contain the indexes
