@@ -1,3 +1,5 @@
+https://cran.r-project.org/web/packages/sampleSelection/index.html
+
 ### https://cran.r-project.org/web/packages/sampleSelection/vignettes/selection.pdf ###
 install.pachages("sampleSelection")
 library(sampleSelection)
