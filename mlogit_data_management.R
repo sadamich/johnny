@@ -1,4 +1,4 @@
-install.packages("mlogit")
+https://cran.r-project.org/web/packages/mlogit/index.html
 library("mlogit")
 Format
 id: individual identifient,
