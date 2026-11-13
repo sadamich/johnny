@@ -1,3 +1,5 @@
+https://cran.r-project.org/web/packages/tseries/
+https://cran.r-project.org/web/packages/tseries/refman/tseries.html#tsbootstrap
 library(tseries)
 
 n <- 500  # Generate AR(1) process
