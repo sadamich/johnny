@@ -1,3 +1,6 @@
+https://cran.r-project.org/web/packages/tseries/
+https://cran.r-project.org/web/packages/tseries/refman/tseries.html#terasvirta.test
+
 library(tseries)
 
 n <- 1000
