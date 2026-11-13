@@ -1,3 +1,5 @@
+https://cran.r-project.org/web/packages/tseries/
+https://cran.r-project.org/web/packages/tseries/refman/tseries.html#white.test
 library(tseries)
 
 n <- 1000
