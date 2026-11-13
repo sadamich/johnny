@@ -1,3 +1,6 @@
+https://cran.r-project.org/web/packages/tseries/
+https://cran.r-project.org/web/packages/tseries/refman/tseries.html#portfolio.optim
+
 library(tseries)
 
 x <- rnorm(1000)
