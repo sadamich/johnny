@@ -1,3 +1,6 @@
+https://cran.r-project.org/web/packages/tseries/
+https://cran.r-project.org/web/packages/tseries/refman/tseries.html#plotOHLC
+
 library(tseries)
 par(mfrow=c(2,2))
 ### DAX
