@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/psych/index.html
 https://www.geo.fu-berlin.de/en/v/soga-r/Advanced-statistics/Multivariate-approaches/Principal-Component-Analysis/PCA-the-basics/Data-preparation/index.html
 
 food <- read.csv("food-texture.csv")
