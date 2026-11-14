@@ -1,5 +1,7 @@
 ### Package forecast ###
-### https://cran.r-project.org/web/packages/forecast/refman/forecast.html ###
+https://cran.r-project.org/web/packages/forecast/refman/forecast.html 
+https://cran.r-project.org/web/packages/forecast/
+https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf
 library(forecast)
 ### Data                                                                  ### 
 head(wineind)
