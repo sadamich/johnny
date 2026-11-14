@@ -7,6 +7,8 @@ xm301<- read.csv("xm301.csv",header=TRUE)
 attach(xm301)
 str(xm301)
 
+https://cran.r-project.org/web/packages/strucchange/index.html
+
 ### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
 ### angewandte Statistik, Pearson                                           ###
 ### Quelle: https://www.pearson.de/r-9783868942507                          ###
