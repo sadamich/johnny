@@ -32,4 +32,4 @@ cos(pi/6)
 cos(pi/3)
 cos(5/12*pi)
 cos(2/3*pi)
-
+https://en.wikipedia.org/wiki/Circles_of_Apollonius
