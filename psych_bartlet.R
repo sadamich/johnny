@@ -1,5 +1,5 @@
 https://cran.r-project.org/web/packages/psych/refman/psych.html#cortest.bartlett
-
+https://cran.r-project.org/web/packages/psych/index.html
 library(psych)
 
 set.seed(42)   
