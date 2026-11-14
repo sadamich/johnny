@@ -2,7 +2,9 @@
 ### R. Hatzinger, K. Hornik, H. Nagel, M.J.Maier (2014), R Einführung durch ###
 ### angewandte Statistik, Pearson                                           ###
 ### Quelle: https://www.pearson.de/r-9783868942507                          ###
-### Kapitel 11 (S. 456-464)                                                 ###
+### Kapitel 11 (S. 456-464)   
+https://cran.r-project.org/web/packages/psych/index.html
+                                              ###
 library("psych")
 
 smarkt <- read.table("smarkt.dat", header = TRUE)
