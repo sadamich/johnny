@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/eulerr/
 library(eulerr)
 https://de.wikipedia.org/wiki/%C3%84quivalenzrelation#%C3%84quivalenzklassen
 menge1<- list(A=c(1,7,10,13,17), B=c(2,5,8,16),C=c(3,4,6,11,18),
