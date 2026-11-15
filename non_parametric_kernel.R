@@ -1,3 +1,5 @@
+https://en.wikipedia.org/wiki/Robust_statistics
+
 https://de.wikipedia.org/wiki/Kerndichtesch%C3%A4tzer
 par(mfrow=c(2,2))
 gauss<- function(t){
