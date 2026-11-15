@@ -1,4 +1,4 @@
-
+https://de.wikipedia.org/wiki/Gerschgorin-Kreis
 
 A_1<- matrix(c(-1,1,2,0), nrow=2, ncol=2)
 eigen(A_1)
