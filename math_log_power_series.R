@@ -8,3 +8,21 @@ return(result)
 curve(f_log, -1, 1)
 
 curve(log(x), add =TRUE, col ="red")
+
+
+Funktionstheorie
+
+Konvergenzradius
+
+https://de.wikipedia.org/wiki/Taylorreihe
+
+sin(x)
+cos(x)
+a^(x)
+exp(x)
+log(x)
+
+(Identitätssatz für Potenzreihen)
+
+Operationen mit Potenzreihen
+Differentiation und Integration
