@@ -1,4 +1,6 @@
 ### https://cran.r-project.org/web/packages/gslnls/refman/gslnls.html#gsl_nls ###
+https://cran.r-project.org/web/packages/gslnls/
+
 ## data
 set.seed(1)
 n <- 25
