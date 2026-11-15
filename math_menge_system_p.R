@@ -1,7 +1,10 @@
+https://cran.r-project.org/web/packages/eulerr/
 library(eulerr)
 https://de.wikipedia.org/wiki/Potenzmenge
 https://de.wikipedia.org/wiki/%CE%A3-Algebra
 https://de.wikipedia.org/wiki/Dynkin-System
+
+
 menge1<- list(A=c(1,2,3,4,5,6), B=c(1,3,5),C=c(2,4,6))
 plot(venn(menge1))
 plot(euler(menge1, shape = "ellipse"), quantities = TRUE)
