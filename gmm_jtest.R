@@ -1,6 +1,6 @@
+https://cran.r-project.org/web/packages/gmm/index.html
 https://cran.r-project.org/web/packages/gmm/refman/gmm.html#specTest
 library(gmm)
-
 n = 500
 phi<-c(.2,.7)
 thet <- 0
