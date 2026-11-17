@@ -1,5 +1,34 @@
+https://cran.r-project.org/web/packages/gmm/index.html
 https://cran.r-project.org/web/packages/gmm/refman/gmm.html#gel
 library(gmm)
+
+### 5 GEL in R
+### The moment function g 
+g1 <- function(tet,x)
+{
+m1 <- (tet[1]-x)
+m2 <- (tet[2]^2- (x- tet[1])^2)
+m3 <- x^3-tet[1]*(tet[1]^2+3*tet[2]^2)
+f <- cbind(m1,m2,m3)
+return(f)
+}
+set.seed(123)
+n<-200
+x1 <-rnorm(n, mean= 4,sd = 2)
+tet0 <- c(mu = mean(x1), sig = sd(x1))
+res_el <- gel(g1,x1,tet0)
+summary(res_el)
+
+res_et <- gel(g1,x1,tet0,type="ET")
+coef(res_et)
+
+res_cue <- gel(g1,x1,tet0,type="CUE")
+coef(res_cue)
+
+res_etel <- gel(g1,x1,c(mu=1,sig=1),type="ETEL")
+coef(res_etel)
+
+https://cran.r-project.org/web/packages/gmm/refman/gmm.html#gel
 # First, an exemple with the fonction g()
 g <- function(tet, x)
 	{
