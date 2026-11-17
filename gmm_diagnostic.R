@@ -1,5 +1,5 @@
+https://cran.r-project.org/web/packages/gmm/index.html
 https://cran.r-project.org/web/packages/gmm/refman/gmm.html#plot
-
 library(gmm)
 # GEL #
 n = 500
