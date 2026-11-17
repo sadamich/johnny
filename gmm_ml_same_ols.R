@@ -3,7 +3,7 @@
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
 ###
-
+https://cran.r-project.org/web/packages/gmm/index.html
 set.seed(43)
 x<- rnorm(30, 0, 1)
 e<- rnorm(30, 0, 1)
