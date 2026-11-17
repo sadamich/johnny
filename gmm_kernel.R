@@ -1,6 +1,6 @@
+https://cran.r-project.org/web/packages/gmm/index.html
 https://cran.r-project.org/web/packages/gmm/refman/gmm.html#smoothG
 library(gmm)
-
 Usage
 smoothG(x, bw = bwAndrews, prewhite = 1, ar.method = "ols", weights = weightsAndrews,
 	kernel = c("Bartlett", "Parzen", "Truncated", "Tukey-Hanning"), 
