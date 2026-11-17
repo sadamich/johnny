@@ -1,5 +1,5 @@
+https://cran.r-project.org/web/packages/gmm/index.html
 https://cran.r-project.org/web/packages/gmm/refman/gmm.html#residuals
-
 ### GEL can deal with endogeneity problems
 n = 200
 phi<-c(.2,.7)
