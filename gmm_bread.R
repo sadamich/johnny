@@ -1,7 +1,7 @@
+https://cran.r-project.org/web/packages/gmm/index.html
 https://cran.r-project.org/web/packages/gmm/refman/gmm.html#bread
+https://de.wikipedia.org/wiki/Momenterzeugende_Funktion
 library(gmm)
-
-
 # See \code{\link{gmm}} for more details on this example.
 # With the identity matrix 
 # bread is the inverse of (G'G)
