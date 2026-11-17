@@ -2,6 +2,7 @@
 ### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
 ### Business and Economics. Oxford University Press                        ###
 ### https://global.oup.com/booksites/content/0199268010/                   ###
+https://cran.r-project.org/web/packages/gmm/index.html
 ### Example 1 7 (p.39)and compare with 4 4 2 (p. 252)                      ###
 xm101<- read.csv("xm101.csv", header=TRUE)
 attach(xm101)
@@ -32,73 +33,7 @@ m(4)
 [1] 2.502283
 
 
-https://cran.r-project.org/web/packages/gmm/refman/gmm.html#estfun
-library(gmm)
-n = 500
-phi<-c(.2,.7)
-thet <- 0
-sd <- .2
-x <- matrix(arima.sim(n=n,list(order=c(2,0,1),ar=phi,ma=thet,sd=sd)),ncol=1)
-y <- x[7:n]
-ym1 <- x[6:(n-1)]
-ym2 <- x[5:(n-2)]
-H <- cbind(x[4:(n-3)], x[3:(n-4)], x[2:(n-5)], x[1:(n-6)])
-g <- y ~ ym1 + ym2
-x <- H
-res <- gmm(g, x,weightsMatrix = diag(5))
-summary(res)
-Call:
-gmm(g = g, x = x, weightsMatrix = diag(5))
 
 
-Method:  One step GMM with fixed W 
-
-Kernel:  Quadratic Spectral
-
-Coefficients:
-             Estimate    Std. Error  t value     Pr(>|t|)  
-(Intercept)  3.4105e-02  4.5474e-02  7.5000e-01  4.5325e-01
-ym1          1.9609e-01  4.8914e-02  4.0089e+00  6.1006e-05
-ym2          7.2739e-01  4.9997e-02  1.4549e+01  5.9526e-48
-
-J-Test: degrees of freedom is 2 
-                J-test   P-value
-Test E(g)=0:    0.19320  0.90792
 
 
-### the structure of variables                                             ###
-str(y)
- num [1:494] 0.87 1.96 1.05 2.7 1.98
-str(x)
-num [1:494, 1:4] 1.52 3.18 3.84 0.87 1.96 ...
-
-str(ym1)
- num [1:494] 3.84 0.87 1.96 1.05 2.7 ..
-str(ym2)
-num [1:494] 3.18 3.84 0.87 1.96 1.05 .
-str(H)
-num [1:494, 1:4] 1.52 3.18 3.84 0.87 1.96 ...
-
-str(phi)
- num [1:2] 0.2 0.7
-str(thet)
-
-
-gt <- res$gt
- num [1:494, 1:5] -1.898 -0.969 0.223 1.156 0.934 ...
- - attr(*, "dimnames")=List of 2
-  ..$ : chr [1:494] "1" "2" "3" "4" ...
-  ..$ : chr [1:5] "(Intercept)" "h1" "h2" "h3" ...
-G <- res$G
-str(G)
-num [1:5, 1:3] -1 0.199 0.194 0.192 0.184 ...
-
-foc <- gt
-foc2 <- estfun(res)
-
-foc[1:5,]
-foc2[1:5,]
-
-### the histogram of 
-plot(foc2)
-hist(foc2)
