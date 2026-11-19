@@ -1,3 +1,4 @@
+https://cran.r-project.org/web/packages/bootstrap/
 https://cran.r-project.org/web/packages/bootstrap/refman/bootstrap.html#bootstrap
 library(bootstrap)
 # 100 bootstraps of the sample mean 
