@@ -136,6 +136,7 @@ return(result)
 }
 skew(x,mean(x),609,sd(x))
 [1] 0.1674154
+
 kurt<-  function(y,mean,n,sd){
 result<- (1/n*(sum ((y - mean)^4)))/sd^4
 return(result)
