@@ -19,4 +19,4 @@ plot(char_fct)
 https://edspace.american.edu/jpnolan/stable/
 https://edspace.american.edu/jpnolan/wp-content/uploads/sites/1720/2020/09/Chap1.pdf
 https://edspace.american.edu/jpnolan/wp-content/uploads/sites/1720/2024/06/Book2Chapter1.pdf
-
+https://edspace.american.edu/jpnolan/wp-content/uploads/sites/1720/2026/11/StableBibliography.pdf
