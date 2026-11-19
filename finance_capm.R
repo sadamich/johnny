@@ -7,9 +7,12 @@ attach(xm404)
 str(xm404)
 detach(xm404)
 
+
 ### The JB test (p.387)                     ###
 eq<- lm(RENDCYCO~RENDMARK)
 res<- resid(eq)
+plot(res, RENDMARK)
+plot(res,type="l")
 m2<- function(res){
 n<- 240
 sum(res^2)/n
@@ -39,6 +42,7 @@ JB
 [1] 14.05774
 1 - pchisq(14.05774,2)
 [1] 0.0008859323  : H0 (the normality is rejected)
+
 ### Exhibit 5 40 (p.388)
 x<- ts(res, freq=12, start=1980)
 plot(x, main = "Time series", ylab = "x")
