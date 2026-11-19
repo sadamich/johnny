@@ -167,16 +167,3 @@ paste(
 
 
 
-
-library(bootstrap)
-n<- 609
-y<- FGPA
-theta<- function(y){
-result<- mean(y)/(sd(y)/sqrt(n))
-return(result)
-}
-z<- bootstrap(y, 10000,theta)
-perc95<- function(y){quantile(y, .95)}
-results <-  bootstrap(y,10000,theta, func=perc95) 
-results
-
