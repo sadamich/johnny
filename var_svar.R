@@ -1,6 +1,14 @@
-### VAR: Package vars ### 
+### Source:Christiaan Heij, Paul de Boer, Philip Hans Franses, Teun Kloek, ###
+### Herman K. van Dijk (2004).Econometric Methods with Applications in     ###
+### Business and Economics. Oxford University Press, p.665 and p.677       ###
+### https://global.oup.com/booksites/content/0199268010/                   ###
+### Example 7 26 Interest and bond rates p.663 ###
+xm722<- read.csv("xm722.csv", head=TRUE)
+str(xm722)
+attach(xm722)
+library("vars")
+
 ### Source:https://cran.r-project.org/web/packages/vars/refman/vars.html ###
-library(vars)
 data(Canada)
 head(Canada)
 ### prod :=	100*(ln(CAN1008S1/445241K)-ln(445005DSA))    Canadian real GDP ###
