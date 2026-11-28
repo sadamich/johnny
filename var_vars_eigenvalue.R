@@ -14,6 +14,7 @@ roots(eq_var)
 [1] 0.2813355 0.2813355
 eq_var2<- VAR(VAR_data, p = 2)
 eq_var2
+roots(eq_var2)
 [1] 0.4686267 0.4686267 0.4402689 0.4402689
 https://cran.r-project.org/web/packages/vars/refman/vars.html#roots
 data(Canada)
